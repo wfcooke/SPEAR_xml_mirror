@@ -112,8 +112,6 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!--Do not change the rest of the properties-->
   <!--========================================-->
 
-   <property name="SPEAR_INPUT_HOME_GAEA"  value="$HOME/SPEAR_xml/xml/SPEAR_include"/>
-   <property name="SPEAR_INPUT_HOME_GFDL"  value="$HOME/ncrc/SPEAR_xml/xml/SPEAR_include"/>
    <property name="MIZ_ARCHIVE_ROOT_GAEA" value="$CPERM/Ming.Zhao/archive/mdt"/>
    <property name="MIZ_ARCHIVE_ROOT_GFDL" value="/archive/miz/mdt/"/>
 
@@ -269,11 +267,11 @@ configuration.
       <project>gfdl_sd</project>
       <directory stem="$(FRE_STEM)">
         <scripts>$CTMP/unswept/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
       </directory>
 
      <property name="MY_ROOT"          value="$(rootDir)"/>
      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML -g -traceback"/>
-     <property name="SPEAR_INPUT_HOME"    value="$(SPEAR_INPUT_HOME_GAEA)"/>
      <property name="AWG_ARCHIVE_ROOT"  value="/lustre/f1/pdata/gfdl_M/cjg/archive/mdt/"/>
      <property name="LWH_ARCHIVE_ROOT"  value="$CDATA/gfdl_M"/>
      <property name="MIZ_ARCHIVE_ROOT"  value="$(MIZ_ARCHIVE_ROOT_GAEA)"/>
@@ -307,7 +305,6 @@ configuration.
 <!--        <archive>/archive/$USER/$(FRE_STEM)/$(name)/$(platform)-$(target)/slow_dt</archive>-->
         <root>/home/$USER/SPEAR</root>
         <archive>/archive/$USER/SPEAR/$(name)</archive>
-        <include>$HOME/ncrc/SPEAR_xml/xml</include>
       </directory>
       <property name="PDATA_ROOT" value="" />
       <property name="MY_ROOT"          value="$(rootDir)"/>
@@ -315,8 +312,6 @@ configuration.
 <!--      <property name="NBROOT"      value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>-->
 
       <property name="F2003_FLAGS"   value="-DINTERNAL_FILE_NML"/>
-<!--      <property name="SPEAR_INPUT_HOME"    value="$(SPEAR_INPUT_HOME_GFDL)"/>-->
-      <property name="SPEAR_INPUT_HOME"    value="$(includeDir)/SPEAR_include"/>
       <property name="AWG_ARCHIVE_ROOT"  value="/archive/cjg/mdt"/>
       <property name="LWH_ARCHIVE_ROOT"  value="/archive"/>
       <property name="MIZ_ARCHIVE_ROOT"  value="$(MIZ_ARCHIVE_ROOT_GFDL)"/>
@@ -344,13 +339,11 @@ configuration.
       <project>gfdl_sd</project>
       <directory stem="$(FRE_STEM)">
         <scripts>$CTMP/unswept/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$HOME/SPEAR_xml/xml</include>
+        <include>$(xmlDir)/SPEAR_include</include>
       </directory>
 
       <property name="MY_ROOT"          value="$(rootDir)"/>
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-<!--      <property name="SPEAR_INPUT_HOME"    value="$(SPEAR_INPUT_HOME_GAEA)"/>-->
-      <property name="SPEAR_INPUT_HOME"    value="$(includeDir)/SPEAR_include"/>
       <property name="AWG_ARCHIVE_ROOT"  value="/lustre/f1/pdata/gfdl_M/cjg/archive/mdt/"/>
       <property name="LWH_ARCHIVE_ROOT"  value="$CDATA/gfdl_M"/>
       <property name="MIZ_ARCHIVE_ROOT"  value="$(MIZ_ARCHIVE_ROOT_GAEA)"/>
@@ -379,13 +372,11 @@ configuration.
       <project>gfdl_sd</project>
       <directory stem="$(FRE_STEM)">
         <scripts>$CTMP/unswept/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$HOME/SPEAR_xml/xml</include>
+        <include>$(xmlDir)/SPEAR_include</include>
       </directory>
 
       <property name="MY_ROOT"          value="$(rootDir)"/>
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-<!--      <property name="SPEAR_INPUT_HOME"    value="$(SPEAR_INPUT_HOME_GAEA)"/>-->
-      <property name="SPEAR_INPUT_HOME"    value="$(includeDir)/SPEAR_include"/>
       <property name="AWG_ARCHIVE_ROOT"  value="/lustre/f1/pdata/gfdl_M/cjg/archive/mdt"/>
       <property name="LWH_ARCHIVE_ROOT"  value="$CDATA/gfdl_M"/>
       <property name="MIZ_ARCHIVE_ROOT"  value="$(MIZ_ARCHIVE_ROOT_GAEA)"/>
@@ -864,13 +855,6 @@ Experiment to build executable. See git log for source code provenance.
     <input>
       <csh><![CDATA[
 set domains_stack_size = "2097152"
-
-# Copy AWG ascii input files to GFDL (waiting for FRE to do this for us)
-if ( $?batch && ! $?FRE_STAGE ) then
-  if ( $?flagOutputXferOn && $?flagOutputPostProcessOn ) then
-    gcp --batch -cd -r --sync $(SPEAR_INPUT_HOME) gfdl:$(SPEAR_INPUT_HOME_GFDL)/..
-  endif
-endif
       ]]></csh>
     </input>
   </freInclude>
@@ -879,13 +863,6 @@ endif
     <input>
       <csh><![CDATA[
 set domains_stack_size = "3097152"
-
-# Copy AWG ascii input files to GFDL (waiting for FRE to do this for us)
-if ( $?batch && ! $?FRE_STAGE ) then
-  if ( $?flagOutputXferOn && $?flagOutputPostProcessOn ) then
-    gcp --batch -cd -r --sync $(SPEAR_INPUT_HOME) gfdl:$(SPEAR_INPUT_HOME_GFDL)/..
-  endif
-endif
       ]]></csh>
     </input>
   </freInclude>
@@ -2524,7 +2501,7 @@ endif
 
   <freInclude name="c96_climo_postprocess">
     <postProcess>
-      <refineDiag script="$(SPEAR_INPUT_HOME_GFDL)/refineDiag/refineDiag_data_stager_globalAve.csh"/>
+      <refineDiag script="$(includeDir)/refineDiag/refineDiag_data_stager_globalAve.csh"/>
       <component type="atmos" zInterp="era40" start="$(ANA_CLIMO_START)" source="atmos_month" sourceGrid="atmos-cubedsphere" xyInterp="180,288">
         <timeSeries freq="3hr" source="atmos_8xdaily" chunkLength="$(PP_CLIMO_CHUNK)">
           <xi:include href="SPEAR_include/analysis/analysis_climo.xml" xpointer="xpointer(*/atmos8xDailyTS/*)"/>
@@ -2655,16 +2632,16 @@ $baseDate
 
       </diagTable>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_MOM6_SIS2</dataSource>
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_MOM6_SIS2</dataSource>
       </dataFile>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_atmos_20170717</dataSource>
+        <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_atmos_20170717</dataSource>
       </dataFile>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_atmos_simpleSO4</dataSource>
+        <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_atmos_simpleSO4</dataSource>
       </dataFile>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_land</dataSource>
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_land</dataSource>
       </dataFile>
       <diagTable>
 "radiation", "netrad_toa",     "netrad_toa",     "atmos_month", "all", .true.,  "none", 2
@@ -2716,7 +2693,7 @@ $baseDate
 cd INPUT
 
 # adjustment of dry mass first time only
-set adjust_dry_mass = `$(SPEAR_INPUT_HOME)/adjust_dry_mass.csh`
+set adjust_dry_mass = `$(includeDir)/adjust_dry_mass.csh`
 
 # create dummy MOM6 parameter file
 touch MOM_input
@@ -2755,7 +2732,7 @@ cd ..
       <!--REFINE DIAG SCRIP -->
       <!--By default a refineDiag script causes the annual data to be unpacked and saved in /ptmp/$USER-->
       <!--MOM6_refineDiag.csh is currently empty and is here only to cause the unpack annual history files in /ptmp-->
-<!--      <refineDiag script="$(NB_ROOT)/mom6/tools/analysis/MOM6_refineDiag.csh,$(SPEAR_INPUT_HOME_GFDL)/refineDiag/refineDiag_data_stager_globalAve.csh"/>-->
+<!--      <refineDiag script="$(NB_ROOT)/mom6/tools/analysis/MOM6_refineDiag.csh,$(includeDir)/refineDiag/refineDiag_data_stager_globalAve.csh"/>-->
 <!-- Tony said to comment this out for now. -->
       <!--PostProcessing component models-->
 
@@ -3076,7 +3053,7 @@ cd ..
       <!--REFINE DIAG SCRIP -->
       <!--By default a refineDiag script causes the annual data to be unpacked and saved in /ptmp/$USER-->
       <!--MOM6_refineDiag.csh is currently empty and is here only to cause the unpack annual history files in /ptmp-->
-<!--      <refineDiag script="$(NB_ROOT)/mom6/tools/analysis/MOM6_refineDiag.csh,$(SPEAR_INPUT_HOME_GFDL)/refineDiag/refineDiag_data_stager_globalAve.csh"/>-->
+<!--      <refineDiag script="$(NB_ROOT)/mom6/tools/analysis/MOM6_refineDiag.csh,$(includeDir)/refineDiag/refineDiag_data_stager_globalAve.csh"/>-->
 <!-- Tony said to comment this out for now. -->
       <!--PostProcessing component models-->
 
@@ -3278,7 +3255,7 @@ cd ..
       <!--REFINE DIAG SCRIP -->
       <!--By default a refineDiag script causes the annual data to be unpacked and saved in /ptmp/$USER-->
       <!--MOM6_refineDiag.csh is currently empty and is here only to cause the unpack annual history files in /ptmp-->
-<!--      <refineDiag script="$(NB_ROOT)/mom6/tools/analysis/MOM6_refineDiag.csh,$(SPEAR_INPUT_HOME_GFDL)/refineDiag/refineDiag_data_stager_globalAve.csh"/>-->
+<!--      <refineDiag script="$(NB_ROOT)/mom6/tools/analysis/MOM6_refineDiag.csh,$(includeDir)/refineDiag/refineDiag_data_stager_globalAve.csh"/>-->
       <refineDiag script="/home/William.Cooke/ncrc/decadal/splitter/SPEAR_refineDiag.csh"/>
 <!-- Tony said to comment this out for now. -->
       <!--PostProcessing component models-->
@@ -3367,11 +3344,11 @@ cd ..
    
   </description>
   <input>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/MOM6_g12.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_common.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_physics.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_c96L33.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_amip.nml"/>
+      <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_amip.nml"/>
       <namelist name="MOM_input_nml">
         output_directory = './',
         input_filename = 'n'
@@ -4111,7 +4088,7 @@ cd ..
      </namelist>
 
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/field_table/field_table_am4p11</dataSource>
+        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/REMAP/C96_LM3_OM4_01_19810101.remapped.v20170512.tar</dataSource>
@@ -4126,7 +4103,7 @@ $baseDate
 
       </diagTable>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_SPEAR_Control</dataSource>
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control</dataSource>
       </dataFile>
 
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
@@ -4388,11 +4365,11 @@ Test bed of A01 experiment using initial condition from year 101.
 
   </description>
   <input>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/MOM6_g12.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_common.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_physics.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_c96L33.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_1850climo.nml"/>
+      <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_1850climo.nml"/>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
@@ -4642,7 +4619,7 @@ Test bed of A01 experiment using initial condition from year 101.
 
 
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/field_table/field_table_am4p11</dataSource>
+        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
@@ -4658,7 +4635,7 @@ $baseDate
 
       </diagTable>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_SPEAR_Control</dataSource>
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control</dataSource>
       </dataFile>
       
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
@@ -4872,11 +4849,11 @@ set nyblocks = $dummy
 
   </description>
   <input>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/MOM6_g12.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_common.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_physics.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_c96L33.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_2010climo.nml"/>
+      <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_2010climo.nml"/>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
@@ -5123,7 +5100,7 @@ set nyblocks = $dummy
 
 
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/field_table/field_table_am4p11</dataSource>
+        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond2010.tar</dataSource>
@@ -5139,7 +5116,7 @@ $baseDate
 
       </diagTable>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_SPEAR_Control</dataSource>
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control</dataSource>
       </dataFile>
       
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
@@ -5360,11 +5337,11 @@ set nyblocks = $dummy
 
   </description>
   <input>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/MOM6_g12.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_common.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_physics.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_c96L33.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_1850climo.nml"/>
+      <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_1850climo.nml"/>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
@@ -5614,7 +5591,7 @@ set nyblocks = $dummy
 
 
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/field_table/field_table_am4p11</dataSource>
+        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
@@ -5630,7 +5607,7 @@ $baseDate
 
       </diagTable>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_SPEAR_Control</dataSource>
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control</dataSource>
       </dataFile>
       
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
@@ -5859,11 +5836,11 @@ set nyblocks = $dummy
 
   </description>
   <input>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/MOM6_g12.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_common.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_physics.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_c96L33.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_1850climo.nml"/>
+      <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_1850climo.nml"/>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
@@ -6113,7 +6090,7 @@ set nyblocks = $dummy
 
 
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/field_table/field_table_am4p11</dataSource>
+        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
@@ -6129,7 +6106,7 @@ $baseDate
 
       </diagTable>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_SPEAR_Control</dataSource>
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control</dataSource>
       </dataFile>
       
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
@@ -6360,11 +6337,11 @@ and the MOM_override
 
   </description>
   <input>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/MOM6_g12.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_common.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_physics.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_c96L33.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_1850climo.nml"/>
+      <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_1850climo.nml"/>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
@@ -6614,7 +6591,7 @@ and the MOM_override
 
 
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/field_table/field_table_am4p11</dataSource>
+        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
@@ -6630,7 +6607,7 @@ $baseDate
 
       </diagTable>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_SPEAR_Control</dataSource>
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control</dataSource>
       </dataFile>
       
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
@@ -6862,11 +6839,11 @@ and the MOM_override
 
   </description>
   <input>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/MOM6_g12.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_common.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_physics.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_c96L33.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_1850climo.nml"/>
+      <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_1850climo.nml"/>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
@@ -7116,7 +7093,7 @@ and the MOM_override
 
 
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/field_table/field_table_am4p11</dataSource>
+        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
@@ -7132,7 +7109,7 @@ $baseDate
 
       </diagTable>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_SPEAR_Control</dataSource>
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control</dataSource>
       </dataFile>
       
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
@@ -7365,11 +7342,11 @@ set nyblocks = $dummy
    Change KD = 2.e-4 to scale this profile.
   </description>
   <input>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/MOM6_g12.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_common.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_physics.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_c96L33.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_1850climo.nml"/>
+      <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_1850climo.nml"/>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
@@ -7619,7 +7596,7 @@ set nyblocks = $dummy
 
 
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/field_table/field_table_am4p11</dataSource>
+        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
@@ -7635,7 +7612,7 @@ $baseDate
 
       </diagTable>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_SPEAR_Control</dataSource>
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control</dataSource>
       </dataFile>
       
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
@@ -7855,11 +7832,11 @@ Added vh_rho and uh_rho to ocean_month diagnostics.
 
   </description>
   <input>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/MOM6_g12.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_common.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_physics.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_c96L33.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_1850climo.nml"/>
+      <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_1850climo.nml"/>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
@@ -8109,7 +8086,7 @@ Added vh_rho and uh_rho to ocean_month diagnostics.
 
 
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/field_table/field_table_am4p11</dataSource>
+        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
@@ -8125,7 +8102,7 @@ $baseDate
 
       </diagTable>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_SPEAR_Control</dataSource>
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control</dataSource>
       </dataFile>
       <diagTable>
 "ocean_model", "uh_rho",                   "uh_rho",                     "ocean_month",     "all", "mean", "none",2
@@ -8358,11 +8335,11 @@ alter the vertical structure of the tidal mixing.
 
   </description>
   <input>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/MOM6_g12.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_common.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_physics.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_c96L33.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_1850climo.nml"/>
+      <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_1850climo.nml"/>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
@@ -8612,7 +8589,7 @@ alter the vertical structure of the tidal mixing.
 
 
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/field_table/field_table_am4p11</dataSource>
+        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
@@ -8628,7 +8605,7 @@ $baseDate
 
       </diagTable>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_SPEAR_Control</dataSource>
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control</dataSource>
       </dataFile>
       
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
@@ -8859,11 +8836,11 @@ set nyblocks = $dummy
 
   </description>
   <input>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/MOM6_g12.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_common.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_physics.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_c96L33.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_1850climo.nml"/>
+      <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_1850climo.nml"/>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
@@ -9113,7 +9090,7 @@ set nyblocks = $dummy
 
 
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/field_table/field_table_am4p11</dataSource>
+        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
@@ -9129,7 +9106,7 @@ $baseDate
 
       </diagTable>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_SPEAR_Control</dataSource>
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control</dataSource>
       </dataFile>
       <diagTable>
 "ocean_model", "uh_rho",                   "uh_rho",                     "ocean_month",     "all", "mean", "none",2
@@ -9359,11 +9336,11 @@ BRYAN_LEWIS_WIDTH_TRANS = 1.e6
 
   </description>
   <input>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/MOM6_g12.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_common.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_physics.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_c96L33.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_1850climo.nml"/>
+      <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_1850climo.nml"/>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
@@ -9613,7 +9590,7 @@ BRYAN_LEWIS_WIDTH_TRANS = 1.e6
 
 
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/field_table/field_table_am4p11</dataSource>
+        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
@@ -9629,7 +9606,7 @@ $baseDate
 
       </diagTable>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_SPEAR_Control</dataSource>
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control</dataSource>
       </dataFile>
       
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
@@ -9857,11 +9834,11 @@ set nyblocks = $dummy
 
   </description>
   <input>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/MOM6_g12.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_common.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_physics.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_c96L33.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_1850climo.nml"/>
+      <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_1850climo.nml"/>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
@@ -10111,7 +10088,7 @@ set nyblocks = $dummy
 
 
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/field_table/field_table_am4p11</dataSource>
+        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
@@ -10127,7 +10104,7 @@ $baseDate
 
       </diagTable>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_SPEAR_Control</dataSource>
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control</dataSource>
       </dataFile>
       
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
@@ -10351,11 +10328,11 @@ set nyblocks = $dummy
 
   </description>
   <input>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/MOM6_g12.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_common.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_physics.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_c96L33.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_1850climo.nml"/>
+      <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_1850climo.nml"/>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
@@ -10605,7 +10582,7 @@ set nyblocks = $dummy
 
 
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/field_table/field_table_am4p11</dataSource>
+        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
@@ -10621,7 +10598,7 @@ $baseDate
 
       </diagTable>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_SPEAR_Control</dataSource>
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control</dataSource>
       </dataFile>
       
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
@@ -10843,11 +10820,11 @@ set nyblocks = $dummy
 
   </description>
   <input>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/MOM6_g12.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_common.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_physics.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_c96L33.nml"/>
-      <namelist file="$(SPEAR_INPUT_HOME)/nml/am4p0_1850climo.nml"/>
+      <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_1850climo.nml"/>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
@@ -11105,7 +11082,7 @@ set nyblocks = $dummy
 
 
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/field_table/field_table_am4p11</dataSource>
+        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource platform="$(platform)">$CDATA/gfdl_G/SPEAR_c96/initCond/c96_LM3equilC_C39_Y0021_AM4_SIS2.tar</dataSource>
@@ -11121,7 +11098,7 @@ $baseDate
 
       </diagTable>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(SPEAR_INPUT_HOME)/diag_table/diag_table_SPEAR_Control</dataSource>
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control</dataSource>
       </dataFile>
       
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
