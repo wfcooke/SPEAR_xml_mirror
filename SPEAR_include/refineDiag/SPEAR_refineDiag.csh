@@ -1,7 +1,8 @@
 #!/bin/csh
 
-#set splitter=/home/nmme/ensemble_splitter/comp_ensemble_avg_v4_fre
-set splitter=/SPEAR_include/refineDiag/comp_ensemble_avg_v4_fre
+set xmlDir = $rtsxml:h
+set refineDiagScriptDir = $xmlDir/SPEAR_include//refineDiag 
+set splitter=$refineDiagScriptDir/comp_ensemble_avg_v4_fre
 
 set startDate = `date`
 echo $startDate
