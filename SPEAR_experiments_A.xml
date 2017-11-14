@@ -1935,6 +1935,15 @@ endif
 	     </resources>
    </freInclude>
 
+   <freInclude name="resourceparams_A576x4_O180">
+	     <resources jobWallclock="03:00:00">
+               <atm ranks="576" threads="4"   layout = "8,12"   io_layout = "1,4" />
+	       <lnd                           layout = "8,12"   io_layout = "1,4" />
+	       <ice                           layout = "18,32"  io_layout = "1,1" />
+	       <ocn ranks="180"  threads="1"  layout = "9,20"   io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
    <freInclude name="resourceparams_A576x4_O216">
 	     <resources jobWallclock="03:00:00">
                <atm ranks="576" threads="4"   layout = "8,12"   io_layout = "1,4" />
@@ -1944,8 +1953,17 @@ endif
 	     </resources>
    </freInclude>
 
+   <freInclude name="resourceparams_A576x4_O252">
+	     <resources jobWallclock="03:00:00">
+               <atm ranks="576" threads="4"   layout = "8,12"   io_layout = "1,4" />
+	       <lnd                           layout = "8,12"   io_layout = "1,4" />
+	       <ice                           layout = "18,32"  io_layout = "1,1" />
+	       <ocn ranks="252"  threads="1"  layout = "18,14"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
    <freInclude name="resourceparams_A864x2_O180">
-	     <resources jobWallclock="01:00:00">
+	     <resources jobWallclock="02:00:00">
                <atm ranks="864" threads="2"   layout = "12,12"   io_layout = "1,4" />
 	       <lnd                           layout = "12,12"   io_layout = "1,4" />
 	       <ice                           layout = "72,12"  io_layout = "1,1" />
@@ -1953,7 +1971,7 @@ endif
 	     </resources>
    </freInclude>
    <freInclude name="resourceparams_A864x3_O288">
-	     <resources jobWallclock="01:00:00">
+	     <resources jobWallclock="02:00:00">
                <atm ranks="864" threads="3"   layout = "12,12"   io_layout = "1,4" />
 	       <lnd                           layout = "12,12"   io_layout = "1,4" />
 	       <ice                           layout = "72,12" io_layout = "1,1" />
@@ -1961,11 +1979,46 @@ endif
 	     </resources>
    </freInclude>
    <freInclude name="resourceparams_A864x4_O360">
-	     <resources jobWallclock="01:00:00">
+	     <resources jobWallclock="02:00:00">
                <atm ranks="864" threads="4"   layout = "12,12"   io_layout = "1,4" />
 	       <lnd                           layout = "12,12"   io_layout = "1,4" />
 	       <ice                           layout = "72,12"  io_layout = "1,1" />
-	       <ocn ranks="360"  threads="1"  layout = "10,32"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	       <ocn ranks="360"  threads="1"  layout = "20,18"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A864x3_O252">
+	     <resources jobWallclock="02:00:00">
+               <atm ranks="864" threads="3"   layout = "12,12"   io_layout = "1,4" />
+	       <lnd                           layout = "12,12"   io_layout = "1,4" />
+	       <ice                           layout = "72,12" io_layout = "1,1" />
+	       <ocn ranks="252"  threads="1"  layout = "18,14"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+   <freInclude name="resourceparams_A864x4_O252">
+	     <resources jobWallclock="02:00:00">
+               <atm ranks="864" threads="4"   layout = "12,12"   io_layout = "1,4" />
+	       <lnd                           layout = "12,12"   io_layout = "1,4" />
+	       <ice                           layout = "72,12"  io_layout = "1,1" />
+	       <ocn ranks="252"  threads="1"  layout = "18,14"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A864x4_O288">
+	     <resources jobWallclock="02:00:00">
+               <atm ranks="864" threads="4"   layout = "12,12"   io_layout = "1,4" />
+	       <lnd                           layout = "12,12"   io_layout = "1,4" />
+	       <ice                           layout = "72,12"  io_layout = "1,1" />
+	       <ocn ranks="288"  threads="1"  layout = "9,32"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A1152x2_O216">
+	     <resources jobWallclock="03:00:00">
+               <atm ranks="1152" threads="2"  layout = "8,24"   io_layout = "1,4" />
+	       <lnd                           layout = "8,24"   io_layout = "1,4" />
+	       <ice                           layout = "72,16"  io_layout = "1,1" />
+	       <ocn ranks="216"  threads="1"  layout = "18,12"   io_layout = "1,1" mask_table="MOM_mask_table" />
 	     </resources>
    </freInclude>
 
@@ -2422,11 +2475,16 @@ endif
 
       <regression label="timing_omp">
 
-        <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
+<!--        <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A576x3_O144']/node())"/>
         </run>
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A576x4_O216']/node())"/>
+        </run>
+
+
+        <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A576x4_O180']/node())"/>
         </run>
 
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
@@ -2434,15 +2492,19 @@ endif
         </run>
 
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x3_O288']/node())"/>
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x3_O252']/node())"/>
         </run>
 
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x4_O360']/node())"/>
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x4_O252']/node())"/>
         </run>
 
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x2_O288']/node())"/>
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x2_O216']/node())"/>
+        </run>
+-->
+        <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x4_O288']/node())"/>
         </run>
 
       </regression>
