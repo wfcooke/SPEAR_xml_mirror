@@ -166,7 +166,7 @@ set ocean_statvars = ( )
 if ( $compstat == .true. ) then
    set atmos_statvars = (t_ref precip)
 #   set ocean_statvars = (temp salt tau_x tau_y) wfc
-   set ocean_statvars = (taux tauy)
+   set ocean_statvars = (tauuo tauvo)
    set oceanz_statvars = (thetao so )
 
    echo " This version will compute compute stddev for these fields:"
