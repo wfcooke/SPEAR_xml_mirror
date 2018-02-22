@@ -3597,6 +3597,9 @@ cd ..
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"  source="ice_month"/>
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)"  source="ice_month"/>
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)"  source="ice_month"/>
+        <timeAverage source="monthly"  interval="$(CHUNK_LENGTH_A)"/>
+        <timeAverage source="monthly"  interval="$(CHUNK_LENGTH_B)"/>
+        <timeAverage source="monthly"  interval="$(CHUNK_LENGTH_C)"/>
 
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"  source="ice_month"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_B)"  source="ice_month"/>
@@ -24770,7 +24773,7 @@ set nyblocks = $dummy
   </input>
 
   <runtime>
-    <production simTime="500" units="years" >
+    <production simTime="1000" units="years" >
       <segment simTime="1" units="years"/>
       <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x2_O720_production']/node())"/>
     </production> 

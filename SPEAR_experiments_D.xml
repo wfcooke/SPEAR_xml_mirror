@@ -16201,7 +16201,7 @@ set nyblocks = $dummy
 
 
 
-<experiment name="SPEAR_c96_o1_Control_1850_D32a" inherit="SPEAR_D_nonsymMOM6_exec">
+<experiment name="SPEAR_c96_o1_Control_1850_D32b" inherit="SPEAR_D_nonsymMOM6_exec">
   <description>
   
    1/5/2017
@@ -16296,7 +16296,6 @@ NEW_SPONGES = True
         months = $months,
         days   = $days,
         current_date = 1988,1,1,0,0,0,
-        restart_interval = 0,0,1,0,0,0
         calendar = 'julian',
         dt_cpld = 1800,
         dt_atmos = 1800,
@@ -16619,8 +16618,9 @@ $baseDate
       <dataFile label="input" target="INPUT/daily_thetao.nc">
 <!-- /lustre/f1/unswept/William.Cooke/ECDA_v3.2_REMAP/1988.ocean_daily.nc -->
 <!-- /lustre/f1/unswept/William.Cooke/ECDA_v3.2_REMAP/1990.ocean_5day.interp.ens_01.nc -->
- /lustre/f1/unswept/William.Cooke/ECDA_v3.2_REMAP/1988.ocean_5day.ongrid.ens_01.nc 
-
+ /lustre/f1/unswept/William.Cooke/ECDA_v3.2_REMAP/1988.ocean_5day.ongrid.ens_01.nc  
+<!-- /lustre/f1/unswept/William.Cooke/ECDA_v3.2_REMAP/1988.ocean_5day.SPEARgrid.ens_01.nc -->
+<!-- /lustre/f1/unswept/William.Cooke/ECDA_v3.2_REMAP/1988.ocean_temp_salt_5day_ens01.nc-->
  </dataFile>
          <csh type="always"><![CDATA[
          
@@ -16668,7 +16668,6 @@ EOF
 touch $work/INPUT/SIS_override
 
 cat > $work/INPUT/SIS_override << EOF
-#override DEBUG = True
 EOF
 
 #scan auxiliary_nml
@@ -16754,6 +16753,11 @@ set nyblocks = $dummy
         <run days="2 2" >
           <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A144x1_O72_debug']/node())"/>
           </run>
+      </regression>
+      <regression name="twomonth">
+        <run months="2" >
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180_long']/node())"/>
+        </run>
       </regression>
       <regression name="oneyear">
         <run months="12" >
