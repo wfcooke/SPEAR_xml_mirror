@@ -306,7 +306,8 @@ configuration.
       <directory stem="$(FRE_STEM)" >
         <root>/home/$USER/SPEAR</root>
         <archive>/archive/$USER/SPEAR/$(name)</archive>
-        <include>$(rootDir)/SPEAR_include</include> 
+        <include>$(rootDir)/SPEAR_include</include>
+        <analysis>/nbhome/$USER/$(stem)/$(name)</analysis>
       </directory>
       <property name="PDATA_ROOT" value="" />
       <property name="MY_ROOT"          value="$(rootDir)"/>
@@ -2486,12 +2487,12 @@ endif
 
 
       <regression label="timing_omp">
-
+<!--
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108']/node())"/>
         </run>
 
-<!--        <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
+        <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A576x3_O144']/node())"/>
         </run>
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
@@ -2502,7 +2503,7 @@ endif
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A576x4_O180']/node())"/>
         </run>
-
+-->
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x2_O180']/node())"/>
         </run>
@@ -2518,7 +2519,7 @@ endif
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x2_O216']/node())"/>
         </run>
-
+<!--
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x4_O288']/node())"/>
         </run>
@@ -13780,6 +13781,12 @@ set nyblocks = $dummy
 2/1/2018
 Same as SPEAR_c96_o1_Control_1850_C45 with Backgrond KH set to 5e3
 
+3/27/2018
+Added daily diagnostics 
+Reverted to year 801 restart to allow diagnostics to be postprocessed at 100 year intervals.
+Changed postprocessing also.
+Extended job to 2000 years.
+
   </description>
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
@@ -14097,8 +14104,11 @@ $name
 $baseDate
 
       </diagTable>
-      <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
+<!--      <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
          <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_nodaily</dataSource>
+      </dataFile> -->
+      <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_20171221</dataSource>
       </dataFile>
 
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
@@ -14273,7 +14283,7 @@ set nyblocks = $dummy
   </input>
 
   <runtime>
-    <production simTime="500" units="years" >
+    <production simTime="2000" units="years" >
       <segment simTime="1" units="years"/>
       <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x2_O720_production']/node())"/>
     </production> 
@@ -14309,7 +14319,8 @@ set nyblocks = $dummy
       </regression>
   </runtime>
   <postProcess>
-      <xi:include xpointer="xpointer(//freInclude[@name='SPEAR_c96_PostP_Control_nodaily']/postProcess/node())"/>
+<!--      <xi:include xpointer="xpointer(//freInclude[@name='SPEAR_c96_PostP_Control_nodaily']/postProcess/node())"/> -->
+      <xi:include xpointer="xpointer(//freInclude[@name='SPEAR_c96_PostP_Control_20171220']/postProcess/node())"/>
   </postProcess>
 
 </experiment>

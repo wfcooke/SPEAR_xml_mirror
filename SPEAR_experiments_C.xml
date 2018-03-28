@@ -24280,6 +24280,9 @@ Same as 1850_C39 but includes the ITF and Galapagos "reefing" to 10m and updated
 Changes ICE_RELATIVE_SALINITY to 0.17 
 Removes ICE_BULK_SALINITY 
 
+3/18/2018
+sat_vapor_pres error in year 978
+Flipping make_exchange_reproduce to false
   </description>
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
@@ -24288,7 +24291,7 @@ Removes ICE_BULK_SALINITY
       <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_1850climo.nml"/>
       <namelist name="xgrid_nml">
-        make_exchange_reproduce = .true.
+        make_exchange_reproduce = .false.
         interp_method = 'second_order'
       </namelist> 
       <namelist name="icebergs_nml">
