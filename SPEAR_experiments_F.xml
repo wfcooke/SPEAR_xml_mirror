@@ -22001,8 +22001,8 @@ set nyblocks = $dummy
         ensemble_size=5
       </namelist>
       <namelist name="aerosolrad_driver_nml">
-        do_swaerosol_forcing = .true.
-        do_lwaerosol_forcing = .true.
+        do_swaerosol_forcing = .false.
+        do_lwaerosol_forcing = .false.
       </namelist> 
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
@@ -22575,8 +22575,8 @@ set nyblocks = $dummy
         ensemble_size=5
       </namelist>
       <namelist name="aerosolrad_driver_nml">
-        do_swaerosol_forcing = .true.
-        do_lwaerosol_forcing = .true.
+        do_swaerosol_forcing = .false.
+        do_lwaerosol_forcing = .false.
       </namelist> 
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
@@ -23148,8 +23148,8 @@ set nyblocks = $dummy
         ensemble_size=5
       </namelist>
       <namelist name="aerosolrad_driver_nml">
-        do_swaerosol_forcing = .true.
-        do_lwaerosol_forcing = .true.
+        do_swaerosol_forcing = .false.
+        do_lwaerosol_forcing = .false.
       </namelist> 
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
@@ -23721,8 +23721,8 @@ set nyblocks = $dummy
         ensemble_size=5
       </namelist>
       <namelist name="aerosolrad_driver_nml">
-        do_swaerosol_forcing = .true.
-        do_lwaerosol_forcing = .true.
+        do_swaerosol_forcing = .false.
+        do_lwaerosol_forcing = .false.
       </namelist> 
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
@@ -24294,8 +24294,8 @@ set nyblocks = $dummy
         ensemble_size=5
       </namelist>
       <namelist name="aerosolrad_driver_nml">
-        do_swaerosol_forcing = .true.
-        do_lwaerosol_forcing = .true.
+        do_swaerosol_forcing = .false.
+        do_lwaerosol_forcing = .false.
       </namelist> 
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
@@ -24867,8 +24867,8 @@ set nyblocks = $dummy
         ensemble_size=5
       </namelist>
       <namelist name="aerosolrad_driver_nml">
-        do_swaerosol_forcing = .true.
-        do_lwaerosol_forcing = .true.
+        do_swaerosol_forcing = .false.
+        do_lwaerosol_forcing = .false.
       </namelist> 
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
