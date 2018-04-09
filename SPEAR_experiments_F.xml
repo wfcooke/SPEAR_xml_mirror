@@ -1210,7 +1210,7 @@ set domains_stack_size = "3097152"
 
    <freInclude name="resourceparams_A144x2_O144_production">
 	     <resources jobWallclock="16:00:00"
-                   segRuntime="2:40:00" >
+                   segRuntime="4:00:00" >
                <atm ranks="144" threads="2"   layout = "2,12"  io_layout = "1,1" />
 	       <lnd                           layout = "2,12"  io_layout = "1,1" />
 	       <ice                           layout = "72,2"  io_layout = "1,1" />
@@ -21985,7 +21985,7 @@ set nyblocks = $dummy
 <experiment name="SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_01_05" inherit="SPEAR_F_nonsymMOM6_exec">
   <description>
   Ensemble member 1 to 5 of historical run with F50 model settings.
-  Model to start in 1921 and run to 2010 with the intention of eventually extending to 2100.
+  Model to start in 1851 and run to 2010 with the intention of eventually extending to 2100.
   Ensemble initial conditions taken from years 101, 121, 141, 161 and 181 of SPEAR_c96_o1_Control_1850_E50
   Get the land restart files from the initial condition of SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_01.
   
@@ -22008,6 +22008,76 @@ set nyblocks = $dummy
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
       </namelist> 
+      <namelist name="carbon_aerosol_nml">
+      bcff_source = 'gocart_2007',
+        bcff_input_name(1)='anthro',
+        bcff_filename='emissions.bc.0.5x0.5.1849-2017.nc',
+        bcff_time_dependency_type='time_varying',bcff_dataset_entry=$baseDate
+      omff_source = 'gocart_2007',
+        omff_input_name(1)='anthro',
+        omff_filename='emissions.om.0.5x0.5.1849-2017.nc',
+        omff_time_dependency_type='time_varying',omff_dataset_entry=$baseDate
+      omsh_source = 'gocart_2007',
+        omsh_input_name(1)='ship',
+        omsh_filename='emissions.om.0.5x0.5.1849-2017.nc',
+        omsh_time_dependency_type='time_varying',omsh_dataset_entry=$baseDate
+      bcsh_source = 'gocart_2007',
+        bcsh_input_name(1)='ship',
+        bcsh_filename='emissions.bc.0.5x0.5.1849-2017.nc',
+        bcsh_time_dependency_type='time_varying',bcsh_dataset_entry=$baseDate
+      bcav_source = 'do_aircraft'
+        bcav_input_name(1)='fuel',
+        bcav_filename='emissions.aircraft.aero.0.5x0.5.1849-2017.nc',
+        bcav_time_dependency_type='time_varying',bcav_dataset_entry=$baseDate
+      bcbb_source = 'AEROCOM',
+        bcbb_filename='emissions.bc.0.5x0.5.1849-2017.nc',
+        bcbb_input_name(1)='bb_l1'
+        bcbb_input_name(2)='bb_l2'
+        bcbb_input_name(3)='bb_l3'
+        bcbb_input_name(4)='bb_l4'
+        bcbb_input_name(5)='bb_l5'
+        bcbb_input_name(6)='bb_l6'
+        bcbb_time_dependency_type='time_varying',bcbb_dataset_entry=$baseDate
+      ombb_source = 'AEROCOM',
+        ombb_filename='emissions.om.0.5x0.5.1849-2017.nc',
+        ombb_input_name(1)='bb_l1'
+        ombb_input_name(2)='bb_l2'
+        ombb_input_name(3)='bb_l3'
+        ombb_input_name(4)='bb_l4'
+        ombb_input_name(5)='bb_l5'
+        ombb_input_name(6)='bb_l6'
+        ombb_time_dependency_type='time_varying',ombb_dataset_entry=$baseDate
+      omna_source = '',
+      omss_source = 'ODowd'
+        omss_coef = 0.05
+      no_biobur_if_no_pbl = .false.
+      do_biobur_pbl_bug = .false.
+      </namelist>
+      <namelist name="simple_sulfate_nml">
+        gas_conc_filename='gas_conc_3D_am3p9.nc'
+        gas_conc_time_dependency_type='constant'
+        cont_volc_source='do_cont_volc'
+        expl_volc_source='do_expl_volc'
+          aerocom_emission_filename='so2_0.25_volcanoes.nc'
+        aircraft_source='do_aircraft',
+          aircraft_filename='emissions.aircraft.aero.0.5x0.5.1849-2017.nc',
+          aircraft_emission_name(1)='fuel'
+          so2_aircraft_EI=0.001
+          aircraft_time_dependency_type='time_varying',aircraft_dataset_entry=$baseDate
+        anthro_source='do_anthro',
+          anthro_emission_name(1)='so2ff',
+          anthro_emission_name(2)='so4ff',
+          anthro_filename='anthro_so2.1849_2017.nc',
+          anthro_time_dependency_type='time_varying',anthro_dataset_entry=$baseDate
+        biobur_source='do_biobur',
+          biobur_emission_name(1)='so2bb',
+          biobur_emission_name(2)='so4bb',
+          biobur_filename='anthro_so2.1849_2017.nc',
+          biobur_time_dependency_type='time_varying',biobur_dataset_entry=$baseDate
+        cloud_chem_solver="f1p"
+        pH_cloud=4.5
+        no_biobur_if_no_pbl = .false.
+      </namelist>
       <namelist name="icebergs_nml">
         make_calving_reproduce=.TRUE.
         really_debug=.FALSE.
@@ -22315,13 +22385,9 @@ set nyblocks = $dummy
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
-<!--     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F45_spinup/18510101.tar</dataSource>
-       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_c96_o1_Hist_AllForc_IC1851_F45_spinup/18510101.tar</dataSource>
-     </dataFile> -->
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_01_05/SPEAR_c96_o1_Control_1850_E50_IC101_ens01_05.tar</dataSource>
-<!--       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_c96_o1_Hist_AllForc_IC1851_F45_spinup/18510101.tar</dataSource> -->
+       <dataSource site="gfdl">/archive/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_01_05/SPEAR_c96_o1_Control_1850_E50_IC101_ens01_05.tar</dataSource>
      </dataFile>
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
@@ -22558,9 +22624,9 @@ set nyblocks = $dummy
 
 <experiment name="SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_06_10" inherit="SPEAR_F_nonsymMOM6_exec">
   <description>
-  Ensemble member 1 to 5 of historical run with F50 model settings.
-  Model to start in 1921 and run to 2010 with the intention of eventually extending to 2100.
-  Ensemble initial conditions taken from years 101, 121, 141, 161 and 181 of SPEAR_c96_o1_Control_1850_E50
+  Ensemble member 6 to 10 of historical run with F50 model settings.
+  Model to start in 1851 and run to 2010 with the intention of eventually extending to 2100.
+  Ensemble initial conditions taken from years 201, 221, 241, 261 and 281 of SPEAR_c96_o1_Control_1850_E50
   Get the land restart files from the initial condition of SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_01.
   
   </description>
@@ -22578,6 +22644,76 @@ set nyblocks = $dummy
         do_swaerosol_forcing = .false.
         do_lwaerosol_forcing = .false.
       </namelist> 
+      <namelist name="carbon_aerosol_nml">
+      bcff_source = 'gocart_2007',
+        bcff_input_name(1)='anthro',
+        bcff_filename='emissions.bc.0.5x0.5.1849-2017.nc',
+        bcff_time_dependency_type='time_varying',bcff_dataset_entry=$baseDate
+      omff_source = 'gocart_2007',
+        omff_input_name(1)='anthro',
+        omff_filename='emissions.om.0.5x0.5.1849-2017.nc',
+        omff_time_dependency_type='time_varying',omff_dataset_entry=$baseDate
+      omsh_source = 'gocart_2007',
+        omsh_input_name(1)='ship',
+        omsh_filename='emissions.om.0.5x0.5.1849-2017.nc',
+        omsh_time_dependency_type='time_varying',omsh_dataset_entry=$baseDate
+      bcsh_source = 'gocart_2007',
+        bcsh_input_name(1)='ship',
+        bcsh_filename='emissions.bc.0.5x0.5.1849-2017.nc',
+        bcsh_time_dependency_type='time_varying',bcsh_dataset_entry=$baseDate
+      bcav_source = 'do_aircraft'
+        bcav_input_name(1)='fuel',
+        bcav_filename='emissions.aircraft.aero.0.5x0.5.1849-2017.nc',
+        bcav_time_dependency_type='time_varying',bcav_dataset_entry=$baseDate
+      bcbb_source = 'AEROCOM',
+        bcbb_filename='emissions.bc.0.5x0.5.1849-2017.nc',
+        bcbb_input_name(1)='bb_l1'
+        bcbb_input_name(2)='bb_l2'
+        bcbb_input_name(3)='bb_l3'
+        bcbb_input_name(4)='bb_l4'
+        bcbb_input_name(5)='bb_l5'
+        bcbb_input_name(6)='bb_l6'
+        bcbb_time_dependency_type='time_varying',bcbb_dataset_entry=$baseDate
+      ombb_source = 'AEROCOM',
+        ombb_filename='emissions.om.0.5x0.5.1849-2017.nc',
+        ombb_input_name(1)='bb_l1'
+        ombb_input_name(2)='bb_l2'
+        ombb_input_name(3)='bb_l3'
+        ombb_input_name(4)='bb_l4'
+        ombb_input_name(5)='bb_l5'
+        ombb_input_name(6)='bb_l6'
+        ombb_time_dependency_type='time_varying',ombb_dataset_entry=$baseDate
+      omna_source = '',
+      omss_source = 'ODowd'
+        omss_coef = 0.05
+      no_biobur_if_no_pbl = .false.
+      do_biobur_pbl_bug = .false.
+      </namelist>
+      <namelist name="simple_sulfate_nml">
+        gas_conc_filename='gas_conc_3D_am3p9.nc'
+        gas_conc_time_dependency_type='constant'
+        cont_volc_source='do_cont_volc'
+        expl_volc_source='do_expl_volc'
+          aerocom_emission_filename='so2_0.25_volcanoes.nc'
+        aircraft_source='do_aircraft',
+          aircraft_filename='emissions.aircraft.aero.0.5x0.5.1849-2017.nc',
+          aircraft_emission_name(1)='fuel'
+          so2_aircraft_EI=0.001
+          aircraft_time_dependency_type='time_varying',aircraft_dataset_entry=$baseDate
+        anthro_source='do_anthro',
+          anthro_emission_name(1)='so2ff',
+          anthro_emission_name(2)='so4ff',
+          anthro_filename='anthro_so2.1849_2017.nc',
+          anthro_time_dependency_type='time_varying',anthro_dataset_entry=$baseDate
+        biobur_source='do_biobur',
+          biobur_emission_name(1)='so2bb',
+          biobur_emission_name(2)='so4bb',
+          biobur_filename='anthro_so2.1849_2017.nc',
+          biobur_time_dependency_type='time_varying',biobur_dataset_entry=$baseDate
+        cloud_chem_solver="f1p"
+        pH_cloud=4.5
+        no_biobur_if_no_pbl = .false.
+      </namelist>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
@@ -22889,13 +23025,9 @@ set nyblocks = $dummy
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
-<!--     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F45_spinup/18510101.tar</dataSource>
-       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_c96_o1_Hist_AllForc_IC1851_F45_spinup/18510101.tar</dataSource>
-     </dataFile> -->
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_01_05/SPEAR_c96_o1_Control_1850_E50_IC201_ens01_05.tar</dataSource>
-<!--       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_c96_o1_Hist_AllForc_IC1851_F45_spinup/18510101.tar</dataSource> -->
+       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_06_10/SPEAR_c96_o1_Control_1850_E50_IC201_ens01_05.tar</dataSource>
+       <dataSource site="gfdl">/archive/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_06_10/SPEAR_c96_o1_Control_1850_E50_IC201_ens01_05.tar</dataSource>
      </dataFile>
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
@@ -23129,11 +23261,11 @@ set nyblocks = $dummy
 
 
 
-<experiment name="SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_10_15" inherit="SPEAR_F_nonsymMOM6_exec">
+<experiment name="SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_11_15" inherit="SPEAR_F_nonsymMOM6_exec">
   <description>
-  Ensemble member 1 to 5 of historical run with F50 model settings.
-  Model to start in 1921 and run to 2010 with the intention of eventually extending to 2100.
-  Ensemble initial conditions taken from years 101, 121, 141, 161 and 181 of SPEAR_c96_o1_Control_1850_E50
+  Ensemble member 11 to 15 of historical run with F50 model settings.
+  Model to start in 1851 and run to 2010 with the intention of eventually extending to 2100.
+  Ensemble initial conditions taken from years 301, 321, 341, 361 and 381 of SPEAR_c96_o1_Control_1850_E50
   Get the land restart files from the initial condition of SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_01.
   
   </description>
@@ -23151,6 +23283,76 @@ set nyblocks = $dummy
         do_swaerosol_forcing = .false.
         do_lwaerosol_forcing = .false.
       </namelist> 
+      <namelist name="carbon_aerosol_nml">
+      bcff_source = 'gocart_2007',
+        bcff_input_name(1)='anthro',
+        bcff_filename='emissions.bc.0.5x0.5.1849-2017.nc',
+        bcff_time_dependency_type='time_varying',bcff_dataset_entry=$baseDate
+      omff_source = 'gocart_2007',
+        omff_input_name(1)='anthro',
+        omff_filename='emissions.om.0.5x0.5.1849-2017.nc',
+        omff_time_dependency_type='time_varying',omff_dataset_entry=$baseDate
+      omsh_source = 'gocart_2007',
+        omsh_input_name(1)='ship',
+        omsh_filename='emissions.om.0.5x0.5.1849-2017.nc',
+        omsh_time_dependency_type='time_varying',omsh_dataset_entry=$baseDate
+      bcsh_source = 'gocart_2007',
+        bcsh_input_name(1)='ship',
+        bcsh_filename='emissions.bc.0.5x0.5.1849-2017.nc',
+        bcsh_time_dependency_type='time_varying',bcsh_dataset_entry=$baseDate
+      bcav_source = 'do_aircraft'
+        bcav_input_name(1)='fuel',
+        bcav_filename='emissions.aircraft.aero.0.5x0.5.1849-2017.nc',
+        bcav_time_dependency_type='time_varying',bcav_dataset_entry=$baseDate
+      bcbb_source = 'AEROCOM',
+        bcbb_filename='emissions.bc.0.5x0.5.1849-2017.nc',
+        bcbb_input_name(1)='bb_l1'
+        bcbb_input_name(2)='bb_l2'
+        bcbb_input_name(3)='bb_l3'
+        bcbb_input_name(4)='bb_l4'
+        bcbb_input_name(5)='bb_l5'
+        bcbb_input_name(6)='bb_l6'
+        bcbb_time_dependency_type='time_varying',bcbb_dataset_entry=$baseDate
+      ombb_source = 'AEROCOM',
+        ombb_filename='emissions.om.0.5x0.5.1849-2017.nc',
+        ombb_input_name(1)='bb_l1'
+        ombb_input_name(2)='bb_l2'
+        ombb_input_name(3)='bb_l3'
+        ombb_input_name(4)='bb_l4'
+        ombb_input_name(5)='bb_l5'
+        ombb_input_name(6)='bb_l6'
+        ombb_time_dependency_type='time_varying',ombb_dataset_entry=$baseDate
+      omna_source = '',
+      omss_source = 'ODowd'
+        omss_coef = 0.05
+      no_biobur_if_no_pbl = .false.
+      do_biobur_pbl_bug = .false.
+      </namelist>
+      <namelist name="simple_sulfate_nml">
+        gas_conc_filename='gas_conc_3D_am3p9.nc'
+        gas_conc_time_dependency_type='constant'
+        cont_volc_source='do_cont_volc'
+        expl_volc_source='do_expl_volc'
+          aerocom_emission_filename='so2_0.25_volcanoes.nc'
+        aircraft_source='do_aircraft',
+          aircraft_filename='emissions.aircraft.aero.0.5x0.5.1849-2017.nc',
+          aircraft_emission_name(1)='fuel'
+          so2_aircraft_EI=0.001
+          aircraft_time_dependency_type='time_varying',aircraft_dataset_entry=$baseDate
+        anthro_source='do_anthro',
+          anthro_emission_name(1)='so2ff',
+          anthro_emission_name(2)='so4ff',
+          anthro_filename='anthro_so2.1849_2017.nc',
+          anthro_time_dependency_type='time_varying',anthro_dataset_entry=$baseDate
+        biobur_source='do_biobur',
+          biobur_emission_name(1)='so2bb',
+          biobur_emission_name(2)='so4bb',
+          biobur_filename='anthro_so2.1849_2017.nc',
+          biobur_time_dependency_type='time_varying',biobur_dataset_entry=$baseDate
+        cloud_chem_solver="f1p"
+        pH_cloud=4.5
+        no_biobur_if_no_pbl = .false.
+      </namelist>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
@@ -23462,13 +23664,9 @@ set nyblocks = $dummy
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
-<!--     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F45_spinup/18510101.tar</dataSource>
-       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_c96_o1_Hist_AllForc_IC1851_F45_spinup/18510101.tar</dataSource>
-     </dataFile> -->
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_01_05/SPEAR_c96_o1_Control_1850_E50_IC301_ens01_05.tar</dataSource>
-<!--       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_c96_o1_Hist_AllForc_IC1851_F45_spinup/18510101.tar</dataSource> -->
+       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_11_15/SPEAR_c96_o1_Control_1850_E50_IC301_ens01_05.tar</dataSource>
+       <dataSource site="gfdl">/archive/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_11_15/SPEAR_c96_o1_Control_1850_E50_IC301_ens01_05.tar</dataSource>
      </dataFile>
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
@@ -23704,9 +23902,9 @@ set nyblocks = $dummy
 
 <experiment name="SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_16_20" inherit="SPEAR_F_nonsymMOM6_exec">
   <description>
-  Ensemble member 1 to 5 of historical run with F50 model settings.
-  Model to start in 1921 and run to 2010 with the intention of eventually extending to 2100.
-  Ensemble initial conditions taken from years 101, 121, 141, 161 and 181 of SPEAR_c96_o1_Control_1850_E50
+  Ensemble member 16 to 20 of historical run with F50 model settings.
+  Model to start in 1851 and run to 2010 with the intention of eventually extending to 2100.
+  Ensemble initial conditions taken from years 401, 421, 441, 461 and 481 of SPEAR_c96_o1_Control_1850_E50
   Get the land restart files from the initial condition of SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_01.
   
   </description>
@@ -23728,6 +23926,76 @@ set nyblocks = $dummy
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
       </namelist> 
+      <namelist name="carbon_aerosol_nml">
+      bcff_source = 'gocart_2007',
+        bcff_input_name(1)='anthro',
+        bcff_filename='emissions.bc.0.5x0.5.1849-2017.nc',
+        bcff_time_dependency_type='time_varying',bcff_dataset_entry=$baseDate
+      omff_source = 'gocart_2007',
+        omff_input_name(1)='anthro',
+        omff_filename='emissions.om.0.5x0.5.1849-2017.nc',
+        omff_time_dependency_type='time_varying',omff_dataset_entry=$baseDate
+      omsh_source = 'gocart_2007',
+        omsh_input_name(1)='ship',
+        omsh_filename='emissions.om.0.5x0.5.1849-2017.nc',
+        omsh_time_dependency_type='time_varying',omsh_dataset_entry=$baseDate
+      bcsh_source = 'gocart_2007',
+        bcsh_input_name(1)='ship',
+        bcsh_filename='emissions.bc.0.5x0.5.1849-2017.nc',
+        bcsh_time_dependency_type='time_varying',bcsh_dataset_entry=$baseDate
+      bcav_source = 'do_aircraft'
+        bcav_input_name(1)='fuel',
+        bcav_filename='emissions.aircraft.aero.0.5x0.5.1849-2017.nc',
+        bcav_time_dependency_type='time_varying',bcav_dataset_entry=$baseDate
+      bcbb_source = 'AEROCOM',
+        bcbb_filename='emissions.bc.0.5x0.5.1849-2017.nc',
+        bcbb_input_name(1)='bb_l1'
+        bcbb_input_name(2)='bb_l2'
+        bcbb_input_name(3)='bb_l3'
+        bcbb_input_name(4)='bb_l4'
+        bcbb_input_name(5)='bb_l5'
+        bcbb_input_name(6)='bb_l6'
+        bcbb_time_dependency_type='time_varying',bcbb_dataset_entry=$baseDate
+      ombb_source = 'AEROCOM',
+        ombb_filename='emissions.om.0.5x0.5.1849-2017.nc',
+        ombb_input_name(1)='bb_l1'
+        ombb_input_name(2)='bb_l2'
+        ombb_input_name(3)='bb_l3'
+        ombb_input_name(4)='bb_l4'
+        ombb_input_name(5)='bb_l5'
+        ombb_input_name(6)='bb_l6'
+        ombb_time_dependency_type='time_varying',ombb_dataset_entry=$baseDate
+      omna_source = '',
+      omss_source = 'ODowd'
+        omss_coef = 0.05
+      no_biobur_if_no_pbl = .false.
+      do_biobur_pbl_bug = .false.
+      </namelist>
+      <namelist name="simple_sulfate_nml">
+        gas_conc_filename='gas_conc_3D_am3p9.nc'
+        gas_conc_time_dependency_type='constant'
+        cont_volc_source='do_cont_volc'
+        expl_volc_source='do_expl_volc'
+          aerocom_emission_filename='so2_0.25_volcanoes.nc'
+        aircraft_source='do_aircraft',
+          aircraft_filename='emissions.aircraft.aero.0.5x0.5.1849-2017.nc',
+          aircraft_emission_name(1)='fuel'
+          so2_aircraft_EI=0.001
+          aircraft_time_dependency_type='time_varying',aircraft_dataset_entry=$baseDate
+        anthro_source='do_anthro',
+          anthro_emission_name(1)='so2ff',
+          anthro_emission_name(2)='so4ff',
+          anthro_filename='anthro_so2.1849_2017.nc',
+          anthro_time_dependency_type='time_varying',anthro_dataset_entry=$baseDate
+        biobur_source='do_biobur',
+          biobur_emission_name(1)='so2bb',
+          biobur_emission_name(2)='so4bb',
+          biobur_filename='anthro_so2.1849_2017.nc',
+          biobur_time_dependency_type='time_varying',biobur_dataset_entry=$baseDate
+        cloud_chem_solver="f1p"
+        pH_cloud=4.5
+        no_biobur_if_no_pbl = .false.
+      </namelist>
       <namelist name="icebergs_nml">
         make_calving_reproduce=.TRUE.
         really_debug=.FALSE.
@@ -24035,13 +24303,9 @@ set nyblocks = $dummy
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
-<!--     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F45_spinup/18510101.tar</dataSource>
-       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_c96_o1_Hist_AllForc_IC1851_F45_spinup/18510101.tar</dataSource>
-     </dataFile> -->
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_01_05/SPEAR_c96_o1_Control_1850_E50_IC401_ens01_05.tar</dataSource>
-<!--       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_c96_o1_Hist_AllForc_IC1851_F45_spinup/18510101.tar</dataSource> -->
+       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_16_20/SPEAR_c96_o1_Control_1850_E50_IC401_ens01_05.tar</dataSource>
+       <dataSource site="gfdl">/archive/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_16_20/SPEAR_c96_o1_Control_1850_E50_IC401_ens01_05.tar</dataSource>
      </dataFile>
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
@@ -24277,9 +24541,9 @@ set nyblocks = $dummy
 
 <experiment name="SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_21_25" inherit="SPEAR_F_nonsymMOM6_exec">
   <description>
-  Ensemble member 1 to 5 of historical run with F50 model settings.
-  Model to start in 1921 and run to 2010 with the intention of eventually extending to 2100.
-  Ensemble initial conditions taken from years 101, 121, 141, 161 and 181 of SPEAR_c96_o1_Control_1850_E50
+  Ensemble member 21 to 25 of historical run with F50 model settings.
+  Model to start in 1851 and run to 2010 with the intention of eventually extending to 2100.
+  Ensemble initial conditions taken from years 501, 521, 541, 561 and 581 of SPEAR_c96_o1_Control_1850_E50
   Get the land restart files from the initial condition of SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_01.
   
   </description>
@@ -24297,6 +24561,76 @@ set nyblocks = $dummy
         do_swaerosol_forcing = .false.
         do_lwaerosol_forcing = .false.
       </namelist> 
+      <namelist name="carbon_aerosol_nml">
+      bcff_source = 'gocart_2007',
+        bcff_input_name(1)='anthro',
+        bcff_filename='emissions.bc.0.5x0.5.1849-2017.nc',
+        bcff_time_dependency_type='time_varying',bcff_dataset_entry=$baseDate
+      omff_source = 'gocart_2007',
+        omff_input_name(1)='anthro',
+        omff_filename='emissions.om.0.5x0.5.1849-2017.nc',
+        omff_time_dependency_type='time_varying',omff_dataset_entry=$baseDate
+      omsh_source = 'gocart_2007',
+        omsh_input_name(1)='ship',
+        omsh_filename='emissions.om.0.5x0.5.1849-2017.nc',
+        omsh_time_dependency_type='time_varying',omsh_dataset_entry=$baseDate
+      bcsh_source = 'gocart_2007',
+        bcsh_input_name(1)='ship',
+        bcsh_filename='emissions.bc.0.5x0.5.1849-2017.nc',
+        bcsh_time_dependency_type='time_varying',bcsh_dataset_entry=$baseDate
+      bcav_source = 'do_aircraft'
+        bcav_input_name(1)='fuel',
+        bcav_filename='emissions.aircraft.aero.0.5x0.5.1849-2017.nc',
+        bcav_time_dependency_type='time_varying',bcav_dataset_entry=$baseDate
+      bcbb_source = 'AEROCOM',
+        bcbb_filename='emissions.bc.0.5x0.5.1849-2017.nc',
+        bcbb_input_name(1)='bb_l1'
+        bcbb_input_name(2)='bb_l2'
+        bcbb_input_name(3)='bb_l3'
+        bcbb_input_name(4)='bb_l4'
+        bcbb_input_name(5)='bb_l5'
+        bcbb_input_name(6)='bb_l6'
+        bcbb_time_dependency_type='time_varying',bcbb_dataset_entry=$baseDate
+      ombb_source = 'AEROCOM',
+        ombb_filename='emissions.om.0.5x0.5.1849-2017.nc',
+        ombb_input_name(1)='bb_l1'
+        ombb_input_name(2)='bb_l2'
+        ombb_input_name(3)='bb_l3'
+        ombb_input_name(4)='bb_l4'
+        ombb_input_name(5)='bb_l5'
+        ombb_input_name(6)='bb_l6'
+        ombb_time_dependency_type='time_varying',ombb_dataset_entry=$baseDate
+      omna_source = '',
+      omss_source = 'ODowd'
+        omss_coef = 0.05
+      no_biobur_if_no_pbl = .false.
+      do_biobur_pbl_bug = .false.
+      </namelist>
+      <namelist name="simple_sulfate_nml">
+        gas_conc_filename='gas_conc_3D_am3p9.nc'
+        gas_conc_time_dependency_type='constant'
+        cont_volc_source='do_cont_volc'
+        expl_volc_source='do_expl_volc'
+          aerocom_emission_filename='so2_0.25_volcanoes.nc'
+        aircraft_source='do_aircraft',
+          aircraft_filename='emissions.aircraft.aero.0.5x0.5.1849-2017.nc',
+          aircraft_emission_name(1)='fuel'
+          so2_aircraft_EI=0.001
+          aircraft_time_dependency_type='time_varying',aircraft_dataset_entry=$baseDate
+        anthro_source='do_anthro',
+          anthro_emission_name(1)='so2ff',
+          anthro_emission_name(2)='so4ff',
+          anthro_filename='anthro_so2.1849_2017.nc',
+          anthro_time_dependency_type='time_varying',anthro_dataset_entry=$baseDate
+        biobur_source='do_biobur',
+          biobur_emission_name(1)='so2bb',
+          biobur_emission_name(2)='so4bb',
+          biobur_filename='anthro_so2.1849_2017.nc',
+          biobur_time_dependency_type='time_varying',biobur_dataset_entry=$baseDate
+        cloud_chem_solver="f1p"
+        pH_cloud=4.5
+        no_biobur_if_no_pbl = .false.
+      </namelist>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
@@ -24608,13 +24942,9 @@ set nyblocks = $dummy
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
-<!--     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F45_spinup/18510101.tar</dataSource>
-       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_c96_o1_Hist_AllForc_IC1851_F45_spinup/18510101.tar</dataSource>
-     </dataFile> -->
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_01_05/SPEAR_c96_o1_Control_1850_E50_IC501_ens01_05.tar</dataSource>
-<!--       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_c96_o1_Hist_AllForc_IC1851_F45_spinup/18510101.tar</dataSource> -->
+       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_21_25/SPEAR_c96_o1_Control_1850_E50_IC501_ens01_05.tar</dataSource>
+       <dataSource site="gfdl">/archive/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_21_25/SPEAR_c96_o1_Control_1850_E50_IC501_ens01_05.tar</dataSource>
      </dataFile>
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
@@ -24850,9 +25180,9 @@ set nyblocks = $dummy
 
 <experiment name="SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_26_30" inherit="SPEAR_F_nonsymMOM6_exec">
   <description>
-  Ensemble member 1 to 5 of historical run with F50 model settings.
-  Model to start in 1921 and run to 2010 with the intention of eventually extending to 2100.
-  Ensemble initial conditions taken from years 101, 121, 141, 161 and 181 of SPEAR_c96_o1_Control_1850_E50
+  Ensemble member 26 to 30 of historical run with F50 model settings.
+  Model to start in 1851 and run to 2010 with the intention of eventually extending to 2100.
+  Ensemble initial conditions taken from years 601, 621, 641, 661 and 681 of SPEAR_c96_o1_Control_1850_E50
   Get the land restart files from the initial condition of SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_01.
   
   </description>
@@ -24869,7 +25199,77 @@ set nyblocks = $dummy
       <namelist name="aerosolrad_driver_nml">
         do_swaerosol_forcing = .false.
         do_lwaerosol_forcing = .false.
-      </namelist> 
+      </namelist>
+      <namelist name="carbon_aerosol_nml">
+      bcff_source = 'gocart_2007',
+        bcff_input_name(1)='anthro',
+        bcff_filename='emissions.bc.0.5x0.5.1849-2017.nc',
+        bcff_time_dependency_type='time_varying',bcff_dataset_entry=$baseDate
+      omff_source = 'gocart_2007',
+        omff_input_name(1)='anthro',
+        omff_filename='emissions.om.0.5x0.5.1849-2017.nc',
+        omff_time_dependency_type='time_varying',omff_dataset_entry=$baseDate
+      omsh_source = 'gocart_2007',
+        omsh_input_name(1)='ship',
+        omsh_filename='emissions.om.0.5x0.5.1849-2017.nc',
+        omsh_time_dependency_type='time_varying',omsh_dataset_entry=$baseDate
+      bcsh_source = 'gocart_2007',
+        bcsh_input_name(1)='ship',
+        bcsh_filename='emissions.bc.0.5x0.5.1849-2017.nc',
+        bcsh_time_dependency_type='time_varying',bcsh_dataset_entry=$baseDate
+      bcav_source = 'do_aircraft'
+        bcav_input_name(1)='fuel',
+        bcav_filename='emissions.aircraft.aero.0.5x0.5.1849-2017.nc',
+        bcav_time_dependency_type='time_varying',bcav_dataset_entry=$baseDate
+      bcbb_source = 'AEROCOM',
+        bcbb_filename='emissions.bc.0.5x0.5.1849-2017.nc',
+        bcbb_input_name(1)='bb_l1'
+        bcbb_input_name(2)='bb_l2'
+        bcbb_input_name(3)='bb_l3'
+        bcbb_input_name(4)='bb_l4'
+        bcbb_input_name(5)='bb_l5'
+        bcbb_input_name(6)='bb_l6'
+        bcbb_time_dependency_type='time_varying',bcbb_dataset_entry=$baseDate
+      ombb_source = 'AEROCOM',
+        ombb_filename='emissions.om.0.5x0.5.1849-2017.nc',
+        ombb_input_name(1)='bb_l1'
+        ombb_input_name(2)='bb_l2'
+        ombb_input_name(3)='bb_l3'
+        ombb_input_name(4)='bb_l4'
+        ombb_input_name(5)='bb_l5'
+        ombb_input_name(6)='bb_l6'
+        ombb_time_dependency_type='time_varying',ombb_dataset_entry=$baseDate
+      omna_source = '',
+      omss_source = 'ODowd'
+        omss_coef = 0.05
+      no_biobur_if_no_pbl = .false.
+      do_biobur_pbl_bug = .false.
+      </namelist>
+      <namelist name="simple_sulfate_nml">
+        gas_conc_filename='gas_conc_3D_am3p9.nc'
+        gas_conc_time_dependency_type='constant'
+        cont_volc_source='do_cont_volc'
+        expl_volc_source='do_expl_volc'
+          aerocom_emission_filename='so2_0.25_volcanoes.nc'
+        aircraft_source='do_aircraft',
+          aircraft_filename='emissions.aircraft.aero.0.5x0.5.1849-2017.nc',
+          aircraft_emission_name(1)='fuel'
+          so2_aircraft_EI=0.001
+          aircraft_time_dependency_type='time_varying',aircraft_dataset_entry=$baseDate
+        anthro_source='do_anthro',
+          anthro_emission_name(1)='so2ff',
+          anthro_emission_name(2)='so4ff',
+          anthro_filename='anthro_so2.1849_2017.nc',
+          anthro_time_dependency_type='time_varying',anthro_dataset_entry=$baseDate
+        biobur_source='do_biobur',
+          biobur_emission_name(1)='so2bb',
+          biobur_emission_name(2)='so4bb',
+          biobur_filename='anthro_so2.1849_2017.nc',
+          biobur_time_dependency_type='time_varying',biobur_dataset_entry=$baseDate
+        cloud_chem_solver="f1p"
+        pH_cloud=4.5
+        no_biobur_if_no_pbl = .false.
+      </namelist>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
@@ -25181,13 +25581,9 @@ set nyblocks = $dummy
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
-<!--     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F45_spinup/18510101.tar</dataSource>
-       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_c96_o1_Hist_AllForc_IC1851_F45_spinup/18510101.tar</dataSource>
-     </dataFile> -->
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_01_05/SPEAR_c96_o1_Control_1850_E50_IC601_ens01_05.tar</dataSource>
-<!--       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_c96_o1_Hist_AllForc_IC1851_F45_spinup/18510101.tar</dataSource> -->
+       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_26_30/SPEAR_c96_o1_Control_1850_E50_IC601_ens01_05.tar</dataSource>
+       <dataSource site="gfdl">/archive/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_F50_ens_26_30/SPEAR_c96_o1_Control_1850_E50_IC601_ens01_05.tar</dataSource> 
      </dataFile>
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
