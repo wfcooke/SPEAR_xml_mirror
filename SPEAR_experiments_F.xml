@@ -6638,17 +6638,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_033016a.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_033016a.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_033016a.nc</dataSource>
       </dataFile>
          <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -7140,17 +7144,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_033016a.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_033016a.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_033016a.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -7632,17 +7640,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_033016a.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_033016a.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_033016a.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -8118,17 +8130,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_033016a.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_033016a.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_033016a.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -8641,17 +8657,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_033016a.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_033016a.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_033016a.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -9163,17 +9183,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_033016a.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_033016a.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_033016a.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -9687,17 +9711,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_033016a.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_033016a.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_033016a.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -10211,17 +10239,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_033016a.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_033016a.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_033016a.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -10734,7 +10766,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180118</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180118</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180118</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -10744,17 +10777,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/Idamp.nc">
          /lustre/f1/unswept/Matthew.Harrison/MOM6_datasets/FLOR2/Idamp.nc
@@ -11344,7 +11381,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -11354,17 +11392,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/Idamp.nc">
          /lustre/f1/unswept/Matthew.Harrison/MOM6_datasets/FLOR2/Idamp.nc
@@ -12335,7 +12377,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -12345,17 +12388,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/Idamp.nc">
          /lustre/f1/unswept/Matthew.Harrison/MOM6_datasets/FLOR2/Idamp.nc
@@ -13376,7 +13423,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -13386,17 +13434,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -13927,7 +13979,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -13937,17 +13990,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -14472,7 +14529,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -14482,17 +14540,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -15013,7 +15075,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -15023,17 +15086,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -15562,7 +15629,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -15572,17 +15640,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -16081,7 +16153,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -16091,17 +16164,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -16619,7 +16696,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -16629,17 +16707,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -17228,7 +17310,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -17238,17 +17321,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -17746,7 +17833,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -17756,14 +17844,17 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -18264,7 +18355,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -18274,17 +18366,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/FLUX_ADJUSTMENT_FILES/prcme_adj_10_cm_per_year_south_60s_zero_over_land.nc</dataSource>
@@ -18823,7 +18919,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -18833,17 +18930,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -19362,7 +19463,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -19372,17 +19474,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -19945,7 +20051,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -19955,17 +20062,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
          <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -20495,7 +20606,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -20505,17 +20617,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -21108,7 +21224,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -21118,17 +21235,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -21721,7 +21842,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -21731,17 +21853,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -22334,7 +22460,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -22344,17 +22471,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -22947,7 +23078,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -22957,17 +23089,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -23560,7 +23696,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -23570,17 +23707,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -24173,7 +24314,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -24183,17 +24325,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -24690,7 +24836,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -24700,17 +24847,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -25221,7 +25372,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -25231,17 +25383,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_1e4_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -25776,7 +25932,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -25786,17 +25943,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -26329,7 +26490,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -26339,17 +26501,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -26881,7 +27047,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -26891,17 +27058,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -27429,7 +27600,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -27439,17 +27611,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -28013,7 +28189,8 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
       <!-- overwrite  Channels file -->
       <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
       </dataFile>
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
@@ -28023,17 +28200,21 @@ $baseDate
       <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/">
-         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
