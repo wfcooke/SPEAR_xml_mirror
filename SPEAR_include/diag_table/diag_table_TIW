@@ -1,0 +1,2 @@
+"ocean_daily",           24,   "hours",  1, "days", "time",
+"ocean_model", "SST", "sst",     "ocean_daily",  "all", "mean", "none",2
