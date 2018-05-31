@@ -47,11 +47,11 @@ if ( ! $?FREVERSION ) set FREVERSION = fre/bronx-12
 set fremodule = $FREVERSION
 set freanalysismodule = fre-analysis/test
 
-set src_dir=$includeDir
+set src_dir=/home/wfc/SPEAR/SPEAR_include
 # The following variables are set by frepp, but frepp is not called yet at refineDiag stage of FRE workflow,
 #  so we need to explicitly set them here
 set descriptor = $name
-set out_dir = $includeDir                  #Niki: How can we set this to frepp analysisdir /nbhome
+set out_dir = /home/wfc/SPEAR/SPEAR_include                  #Niki: How can we set this to frepp analysisdir /nbhome
 set yr1 = $oname
 set yr2 = $oname
 set databegyr = $oname

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import argparse
-import m6toolbox
+#import m6toolbox
 import netCDF4 as nc
 import numpy as np
 import os
