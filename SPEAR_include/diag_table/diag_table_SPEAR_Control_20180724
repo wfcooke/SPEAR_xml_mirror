@@ -20,7 +20,7 @@
 "ocean_month",            1, "months", 1, "days", "time"
 "ocean_z_month",          1, "months", 1, "days", "time"
 "ocean_month_rho2",       1, "months", 1, "days", "time"
-"ocean_annual",          12, "months", 1, "days", "time"
+"ocean_annual",        12, "months", 1, "days", "time"
 "ocean_z_annual",        12, "months", 1, "days", "time"
 #"ocean_annual_rho2",     12, "months", 1, "days", "time"
 
@@ -257,7 +257,6 @@
 "flux",      "land_mask",          "land_mask",      "grid_spec",   "all", .false.,  "none", 2
 "dynamics",  "zsurf",              "zsurf",          "grid_spec",   "all", .false.,  "none", 2
 
-
 "cloudrad",  "high_cld_amt",       "high_cld_amt",   "atmos_month", "all", .true.,  "none", 2
 "cloudrad",  "low_cld_amt",        "low_cld_amt",    "atmos_month", "all", .true.,  "none", 2
 "cloudrad",  "mid_cld_amt",        "mid_cld_amt",    "atmos_month", "all", .true.,  "none", 2
@@ -395,69 +394,88 @@
 #=======================
 #
 # land one-level month-average output
-"land_sg", "cell_area",  "cell_area",  "land_static_sg", "all", .false., "none", 2
+"land_sg",   "cell_area",  "cell_area",  "land_static_sg", "all", .false., "none", 2
 
-"land",    "area_lake",  "lake_area",  "land_static", "all", .false., "none", 2
-"land",    "area_land",  "land_area",  "land_static", "all", .false., "none", 2
-"land",    "area_soil",  "soil_area",  "land_static", "all", .false., "none", 2
-"land",    "cell_area",  "cell_area",  "land_static", "all", .false., "none", 2
-"land",    "frac_soil",  "frac_soil",  "land_static", "all", .false., "none", 2
-"land",    "geolat_t",   "geolat_t",   "land_static", "all", .false., "none", 1
-"land",    "geolon_t",   "geolon_t",   "land_static", "all", .false., "none", 1
-"land",    "land_frac",  "land_frac",  "land_static", "all", .false., "none", 2
+"land",      "area_lake",  "lake_area",  "land_static", "all", .false., "none", 2
+"land",      "area_land",  "land_area",  "land_static", "all", .false., "none", 2
+"land",      "area_soil",  "soil_area",  "land_static", "all", .false., "none", 2
+"land",      "cell_area",  "cell_area",  "land_static", "all", .false., "none", 2
+"land",      "frac_soil",  "frac_soil",  "land_static", "all", .false., "none", 2
+"land",      "geolat_t",   "geolat_t",   "land_static", "all", .false., "none", 1
+"land",      "geolon_t",   "geolon_t",   "land_static", "all", .false., "none", 1
+"land",      "land_frac",  "land_frac",  "land_static", "all", .false., "none", 2
+
+"land",      "swdn_dif",   "swdn_dif",   "land_month",  "all", .true., "none", 2 
+"land",      "swdn_dir",   "swdn_dir",   "land_month",  "all", .true., "none", 2
+"land",      "swup_dif",   "swup_dif",   "land_month",  "all", .true., "none", 2
+"land",      "swup_dir",   "swup_dir",   "land_month",  "all", .true., "none", 2
+"flux_land", "t_ref",     "t_ref",      "land_month",  "all", .true., "none", 2
+"land",      "FWS",        "FWS",        "land_month",  "all", .true., "none", 2
+"land",      "LWS",        "LWS",        "land_month",  "all", .true., "none", 2
+"land",      "water_lake", "water_lake", "land_month",  "all", .true., "none", 2
+"land",      "water_soil", "water_soil", "land_month",  "all", .true., "none", 2
+"river",     "FWSr",       "FWSr",       "river_month", "all", .true., "none", 2
+"river",     "LWSr",       "LWSr",       "river_month", "all", .true., "none", 2
 
 "cmor_land", "tws",      "tws",        "land_month",  "all", .true., "none", 2
-"land",    "area",       "area",       "land_month",  "all", .true., "none", 2
-"land",    "area_glac",  "glac_area",  "land_month",  "all", .true., "none", 2
-"land",    "evap",       "evap_land",  "land_month",  "all", .true., "none", 2
-"land",    "flw",        "flw",        "land_month",  "all", .true., "none", 2
-"land",    "frac_glac",  "frac_glac",  "land_month",  "all", .true., "none", 2
-"land",    "frac_lake",  "frac_lake",  "land_month",  "all", .true., "none", 2
-"land",    "frunf",      "frunf",      "land_month",  "all", .true., "none", 2
-"land",    "fsw",        "fsw",        "land_month",  "all", .true., "none", 2
-"land",    "hevap",      "hevap",      "land_month",  "all", .true., "none", 2
-"land",    "hprec",      "hprec",      "land_month",  "all", .true., "none", 2
-"land",    "levapg",     "levapg",     "land_month",  "all", .true., "none", 2
-"land",    "levapv",     "levapv",     "land_month",  "all", .true., "none", 2
-"land",    "lwdn",       "lwdn",       "land_month",  "all", .true., "none", 2
-"land",    "melt",       "melt",       "land_month",  "all", .true., "none", 2
-"land",    "precip",     "precip",     "land_month",  "all", .true., "none", 2
-"land",    "runf",       "runf",       "land_month",  "all", .true., "none", 2
-"land",    "sens",       "sens",       "land_month",  "all", .true., "none", 2
-"land",    "snow",       "snow",       "land_month",  "all", .true., "none", 2
-"land",    "transp",     "transp",     "land_month",  "all", .true., "none", 2
-"soil",    "soil_ice",   "soil_ice",   "land_month",  "all", .true., "none", 2
-"soil",    "soil_liq",   "soil_liq",   "land_month",  "all", .true., "none", 2
-"vegn",    "LAI",        "LAI",        "land_month",  "all", .true., "none", 2
-"vegn",    "npp",        "npp",        "land_month",  "all", .true., "none", 2
-"land",    "area_ntrl",  "ntrl_area",  "land_month",  "all", .true., "none", 2
-"land",    "area_crop",  "crop_area",  "land_month",  "all", .true., "none", 2
-"land",    "area_past",  "past_area",  "land_month",  "all", .true., "none", 2
-"vegn",    "bwood_ntrl", "ntrl_bwood", "land_month",  "all", .true., "none", 2
-"vegn",    "bwood_crop", "crop_bwood", "land_month",  "all", .true., "none", 2
-"vegn",    "bwood_past", "past_bwood", "land_month",  "all", .true., "none", 2
-"vegn",    "height"      "height",     "land_month",  "all", .true., "none", 2
-"land",    "meltg_glac", "meltg_glac", "land_month",  "all", .true.,  "none", 2
-"soil",    "soil_T",     "soil_T",     "land_month",  "all", .true., "none", 2
-#"lake",    "lake_T",     "lake_T",     "land_month",  "all", .true., "none", 2
-"lake",    "lake_T",     "lake_T",     "land_month",  "all",  .true., "-1  -1 -1  -1 0 0.1", 2
-#"lake",    "lake_wl",    "lake_wl",    "land_month",  "all", .true., "none", 2
-#"lake",    "lake_ws",    "lake_ws",    "land_month",  "all", .true., "none", 2
-"land", "LWSg_lake", "LWSg_lake", "land_month",  "all", .true., "none", 2
-"land", "FWSg_lake", "FWSg_lake", "land_month",  "all", .true., "none", 2
-"land", "LWSs_lake", "LWSs_lake", "land_month",  "all", .true., "none", 2
+"land",      "area",       "area",       "land_month",  "all", .true., "none", 2
+"land",      "area_glac",  "glac_area",  "land_month",  "all", .true., "none", 2
+"land",      "evap",       "evap_land",  "land_month",  "all", .true., "none", 2
+"land",      "flw",        "flw",        "land_month",  "all", .true., "none", 2
+"land",      "frac_glac",  "frac_glac",  "land_month",  "all", .true., "none", 2
+"land",      "frac_lake",  "frac_lake",  "land_month",  "all", .true., "none", 2
+"land",      "frunf",      "frunf",      "land_month",  "all", .true., "none", 2
+"land",      "fsw",        "fsw",        "land_month",  "all", .true., "none", 2
+"land",      "hevap",      "hevap",      "land_month",  "all", .true., "none", 2
+"land",      "hprec",      "hprec",      "land_month",  "all", .true., "none", 2
+"land",      "levapg",     "levapg",     "land_month",  "all", .true., "none", 2
+"land",      "levapv",     "levapv",     "land_month",  "all", .true., "none", 2
+"land",      "lwdn",       "lwdn",       "land_month",  "all", .true., "none", 2
+"land",      "melt",       "melt",       "land_month",  "all", .true., "none", 2
+"land",      "precip",     "precip",     "land_month",  "all", .true., "none", 2
+"land",      "runf",       "runf",       "land_month",  "all", .true., "none", 2
+"land",      "sens",       "sens",       "land_month",  "all", .true., "none", 2
+"land",      "snow",       "snow",       "land_month",  "all", .true., "none", 2
+"land",      "transp",     "transp",     "land_month",  "all", .true., "none", 2
+"soil",      "soil_ice",   "soil_ice",   "land_month",  "all", .true., "none", 2
+"soil",      "soil_liq",   "soil_liq",   "land_month",  "all", .true., "none", 2
+"vegn",      "LAI",        "LAI",        "land_month",  "all", .true., "none", 2
+"vegn",      "npp",        "npp",        "land_month",  "all", .true., "none", 2
+"land",      "area_ntrl",  "ntrl_area",  "land_month",  "all", .true., "none", 2
+"land",      "area_crop",  "crop_area",  "land_month",  "all", .true., "none", 2
+"land",      "area_past",  "past_area",  "land_month",  "all", .true., "none", 2
+"land",      "area_scnd",  "scnd_area",  "land_month",  "all", .true., "none", 2
+"land",      "frac_ntrl",  "frac_ntrl",  "land_month",  "all", .true., "none", 2
+"land",      "frac_crop",  "frac_crop",  "land_month",  "all", .true., "none", 2
+"land",      "frac_past",  "frac_past",  "land_month",  "all", .true., "none", 2
+"land",      "frac_scnd",  "frac_scnd",  "land_month",  "all", .true., "none", 2
+#"vegn",      "bwood",      "bwood",      "land_month",  "all", .true., "none", 2
+"vegn",      "bwood_ntrl", "ntrl_bwood", "land_month",  "all", .true., "none", 2
+"vegn",      "bwood_crop", "crop_bwood", "land_month",  "all", .true., "none", 2
+"vegn",      "bwood_past", "past_bwood", "land_month",  "all", .true., "none", 2
+"vegn",      "bwood_scnd", "scnd_bwood", "land_month",  "all", .true., "none", 2
+"vegn",      "height"      "height",     "land_month",  "all", .true., "none", 2
+"land",      "meltg_glac", "meltg_glac", "land_month",  "all", .true.,  "none", 2
+"soil",      "soil_T",     "soil_T",     "land_month",  "all", .true., "none", 2
+#"lake",      "lake_T",     "lake_T",     "land_month",  "all", .true., "none", 2
+"lake",      "lake_T",     "lake_T",     "land_month",  "all",  .true., "-1  -1 -1  -1 0 0.1", 2
+#"lake",      "lake_wl",    "lake_wl",    "land_month",  "all", .true., "none", 2
+#"lake",      "lake_ws",    "lake_ws",    "land_month",  "all", .true., "none", 2
+"land",      "LWSg_lake",  "LWSg_lake",  "land_month",  "all", .true., "none", 2
+"land",      "FWSg_lake",  "FWSg_lake",  "land_month",  "all", .true., "none", 2
+"land",      "LWSs_lake",  "LWSs_lake",  "land_month",  "all", .true., "none", 2
+"land",      "T_snow_subs","T_snow_subs", "land_month",  "all", .true., "none", 2
 
-"land",    "LWS",        "LWS",        "land_month_inst","all", .false., "none", 2
-"land",    "FWS",        "FWS",        "land_month_inst","all", .false., "none", 2
-"land",    "HS",         "HS",         "land_month_inst","all", .false., "none", 2
+"land",      "LWS",        "LWS",        "land_month_inst","all", .false., "none", 2
+"land",      "FWS",        "FWS",        "land_month_inst","all", .false., "none", 2
+"land",      "HS",         "HS",         "land_month_inst","all", .false., "none", 2
 #
 #=======================
 # LAND MODEL DIAGNOSTICS
 #=======================
-"river",   "rv_basin",   "rv_basin",   "river_static", "all", .false., "none", 2
+"river",    "rv_basin",   "rv_basin",   "river_static", "all", .false., "none", 2
 "river",    "area_land",  "land_area",  "river_static", "all", .false., "none", 2
 "river",    "cell_area",  "cell_area",  "river_static", "all", .false., "none", 2
-
 
 "river",    "LWSr",       "LWSr",       "river_month_inst","all", .false., "none", 2
 "river",    "FWSr",       "FWSr",       "river_month_inst","all", .false., "none", 2
