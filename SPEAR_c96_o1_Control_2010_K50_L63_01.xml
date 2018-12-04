@@ -282,9 +282,9 @@ configuration.
       <compiler type="intel" version="16.0.3.210" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="AWG_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/cjg/archive/mdt"/>
-      <property name="LWH_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/cmip6/datasets"/>
+      <property name="AWG_ARCHIVE_ROOT"  value="/lustre/f1/pdata/gfdl_M/cjg/archive/mdt"/>
+      <property name="LWH_ARCHIVE_ROOT"  value="$CDATA/gfdl_M"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$CDATA/cmip6/datasets"/>
       <property name="NCORE_PER_NODE"      value="32"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
       <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
@@ -322,24 +322,17 @@ configuration.
       <compiler type="intel" version="16.0.3.210" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="AWG_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/cjg/archive/mdt"/>
-      <property name="LWH_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/cmip6/datasets"/>
+      <property name="AWG_ARCHIVE_ROOT"  value="/lustre/f1/pdata/gfdl_M/cjg/archive/mdt"/>
+      <property name="LWH_ARCHIVE_ROOT"  value="$CDATA/gfdl_M"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$CDATA/cmip6/datasets"/>
       <property name="NCORE_PER_NODE"      value="36"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
       <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
  
       <project>gfdl_sd</project>
 
-      <!--
       <directory stem="$(FRE_STEM)">
         <scripts>$CTMP/unswept/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
-        <include>$HOME/SPEAR/SPEAR_include</include>
-      </directory>
-      -->
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
         <include>$(xmlDir)/SPEAR_include</include>
         <!--
         <include>$HOME/SPEAR/SPEAR_include</include>
@@ -366,9 +359,9 @@ configuration.
       <compiler type="gnu" version="7.2.0" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="AWG_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/cjg/archive/mdt"/>
-      <property name="LWH_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/cmip6/datasets"/>
+      <property name="AWG_ARCHIVE_ROOT"  value="/lustre/f1/pdata/gfdl_M/cjg/archive/mdt"/>
+      <property name="LWH_ARCHIVE_ROOT"  value="$CDATA/gfdl_M"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$CDATA/cmip6/datasets"/>
       <property name="NCORE_PER_NODE"      value="36"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
       <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
@@ -392,9 +385,9 @@ setenv MAIN_PROGRAM coupler/coupler_main.o
       <compiler type="cce" version="8.5.0" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="AWG_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/cjg/archive/mdt"/>
-      <property name="LWH_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/cmip6/datasets"/>
+      <property name="AWG_ARCHIVE_ROOT"  value="/lustre/f1/pdata/gfdl_M/cjg/archive/mdt"/>
+      <property name="LWH_ARCHIVE_ROOT"  value="$CDATA/gfdl_M"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$CDATA/cmip6/datasets"/>
       <property name="NCORE_PER_NODE"      value="36"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
       <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
@@ -415,9 +408,9 @@ setenv MAIN_PROGRAM coupler/coupler_main.o
       <compiler type="pgi" version="16.5.0" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="AWG_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/cjg/archive/mdt"/>
-      <property name="LWH_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/cmip6/datasets"/>
+      <property name="AWG_ARCHIVE_ROOT"  value="/lustre/f1/pdata/gfdl_M/cjg/archive/mdt"/>
+      <property name="LWH_ARCHIVE_ROOT"  value="$CDATA/gfdl_M"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$CDATA/cmip6/datasets"/>
       <property name="NCORE_PER_NODE"      value="36"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
       <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
