@@ -3,7 +3,7 @@
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 08/17/10 version. added statistics (just rms) 
 # 04/01/11 version v3. running on gaea output, analysis nodes
-
+# VERSION ON GAEA
 set argv = (`getopt y:b:c:d:o:p:x:w:P:s:vh $*`)
 
 while ("$argv[1]" != "--")
@@ -342,8 +342,15 @@ while ( $mo <= $maxmon )
   if ( ( $pp == ".true." &&  $Nmons == 1 && $mmdd == 1201 ) || ( $pp == ".true." &&  $Nmons == 12 ) ) then 
     echo " frepp -P ${FRE_PLATFORM} -T ${FRE_TARGET} -c split -s  -x $xmlfile  -u ensemble -d $outdir -t $begindate $name"
     frepp -P ${FRE_PLATFORM} -T ${FRE_TARGET} -c split -s  -x $xmlfile  -u ensemble -d $outdir -t $begindate $name
+    if ($status != 0) then 
+      Mail -s"'Problem with frepp for ensemble average for timeslice '$begindate' of '$name'" $USER  << EOF
+Command issued was  
+frepp -P ${FRE_PLATFORM} -T ${FRE_TARGET} -c split -s  -x $xmlfile  -u ensemble -d $outdir -t $begindate $name
+Check your stdout for more details.
+EOF
+      goto err
+    endif
   endif
-
   ####### each member
   if ( $pp_ens_member == .false. ) then
     echo "Not processing ensemble members"
@@ -378,8 +385,15 @@ while ( $mo <= $maxmon )
        if ( ( $pp == ".true." &&  $Nmons == 1 && $mmdd == 1201 ) || ( $pp == ".true." &&  $Nmons == 12 ) ) then
          echo "frepp -P ${FRE_PLATFORM} -T ${FRE_TARGET} -c split -s -x "$xmlfile"  -u $eee  -d "$outdir:h/$eee" -t $begindate $name "
          frepp -P ${FRE_PLATFORM} -T ${FRE_TARGET} -c split -s -x "$xmlfile"  -u $eee  -d "$outdir:h/$eee" -t $begindate $name
+         if ( $status !=0 ) then
+           Mail -s"'Problem with frepp for ensemble member '$eee' for timeslice '$begindate' of '$name" $USER  << EOF
+Command issued was
+frepp -P ${FRE_PLATFORM} -T ${FRE_TARGET} -c split -s -x "$xmlfile"  -u $eee  -d "$outdir:h/$eee" -t $begindate $name
+Check your stdout for more details.
+EOF
+           goto err
+         endif
        endif
-
     end # foreach ensNum
 
   endif #if ( $pp_ens_member

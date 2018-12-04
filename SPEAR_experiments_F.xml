@@ -5384,17 +5384,26 @@ cd ..
       <component type="ocean_z"   start="$(PP_START_YEAR)" sourceGrid="ocean-tripolar">
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month"> </timeSeries>
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)" source="ocean_z_month"> </timeSeries>
+        <!--
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_z_month">
+        -->
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_B)">
         <!--
         <analysis switch="$(ANALYSIS_SWITCH)" cumulative="no" script="$(NB_ROOT)/mom6/ice_ocean_SIS/OM4_025/ocn_monthly.frepp"/>
         -->
         </timeSeries>
         <timeAverage source="monthly" interval="$(CHUNK_LENGTH_A)" />
         <timeAverage source="monthly" interval="$(CHUNK_LENGTH_B)" />
+        <!--
+        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_C)" />
+        -->
         <timeAverage source="monthly" interval="$(CHUNK_LENGTH_C)" />
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month"> </timeSeries>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_B)" source="ocean_z_month"> </timeSeries>
+        <!--
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_z_month">
+        -->
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_B)">
         <!--
         <analysis switch="$(ANALYSIS_SWITCH)" cumulative="no" script="$(NB_ROOT)/mom6/ice_ocean_SIS/OM4_025/ocn_monthly.frepp"/>
         -->
@@ -16963,6 +16972,9 @@ flipped  make_exchange_reproduce to .false
 6/8/2018
 sat vapor pres 1006/1/21+ 
 flipped  make_exchange_reproduce to .true
+
+8/31/2018
+Extended job to 3000 years.
   </description>
   <executable file="/lustre/f1/unswept/William.Cooke/SPEAR_experiments_F/SPEAR_F_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_F_nonsymMOM6_exec.x"/>
   <input>
@@ -17458,7 +17470,7 @@ set nyblocks = $dummy
       <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A576x4_O180_production_c192']/node())"/>
     </production>
     -->
-    <production simTime="2000" units="years" >
+    <production simTime="3000" units="years" >
       <segment simTime="1" units="years"/>
       <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x4_O252_production_c192']/node())"/>
     </production> 
@@ -31045,6 +31057,10 @@ Did this by modifying
 /lustre/f1/unswept/William.Cooke/SPEAR_experiments_F/SPEAR_c96_o1_Control_1850_F50c/ncrc3.intel16-repro-openmp/state/run/reload_commands
 currentSeg = 280
 initCond = /lustre/f1/William.Cooke/SPEAR_experiments_F/SPEAR_c96_o1_Control_1850_F50c/ncrc3.intel16-repro-openmp/restart/03300101.tar
+
+9/1/2018
+sat vapor pres error after 539/4/21
+xgrid_nml: make_exchange_reproduce = .false.
   </description>
   <executable file="/lustre/f1/unswept/William.Cooke/SPEAR_experiments_F/SPEAR_F_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_F_nonsymMOM6_exec.x"/>
   <input>
@@ -31054,7 +31070,7 @@ initCond = /lustre/f1/William.Cooke/SPEAR_experiments_F/SPEAR_c96_o1_Control_185
       <namelist file="$(includeDir)/nml/am4p0_c96L33_F50.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_1850climo_F50.nml"/>
       <namelist name="xgrid_nml">
-        make_exchange_reproduce = .true.
+        make_exchange_reproduce = .false.
         interp_method = 'second_order'
       </namelist> 
       <namelist name="atmos_model_nml">

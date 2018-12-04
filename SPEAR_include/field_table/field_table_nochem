@@ -1,0 +1,42 @@
+# specific humidity for moist runs
+
+ "TRACER", "atmos_mod", "sphum" 
+           "longname", "specific humidity"
+           "units", "kg/kg" 
+	   "profile_type", "fixed", "surface_value=3.e-6" /
+
+# prognotic cloud scheme tracers
+
+  "TRACER", "atmos_mod", "liq_wat"
+            "longname", "cloud liquid specific humidity"
+            "units", "kg/kg" /
+  "TRACER", "atmos_mod", "ice_wat"
+            "longname", "cloud ice water specific humidity"
+            "units", "kg/kg" /
+  "TRACER", "atmos_mod", "cld_amt"
+            "longname", "cloud fraction"
+            "units", "none" /
+
+  "TRACER", "atmos_mod", "liq_drp"
+            "longname", "cloud droplet"
+            "units", "none" /
+
+# required by LM3
+
+  "TRACER", "land_mod", "sphum"
+           "longname",     "specific humidity"
+            "units",        "kg/kg" /
+
+  "TRACER", "land_mod",     "co2"
+           "longname",     "carbon dioxide"
+           "units",        "kg/kg" /
+
+
+# optional: add radon as tracer
+"tracer","atmos_mod","radon"
+"longname","radon-222"
+"units","VMR*1E21"
+"profile_type","fixed","surface_value=0.0E+00"
+"convection","all"
+/
+
