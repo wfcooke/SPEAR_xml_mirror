@@ -76,7 +76,7 @@ SPEAR_c192_omlp25_Control_2010_A01
    <property name="CHUNK_LENGTH_A" value="10yr"/>
    <property name="CHUNK_LENGTH_B" value="100yr"/>
    <property name="CHUNK_LENGTH_C" value="160yr"/>
-   <property name="CHUNK_LENGTH_A_c384" value="1yr"/>
+   <property name="CHUNK_LENGTH_A_c384" value="10yr"/>
    <property name="CHUNK_LENGTH_B_c384" value="100yr"/>
    <property name="CHUNK_LENGTH_C_c384" value="1000yr"/>
    <property name="ANA_START" value="1"/>
@@ -5462,11 +5462,11 @@ cd ..
         <timeAverage source="annual"  interval="$(CHUNK_LENGTH_B)"/>
         <timeAverage source="annual"  interval="$(CHUNK_LENGTH_C)"/>
       </component>
-      <component type="land_daily"  start="$(PP_START_YEAR)"  source="land_daily" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="768,1536">
+      <component type="land_daily"  start="$(PP_START_YEAR)"  source="land_daily" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="720,1152">
 	<timeSeries freq="daily" source="land_daily" chunkLength="$(CHUNK_LENGTH_A_c384)"/>
 	<timeSeries freq="daily" source="land_daily" chunkLength="$(CHUNK_LENGTH_B)"/>
       </component>
-      <component type="land"  start="$(PP_START_YEAR)"  source="land_month" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="768,1536">
+      <component type="land"  start="$(PP_START_YEAR)"  source="land_month" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="720,1152">
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A_c384)"/>
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A_c384)"/>
@@ -5477,16 +5477,16 @@ cd ..
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_B)" />
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
       </component>
-      <component type="land_inst_month"   start="$(PP_START_YEAR)" source="land_month_inst" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="768,1536">
+      <component type="land_inst_month"   start="$(PP_START_YEAR)" source="land_month_inst" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="720,1152">
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A_c384)"/>
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)"/>
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_B)"/>
       </component>
-      <component type="river_daily"  start="$(PP_START_YEAR)"  source="river_daily" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="768,1536">
+      <component type="river_daily"  start="$(PP_START_YEAR)"  source="river_daily" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="720,1152">
 	<timeSeries freq="daily" source="river_daily" chunkLength="$(CHUNK_LENGTH_A_c384)"/>
 	<timeSeries freq="daily" source="river_daily" chunkLength="$(CHUNK_LENGTH_B)"/>
       </component>
-      <component type="river"  start="$(PP_START_YEAR)"  source="river_month" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="768,1536">
+      <component type="river"  start="$(PP_START_YEAR)"  source="river_month" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="720,1152">
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A_c384)"/>
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A_c384)"/>
@@ -5497,7 +5497,7 @@ cd ..
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_B)" />
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
       </component>
-      <component type="river_inst_month"   start="$(PP_START_YEAR)" source="river_month_inst" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="768,1536">
+      <component type="river_inst_month"   start="$(PP_START_YEAR)" source="river_month_inst" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="720,1152">
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A_c384)"/>
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)"/>
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_B)"/>
@@ -11026,10 +11026,12 @@ set nyblocks = $dummy
 <description>
 Rerun of 1 member of ens_01_05 to check input data for scenario run.
 </description>
-<!--
+
+
 <executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_O/SPEAR_O_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_O_nonsymMOM6_exec.x"/>
--->
+<!--
 <executable file="/lustre/f1/unswept/William.Cooke/SPEAR_experiments_O_f1/SPEAR_O_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_O_nonsymMOM6_exec.x"/>
+-->
   <input>
       <namelist name="ensemble_nml">
         ensemble_size=1
@@ -11045,6 +11047,7 @@ Rerun of 1 member of ens_01_05 to check input data for scenario run.
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override ENERGYSAVEDAYS = 0.0001
 #override TOPO_EDITS_FILE = "topo_edits_011818.nc"
 #override CHANNEL_LIST_FILE = MOM_channels_SPEAR
 NUM_DIAG_COORDS = 2             ! default = 1
@@ -11073,6 +11076,7 @@ EOF
 touch $work/INPUT/SIS_override
 
 cat > $work/INPUT/SIS_override << EOF
+#override ICE_STATS_INTERVAL = 0.0001
 #override CP_SEAWATER = 3992.
 #override CP_BRINE = 3992.
 #override ICE_BULK_SALINITY = 0.0
@@ -11110,16 +11114,17 @@ SIS_LAYOUT_EOF
 
 cd $work/INPUT
 
-#if ( $currentSeg == 1 ) then
+if ( $currentSeg == 1 ) then
 #     rm -f coupler.res
-#endif
+rm -f MOM.res.nc ice_model.res.nc icebergs.res.nc
+endif
 cd $work
 
 #------------------------------------------
 ## Find out whether to restart.
 # MOM6 restart switch
-   set restart_flag = 'r'
-   set sis_restart_flag = 'r'
+   set restart_flag = 'n'
+   set sis_restart_flag = 'n'
 cd $work
 
 ## Run the model
@@ -11545,8 +11550,8 @@ set nyblocks = $dummy
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_ens_01_05/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_IC101_ens01_05.tar</dataSource>
-       <dataSource site="gfdl">/archive/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_ens_01_05/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_IC101_ens01_05.tar</dataSource>
+       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_SSP_Scenario/ens_01_05/20110101.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_ens_01_05/restart/20110101.tar</dataSource>
      </dataFile>
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
