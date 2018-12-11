@@ -2833,8 +2833,9 @@ cd ..
 
 <experiment name="SPEAR_c96_o1_Scen_SSP585_AllForc_IC2011_K50_ens_16_20" inherit="SPEAR_K_nonsymMOM6_exec">
   <description>
-  First 5 members of SSP585 scenario starting from 2011.
+  Members 16-20 of SSP585 scenario starting from 2011.
   </description>
+  <executable file="/lustre/f1/unswept/William.Cooke/SPEAR_experiments_K/SPEAR_K_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_K_nonsymMOM6_exec.x"/>
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
