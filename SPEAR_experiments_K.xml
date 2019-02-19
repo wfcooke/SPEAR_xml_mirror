@@ -65,17 +65,17 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="PROD_SIMTIME"     value="40"/>   <!--simulation length in years-->
 
   <property name="PP_START_YEAR"   value="0001"/>
-  <property name="PP_START_YEAR_HIST"   value="1851"/>
+  <property name="PP_START_YEAR_HIST"   value="1981"/>
 
   <property name="PP_AMIP_CHUNK" value="5yr"/>
   <property name="PP_AMIP_START_YEAR"  value="1981"/>
   <property name="ANA_AMIP_START" value="1981"/>
-  <property name="ANA_AMIP_END"   value="2011"/>
+  <property name="ANA_AMIP_END"   value="2010"/>
   <property name="ANA_AMIP_LEN"   value="30yr"/>
 
    <property name="CHUNK_LENGTH_A" value="10yr"/>
    <property name="CHUNK_LENGTH_B" value="100yr"/>
-   <property name="CHUNK_LENGTH_C" value="160yr"/>
+   <property name="CHUNK_LENGTH_C" value="163yr"/>
    <property name="CHUNK_LENGTH_A_c384" value="10yr"/>
    <property name="CHUNK_LENGTH_B_c384" value="100yr"/>
    <property name="CHUNK_LENGTH_C_c384" value="1000yr"/>
@@ -11550,8 +11550,8 @@ set nyblocks = $dummy
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_SSP_Scenario/ens_01_05/20110101.tar</dataSource>
-       <dataSource site="gfdl">/archive/wfc/SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_ens_01_05/restart/20110101.tar</dataSource>
+       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_ens_01_05/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_IC101_ens01_05.tar</dataSource>
+       <dataSource site="gfdl">/archive/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_ens_01_05/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_IC101_ens01_05.tar</dataSource>
      </dataFile>
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
@@ -23633,7 +23633,10 @@ set nyblocks = $dummy
       </regression>
       <regression name="basic_prodsettings">
         <run days="8" >
+      <!--
       <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
+      -->
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x2_O72']/node())"/>
         </run>
       </regression>
       <regression name="spinup_prodsettings">
@@ -24167,7 +24170,10 @@ set nyblocks = $dummy
       </regression>
       <regression name="basic_prodsettings">
         <run days="8" >
+      <!--
       <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
+      -->
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x2_O72']/node())"/>
         </run>
       </regression>
       <regression name="spinup_prodsettings">
@@ -24701,7 +24707,7 @@ set nyblocks = $dummy
     </csh>
   </input>
   <runtime>
-    <production simTime="100" units="years" >
+    <production simTime="300" units="years" >
       <segment simTime="1" units="years"/>
       <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x4_O72_production_c384']/node())"/>
     </production> 
@@ -24722,7 +24728,10 @@ set nyblocks = $dummy
       </regression>
       <regression name="basic_prodsettings">
         <run days="8" >
+      <!--
       <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
+      -->
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x2_O72']/node())"/>
         </run>
       </regression>
       <regression name="spinup_prodsettings">
