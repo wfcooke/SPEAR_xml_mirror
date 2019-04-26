@@ -53,7 +53,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
 
   <property name="FRE_STEM" value="SPEAR_experiments_E" /> 
-  <property name="FRE_VERSION" value="bronx-12" />
+  <property name="FRE_VERSION" value="bronx-13" />
   <property name="FRE_NCTOOLS" value="fre-nctools/tikal" />
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
@@ -112,9 +112,6 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!--========================================-->
   <!--Do not change the rest of the properties-->
   <!--========================================-->
-
-   <property name="MIZ_ARCHIVE_ROOT_GAEA" value="$CPERM/Ming.Zhao/archive/mdt"/>
-   <property name="MIZ_ARCHIVE_ROOT_GFDL" value="/archive/miz/mdt/"/>
 
 <!--
 GFDL FAIR USE POLICY
@@ -275,9 +272,14 @@ configuration.
 
      <property name="MY_ROOT"          value="$(rootDir)"/>
      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML -g -traceback"/>
-     <property name="AWG_ARCHIVE_ROOT"  value="/lustre/f1/pdata/gfdl_M/cjg/archive/mdt/"/>
-     <property name="LWH_ARCHIVE_ROOT"  value="$CDATA/gfdl_M"/>
-     <property name="MIZ_ARCHIVE_ROOT"  value="$(MIZ_ARCHIVE_ROOT_GAEA)"/>
+      <!--
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f1/unswept/William.Cooke"/>
+      -->
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <!--
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f1/unswept/David.Paynter"/>
+      -->
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
 
      <property name="NCORE_PER_NODE"      value="32"/>
 
@@ -314,10 +316,9 @@ configuration.
       <property name="NB_ROOT"      value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
 
       <property name="F2003_FLAGS"   value="-DINTERNAL_FILE_NML"/>
-      <property name="AWG_ARCHIVE_ROOT"  value="/archive/cjg/mdt"/>
-      <property name="LWH_ARCHIVE_ROOT"  value="/archive"/>
+      <property name="WFC_ARCHIVE_ROOT"  value="/archive"/>
+      <property name="DJP_ARCHIVE_ROOT"  value="/archive"/>
       <property name="CMIP6_ARCHIVE_ROOT"   value="/archive/oar.gfdl.cmip6/datasets"/>
-      <property name="MIZ_ARCHIVE_ROOT"  value="$(MIZ_ARCHIVE_ROOT_GFDL)"/>
       <property name="NCORE_PER_NODE"      value="1"/>
       <property name="platform_gs"         value="$(PLATFORM_GS_GFDL)"/>
 
@@ -347,9 +348,16 @@ configuration.
 
       <property name="MY_ROOT"          value="$(rootDir)"/>
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="AWG_ARCHIVE_ROOT"  value="/lustre/f1/pdata/gfdl_M/cjg/archive/mdt/"/>
-      <property name="LWH_ARCHIVE_ROOT"  value="$CDATA/gfdl_M"/>
-      <property name="MIZ_ARCHIVE_ROOT"  value="$(MIZ_ARCHIVE_ROOT_GAEA)"/>
+      <!--
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f1/unswept/William.Cooke"/>
+      -->
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <!--
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f1/unswept/David.Paynter"/>
+      -->
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
+      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
       <property name="NCORE_PER_NODE"      value="32"/>
 
      <property name="PDATA_ROOT" value="${CDATA}" />
@@ -373,7 +381,10 @@ configuration.
       <compiler type="intel" version="16.0.3.210" />
       <project>gfdl_sd</project>
       <directory stem="$(FRE_STEM)">
+        <!--
         <scripts>$CTMP/unswept/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        -->
+        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
         <include>$(xmlDir)/SPEAR_include</include>
 <!--        <include>$HOME/SPEAR/SPEAR_include</include>-->
       </directory>
@@ -381,9 +392,17 @@ configuration.
       <property name="MY_ROOT"          value="$(rootDir)"/>
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="AWG_ARCHIVE_ROOT"  value="/lustre/f1/pdata/gfdl_M/cjg/archive/mdt"/>
-      <property name="LWH_ARCHIVE_ROOT"  value="$CDATA/gfdl_M"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$CDATA/cmip6/datasets"/>
-      <property name="MIZ_ARCHIVE_ROOT"  value="$(MIZ_ARCHIVE_ROOT_GAEA)"/>
+      <!--
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f1/unswept/William.Cooke"/>
+      -->
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <!--
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f1/unswept/David.Paynter"/>
+      -->
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
       <property name="NCORE_PER_NODE"      value="36"/>
 
      <property name="PDATA_ROOT" value="${CDATA}" />
@@ -529,7 +548,7 @@ Experiment to build executable. See git log for source code provenance.
           else if ("${platform_domain}" =~ *"ccs.ornl.gov"* ) then
             ln -s /lustre/atlas/proj-shared/cli061/pdata/gfdl_O/datasets/ .datasets
           else
-            ln -s /lustre/f1/pdata/gfdl_O/datasets/ .datasets
+            ln -s /lustre/f2/pdata/gfdl/gfdl_O/datasets/ .datasets
           endif
           popd 	
  
@@ -630,42 +649,63 @@ Experiment to build executable. See git log for source code provenance.
   <freInclude name="common_LM4">
     <input>
       <dataFile label="input" target="INPUT/soil_type.nc" chksum="" size="" timestamp="">
+         <!--
          <dataSource platform="$(platform)">$CDATA/gfdl_G/Krista.A.Dunne/mod_input_files/any_grid/soil_type_hwsd_5minute.nc</dataSource>
+         -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/common_LM4/soil_type_hwsd_5minute.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/Huan.Guo/awg/input/lm3/biodata.nc</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/common_LM4/biodata.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/Huan.Guo/awg/input/lm3/cover_type.nc</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/common_LM4/cover_type.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/Huan.Guo/awg/input/lm3/geohydrology.nc</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/common_LM4/geohydrology.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/Huan.Guo/awg/input/lm3/geohydrology_table_2a2n.nc</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/common_LM4/geohydrology_table_2a2n.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/Huan.Guo/awg/input/lm3/ground_type.nc</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/common_LM4/ground_type.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/Huan.Guo/awg/input/lm3/landuse.nc</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/common_LM4/landuse.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/Huan.Guo/awg/input/lm3/soil_brdf.nc</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/common_LM4/soil_brdf.nc</dataSource>
       </dataFile>
     </input>
   </freInclude>
 
  <freInclude name="c96_LM4_SPEAR">
     <input>
-<!--      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(MIZ_ARCHIVE_ROOT)/awgmiz/19810101.static_veg.lm3p2.remapped_to_AM2OM2_c96.v20150513.tar</dataSource>
-      </dataFile> -->
-<!--      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(MIZ_ARCHIVE_ROOT)/awgmiz/AM4OM2_c96_hydrography.tar</dataSource>
-      </dataFile>-->
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/Huan.Guo/INPUT/drag/c96_topo_rough_land.nc.tar</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/c96_LM4/c96_topo_rough_land.nc.tar</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -673,12 +713,15 @@ Experiment to build executable. See git log for source code provenance.
  <freInclude name="c192_LM4_SPEAR">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C192_OM360x320.080417/SPEAR_c192_hydrography_with_gage.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C192_OM360x320.080417/SPEAR_c192_hydrography_with_gage.tar</dataSource>
         <dataSource site="gfdl">/archive/wfc/gold/datasets/LOAR4/C192.OM360x320.080417/LOAR4_extended_c192_hydrography.tar</dataSource> 
       </dataFile>
 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+       <!--
        <dataSource platform="$(platform)">$CPERM/Huan.Guo/INPUT/drag/c192_topo_rough_land.nc.tar</dataSource>
+       -->
+       <dataSource platform="$(platform)">/lustre/f2/pdata//gfdl/gfdl_M/Huan.Guo/INPUT/drag/c192_topo_rough_land.nc.tar</dataSource>
      </dataFile> 
     </input>
   </freInclude>
@@ -687,21 +730,36 @@ Experiment to build executable. See git log for source code provenance.
   <freInclude name="common_cmip6">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/Huan.Guo/awg/input/cmip6/cmip6_GHG_ODS_conc_2016.tar</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/cmip6_GHG_ODS_conc_2016.tar</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/chemlbf" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/Vaishali.Naik/input/cmip6_forcing_dataset/chemlbf/chemlbf_CMIP6_merge_RCP45</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/chemlbf_CMIP6_merge_RCP45</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/o3.climatology.nc" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/Huan.Guo/awg/input/litechem/mmro3_CMIP6_184901-201512.nc</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/mmro3_CMIP6_184901-201512.nc</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$(LWH_ARCHIVE_ROOT)/cm3/ipcc_ar5/input/2000/emissions.isoprene.1x1.2000.nc</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.isoprene.1x1.2000.nc</dataSource>
       </dataFile>
        <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$(LWH_ARCHIVE_ROOT)/cm3/ipcc_ar5/input/2000/emissions.terpenes.1x1.2000.nc</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.terpenes.1x1.2000.nc</dataSource>
       </dataFile>
    </input>
   </freInclude>
@@ -710,19 +768,19 @@ Experiment to build executable. See git log for source code provenance.
   <freInclude name="Volcano_Solar_TimeSeries_cmip6">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano/extsw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/extsw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano/omgsw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/omgsw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano/asmsw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/asmsw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano/extlw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/extlw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Solar/lean_solar_spectral_data.dat</dataSource>
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Solar/lean_solar_spectral_data.dat</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -730,19 +788,19 @@ Experiment to build executable. See git log for source code provenance.
   <freInclude name="Volcano_Solar_TimeSeries_cmip6_V2">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano_V2/extsw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano_V2/extsw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano_V2/omgsw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano_V2/omgsw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano_V2/asmsw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano_V2/asmsw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano_V2/extlw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano_V2/extlw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Solar/lean_solar_spectral_data.dat</dataSource>
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Solar/lean_solar_spectral_data.dat</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -750,19 +808,19 @@ Experiment to build executable. See git log for source code provenance.
   <freInclude name="Volcano_Solar_2010_cmip6">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano/AVG_2010/extsw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/AVG_2010/extsw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano/AVG_2010/omgsw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/AVG_2010/omgsw_data.nc</dataSource>
       </dataFile>
         <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-      <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano/AVG_2010/asmsw_data.nc</dataSource>
+      <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/AVG_2010/asmsw_data.nc</dataSource>
       </dataFile>
         <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-      <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano/AVG_2010/extlw_data.nc</dataSource>
+      <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/AVG_2010/extlw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Solar/AVG_2010/lean_solar_spectral_data.dat</dataSource>
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Solar/AVG_2010/lean_solar_spectral_data.dat</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -770,19 +828,19 @@ Experiment to build executable. See git log for source code provenance.
   <freInclude name="Volcano_Solar_2010_cmip6_v2">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano_V2/AVG_2010/extsw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano_V2/AVG_2010/extsw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano_V2/AVG_2010/omgsw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano_V2/AVG_2010/omgsw_data.nc</dataSource>
       </dataFile>
         <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-      <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano_V2/AVG_2010/asmsw_data.nc</dataSource>
+      <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano_V2/AVG_2010/asmsw_data.nc</dataSource>
       </dataFile>
         <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-      <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano_V2/AVG_2010/extlw_data.nc</dataSource>
+      <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano_V2/AVG_2010/extlw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Solar/AVG_2010/lean_solar_spectral_data.dat</dataSource>
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Solar/AVG_2010/lean_solar_spectral_data.dat</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -790,19 +848,34 @@ Experiment to build executable. See git log for source code provenance.
   <freInclude name="Volcano_Solar_1850_cmip6">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano/AVG_1850/extsw_data.nc</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/AVG_1850/extsw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano/AVG_1850/omgsw_data.nc</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/AVG_1850/omgsw_data.nc</dataSource>
       </dataFile>
         <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+      <!--
       <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano/AVG_1850/asmsw_data.nc</dataSource>
+      -->
+      <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/AVG_1850/asmsw_data.nc</dataSource>
       </dataFile>
         <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+      <!--
       <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Volcano/AVG_1850/extlw_data.nc</dataSource>
+      -->
+      <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/AVG_1850/extlw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/CMIP6_INPUT/Solar/AVG_1850/lean_solar_spectral_data.dat</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Solar/AVG_1850/lean_solar_spectral_data.dat</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -841,13 +914,22 @@ Experiment to build executable. See git log for source code provenance.
   <freInclude name="emissions_cmip6_v20161213">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$CPERM/Vaishali.Naik/input/cmip6_forcing_dataset/emissions/v2016-12-13/1849-2016/emissions.0.5x0.5.1849-2016.tar</dataSource>
+        <!--
+        <dataSource platform="$(platform)">/lustre/f1/unswept/Vaishali.Naik/input/cmip6_forcing_dataset/emissions/v2016-12-13/1849-2016/emissions.0.5x0.5.1849-2016.tar</dataSource>
+        -->
+        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_M/Vaishali.Naik/input/cmip6_forcing_dataset/emissions/v2016-12-13/1849_2016/emissions.0.5x0.5.1849-2016.tar</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/anthro_so2.1849_2016.nc" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/Vaishali.Naik/input/cmip6_forcing_dataset/emissions/v2016-12-13/fast_chemistry/emissions.simple.so2.0.5x0.5.1849-2016.nc</dataSource>
+        -->
+        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_M/Vaishali.Naik/input/cmip6_forcing_dataset/emissions/v2016-12-13/fast_chemistry/emissions.simple.so2.0.5x0.5.1849-2016.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/co2_data.nc" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/Huan.Guo/awg/input/cmip6/co2_data_2016.nc</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/CO2/co2_historical_3D_0to2016.nc</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -856,15 +938,10 @@ Experiment to build executable. See git log for source code provenance.
   <freInclude name="L32_gas_conc">
     <input>
       <dataFile label="input" target="INPUT/gas_conc_3D_am3p9.nc" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$(AWG_ARCHIVE_ROOT)/liteChem/input/aerosol/gas_conc_3D32L_am3p9.nc</dataSource>
-      </dataFile>
-    </input>
-  </freInclude>
-
-  <freInclude name="c96_grid">
-    <input>
-      <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(platform_gs)/c96_OM4_025_grid_No_mg_drag_v20160808.tar</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/L32_gas_conc/gas_conc_3D32L_am3p9.nc</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -2098,7 +2175,7 @@ endif
   <freInclude name="SPEAR_c96_grid">
     <input>
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.112816/mosaic.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.112816/mosaic.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/mosaic.tar</dataSource> 
       </dataFile>
     </input>
@@ -2565,7 +2642,10 @@ endif
        <dataSource platform="$(platform)">$(MOM6_EXAMPLES)/ice_ocean_SIS2/OM4_025/INPUT/vgrid_75_2m.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+          <!--
           <dataSource site="ncrc">/lustre/f1/unswept/Matthew.Harrison/MOM6_datasets/FLOR2/diag_vgrid.nc</dataSource>
+          -->
+          <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/MOM6_datasets/FLOR2/diag_vgrid.nc</dataSource>
           <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/FLOR2/diag_vgrid.nc</dataSource>
       </dataFile>
 
@@ -2573,10 +2653,16 @@ endif
        <dataSource platform="$(platform)">$(MOM6_EXAMPLES)/ice_ocean_SIS2/OM4_025/INPUT/WOA05_pottemp_salt.nc </dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource site="ncrc">/lustre/f1/unswept/Matthew.Harrison/MOM6_datasets/FLOR2/edits_012016.nc</dataSource>
+        -->
+        <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/MOM6_datasets/FLOR2/edits_012016.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource site="ncrc">/lustre/f1/unswept/Matthew.Harrison/MOM6_datasets/FLOR2/edits_013016a.nc</dataSource>
+        -->
+        <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/MOM6_datasets/FLOR2/edits_013016a.nc</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -2631,35 +2717,8 @@ endif
 
 
 
-  <freInclude name="c96L33_initCond_Newtopo">
-    <input>
-      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/Ming.Zhao/archive/mdt/awg/input/ic/AM4/awg_C96L33_LM3_OM4_025_grid_lm4p1_topo_v20170309.tar</dataSource>
-      </dataFile>
-    </input>
-  </freInclude>
-
 
    <!--AMIP configurations-->
-<!--   <property name="domainparams_A216x1"
-	     value="
-	       coupler_nml:do_ocean=.false.;coupler_nml:ocean_npes=0;
-               coupler_nml:atmos_npes=216;coupler_nml:atmos_nthreads=1;
-               flux_exchange_nml:nblocks=1;
-               atmos_model_nml:nxblocks=1;atmos_model_nml:nyblocks=1;
-               fv_core_nml:layout=3,12;fv_core_nml:io_layout=1,4;
-	       land_model_nml:layout=3,12;land_model_nml:io_layout=1,4;
-	       ice_model_nml:layout=72,3;ice_model_nml:io_layout=1,3" />
-   <property name="domainparams_A216x2"
-	     value="
-	       coupler_nml:do_ocean=.false.;coupler_nml:ocean_npes=0;
-               coupler_nml:atmos_npes=216;coupler_nml:atmos_nthreads=2;
-               flux_exchange_nml:nblocks=2;
-               fv_core_nml:layout=3,12;fv_core_nml:io_layout=1,4;
-               atmos_model_nml:nxblocks=1;atmos_model_nml:nyblocks=8;
-	       land_model_nml:layout=3,12;land_model_nml:io_layout=1,4;
-	       ice_model_nml:layout=72,3;ice_model_nml:io_layout=1,3" />
--->
    <property name="domainparams_A216x1"
 	     value="
 	       coupler_nml:do_ocean=.false.;
@@ -2769,22 +2828,40 @@ endif
  <freInclude name="common_AM4_v20170208">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/David.Paynter/sea_esf_CM4_V6_AUG2015.cpio</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/common_AM4/sea_esf_CM4_V6_AUG2015.cpio</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_W/Ming.Zhao/archive/mdt/awg/input/aerosol_inputs/aerosol_inputs_newdroplet2_v20170208.tar</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/common_AM4/aerosol_inputs_newdroplet2_v20170208.tar</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$(LWH_ARCHIVE_ROOT)/cm3/ipcc_ar5/input/common/tropchem_dec2015.cpio</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/common_AM4/tropchem_dec2015.cpio</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/Fabien.Paulot/archive/depvel/depvel_gc_am3_tran.nc</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/common_AM4/depvel_gc_am3_tran.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$(AWG_ARCHIVE_ROOT)/liteChem/input/emissions/so2_0.25_volcanoes.nc</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/common_AM4/so2_0.25_volcanoes.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/AM4_201510" chksum="" size="" timestamp="">
+        <!--
         <dataSource platform="$(platform)">$CDATA/gfdl_M/Fabien.Paulot/archive/rad/am4_optical_table_20151029.dat</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/common_AM4/am4_optical_table_20151029.dat</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -3306,7 +3383,7 @@ cd ..
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_B)"/>
 
 
-        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_C)">
+        <timeAverage source="monthly" interval="1000000yr"><!-- This is getting 1000 years of history file for some reason so commenting out. $(CHUNK_LENGTH_C)">-->
           <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/bw/stub/bw_atmos_av_mon.csh"/>
           <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/bw/stub/bw_cru_precip.csh"/>
           <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/bw/stub/bw_atmos_tauu_atl_pac.csh"/>
@@ -3328,7 +3405,7 @@ cd ..
         </timeAverage>
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)"/>
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_B)"/>
-        <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)">
+        <timeAverage source="annual" interval="1000000yr"><!-- This is getting 1000 years of history file for some reason so commenting out. $(CHUNK_LENGTH_C)"> -->
           <analysis switch="$(ANALYSIS_SWITCH)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_av_annual/column/frepp.atw_atmos_av_annual_column.csh -s solo"/>
         </timeAverage>
 
@@ -5432,11 +5509,17 @@ cd ..
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <!--
        <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
+       -->
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+       <!--
        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       -->
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -5449,18 +5532,18 @@ $baseDate
       </dataFile>
       
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.112816/mosaic_noriver_data.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.112816/mosaic_noriver_data.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/mosaic_noriver_data.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.112816/LOAR4_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.112816/LOAR4_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/LOAR4_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -5485,16 +5568,16 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
@@ -5959,11 +6042,11 @@ NEW: f_iso_warm = 0.92, 0.68
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -5976,18 +6059,18 @@ $baseDate
       </dataFile>
       
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.112816/mosaic_noriver_data.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.112816/mosaic_noriver_data.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.112816/LOAR4_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.112816/LOAR4_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/LOAR4_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -6012,16 +6095,16 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
@@ -6473,11 +6556,11 @@ NEW: f_iso_warm = 0.92, 0.73
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -6490,18 +6573,18 @@ $baseDate
       </dataFile>
       
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.112816/mosaic_noriver_data.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.112816/mosaic_noriver_data.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.112816/LOAR4_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.112816/LOAR4_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/LOAR4_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -6526,16 +6609,16 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
@@ -6979,11 +7062,11 @@ NEW: f_iso_warm = 0.73, 0.43
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -6996,18 +7079,18 @@ $baseDate
       </dataFile>
       
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.112816/mosaic_noriver_data.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.112816/mosaic_noriver_data.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.112816/LOAR4_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.112816/LOAR4_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/LOAR4_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -7032,16 +7115,16 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
@@ -7522,11 +7605,11 @@ f_geo_warm_on_glacier = 0.00, 0.00
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
+       <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -7539,18 +7622,18 @@ $baseDate
       </dataFile>
 
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -7575,16 +7658,16 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
@@ -8064,12 +8147,10 @@ f_geo_warm_on_glacier = 0.00, 0.00
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-<!--       <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
-       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>-->
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.2010.remapped.v20171217.tar</dataSource>
+       <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.2010.remapped.v20171217.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -8082,18 +8163,18 @@ $baseDate
       </dataFile>
 
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -8118,16 +8199,16 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
@@ -8609,11 +8690,11 @@ f_geo_warm_on_glacier = 0.00, 0.00
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
+       <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -8626,18 +8707,18 @@ $baseDate
       </dataFile>
 
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -8662,16 +8743,16 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
@@ -9153,12 +9234,10 @@ f_geo_warm_on_glacier = 0.00, 0.00
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-<!--       <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
-       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>-->
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.2010.remapped.v20171217.tar</dataSource>
+       <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.2010.remapped.v20171217.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -9171,18 +9250,18 @@ $baseDate
       </dataFile>
 
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -9207,16 +9286,16 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
@@ -9705,13 +9784,11 @@ NEW_SPONGES = True
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-<!--       <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>
-       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/SPEAR_A01_initCond1850.tar</dataSource>-->
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
+       <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -9729,18 +9806,18 @@ $baseDate
 </diagTable>
 
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -9769,31 +9846,33 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
          /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
       </dataFile>
 
+      <!--
       <dataFile label="input" target="INPUT/Idamp.nc">
          /lustre/f1/unswept/Matthew.Harrison/MOM6_datasets/FLOR2/Idamp.nc
       </dataFile>
+      -->
+      <dataFile label="input" target="INPUT/Idamp.nc">
+         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/ECDA_v3.2_REMAP/Idamp.nc</dataSource>
+      </dataFile>
       <dataFile label="input" target="INPUT/daily_thetao.nc">
-<!-- /lustre/f1/unswept/William.Cooke/ECDA_v3.2_REMAP/1988.ocean_daily.nc -->
-<!-- /lustre/f1/unswept/William.Cooke/ECDA_v3.2_REMAP/1990.ocean_5day.interp.ens_01.nc -->
- /lustre/f1/unswept/William.Cooke/ECDA_v3.2_REMAP/1988.ocean_5day.ongrid.ens_01.nc 
-
- </dataFile>
+         /lustre/f2/dev/gfdl/William.Cooke/ECDA_v3.2_REMAP/1988.ocean_5day.ongrid.ens_01.nc
+      </dataFile>
          <csh type="always"><![CDATA[
          
 ######BEGIN MOM6 and SIS2 layout setup################
@@ -10314,14 +10393,13 @@ Use Year 11 restart from SPEAR_c96_o1_Control_1850_C44 case in order to get in t
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-<!--       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
-       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource> -->
-<!--       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/SPEAR_c96_o1_Control_1850_C44/restart/00110101.tar</dataSource>
-       <dataSource site="gfdl">/archive/wfc/SPEAR/SPEAR_c96_o1_Control_1850_C44/restart/00110101.tar</dataSource> -->
+       <!--
        <dataSource site="ncrc">/lustre/f1/pdata/gfdl_G/SPEAR_SI/SPEAR_1850_C44/c96_o1_00110101.12members.tar</dataSource>
+       -->
+       <dataSource site="ncrc">($SD_ARCHIVE_ROOT)/SPEAR_SI/SPEAR_1850_C44/c96_o1_00110101.12members.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -10343,18 +10421,18 @@ $baseDate
 </diagTable>
 -->
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -10383,34 +10461,34 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
          /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
       </dataFile>
 
+      <!--
       <dataFile label="input" target="INPUT/Idamp.nc">
          /lustre/f1/unswept/Matthew.Harrison/MOM6_datasets/FLOR2/Idamp.nc
       </dataFile>
-<!--      <dataFile label="input" target="INPUT/">
-         /lustre/f1/unswept/William.Cooke/ECDA_v3.2_REMAP/1988.ocean_5day.ongrid.ens_01.nc
+      -->
+      <dataFile label="input" target="INPUT/Idamp.nc">
+         <dataSource site="ncrc">/lustre/f2/dev/William.Cooke/ECDA_v3.2_REMAP/Idamp.nc</dataSource>
       </dataFile>
+         
+
       <dataFile label="input" target="INPUT/">
-         /lustre/f1/unswept/William.Cooke/ECDA_v3.2_REMAP/1988.ocean_5day.ongrid.ens_02.nc
-      </dataFile> -->
-      
-      <dataFile label="input" target="INPUT/">
-         /lustre/f1/unswept/William.Cooke/ECDA_v3.2_REMAP/1988.ocean_5day.ongrid.tar
+         /lustre/f2/dev/gfdl/William.Cooke/ECDA_v3.2_REMAP/1988.ocean_5day.ongrid.tar
       </dataFile>
       
          <csh type="always"><![CDATA[
@@ -11304,11 +11382,11 @@ Removes ICE_BULK_SALINITY
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
+       <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -11321,18 +11399,18 @@ $baseDate
       </dataFile>
 
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -11361,16 +11439,16 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
@@ -11871,11 +11949,11 @@ Changed production core count from 2448 to 756 cores after year 40.
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
+       <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -11888,18 +11966,18 @@ $baseDate
       </dataFile>
 
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -11928,16 +12006,16 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
@@ -12439,11 +12517,11 @@ box_N(1) = -60.0
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
+       <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -12456,18 +12534,18 @@ $baseDate
       </dataFile>
 
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -12496,16 +12574,16 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
@@ -13003,11 +13081,11 @@ Changed production core count from 2448 to 756 cores after year 40.
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
+       <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -13020,18 +13098,18 @@ $baseDate
       </dataFile>
 
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -13060,16 +13138,16 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
@@ -13578,11 +13656,11 @@ Reduced diag table (no 4xdaily or daily)
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
+       <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -13595,18 +13673,18 @@ $baseDate
       </dataFile>
 
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -13635,16 +13713,16 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
@@ -14138,11 +14216,11 @@ Extended job to 5000 years and reduced core count.
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
+       <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -14150,27 +14228,23 @@ $name
 $baseDate
 
       </diagTable>
-<!--      <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_nodaily</dataSource>
-      </dataFile> -->
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
          <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_20171221</dataSource>
-<!--         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_TIW</dataSource> -->
       </dataFile>
 
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -14199,16 +14273,16 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
@@ -14376,7 +14450,7 @@ set nyblocks = $dummy
 </experiment>
 
 
-<experiment name="SPEAR_c96_o1_Control_2010_E50" inherit="SPEAR_E_nonsymMOM6_exec">
+<experiment name="SPEAR_c96_o1_Control_2010_E50_f2" inherit="SPEAR_E_nonsymMOM6_exec">
   <description>
 
 2/20/2018
@@ -14687,11 +14761,11 @@ Same as SPEAR_c96_o1_Control_1850_E50 but with 2010 forcings
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.2010.remapped.v20171217.tar</dataSource>
+       <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.2010.remapped.v20171217.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/C96_LM3_OM4_01_CanadianArchipelago.2010.remapped.v20171217.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -14704,18 +14778,18 @@ $baseDate
       </dataFile>
 
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -14744,16 +14818,16 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
@@ -15234,11 +15308,11 @@ Rerun of SPEAR_c96_o1_Control_2010_E50 with only daily output.
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.2010.remapped.v20171217.tar</dataSource>
+       <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.2010.remapped.v20171217.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/C96_LM3_OM4_01_CanadianArchipelago.2010.remapped.v20171217.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -15251,18 +15325,18 @@ $baseDate
       </dataFile>
 
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -15291,16 +15365,16 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
@@ -15467,6 +15541,559 @@ set nyblocks = $dummy
   </postProcess>
 
 </experiment>
+
+
+
+<experiment name="SPEAR_c96_o1_Control_2010_E50_daily_stdlevels_atmos" inherit="SPEAR_E_nonsymMOM6_exec">
+  <description>
+
+2/20/2018
+Same as SPEAR_c96_o1_Control_1850_E50 but with 2010 forcings
+
+12/14/2018
+Rerun of SPEAR_c96_o1_Control_2010_E50 with only daily output.
+
+4/8/19
+Rerun of SPEAR_c96_o1_Control_2010_E50 with only daily output of U,V,T,Z and OMG at all 31 standard levels for daily output.
+
+  </description>
+  <input>
+      <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_2010climo.nml"/>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
+      <namelist name="icebergs_nml">
+        make_calving_reproduce=.TRUE.
+        really_debug=.FALSE.
+        debug=.FALSE.
+        verbose=.FALSE.
+        verbose_hrs=7200
+        use_operator_splitting=.TRUE.
+        bergy_bit_erosion_fraction=0.0
+        sicn_shift=0.1
+        parallel_reprod=.TRUE.
+        traj_sample_hrs=0
+        add_weight_to_ocean=.false.
+        tidal_drift = 0.005
+        coastal_drift = 0.001
+      </namelist>
+      <namelist name="deep_conv_nml">
+        crh_th_ocean = 0.4
+        crh_th_land  = 0.4
+        auto_th0_d = 0.2e-3
+        tcrit_d    = -25.15,
+        peff_l_d   = 6.0e-5
+        peff_i_d   = 11.e-5
+        rkm_dp1 = 0.9
+        rkm_dp2 = 0.1
+        crh_max = 1.0
+        cwfn_th = 10.
+        tau_dp = 28800.
+        mixing_assumption_d = 6
+        do_ppen_d  = .true.
+        rpen_d     = 4.0
+        do_pevap_d = .true.
+        cfrac_d    = 0.15
+        hcevap_d   = 0.85
+        hcevappbl_d = 0.95
+        pblfac_d   = 1.0
+        frac_limit_d = 0.25
+        dcwfndm_th = 100
+        lofactor_d = 1.0
+        do_cgust_dp  = .true.
+        cgust_choice = 1
+        include_emf_d = .false.
+      </namelist>
+      <namelist name="atmos_model_nml">
+        nxblocks = 1
+        nyblocks = $atm_threads
+      </namelist>
+      <namelist name="coupler_nml">
+        do_chksum = .false.
+        months = $months,
+        days   = $days,
+        current_date = 1,1,1,0,0,0,
+        calendar = 'julian',
+        dt_cpld = 1800,
+        dt_atmos = 1800,
+        do_atmos = .true.,
+        do_land = .true.,
+        do_ice = .true.,
+        do_ocean = .true.,
+        atmos_npes = $atm_ranks
+        atmos_nthreads = $atm_threads
+        do_concurrent_radiation=.false.
+        radiation_nthreads = 1
+        ocean_npes = $ocn_ranks,
+        concurrent = .true.
+        use_lag_fluxes=.true.
+        check_stocks=0
+        ncores_per_node = $(NCORE_PER_NODE)
+      </namelist>
+      <namelist name="cg_drag_nml">
+        cg_drag_freq = 1800,
+        cg_drag_offset = 0,
+        Bt_0 =  0.005,
+        Bt_aug= 0.000,
+        Bt_nh=  0.002,
+        Bt_sh= -0.00025,
+        Bt_eq=  0.000,
+        Bt_eq_width= 4.0,
+        phi0n =  30.,
+        phi0s = -30.,
+        dphin =  5.0,
+        dphis = -5.0,
+        dump_flux= .true.
+        dc= 2.4,
+        cmax= 99.6
+        do_conserve_energy = .true.,
+      </namelist>
+      <namelist name="fms_io_nml">
+        threading_read  = 'multi',
+        max_files_r = 100,
+        max_files_w = 100,
+        checksum_required =.false.
+     </namelist>
+     <namelist name="icebergs_nml">
+        make_calving_reproduce=.TRUE.
+        really_debug=.FALSE.
+        debug=.FALSE.
+        verbose=.FALSE.
+        verbose_hrs=7200
+        use_operator_splitting=.TRUE.
+        bergy_bit_erosion_fraction=0.0
+        sicn_shift=0.1
+        parallel_reprod=.TRUE.
+        traj_sample_hrs=0
+        add_weight_to_ocean=.false.
+     </namelist>
+     <namelist name="vegn_nml">
+        init_Tv = 288.0
+        rad_to_use = 'two-stream'
+        snow_rad_to_use = 'paint-leaves'
+        do_cohort_dynamics   = .TRUE.,              
+        do_patch_disturbance = .TRUE.,              
+        do_phenology         = .TRUE.,              
+        do_biogeography      = .TRUE.,              
+        do_seed_transport    = .TRUE.,
+        tau_smooth_ncm = 22.0
+        rav_lit_bwood = 300.
+      </namelist>
+      <namelist name="photosynthesis_nml">
+        photosynthesis_to_use = 'leuning'
+        co2_to_use_for_photosynthesis ='prescribed'
+       co2_for_photosynthesis = 387.5e-6
+       respiration_to_use = 'LM3'
+       Kok_effect = .False.
+       lai_eps=1.e-5
+      </namelist>
+     <namelist name="static_veg_nml">
+       use_static_veg = .false.
+       write_static_veg = .false.
+       timeline   = 'loop'
+       start_loop = 1981, 1, 1, 0, 0, 0
+       end_loop   = 1982, 1, 1, 0, 0, 0
+       fill_land_mask = .TRUE.
+       input_file = 'INPUT/19810101.static_veg_out.nc'
+     </namelist>
+     <namelist name="cana_nml">
+       turbulence_to_use = "lm3v"
+       init_co2 = 286.0e-6
+       canopy_air_mass_for_tracers = 10.0
+       allow_small_z0 = .true.
+       sai_turb = .true.
+     </namelist>
+     <namelist name="harvesting_nml">
+        do_harvesting          =.true.
+        grazing_intensity      = 18.25 ! roughly 5% of biomass per day
+        grazing_residue        = 0.1
+        grazing_frequency      = 'daily'
+        min_lai_for_grazing    = 1.0
+        frac_wood_wasted_harv  = 0.25
+        frac_wood_wasted_clear = 0.25
+        !frac_wood_fast         = ONETHIRD
+        !frac_wood_med          = ONETHIRD
+        !frac_wood_slow         = ONETHIRD
+        crop_seed_density      = 0.1
+        waste_below_ground_wood = .TRUE.
+     </namelist>
+     <namelist name="hlsp_nml">
+       max_num_topo_hlsps = 1
+       num_vertclusters = 10
+       use_geohydrodata = .true.
+       strm_depth_penetration = 1.5
+       use_hlsp_aspect_in_gwflow = .true.
+       diagnostics_by_cluster = .true.
+       init_wt_strmelev = .false.
+       dammed_strm_bc = .true.
+       limit_intertile_flow = .true. !.false.
+       flow_ratio_limit = 0.25
+     </namelist>
+     <namelist name="land_conservation_nml">
+        do_check_conservation = .FALSE.
+     </namelist>
+     <namelist name="soil_data_nml">
+       geohydrology_to_use    = 'hill'
+       use_comp_for_ic        = .true.
+       use_comp_for_push      = .true.
+       use_tau_fix            = .false.
+       use_sat_fix            = .true.
+       use_alt3_soil_hydraulics = .true.
+       gw_scale_soil_depth  = 0.1666667
+       gw_scale_perm        = 1.0
+       gw_scale_relief      = 0.5
+       aspect           = 0.01
+       k0_macro_z       = 0.0
+       k0_macro_x       = 1.0
+       freeze_factor    = 1.5
+       comp             = 1e-4
+       num_l            = 20
+       dz = 0.020, 0.040, 0.040, 0.050, 0.05, 0.100, 0.10, 0.200, 0.200, 0.2,
+            0.40,  0.40,  0.40,  0.4,   0.4,   1.0,   1.0,  1.0,  1.5,   2.5
+       soil_type_file          = "INPUT/soil_type.nc"
+       input_cover_types       =  1,       2,       3,       4,       5,       6,       7,       8,       9,       10,      11,      12,      13,       14
+       tile_names              =  'hec',   'sic',   'lic',   'sicl',  'cl',    'si',    'sil',   'sac',   'l',     'sacl',  'sal',  'ls',     's',     'u'
+       dat_w_sat               =  0.468,   0.468,   0.468,   0.464,   0.465,   0.476,   0.476,   0.406,   0.439,   0.404,   0.434,   0.421,   0.339,   0.439
+       dat_k_sat_ref           =  0.00097, 0.0013,  0.00097, 0.002,   0.0024,  0.0028,  0.0028,  0.0072,  0.0033,  0.0045,  0.0052,  0.014,   0.047,   0.0033
+       dat_psi_sat_ref         = -0.47,   -0.32,   -0.47,   -0.62,   -0.26,   -0.76,   -0.76,   -0.098,  -0.35,   -0.13,   -0.14,   -0.036   -0.069,  -0.35
+       dat_chb                 =  12.0,    10.0,    12.0,    8.7,     8.2,     5.3,     5.3,     11.0,    5.2,     6.8,     4.7,     4.3,     2.8,     5.2
+       dat_heat_capacity_dry   =  1.1e6,   1.1e6,   1.1e6,   1.1e6,   1.1e6,   1.1e6,   1.1e6,   1.1e6,   1.1e6,   1.1e6,   1.1e6,   1.1e6,   1.1e6,   1.1e6
+       dat_thermal_cond_dry    =  0.21,    0.21,    0.21,    0.21,    0.21,    0.21,    0.21,    0.21,    0.21,    0.21,    0.21,    0.21,    0.14,    0.21
+       dat_thermal_cond_sat    =  1.5,     1.5,     1.5,     1.5,     1.5,     1.5,     1.5,     1.5,     1.5,     1.5,     1.5,     1.5,     2.3,     1.5
+       dat_thermal_cond_exp    =  6,       6,       6,       5,       5,       5,       5,       6,       5,       5,       5,       5,       3,       5
+       dat_thermal_cond_scale  =  10,      10,      10,      0.5,     0.5,     0.5,     0.5,     10,      0.5,     0.5,     0.5,     0.5,     15,      0.5
+       dat_thermal_cond_weight =  0.7,     0.7,     0.7,     0.7,     0.7,     0.7,     0.7,     0.7,     0.7,     0.7,     0.7,     0.7,     0.2,     0.7
+       dat_emis_dry            =  1.0,     1.0,     1.0,     1.0,     1.0,     1.0,     1.0,     1.0,     1.0,     1.0,     1.0,     1.0,     1.0,     1.0
+       dat_emis_sat            =  1.0,     1.0,     1.0,     1.0,     1.0,     1.0,     1.0,     1.0,     1.0,     1.0,     1.0,     1.0,     1.0,     1.0
+       dat_tf_depr             =  2.0,     2.0,     2.0,     2.0,     2.0,     2.0,     2.0,     2.0,     2.0,     2.0,     2.0,     2.0,     2.0,     2.0
+       dat_z0_momentum         =  0.01,    0.01,    0.01,    0.01,    0.01,    0.01,    0.01,    0.01,    0.01,    0.01,    0.01,    0.01,    0.01,    0.01
+       Dpsi_min_const      = -1.e12
+       K_min               = 1.e-12
+       geothermal_heat_flux_constant = 0.065
+       retro_a0N1 = .true.
+     </namelist>
+     <namelist name="vegn_data_nml">
+       vegn_to_use = 'uniform'
+       K1=10,
+       K2=0.1,
+       fsc_liv=0.9,
+       fsc_wood=0.45,
+       c1(4) = 0.3
+       c2(4) = 0.3
+       Vmax = 2.0E-5, 2.0E-5, 2.0E-5, 2.0E-5, 1.50E-5,
+       m_cond = 4., 9., 9., 7., 7.,
+       alpha_phot = 0.05, 0.06, 0.06, 0.06, 0.06,
+       gamma_resp = 0.03, 0.02, 0.02, 0.02, 0.02,
+       tc_crit(0:2) = 3*273.16
+       fact_crit_phen(0:4) = 0., 0., 0., 0., 0.
+       fact_crit_fire(0:4) = 0., 0., 0., 0., 0.
+       cnst_crit_phen(0:4) = 0.30, 0.15, 0.15, 0.30, 0.30
+       cnst_crit_fire(0:4) = 0.15,  0.40, 0.15, 0.15, 0.15
+       wet_leaf_dreg(0:4)  = .3, .3, .3, .3, .3
+       ksi =  0, 0, 0, 0, 0,
+       leaf_refl(0:4,1) = 0.11, 0.11, 0.10, 0.10, 0.10
+       leaf_refl(0:4,2) = 0.58, 0.58, 0.45, 0.45, 0.39,
+       dat_root_zeta(0:4) =   0.35212, 0.17039, 0.28909, 0.25813, 0.17039
+       critical_root_density = 0.0,
+       tau_drip_s     = 259200.0
+       cmc_lai(0:4) = 0.02, 0.02, 0.02, 0.02, 0.02
+       csc_lai(0:4) = 0.30, 0.30, 0.30, 0.30, 0.2
+       dat_snow_crit = 2*1.e7, .1, 1.e7, .1
+       t_transp_min = 268.
+       srl(0:1) = 112.0e3, 150.0e3
+       root_perm = 14*5e-7
+       alpha(1,3) = 4
+       leaf_age_tau(2) = 150
+       smoke_fraction = 0.9, 0.9, 0.6, 0.6, 0.6
+       tg_c3_thresh = 1
+       phen_ev1 = 0.2
+       phen_ev2 = 0.7
+       cmc_eps = 0.01
+       alpha(0:4,6) = 0.0, 0.0, 0.012, 0.012, 0.012
+       treefall_disturbance_rate = 0.175, 0.185, 0.025, 0.0275, 0.027
+       use_light_saber = .true.
+       sai_cover = .true.
+       sai_rad = .true.
+       min_lai = 1.e-5   ! h1g, prevent numerical instability, 2017-08-24
+     </namelist>
+     <namelist name="glac_data_nml">
+       use_lm2_awc = .true.,
+       rsa_exp_global = 10.,
+       f_iso_cold = 0.92, 0.73
+       f_vol_cold = 0.06, 0.08
+       f_geo_cold = 0.00, 0.00
+       f_iso_warm = 0.92, 0.73
+       f_vol_warm = 0.06, 0.08
+       f_geo_warm = 0.00, 0.00
+       dat_emis_dry = 1.,
+       dat_emis_sat = 1.,
+       geothermal_heat_flux_constant = 0.065
+     </namelist>
+     <namelist name="snow_data_nml">
+       emis_snow_max = 1.
+       emis_snow_min = 1.
+       z0_momentum = 0.01
+       num_l = 5
+       dz = 0.05, 0.2, 0.5, 0.2, 0.05, 0.0, 0.0, 0.0, 0.0, 0.0
+       f_iso_cold = 0.92, 0.58
+       f_vol_cold = 0.06, 0.08
+       f_geo_cold = 0.00, 0.00
+       f_iso_warm = 0.77, 0.43
+       f_vol_warm = 0.06, 0.08
+       f_geo_warm = 0.00, 0.00
+       depth_crit = 0.0125
+       thermal_cond_ref = 0.09
+       distinct_snow_on_glacier = .TRUE.
+       f_iso_cold_on_glacier = 0.92, 0.68
+       f_vol_cold_on_glacier = 0.06, 0.08
+       f_geo_cold_on_glacier = 0.00, 0.00
+       f_iso_warm_on_glacier = 0.77, 0.43
+       f_vol_warm_on_glacier = 0.06, 0.08
+       f_geo_warm_on_glacier = 0.00, 0.00
+     </namelist>
+
+     <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
+     </dataFile>
+     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.2010.remapped.v20171217.tar</dataSource>
+       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/C96_LM3_OM4_01_CanadianArchipelago.2010.remapped.v20171217.tar</dataSource>
+     </dataFile> 
+     <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+     </dataFile>
+
+      <diagTable>
+$name
+$baseDate
+      </diagTable>
+      <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_stdlevels_atmos</dataSource>
+      </dataFile>
+
+      <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
+      </dataFile>
+
+      <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+      </dataFile>
+      
+      <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
+      </dataFile>
+      <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
+
+      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='Volcano_Solar_2010_cmip6']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_v20161213']/input/node())"/>
+
+      <xi:include xpointer="xpointer(//freInclude[@name='L32_gas_conc']/input/node())"/>
+
+      <xi:include xpointer="xpointer(//freInclude[@name='c96_stack_size']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='csh_adjust_dry_mass']/input/node())"/>
+
+      <xi:include xpointer="xpointer(//freInclude[@name='SPEAR_domain_decomp']/input/node())"/>
+
+      <!--MOM6 Input datasets-->
+      <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
+      <!-- overwrite  Channels file -->
+      <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+      </dataFile>
+      <!--MOM6 Input datasets-->
+      <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(MOM6_EXAMPLES)/ice_ocean_SIS2/OM4_025/INPUT/hycom1_75_800m.nc</dataSource>
+      </dataFile>
+<!-- Override the MOM_input in the MOM6_data xi include above --> 
+      <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+      </dataFile>
+      <!--SIS Input datasets-->
+      <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
+      <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+      </dataFile>
+
+      <dataFile label="input" target="INPUT/KH_background_2d.nc">
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc
+      </dataFile>
+
+      <dataFile label="input" target="INPUT/">
+         /autofs/mnt/ncrc-svm1_home2/William.Cooke/decadal/topo_edits_011818.nc
+      </dataFile>
+
+         <csh type="always"><![CDATA[
+         
+######BEGIN MOM6 and SIS2 layout setup################
+##THIS HAS TO BE PART OF csh type=always###
+
+touch $work/INPUT/MOM_override
+
+cat > $work/INPUT/MOM_override << EOF
+#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
+#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
+NUM_DIAG_COORDS = 2             ! default = 1
+                                ! The number of diagnostic vertical coordinates to use.
+                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
+DIAG_COORDS = "z Z ZSTAR", "rho2 RHO2 RHO" !
+
+DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
+                                ! Determines how to specify the coordinate
+                                ! resolution. Valid options are:
+                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
+                                !  UNIFORM[:N] - uniformly distributed
+                                !  FILE:string - read from a file. The string specifies
+                                !                the filename and variable name, separated
+                                !                by a comma or space, e.g. FILE:lev.nc,dz
+                                !                or FILE:lev.nc,interfaces=zw
+                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
+                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
+                                !  HYBRID:string - read from a file. The string specifies
+                                !                the filename and two variable names, separated
+                                !                by a comma or space, for sigma-2 and dz. e.g.
+                                !                HYBRID:vgrid.nc,sigma2,dz
+
+EOF
+
+touch $work/INPUT/SIS_override
+
+cat > $work/INPUT/SIS_override << EOF
+#override CP_SEAWATER = 3992.
+#override CP_BRINE = 3992.
+#override ICE_BULK_SALINITY = 0.0
+#override ICE_RELATIVE_SALINITY = 0.17
+#override SIS2_FILLING_FRAZIL = T
+#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
+#override SIS_CONTINUITY_SCHEME = "PCM"
+#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
+EOF
+
+#scan auxiliary_nml
+#set OCN_MASK_TABLE = 
+#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+
+cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
+#override IO_LAYOUT = $ocn_io_layout
+#override LAYOUT    = $ocn_layout
+#override MASKTABLE = $ocn_mask_table
+MOM_LAYOUT_EOF
+
+#scan auxiliary_nml
+#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+
+cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
+#override IO_LAYOUT = $ice_io_layout
+#override LAYOUT    = $ice_layout
+#override MASKTABLE = $ocn_mask_table
+SIS_LAYOUT_EOF
+
+######END MOM6 and SIS2 layout setup################
+
+cd $work/INPUT
+
+if ( $currentSeg == 1 ) then
+     rm -f coupler.res
+endif
+cd $work
+
+#------------------------------------------
+## Find out whether to restart.
+# MOM6 restart switch
+if ( $currentSeg == 1 ) then
+   set restart_flag = 'n'
+else
+   set restart_flag = 'r'
+endif
+   set sis_restart_flag = 'r'
+cd $work
+
+## Run the model
+#------------------------------------------
+###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
+set OCN_MASK_TABLE  =  $ocn_mask_table
+set OCN_LAYOUT    = $ocn_layout
+set OCN_IO_LAYOUT = $ocn_io_layout
+set ICE_LAYOUT    = $ice_layout
+set ICE_IO_LAYOUT = $ice_io_layout
+set atmos_npes = $atm_ranks
+set ocean_npes = $ocn_ranks
+set fv_layout = $atm_layout
+set fv_io_layout  = $atm_io_layout
+set land_layout   = $lnd_layout
+set land_io_layout = $lnd_io_layout
+set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nxblocks = $dummy
+set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nyblocks = $dummy
+
+    ]]></csh>
+
+
+
+  </input>
+
+  <runtime>
+    <production simTime="100" units="years" >
+      <segment simTime="1" units="years"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x2_O720_production']/node())"/>
+    </production> 
+      <regression name="debug_216">
+        <run days="1" >
+          <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A144x1_O72_debug']/node())"/>
+          </run>
+      </regression>
+      <regression name="oneyear">
+        <run months="12" >
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180_long']/node())"/>
+        </run>
+      </regression>
+      <regression name="oneday_coldstart">
+        <run days="1" >
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
+        </run>
+      </regression>
+      <regression name="basic_prodsettings">
+        <run days="8" >
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
+        </run>
+      </regression>
+      <regression name="restart_prodsettings">
+        <run days="4 4" >
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
+        </run>
+      </regression>
+      <regression name="spinup_prodsettings">
+        <run months="3" >
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
+        </run>
+      </regression>
+      <xi:include xpointer="xpointer(//freInclude[@name='regression_OMP_c96']/runtime/node())"/>
+      <regression name="rts_2day">
+          <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O216_rts_1x2day']/node())"/>
+          <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O216_rts_2x1day']/node())"/>
+      </regression>
+  </runtime>
+  <postProcess>
+      <xi:include xpointer="xpointer(//freInclude[@name='SPEAR_c96_PostP_Control_daily_only']/postProcess/node())"/>
+  </postProcess>
+
+</experiment>
+
 
 
 
@@ -15781,11 +16408,11 @@ Same as SPEAR_c96_o1_Control_1850_E46 with Background KH removed
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
+       <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -15798,18 +16425,18 @@ $baseDate
       </dataFile>
 
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -15838,12 +16465,12 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
@@ -16320,11 +16947,11 @@ Same as 1850_C45 but adds flux adjustment south of 60S
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
+       <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
      </dataFile> 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR_c96/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
      </dataFile>
 
       <diagTable>
@@ -16339,18 +16966,18 @@ $baseDate
       </dataFile>
 
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
       </dataFile>
 
       <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f1/unswept/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
       </dataFile>
       
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -16379,16 +17006,16 @@ $baseDate
       </dataFile>
 <!-- Override the MOM_input in the MOM6_data xi include above --> 
       <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
       </dataFile>
       <!--SIS Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         /lustre/f1/unswept/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
+         /lustre/f2/dev/gfdl/William.Cooke/MOM6_datasets/Kh_BG_2D/Kh_background_1e4_50to90ns.nc
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
@@ -16396,7 +17023,10 @@ $baseDate
       </dataFile>
 
       <dataFile label="input" target="INPUT/">
+         <!--
          <dataSource site="ncrc">/lustre/f1/unswept/William.Cooke/FLUX_ADJUSTMENT_FILES/prcme_adj_10_cm_per_year_south_60s_zero_over_land.nc</dataSource>
+         -->
+         <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/FLUX_ADJUSTMENT_FILES/prcme_adj_10_cm_per_year_south_60s_zero_over_land.nc</dataSource>
          <dataSource site="gfdl">/archive/td/SPEAR/FLUX_ADJUSTMENT_FILES/prcme_adj_10_cm_per_year_south_60s_zero_over_land.nc</dataSource>
       </dataFile>
       <dataTable>
