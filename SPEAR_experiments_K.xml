@@ -1256,6 +1256,15 @@ set domains_stack_size = "5097152"
 	     </resources>
    </freInclude>
 
+   <freInclude name="resourceparams_A432x1_O36_c192">
+             <resources jobWallclock="12:00:00">
+               <atm ranks="432" threads="1"  layout = "6,12"   io_layout = "1,4" />
+               <lnd                          layout = "6,12"   io_layout = "1,4" />
+               <ice                          layout = "72,6"  io_layout = "1,1" />
+               <ocn ranks="36"  threads="1"  layout = "6,6"   io_layout = "1,1" mask_table="MOM_mask_table" />
+             </resources>
+   </freInclude>
+
    <freInclude name="resourceparams_A432x1_O64_c192">
 	     <resources jobWallclock="12:00:00">
                <atm ranks="432" threads="1"  layout = "6,12"   io_layout = "1,4" />
@@ -1290,6 +1299,33 @@ set domains_stack_size = "5097152"
 	       <ice                          layout = "72,6"  io_layout = "1,1" />
 	       <ocn ranks="64"  threads="1"  layout = "8,8"   io_layout = "1,1" mask_table="MOM_mask_table" />
 	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A72x4_O36_c192">
+	     <resources jobWallclock="10:00:00">
+               <atm ranks="72" threads="4"    layout = "2,6"   io_layout = "1,1" />
+	       <lnd                           layout = "2,6"   io_layout = "1,1" />
+	       <ice                           layout = "72,1" io_layout = "1,1" />
+	       <ocn ranks="36" threads="1"    layout = "6,6"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A144x2_O36_c192">
+	     <resources jobWallclock="10:00:00">
+               <atm ranks="144" threads="2"   layout = "4,6"   io_layout = "1,1" />
+	       <lnd                           layout = "4,6"   io_layout = "1,1" />
+	       <ice                           layout = "72,2" io_layout = "1,1" />
+	       <ocn ranks="36" threads="1"    layout = "6,6"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A288x1_O36_c192">
+             <resources jobWallclock="08:00:00">
+               <atm ranks="288" threads="1"  layout = "6,8"   io_layout = "1,4" />
+               <lnd                          layout = "6,8"   io_layout = "1,4" />
+               <ice                          layout = "72,4"  io_layout = "1,1" />
+               <ocn ranks="36"  threads="1"  layout = "6,6"   io_layout = "1,1" mask_table="MOM_mask_table" />
+             </resources>
    </freInclude>
 
    <freInclude name="resourceparams_A288x1_O72_c192">
@@ -2753,6 +2789,19 @@ LAYOUT_EOF
         </run>
       </regression>
       <regression label="timing_small_c192_c4">
+       <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A72x4_O36_c192']/node())"/>
+        </run>
+       <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A144x2_O36_c192']/node())"/>
+        </run>
+<!--
+       <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x1_O36_c192']/node())"/>
+        </run>
+        <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A432x1_O36_c192']/node())"/>
+        </run>
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x1_O72_c192']/node())"/>
         </run>
@@ -2768,6 +2817,7 @@ LAYOUT_EOF
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A432x2_O72_c192']/node())"/>
         </run>
+-->
       </regression>
       <regression label="timing_omp">
         <run days="0" months="3" overrideParams="fms_nml:clock_grain='ROUTINE';">

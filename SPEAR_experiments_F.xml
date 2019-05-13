@@ -53,7 +53,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
 
   <property name="FRE_STEM" value="SPEAR_experiments_F" /> 
-  <property name="FRE_VERSION" value="bronx-12" />
+  <property name="FRE_VERSION" value="bronx-13" />
   <property name="FRE_NCTOOLS" value="fre-nctools/tikal" />
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>

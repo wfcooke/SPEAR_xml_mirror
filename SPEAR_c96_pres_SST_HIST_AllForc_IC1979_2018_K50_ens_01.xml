@@ -68,14 +68,14 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="PP_START_YEAR_HIST"   value="1981"/>
 
   <property name="PP_AMIP_CHUNK" value="5yr"/>
-  <property name="PP_AMIP_START_YEAR"  value="1971"/>
+  <property name="PP_AMIP_START_YEAR"  value="1981"/>
   <property name="ANA_AMIP_START" value="1971"/>
   <property name="ANA_AMIP_END"   value="2018"/>
   <property name="ANA_AMIP_LEN"   value="48yr"/>
 
    <property name="CHUNK_LENGTH_A" value="10yr"/>
-   <property name="CHUNK_LENGTH_B" value="40yr"/>
-   <property name="CHUNK_LENGTH_C" value="48yr"/>
+   <property name="CHUNK_LENGTH_B" value="30yr"/>
+   <property name="CHUNK_LENGTH_C" value="38yr"/>
    <property name="CHUNK_LENGTH_A_c384" value="10yr"/>
    <property name="CHUNK_LENGTH_B_c384" value="100yr"/>
    <property name="CHUNK_LENGTH_C_c384" value="1000yr"/>
@@ -7125,10 +7125,8 @@ cd ..
       <!--PostProcessing component models-->
       <component type="atmos" zInterp="ncep" start="$(PP_AMIP_START_YEAR)"  source="atmos_month" sourceGrid="atmos-cubedsphere" xyInterp="180,288" >
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
-	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_B)"/>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_B)">
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" >
           <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="$FRE_ANALYSIS_HOME/cjg/stub/cjg_atmos_ts_mon.csh"/>
           <!-- Analysis scripts from Andrew Wittenberg
           annual and seasonal climatology -->
@@ -7168,7 +7166,7 @@ cd ..
           <!-- Koppen climate types -->
           <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/koppen/frepp.atw_atmos_ts_monthly_koppen.csh -n -s vs_uea"/>
         </timeSeries>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_B)"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)"/>
         <timeAverage source="monthly" interval="$(CHUNK_LENGTH_C)">
           <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/bw/stub/bw_atmos_av_mon.csh"/>
           <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/bw/stub/bw_cru_precip.csh"/>
@@ -7191,74 +7189,54 @@ cd ..
           -->
           <analysis switch="$(ANALYSIS_SWITCH)" cumulative="no" script="$FRE_ANALYSIS_HOME/eem/code/pcmdi_metrics/frepp.pcmdi_metrics_v1p1p1.atmos.csh -c amip"/>
         </timeAverage>
-        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_B)"/>
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)"/>
-        <timeAverage source="annual" interval="$(CHUNK_LENGTH_B)"/>
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)">
           <analysis switch="$(ANALYSIS_SWITCH)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_av_annual/column/frepp.atw_atmos_av_annual_column.csh -s solo"/>
         </timeAverage>
       </component>
       <component type="atmos_month_aer"  start="$(PP_AMIP_START_YEAR)" source="atmos_month_aer" sourceGrid="atmos-cubedsphere" xyInterp="180,288">
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)"/>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_B)"/>
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_B)"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_B)"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)"/>
       </component>
       <component type="atmos_scalar" start="$(PP_AMIP_START_YEAR)"  source="atmos_scalar">
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"  source="atmos_scalar"/>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)" source="atmos_scalar"/>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_B)"/>
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"  source="atmos_scalar"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_B)" source="atmos_scalar"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_B)"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)"/>
       </component>
       <component type="ice"  start="$(PP_AMIP_START_YEAR)" sourceGrid="ocean-tripolar">
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"  source="ice_month"/>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)"  source="ice_month"/>
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)"  source="ice_month"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"  source="ice_month"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_B)"  source="ice_month"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)"  source="ice_month"/>
-        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_B)"/>
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
-        <timeAverage source="annual" interval="$(CHUNK_LENGTH_B)" />
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
       </component>
       <component type="land"  start="$(PP_AMIP_START_YEAR)"  source="land_month" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="192,384">
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
-	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_B)"/>
-	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_B)"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_B)"/>
-        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_B)"/>
+	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)"/>
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
-        <timeAverage source="annual" interval="$(CHUNK_LENGTH_B)" />
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
       </component>
       <component type="land_inst_month"   start="$(PP_AMIP_START_YEAR)" source="land_month_inst" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="192,384">
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)"/>
-	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_B)"/>
+	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)"/>
       </component>
       <component type="river"  start="$(PP_AMIP_START_YEAR)"  source="river_month" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="192,384">
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
-	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_B)"/>
-	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_B)"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_B)"/>
-        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_B)" />
+	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" />
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
-        <timeAverage source="annual" interval="$(CHUNK_LENGTH_B)" />
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
       </component>
       <component type="river_inst_month"   start="$(PP_AMIP_START_YEAR)" source="river_month_inst" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="192,384">
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)"/>
-	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_B)"/>
+	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)"/>
       </component>
       <component type="river_cubic" start="$(PP_AMIP_START_YEAR)" source="river_month" sourceGrid="land-cubedsphere" cmip="off">
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" >
