@@ -2802,6 +2802,10 @@ cd ..
 <experiment name="SPEAR_c96_o1_Scen_SSP585_AllForc_IC2011_K50_ens_26_30" inherit="SPEAR_K_nonsymMOM6_exec">
   <description>
   Members 26-30 of SSP585 scenario starting from 2011.
+
+2/13/2019 
+Flipped make_exchange_reproduce to false after land radiation NaN.
+Restarted for year 2080.
   </description>
   <executable file="$(WFC_ARCHIVE_ROOT)/SPEAR_experiments_K/SPEAR_K_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_K_nonsymMOM6_exec.x"/>
   <input>
@@ -2818,7 +2822,7 @@ cd ..
         do_lwaerosol_forcing = .false.
       </namelist> 
       <namelist name="xgrid_nml">
-        make_exchange_reproduce = .true.
+        make_exchange_reproduce = .false.
         interp_method = 'second_order'
       </namelist> 
       <namelist name="carbon_aerosol_nml">

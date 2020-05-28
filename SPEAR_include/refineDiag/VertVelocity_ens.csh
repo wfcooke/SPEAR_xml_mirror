@@ -43,7 +43,7 @@ echo ""
 #Generate this year's analysis figures based on the unpacked history files
 #
 #Try setting fre version to the caller version
-if ( ! $?FREVERSION ) set FREVERSION = fre/bronx-13
+if ( ! $?FREVERSION ) set FREVERSION = fre/bronx-15
 set fremodule = $FREVERSION
 set freanalysismodule = fre-analysis/test
 
@@ -92,14 +92,25 @@ set script_dir=${out_dir}/refineDiag
 #gcp does not preserve executable bit, re-set it in order to work after transfer
 chmod +x $script_dir/*.py
 
-set ocean_static_file = $yr1.ocean_static.nc
-if ( -e $yr1.ocean_static_no_mask_table.nc ) set ocean_static_file = $yr1.ocean_static_no_mask_table.nc
+set varlist=(`ls -1 *ocean_static.ens_??*.nc`)
+foreach sne ( $varlist )
+  set ensname=$sne:r:e 
 
-echo '==== Offline Diagnostics ===='
-echo "PWD = "$PWD
-pwd
-ls -l $ocean_static_file
-$script_dir/refineDiag_vertVel.py -b $ocean_static_file -r $refineDiagDir $yr1.ocean_z_month.nc
+  set ocean_static_file = $yr1.ocean_static.$ensname.nc
+
+  set ocean_z_month_file = $yr1.ocean_z_month.$ensname.nc
+  echo '==== Offline Diagnostics ===='
+  echo "PWD = "$PWD
+  pwd
+  ls -l $ocean_static_file $ocean_z_month_file
+  set outfile_name = $ocean_z_month_file:r:r"_refined."$ensname".nc"
+  echo $refineDiagDir
+  echo "OUTPUT_NAME=",$outfile_name
+  #$script_dir/refineDiag_vertVel.py -b $ocean_static_file -r $refineDiagDir -o $outfile_name $ocean_z_month_file
+  $script_dir/refineDiag_vertVel.py -b $ocean_static_file -r $PWD -o $outfile_name $ocean_z_month_file
+  ls -l *ocean_z_month*
+end
+
 echo "  ---------- end yearly analysis ----------  "
 
 echo "  -- end   MOM6_refineDiag.csh --  "

@@ -1,7 +1,7 @@
 #!/bin/csh
 
 set xmlDir = $rtsxml:h
-set refineDiagScriptDir = $xmlDir/SPEAR_include//refineDiag 
+set refineDiagScriptDir = $xmlDir/SPEAR_include/refineDiag 
 set splitter=$refineDiagScriptDir/comp_ensemble_avg_v4_fre
 
 set startDate = `date`

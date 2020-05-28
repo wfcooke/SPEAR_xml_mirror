@@ -53,7 +53,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
 
   <property name="FRE_STEM" value="SPEAR_experiments_F" /> 
-  <property name="FRE_VERSION" value="bronx-13" />
+  <property name="FRE_VERSION" value="bronx-15" />
   <property name="FRE_NCTOOLS" value="fre-nctools/tikal" />
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
@@ -86,7 +86,7 @@ SPEAR_c192_omlp25_Control_2010_A01
    <property name="CHUNK_LENGTH_B" value="100yr"/>
    <property name="CHUNK_LENGTH_C" value="1000yr"/>
    <property name="ANA_START" value="1"/>
-   <property name="ANA_END"   value="40"/> <!-- Same as CHUNK_LENGTH_B -->
+   <property name="ANA_END"   value="100"/> <!-- Same as CHUNK_LENGTH_B -->
 
   <property name="PROD_RUNTIME"     value="16:00:00"/><!--Maximum wall clock per simulation-->
   <property name="PROD_SEGTIME"     value="01:30:00"/><!--Wall clock per segment (usually 1 year)-->
@@ -306,6 +306,9 @@ configuration.
       <directory stem="$(FRE_STEM)" >
         <root>/home/$USER/SPEAR</root>
         <archive>/archive/$USER/SPEAR/$(name)</archive>
+        <!--
+        <archive>/archive/rgg/SPEAR/$(name)</archive>
+        -->
         <include>$(rootDir)/SPEAR_include</include> 
         <analysis>/nbhome/$USER/$(stem)/$(name)</analysis>
       </directory>
@@ -5284,7 +5287,10 @@ cd ..
       <!--PostProcessing component models-->
       <component type="atmos_daily" zInterp="ncep"  start="$(PP_START_YEAR)"  source="atmos_daily" sourceGrid="atmos-cubedsphere" xyInterp="360,576" >
 	<timeSeries freq="daily" source="atmos_daily" chunkLength="$(CHUNK_LENGTH_A)"/>
-	<timeSeries freq="daily" source="atmos_daily" chunkLength="$(CHUNK_LENGTH_B)"/>
+	<timeSeries freq="daily" source="atmos_daily" chunkLength="$(CHUNK_LENGTH_B)">
+      <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="$FRE_ANALYSIS_HOME/bw/stub/bw_cru_temp.csh"/>
+      <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="$FRE_ANALYSIS_HOME/cjs/stub/wheeler_kiladis.csh"/>
+        </timeSeries>
       </component>
       <component type="atmos_4xdaily" zInterp="ncep"   start="$(PP_START_YEAR)" source="atmos_4xdaily" sourceGrid="atmos-cubedsphere" xyInterp="360,576" >
         <timeSeries freq="6hr" source="atmos_4xdaily" chunkLength="$(CHUNK_LENGTH_A)"/>
@@ -5338,9 +5344,13 @@ cd ..
           <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -a clim -t all -v t_surf -y -90,90,20,1 -N globe -p globe vs_era40"/>
           <!-- Koppen climate types -->
           <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/koppen/frepp.atw_atmos_ts_monthly_koppen.csh -n -s vs_uea"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" cumulative="yes" script="$(includeDir)/analysis/stub/bw_atmos_monthly_cru_ts.csh"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" cumulative="yes" script="$(includeDir)/analysis/stub/bw_atmos_timeseries.csh"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" cumulative="yes" script="$(includeDir)/analysis/stub/bw_atmos_regress.csh"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" cumulative="yes" script="$(includeDir)/analysis/stub/bw_atmos_zmstream.csh"/>
         </timeSeries>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_B)"/>
-        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_C)">
+        <timeAverage source="monthly" interval="100000"><!--$(CHUNK_LENGTH_C)"> -->
           <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/bw/stub/bw_atmos_av_mon.csh"/>
           <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/bw/stub/bw_cru_precip.csh"/>
           <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/bw/stub/bw_atmos_tauu_atl_pac.csh"/>
@@ -5364,7 +5374,7 @@ cd ..
         </timeAverage>
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)"/>
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_B)"/>
-        <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)">
+        <timeAverage source="annual" interval="1000000"><!--$(CHUNK_LENGTH_C)">-->
           <analysis switch="$(ANALYSIS_SWITCH)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_av_annual/column/frepp.atw_atmos_av_annual_column.csh -s solo"/>
         </timeAverage>
       </component>
@@ -18759,7 +18769,10 @@ set nyblocks = $dummy
       </regression>
   </runtime>
   <postProcess>
+      <!--
       <xi:include xpointer="xpointer(//freInclude[@name='SPEAR_c96_PostP_Control_nodaily']/postProcess/node())"/>
+      -->
+      <xi:include xpointer="xpointer(//freInclude[@name='SPEAR_c96_PostP_Control_20171220']/postProcess/node())"/>
   </postProcess>
 </experiment>
 

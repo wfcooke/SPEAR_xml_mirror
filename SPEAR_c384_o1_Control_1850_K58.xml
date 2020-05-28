@@ -57,7 +57,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
   <!-- FRE specific properties -->
   <property name="FRE_STEM" value="SPEAR_experiments_K" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-13" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_VERSION" value="bronx-15" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
@@ -227,7 +227,6 @@ configuration.
 
       <property name="NB_ROOT"            value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
       <property name="F2003_FLAGS"        value="-DINTERNAL_FILE_NML"/>
-      <property name="AWG_ARCHIVE_ROOT"   value="/archive/cjg/mdt"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/archive"/>
       <property name="DJP_ARCHIVE_ROOT"  value="/archive"/>
       <property name="CMIP6_ARCHIVE_ROOT" value="/archive/oar.gfdl.cmip6/datasets"/>
@@ -275,10 +274,6 @@ configuration.
       <compiler type="intel" version="16.0.3.210" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="AWG_ARCHIVE_ROOT"   value="/lustre/f1/pdata/gfdl_M/cjg/archive/mdt/"/>
-      <!--
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f1/unswept/William.Cooke"/>
-      -->
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
       <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
       <property name="NCORE_PER_NODE"      value="32"/>
@@ -313,10 +308,6 @@ configuration.
       <compiler type="intel" version="16.0.3.210" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="AWG_ARCHIVE_ROOT"  value="/lustre/f1/pdata/gfdl_M/cjg/archive/mdt/"/>
-      <!--
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f1/unswept/William.Cooke"/>
-      -->
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
       <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
       <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
@@ -359,7 +350,6 @@ configuration.
       <compiler type="gnu" version="7.2.0" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="AWG_ARCHIVE_ROOT"  value="/lustre/f1/pdata/gfdl_M/cjg/archive/mdt"/>
       <property name="CMIP6_ARCHIVE_ROOT"   value="$CDATA/cmip6/datasets"/>
       <property name="NCORE_PER_NODE"      value="36"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
@@ -1183,9 +1173,6 @@ configuration.
   <freInclude name="L32_gas_conc">
     <input>
       <dataFile label="input" target="INPUT/gas_conc_3D_am3p9.nc" chksum="" size="" timestamp="">
-        <!--
-        <dataSource platform="$(platform)">$(AWG_ARCHIVE_ROOT)/liteChem/input/aerosol/gas_conc_3D32L_am3p9.nc</dataSource>
-        -->
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/L32_gas_conc/gas_conc_3D32L_am3p9.nc</dataSource>
       </dataFile>
     </input>
@@ -1923,7 +1910,7 @@ set domains_stack_size = "5097152"
 	     <resources jobWallclock="01:00:00">
                <atm ranks="864" threads="3"   layout = "12,12"   io_layout = "1,4" />
 	       <lnd                           layout = "12,12"   io_layout = "1,4" />
-	       <ice                           layout = "24,36" io_layout = "1,1" />
+	       <ice                           layout = "72,12" io_layout = "1,1" />
 	       <ocn ranks="864"  threads="1"  layout = "36,24"  io_layout = "1,1" mask_table="MOM_mask_table" />
 	     </resources>
    </freInclude>
@@ -2172,8 +2159,8 @@ set domains_stack_size = "5097152"
 
    <freInclude name="resourceparams_A864x3_O36_c384">
 	     <resources jobWallclock="01:00:00">
-               <atm ranks="864" threads="3"   layout = "12,12"   io_layout = "1,4" />
-	       <lnd                           layout = "12,12"   io_layout = "1,4" />
+               <atm ranks="864" threads="3"   layout = "9,16"   io_layout = "1,1" />
+	       <lnd                           layout = "9,16"   io_layout = "1,1" />
 	       <ice                           layout = "72,12"   io_layout = "1,1" />
 	       <ocn ranks="36"  threads="1"   layout = "9,4"     io_layout = "1,1" mask_table="MOM_mask_table" />
 	     </resources>
@@ -2181,8 +2168,8 @@ set domains_stack_size = "5097152"
 
    <freInclude name="resourceparams_A864x3_O72_c384">
 	     <resources jobWallclock="01:00:00">
-               <atm ranks="864" threads="3"   layout = "12,12"   io_layout = "1,4" />
-	       <lnd                           layout = "12,12"   io_layout = "1,4" />
+               <atm ranks="864" threads="3"   layout = "9,16"   io_layout = "1,1" />
+	       <lnd                           layout = "9,16"   io_layout = "1,1" />
 	       <ice                           layout = "72,12"   io_layout = "1,1" />
 	       <ocn ranks="72"  threads="1"   layout = "9,8"     io_layout = "1,1" mask_table="MOM_mask_table" />
 	     </resources>
@@ -2205,6 +2192,15 @@ set domains_stack_size = "5097152"
 	     </resources>
    </freInclude>
 
+   <freInclude name="resourceparams_A2304x2_O72_c384">
+             <resources jobWallclock="00:45:00">
+               <atm ranks="2304" threads="2"  layout = "12,32"   io_layout = "1,4" />
+               <lnd                           layout = "12,32"   io_layout = "1,4" />
+               <ice                           layout = "72,32"   io_layout = "1,1" />
+               <ocn ranks="72"  threads="1"   layout = "9,8"     io_layout = "1,1" mask_table="MOM_mask_table" />
+             </resources>
+   </freInclude>
+ 
    <freInclude name="resourceparams_A1152x4_O72_c384">
 	     <resources jobWallclock="00:45:00">
                <atm ranks="1152" threads="4"  layout = "12,16"   io_layout = "1,4" />
@@ -2831,6 +2827,7 @@ LAYOUT_EOF
         </run>
       </regression>
       <regression label="restarts">
+
         <run days="4 4" months="0 0"
              overrideParams="atmos_model_nml:nxblocks=2;
                              atmos_model_nml:nyblocks=2;
@@ -2842,21 +2839,22 @@ LAYOUT_EOF
         </run>
       </regression>
       <regression label="scaling">
-        <!--
-        <run days="8" months="0"
+<!--        <run days="8" months="0"
              overrideParams="fms_nml:clock_grain='ROUTINE';
                              random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
                              icebergs_nml:make_calving_reproduce=.TRUE.;
                              xgrid_nml:make_exchange_reproduce=.TRUE.;">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x2_O36_c384']/node())"/>
         </run>
-        <run days="8" months="0"
+ -->
+       <run days="8" months="0"
              overrideParams="fms_nml:clock_grain='ROUTINE';
                              random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
                              icebergs_nml:make_calving_reproduce=.TRUE.;
                              xgrid_nml:make_exchange_reproduce=.TRUE.;">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x3_O72_c384']/node())"/>
         </run>
+<!--
         <run days="8" months="0"
              overrideParams="fms_nml:clock_grain='ROUTINE';
                              random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
@@ -2864,7 +2862,14 @@ LAYOUT_EOF
                              xgrid_nml:make_exchange_reproduce=.TRUE.;">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x4_O72_c384']/node())"/>
         </run>
-        -->
+        <run days="8" months="0"
+             overrideParams="fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A2304x2_O72_c384']/node())"/>
+        </run>
+ 
         <run days="8" months="0"
              overrideParams="fms_nml:clock_grain='ROUTINE';
                              random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
@@ -2879,6 +2884,7 @@ LAYOUT_EOF
                              xgrid_nml:make_exchange_reproduce=.TRUE.;">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x4_O72_c384']/node())"/>
         </run>
+-->
       </regression>
       <regression label="timing">
         <!--

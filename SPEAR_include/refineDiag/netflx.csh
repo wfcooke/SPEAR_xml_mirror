@@ -1,6 +1,6 @@
 #!/bin/csh
 #------------------------------------------------------------------------------
-#  MOM6_refineDiag.csh
+#  netflx_ens.csh
 #
 #  DESCRIPTION: This is a script that is inteded to drive all the
 #               pre-postprocessing stages of data manipulations on analysis nodes.
@@ -18,32 +18,24 @@
 #           module purge
 #           module load jpk-analysis/0.0.4
 #           module load $(FRE_VERSION)
-###         The following clones the mom6 git repo which should contain all the pp scripts
-#           setenv NBROOT /nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)
-#           mkdir -p $NBROOT
-#           cd $NBROOT
-#           #bronx-8
-#           #git clone "http://gitlab.gfdl.noaa.gov/github_mirror/noaa-gfdl-mom6.git" mom6
-#           #bronx-7 (due to a bug in interpreting : in the above command)
-#           /home/Niki.Zadeh/bin/git_clone_mom6_fix.csh
 #         ]]></csh>
 #
 #------------------------------------------------------------------------------
 echo ""
-echo "  -- begin MOM6_refineDiag.csh --  "
+echo "  -- begin netflx.csh --  "
 echo ""
 #The mere existance of a refineDiag section in the xml pointing to any non-empty refineDiag
 #script (as simple as doing a "echo" above)
 #causes the history files to be unpacked by frepp in /ptmp/$USER/$ARCHIVE/$year.nc
 #when the current year data lands on gfdl archive.
 #
-echo "  ---------- begin yearly analysis ----------  "
+echo "  ---------- begin monthly analysis ----------  "
 echo ""
 #
 #Generate this year's analysis figures based on the unpacked history files
 #
 #Try setting fre version to the caller version
-if ( ! $?FREVERSION ) set FREVERSION = fre/bronx-13
+if ( ! $?FREVERSION ) set FREVERSION = fre/bronx-15
 set fremodule = $FREVERSION
 set freanalysismodule = fre-analysis/test
 
@@ -53,10 +45,6 @@ set src_dir=/home/wfc/SPEAR/SPEAR_include
 set descriptor = $name
 set out_dir = /home/wfc/SPEAR/SPEAR_include                  #Niki: How can we set this to frepp analysisdir /nbhome
 set yr1 = $oname
-set yr2 = $oname
-set databegyr = $oname
-set dataendyr = $oname
-set datachunk = 1
 
 # make sure valid platform and required modules are loaded
 if (`gfdl_platform` == "hpcs-csc") then
@@ -86,22 +74,36 @@ endif
 echo "We are inside the refineDiag script"
 pwd
 ls -l
+# This script calculates the netflx at the surface from the formula
+# netflx_sfc=swdn_sfc-swup_sfc+lwflx-2.5e6*evap-shflx
 
 set script_dir=${out_dir}/refineDiag
-#/mom6/tools/analysis
-#gcp does not preserve executable bit, re-set it in order to work after transfer
-chmod +x $script_dir/*.py
 
-set ocean_static_file = $yr1.ocean_static.nc
-if ( -e $yr1.ocean_static_no_mask_table.nc ) set ocean_static_file = $yr1.ocean_static_no_mask_table.nc
+set varlist=(`ls -1 *atmos_month.*.nc`)
 
-echo '==== Offline Diagnostics ===='
-echo "PWD = "$PWD
-pwd
-ls -l $ocean_static_file
-$script_dir/refineDiag_vertVel.py -b $ocean_static_file -r $refineDiagDir $yr1.ocean_z_month.nc
-echo "  ---------- end yearly analysis ----------  "
+foreach sne ( $varlist )
+  # Get the tile number
+  set tilename=$sne:r:e 
+  # Check the variables are in the file
+  ncks -m -v swup_sfc,swdn_sfc,lwflx,shflx,evap $sne > /dev/null
+  if ($status == 0) then
+    # Extract the 5 variables of interest to an interim file.
+    ncks -v time_bnds,average_T1,average_T2,average_DT,swup_sfc,swdn_sfc,lwflx,evap,shflx $yr1.atmos_month.$tilename.nc interim.nc
+    # Sum the 5 variables as needed. Output to a atmos_month_refined file.
+    ncap2 -s "hfds=lwflx+swdn_sfc-swup_sfc-2.5e6*evap-shflx"  interim.nc interim1.nc 
+    ncatted -h -a long_name,hfds,o,c,"net (down-up) heat flux at surface" interim1.nc
+    ncatted -h -a _FillValue,hfds,o,d,1.0e+20 interim1.nc
+    # Now remove the 5 variables from the refined file, leaving netflx_sfc,time_bnds and average_{T1,T2,DT}.
+    ncks -x -v swup_sfc,swdn_sfc,lwflx,evap,shflx interim1.nc  $refineDiagDir/$yr1.atmos_month_refined.$tilename.nc
+    rm -f interim.nc interim1.nc
+  else
+    echo "Missing one of lwflx, swdn_sfc, swup_sfc, evap, or shflx from input file."
+    exit 1
+  endif
+end
 
-echo "  -- end   MOM6_refineDiag.csh --  "
+echo "  ---------- end monthly analysis ----------  "
+
+echo "  -- end netflx.csh --  "
 
 exit 0
