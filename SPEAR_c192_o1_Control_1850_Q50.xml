@@ -256,6 +256,10 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
+    <platform name="gfdl.ncrc3-intel18">
+      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
     <platform name="gfdl.ncrc4-intel">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
@@ -304,6 +308,10 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='ncrc3.intel16']/node())" />
     </platform>
 
+    <platform name="ncrc3.intel18">
+      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
+    </platform>
+
     <platform name="ncrc4.intel16">
       <freVersion>$(FRE_VERSION)</freVersion>
       <compiler type="intel" version="16.0.3.210" />
@@ -342,6 +350,33 @@ configuration.
 
     <platform name="ncrc4.intel">
       <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel16']/node())" />
+    </platform>
+
+    <platform name="ncrc4.intel18">
+      <freVersion>$(FRE_VERSION)</freVersion>
+      <compiler type="intel" version="18.0.6.288" />
+
+      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
+      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      <property name="NCORE_PER_NODE"      value="36"/>
+      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+ 
+      <project>gfdl_sd</project>
+
+      <directory stem="$(FRE_STEM)">
+        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
+        <!--
+        <include>$HOME/SPEAR/SPEAR_include</include>
+        -->
+      </directory>
+
     </platform>
 
     <platform name="ncrc4.gnu">
@@ -784,6 +819,42 @@ set domains_stack_size = "5097152"
 	       <lnd                          layout = "6,12"   io_layout = "1,4" />
 	       <ice                          layout = "72,6"  io_layout = "1,1" />
 	       <ocn ranks="64"  threads="1"  layout = "8,8"   io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A216x2_O64_c192">
+	     <resources jobWallclock="12:00:00">
+               <atm ranks="216" threads="2"  layout = "6,6"   io_layout = "1,3" />
+	       <lnd                          layout = "6,6"   io_layout = "1,3" />
+	       <ice                          layout = "72,3"  io_layout = "1,1" />
+	       <ocn ranks="64"  threads="1"  layout = "8,8"   io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A108x4_O64_c192">
+	     <resources jobWallclock="12:00:00">
+               <atm ranks="108" threads="4"  layout = "6,3"   io_layout = "1,3" />
+	       <lnd                          layout = "6,3"   io_layout = "1,3" />
+	       <ice                          layout = "36,3"  io_layout = "1,1" />
+	       <ocn ranks="64"  threads="1"  layout = "8,8"   io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A144x3_O32_c192">
+	     <resources jobWallclock="12:00:00">
+               <atm ranks="144" threads="3"  layout = "6,4"   io_layout = "1,4" />
+	       <lnd                          layout = "6,4"   io_layout = "1,4" />
+	       <ice                          layout = "72,2"  io_layout = "1,1" />
+	       <ocn ranks="32"  threads="1"  layout = "8,4"   io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A72x6_O32_c192">
+	     <resources jobWallclock="12:00:00">
+               <atm ranks="72" threads="6"   layout = "6,2"   io_layout = "1,2" />
+	       <lnd                          layout = "6,2"   io_layout = "1,2" />
+	       <ice                          layout = "72,1"  io_layout = "1,1" />
+	       <ocn ranks="32"  threads="1"  layout = "8,4"   io_layout = "1,1" mask_table="MOM_mask_table" />
 	     </resources>
    </freInclude>
 
@@ -2737,13 +2808,14 @@ LAYOUT_EOF
                              xgrid_nml:make_exchange_reproduce=.TRUE.;">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x2_O864']/node())"/>
         </run>
+        -->
         <run days="8" months="0" overrideParams="fms_nml:clock_grain='ROUTINE';
                              random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
                              icebergs_nml:make_calving_reproduce=.TRUE.;
                              xgrid_nml:make_exchange_reproduce=.TRUE.;">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A72x4_O36_c192']/node())"/>
         </run>
-        -->
+        <!--
         <run days="8" months="0" overrideParams="fms_nml:clock_grain='ROUTINE';
                              random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
                              icebergs_nml:make_calving_reproduce=.TRUE.;
@@ -2786,14 +2858,31 @@ LAYOUT_EOF
                              xgrid_nml:make_exchange_reproduce=.TRUE.;">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x4_O288']/node())"/>
         </run>
+        -->
       </regression>
       <regression label="timing_small_c192_c3">
-        <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
+        
+        <run days="8" months="0" overrideParams="fms_nml:clock_grain='ROUTINE';">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x1_O64_c192']/node())"/>
         </run>
-        <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
+        <run days="8" months="0" overrideParams="fms_nml:clock_grain='ROUTINE';">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A432x1_O64_c192']/node())"/>
         </run>
+
+        <run days="8" months="0" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A216x2_O64_c192']/node())"/>
+        </run>
+        <run days="8" months="0" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A108x4_O64_c192']/node())"/>
+        </run>
+        
+        <run days="8" months="0" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A144x3_O32_c192']/node())"/>
+        </run>
+        <run days="8" months="0" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A72x6_O32_c192']/node())"/>
+        </run>
+        <!--
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A576x1_O64_c192']/node())"/>
         </run>
@@ -2803,6 +2892,7 @@ LAYOUT_EOF
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A432x2_O64_c192']/node())"/>
         </run>
+        -->
       </regression>
       <regression label="timing_small_c192_c4">
         <!--
@@ -8605,9 +8695,9 @@ Added daily ocean SST diagnostic for TIW investigation. Will run this for the we
 4/13/2018
 Removed daily ocean SST diagnostic.'''
   </description>
-  
+
 <executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
-  
+
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
