@@ -794,12 +794,12 @@ set domains_stack_size = "5097152"
              </resources>
    </freInclude>
 
-   <freInclude name="resourceparams_A288x1_O64_c192">
+   <freInclude name="resourceparams_A576x1_O72_c192">
 	     <resources jobWallclock="12:00:00">
-               <atm ranks="288" threads="1"  layout = "6,8"   io_layout = "1,4" />
-	       <lnd                          layout = "6,8"   io_layout = "1,4" />
-	       <ice                          layout = "72,4"  io_layout = "1,1" />
-	       <ocn ranks="64"  threads="1"  layout = "8,8"   io_layout = "1,1" mask_table="MOM_mask_table" />
+               <atm ranks="576" threads="1"  layout = "8,12"   io_layout = "1,4" />
+	       <lnd                          layout = "8,12"   io_layout = "1,4" />
+	       <ice                          layout = "72,8"  io_layout = "1,1" />
+	       <ocn ranks="72"  threads="1"  layout = "9,8"   io_layout = "1,1" mask_table="MOM_mask_table" />
 	     </resources>
    </freInclude>
 
@@ -2660,10 +2660,10 @@ LAYOUT_EOF
       </regression>
       <regression label="timing">
         <run days="8" months="0" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x1_O64_c192']/node())"/>
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A576x1_O72_c192']/node())"/>
         </run>
         <run days="8" months="0" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A432x1_O64_c192']/node())"/>
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A432x1_O72_c192']/node())"/>
         </run>
 
         <run days="8" months="0" overrideParams="fms_nml:clock_grain='ROUTINE';">
