@@ -2669,10 +2669,10 @@ LAYOUT_EOF
       </regression>
       <regression label="timing">
         <run days="8" months="0" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x1_O64_c192']/node())"/>
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A576x1_O72_c192']/node())"/>
         </run>
         <run days="8" months="0" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A432x1_O72_c192']/node())"/>
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x1_O72_c192']/node())"/>
         </run>
 
         <run days="8" months="0" overrideParams="fms_nml:clock_grain='ROUTINE';">
