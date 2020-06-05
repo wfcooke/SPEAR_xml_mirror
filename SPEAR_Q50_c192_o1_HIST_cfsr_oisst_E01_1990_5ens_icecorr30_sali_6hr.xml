@@ -9097,8 +9097,6 @@ $baseDate
 
 touch $work/INPUT/MOM_override
 
-#override ENERGYSAVEDAYS = 0.01
-#override DEBUG =True
 cat > $work/INPUT/MOM_override << EOF
 #override TOPO_EDITS_FILE = "topo_edits_011818.nc"
 #override CHANNEL_LIST_FILE = MOM_channels_SPEAR

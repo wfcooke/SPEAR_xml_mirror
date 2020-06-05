@@ -9795,8 +9795,6 @@ $baseDate
 
 touch $work/INPUT/MOM_override
 
-#override ENERGYSAVEDAYS = 0.01
-#override DEBUG =True
 cat > $work/INPUT/MOM_override << EOF
 #override FLUXCONST = 0.0
 #override FLUXCONST_SALT = 0.05556
