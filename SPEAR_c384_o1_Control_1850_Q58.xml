@@ -6,7 +6,7 @@ Quick start guide
 =================
 
 ```
-module load fre/bronx-15
+module load fre/bronx-17
 fremake -x SPEAR_experiments_Q.xml -p ncrc4.intel16 -t repro,openmp SPEAR_Q_nonsymMOM6_exec
 frerun  -x SPEAR_experiments_Q.xml -p ncrc4.intel16 -t repro,openmp SPEAR_c96_o1_Control_1850_Q50 -r basic_prodsettings
 ```
@@ -60,7 +60,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
   <!-- FRE specific properties -->
   <property name="FRE_STEM" value="SPEAR_experiments_Q" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-15" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_VERSION" value="bronx-17" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
@@ -875,6 +875,15 @@ set domains_stack_size = "5097152"
 	     </resources>
    </freInclude>
 
+   <freInclude name="resourceparams_A384x2_O72_c192">
+	     <resources jobWallclock="10:00:00">
+               <atm ranks="384" threads="2"  layout = "8,8"   io_layout = "1,4" />
+	       <lnd                          layout = "8,8"   io_layout = "1,4" />
+	       <ice                          layout = "72,8"  io_layout = "1,1" />
+	       <ocn ranks="72"  threads="1"  layout = "9,8"   io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
    <freInclude name="resourceparams_A432x2_O64_c192">
 	     <resources jobWallclock="10:00:00">
                <atm ranks="432" threads="2"  layout = "6,12"   io_layout = "1,4" />
@@ -896,33 +905,6 @@ set domains_stack_size = "5097152"
    <freInclude name="resourceparams_A432x1_O72_c192">
 	     <resources jobWallclock="06:00:00">
                <atm ranks="432" threads="1"  layout = "6,12"   io_layout = "1,4" />
-	       <lnd                          layout = "6,12"   io_layout = "1,4" />
-	       <ice                          layout = "72,6"  io_layout = "1,1" />
-	       <ocn ranks="72"  threads="1"  layout = "12,6"   io_layout = "1,1" mask_table="MOM_mask_table" />
-	     </resources>
-   </freInclude>
-
-   <freInclude name="resourceparams_A576x1_O72_c192">
-	     <resources jobWallclock="06:00:00">
-               <atm ranks="576" threads="1"  layout = "8,12"   io_layout = "1,4" />
-	       <lnd                          layout = "8,12"   io_layout = "1,4" />
-	       <ice                          layout = "72,8"  io_layout = "1,1" />
-	       <ocn ranks="72"  threads="1"  layout = "12,6"   io_layout = "1,1" mask_table="MOM_mask_table" />
-	     </resources>
-   </freInclude>
-
-   <freInclude name="resourceparams_A384x2_O72_c192">
-	     <resources jobWallclock="05:00:00">
-               <atm ranks="384" threads="2"  layout = "8,8"   io_layout = "1,4" />
-	       <lnd                          layout = "8,8"   io_layout = "1,4" />
-	       <ice                          layout = "48,8"  io_layout = "1,1" />
-	       <ocn ranks="72"  threads="1"  layout = "12,6"   io_layout = "1,1" mask_table="MOM_mask_table" />
-	     </resources>
-   </freInclude>
-
-   <freInclude name="resourceparams_A432x2_O72_c192">
-	     <resources jobWallclock="05:00:00">
-               <atm ranks="432" threads="2"  layout = "6,12"   io_layout = "1,4" />
 	       <lnd                          layout = "6,12"   io_layout = "1,4" />
 	       <ice                          layout = "72,6"  io_layout = "1,1" />
 	       <ocn ranks="72"  threads="1"  layout = "12,6"   io_layout = "1,1" mask_table="MOM_mask_table" />
@@ -2549,7 +2531,7 @@ LAYOUT_EOF
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x1_O64_c192']/node())"/>
         </run>
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A432x1_O64_c192']/node())"/>
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x1_O72_c192']/node())"/>
         </run>
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A576x1_O64_c192']/node())"/>
@@ -2563,10 +2545,7 @@ LAYOUT_EOF
       </regression>
       <regression label="timing_small_c192_c4">
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x1_O72_c192']/node())"/>
-        </run>
-        <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A432x1_O72_c192']/node())"/>
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x1_O72_c192']/node())"/>
         </run>
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A576x1_O72_c192']/node())"/>

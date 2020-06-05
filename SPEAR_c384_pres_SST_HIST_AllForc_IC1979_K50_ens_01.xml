@@ -6,7 +6,7 @@ Quick start guide
 =================
 
 ```
-module load fre/bronx-14
+module load fre/bronx-17
 fremake -x SPEAR_experiments_K.xml -p ncrc4.intel16 -t repro,openmp SPEAR_K_nonsymMOM6_exec
 frerun  -x SPEAR_experiments_K.xml -p ncrc4.intel16 -t repro,openmp SPEAR_c96_o1_Control_1850_K45 -r basic_prodsettings
 ```
@@ -57,7 +57,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
   <!-- FRE specific properties -->
   <property name="FRE_STEM" value="SPEAR_experiments_K" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-15" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_VERSION" value="bronx-17" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
