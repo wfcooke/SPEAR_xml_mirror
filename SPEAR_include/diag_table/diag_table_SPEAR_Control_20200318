@@ -344,7 +344,7 @@
 "dynamics",  "zsurf",              "zsurf",          "grid_spec",   "all", .false.,  "none", 2
 
 "dynamics",  "ps",                 "ps",             "atmos_4xdaily", "all", .false.,  "none", 2
-"dynamics",  "pv350",              "pv350",          "atmos_4xdaily", "all", .false.,  "none", 2
+"dynamics",  "pv350K",             "pv350K",         "atmos_4xdaily", "all", .false.,  "none", 2
 "dynamics",  "slp",                "slp_dyn",        "atmos_4xdaily", "all", .false.,  "none", 2
 "dynamics",  "tm",                 "tm",             "atmos_4xdaily", "all", .false.,  "none", 2
 "dynamics",  "u200",               "u200",           "atmos_4xdaily", "all", .false.,  "none", 2
@@ -373,7 +373,8 @@
 "moist",     "snow_tot",           "snow_tot",       "atmos_4xdaily_avg", "all", .true., "none", 2
 "moist",     "WVP",                "WVP",            "atmos_4xdaily_avg", "all", .true., "none", 2
 
-"dynamics",  "pv350",              "pv350",          "atmos_daily", "all", .true.,  "none", 2
+"dynamics",  "pv350K",             "pv350K",         "atmos_daily", "all", .true.,  "none", 2
+"dynamics",  "pv550K",             "pv550K",         "atmos_daily", "all", .true.,  "none", 2
 "dynamics",  "z200",               "z200",           "atmos_daily", "all", .true.,  "none", 2
 "dynamics",  "z250",               "z250",           "atmos_daily", "all", .true.,  "none", 2
 "dynamics",  "z500",               "z500",           "atmos_daily", "all", .true.,  "none", 2
@@ -394,6 +395,7 @@
 "dynamics",  "t700",               "t700",           "atmos_daily", "all", .true.,  "none", 2
 "dynamics",  "t850",               "t850",           "atmos_daily", "all", .true.,  "none", 2
 "dynamics",  "t925",               "t925",           "atmos_daily", "all", .true.,  "none", 2
+"dynamics",  "u10",                "u10",            "atmos_daily", "all", .true.,  "none", 2
 "dynamics",  "u200",               "u200",           "atmos_daily", "all", .true.,  "none", 2
 "dynamics",  "u250",               "u250",           "atmos_daily", "all", .true.,  "none", 2
 "dynamics",  "u50",                "u50",            "atmos_daily", "all", .true.,  "none", 2
