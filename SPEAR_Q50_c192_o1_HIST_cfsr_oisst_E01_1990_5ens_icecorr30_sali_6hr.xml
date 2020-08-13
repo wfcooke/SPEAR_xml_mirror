@@ -6,7 +6,7 @@ Quick start guide
 =================
 
 ```
-module load fre/bronx-17
+module load fre/bronx-18
 fremake -x SPEAR_experiments_Q.xml -p ncrc4.intel16 -t repro,openmp SPEAR_Q_nonsymMOM6_exec
 fremake -x SPEAR_experiments_Q.xml -p ncrc4.intel16 -t repro,openmp SPEAR_Q_AMIP_exec
 frerun  -x SPEAR_experiments_Q.xml -p ncrc4.intel16 -t repro,openmp SPEAR_c96_o1_Control_1850_Q50 -r basic_prodsettings
@@ -61,7 +61,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
   <!-- FRE specific properties -->
   <property name="FRE_STEM" value="SPEAR_experiments_Q" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-17" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_VERSION" value="bronx-18" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
@@ -232,7 +232,6 @@ configuration.
       <property name="DJP_ARCHIVE_ROOT"  value="/archive"/>
       <property name="CMIP6_ARCHIVE_ROOT" value="/archive/oar.gfdl.cmip6/datasets"/>
       <property name="SD_ARCHIVE_ROOT"   value="/archive"/>
-      <property name="NCORE_PER_NODE"     value="1"/>
 
       <directory stem="$(FRE_STEM)" >
         <root>/home/$USER/SPEAR</root>
@@ -265,6 +264,10 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
+    <platform name="gfdl.ncrc4-intel18">
+      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
     <platform name="gfdl.ncrc4-gnu">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
@@ -280,7 +283,6 @@ configuration.
       <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
       <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
       <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NCORE_PER_NODE"      value="32"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
  
       <project>gfdl_sd</project>
@@ -315,9 +317,8 @@ configuration.
       <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
       <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
       
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/gfdl_sd/"/>
       <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="NCORE_PER_NODE"      value="36"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
  
       <project>gfdl_sd</project>
@@ -345,6 +346,32 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel16']/node())" />
     </platform>
 
+    <platform name="ncrc4.intel18">
+      <freVersion>$(FRE_VERSION)</freVersion>
+      <compiler type="intel" version="18.0.6.288" />
+
+      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
+      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+ 
+      <project>gfdl_sd</project>
+
+      <directory stem="$(FRE_STEM)">
+        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
+        <!--
+        <include>$HOME/SPEAR/SPEAR_include</include>
+        -->
+      </directory>
+
+    </platform>
+
     <platform name="ncrc4.gnu">
       <freVersion>$(FRE_VERSION)</freVersion>
       <compiler type="gnu" version="7.2.0" />
@@ -355,7 +382,6 @@ configuration.
       <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
       <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
       <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NCORE_PER_NODE"      value="36"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
  
       <project>gfdl_sd</project>
@@ -1012,6 +1038,29 @@ configuration.
    </input>
   </freInclude>
 
+  <freInclude name="common_cmip6_1949_2040">
+    <input>
+      <!-- Use the SSP585 Scenario GHGs -->
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+	<dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp585/cmip6_Scenario_ssp585_GHG_ODS_conc_2500.tar</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/chemlbf" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/chemlbf_CMIP6_merge_RCP45</dataSource>
+      </dataFile>
+
+      <dataFile label="input" target="INPUT/o3.climatology.nc" chksum="" size="" timestamp="">
+	<dataSource platform="$(platform)">$(SD_ARCHIVE_ROOT)/SPEAR/datasets/1949_2040/ozone/mmro3_CMIP6_SSP585_194901-204012.nc</dataSource>
+      </dataFile>
+
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.isoprene.1x1.2000.nc</dataSource>
+      </dataFile>
+       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.terpenes.1x1.2000.nc</dataSource>
+      </dataFile>
+   </input>
+  </freInclude>
+
   <freInclude name="Volcano_Solar_TimeSeries_cmip6">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
@@ -1045,6 +1094,26 @@ configuration.
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano_V2/extlw_data.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Solar/lean_solar_spectral_data.dat</dataSource>
+      </dataFile>
+    </input>
+  </freInclude>
+
+  <freInclude name="Volcano_Solar_TimeSeries_cmip6_V2_1949_2040">
+    <input>
+      <dataFile label="input" target="INPUT/extsw_data.nc" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(SD_ARCHIVE_ROOT)/SPEAR/datasets/1949_2040/Volcano/extsw_data_194901_204012.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/omgsw_data.nc" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(SD_ARCHIVE_ROOT)/SPEAR/datasets/1949_2040/Volcano/omgsw_data_194901_204012.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/asmsw_data.nc" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(SD_ARCHIVE_ROOT)/SPEAR/datasets/1949_2040/Volcano/asmsw_data_194901_204012.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/extlw_data.nc" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(SD_ARCHIVE_ROOT)/SPEAR/datasets/1949_2040/Volcano/extlw_data_194901_204012.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Solar/lean_solar_spectral_data.dat</dataSource>
@@ -1148,6 +1217,24 @@ configuration.
       </dataFile>
       <dataFile label="input" target="INPUT/anthro_so2.1849_2021.nc" chksum="" size="" timestamp="">
 	<dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/extend_CMIP6_forcings/emissions.simple.so2.0.5x0.5.1849-2021.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/co2_data.nc" chksum="" size="" timestamp="">
+        <!--<dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/CO2/co2_historical_3D_0to2016.nc</dataSource>-->
+        <!--
+        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/extend_CMIP6_forcings/co2_data_2020.nc</dataSource>
+        -->
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp585/co2_ssp585_3D_0to2499.nc</dataSource>
+      </dataFile>
+    </input>
+  </freInclude>
+
+  <freInclude name="emissions_cmip6_v20200630_1949_2040">
+    <input>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+	<dataSource platform="$(platform)">$(SD_ARCHIVE_ROOT)/SPEAR/datasets/1949_2040/emissions/emissions.fastchem.0.5x0.5.1949-2040.tar</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/anthro_so2.1949_2040.nc" chksum="" size="" timestamp="">
+	<dataSource platform="$(platform)">$(SD_ARCHIVE_ROOT)/SPEAR/datasets/1949_2040/emissions/emissions.simple.so2.0.5x0.5.1949-2040.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/co2_data.nc" chksum="" size="" timestamp="">
         <!--<dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/CO2/co2_historical_3D_0to2016.nc</dataSource>-->
@@ -3144,17 +3231,17 @@ LAYOUT_EOF
        <dataSource platform="$(platform)">$(includeDir)/ice_ocean_SIS2/OM4_025/INPUT/vgrid_75_2m.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-          <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/MOM6_datasets/FLOR2/diag_vgrid.nc</dataSource>
+          <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR/MOM6_datasets/FLOR2/diag_vgrid.nc</dataSource>
           <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/FLOR2/diag_vgrid.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource platform="$(platform)">$(includeDir)/ice_ocean_SIS2/OM4_025/INPUT/WOA05_pottemp_salt.nc </dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/MOM6_datasets/FLOR2/edits_012016.nc</dataSource>
+        <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR/MOM6_datasets/FLOR2/edits_012016.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/MOM6_datasets/FLOR2/edits_013016a.nc</dataSource>
+        <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR/MOM6_datasets/FLOR2/edits_013016a.nc</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -8648,26 +8735,26 @@ Q50 atmosphere-nudging and sst-restoring
       <namelist name="carbon_aerosol_nml">
       bcff_source = 'gocart_2007',
         bcff_input_name(1)='anthro',
-        bcff_filename='emissions.bc.0.5x0.5.1849-2021.nc',
+        bcff_filename='emissions.bc.0.5x0.5.1949-2040.nc',
         bcff_time_dependency_type='time_varying',bcff_dataset_entry=$baseDate
       omff_source = 'gocart_2007',
         omff_input_name(1)='anthro',
-        omff_filename='emissions.om.0.5x0.5.1849-2021.nc',
+        omff_filename='emissions.om.0.5x0.5.1949-2040.nc',
         omff_time_dependency_type='time_varying',omff_dataset_entry=$baseDate
       omsh_source = 'gocart_2007',
         omsh_input_name(1)='ship',
-        omsh_filename='emissions.om.0.5x0.5.1849-2021.nc',
+        omsh_filename='emissions.om.0.5x0.5.1949-2040.nc',
         omsh_time_dependency_type='time_varying',omsh_dataset_entry=$baseDate
       bcsh_source = 'gocart_2007',
         bcsh_input_name(1)='ship',
-        bcsh_filename='emissions.bc.0.5x0.5.1849-2021.nc',
+        bcsh_filename='emissions.bc.0.5x0.5.1949-2040.nc',
         bcsh_time_dependency_type='time_varying',bcsh_dataset_entry=$baseDate
       bcav_source = 'do_aircraft'
         bcav_input_name(1)='fuel',
-        bcav_filename='emissions.aircraft.aero.0.5x0.5.1849-2021.nc',
+        bcav_filename='emissions.aircraft.aero.0.5x0.5.1949-2040.nc',
         bcav_time_dependency_type='time_varying',bcav_dataset_entry=$baseDate
       bcbb_source = 'AEROCOM',
-        bcbb_filename='emissions.bc.0.5x0.5.1849-2021.nc',
+        bcbb_filename='emissions.bc.0.5x0.5.1949-2040.nc',
         bcbb_input_name(1)='bb_l1'
         bcbb_input_name(2)='bb_l2'
         bcbb_input_name(3)='bb_l3'
@@ -8676,7 +8763,7 @@ Q50 atmosphere-nudging and sst-restoring
         bcbb_input_name(6)='bb_l6'
         bcbb_time_dependency_type='time_varying',bcbb_dataset_entry=$baseDate
       ombb_source = 'AEROCOM',
-        ombb_filename='emissions.om.0.5x0.5.1849-2021.nc',
+        ombb_filename='emissions.om.0.5x0.5.1949-2040.nc',
         ombb_input_name(1)='bb_l1'
         ombb_input_name(2)='bb_l2'
         ombb_input_name(3)='bb_l3'
@@ -8697,19 +8784,19 @@ Q50 atmosphere-nudging and sst-restoring
         expl_volc_source='do_expl_volc'
           aerocom_emission_filename='so2_0.25_volcanoes.nc'
         aircraft_source='do_aircraft',
-          aircraft_filename='emissions.aircraft.aero.0.5x0.5.1849-2021.nc',
+          aircraft_filename='emissions.aircraft.aero.0.5x0.5.1949-2040.nc',
           aircraft_emission_name(1)='fuel'
           so2_aircraft_EI=0.001
           aircraft_time_dependency_type='time_varying',aircraft_dataset_entry=$baseDate
         anthro_source='do_anthro',
           anthro_emission_name(1)='so2ff',
           anthro_emission_name(2)='so4ff',
-          anthro_filename='anthro_so2.1849_2021.nc',
+          anthro_filename='anthro_so2.1949_2040.nc',
           anthro_time_dependency_type='time_varying',anthro_dataset_entry=$baseDate
         biobur_source='do_biobur',
           biobur_emission_name(1)='so2bb',
           biobur_emission_name(2)='so4bb',
-          biobur_filename='anthro_so2.1849_2021.nc',
+          biobur_filename='anthro_so2.1949_2040.nc',
           biobur_time_dependency_type='time_varying',biobur_dataset_entry=$baseDate
         cloud_chem_solver="f1p"
         pH_cloud=4.5
@@ -8782,10 +8869,6 @@ Q50 atmosphere-nudging and sst-restoring
         use_lag_fluxes=.true.
         check_stocks=0
       </namelist>
-      <!--
-        ncores_per_node = $(NCORE_PER_NODE)
-      </namelist>
-      -->
       <namelist name="cg_drag_nml">
         cg_drag_freq = 1200,
         cg_drag_offset = 0,
@@ -9044,9 +9127,10 @@ $baseDate
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C192.OM360x320.20171213/SPEAR_c192_hydrography.v20171218.tar</dataSource>
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='Volcano_Solar_TimeSeries_cmip6_V2']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_v20170518']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6_1949_2040']/input/node())"/><!-- Needs updating -->
+      <xi:include xpointer="xpointer(//freInclude[@name='Volcano_Solar_TimeSeries_cmip6_V2_1949_2040']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_v20200630_1949_2040']/input/node())"/>
+      
       <xi:include xpointer="xpointer(//freInclude[@name='L32_gas_conc']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c192_stack_size']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='csh_adjust_dry_mass']/input/node())"/>

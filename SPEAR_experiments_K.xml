@@ -6639,16 +6639,16 @@ cd ..
       -->
       <!-- Tony said to comment this out for now. -->
       <!--PostProcessing component models-->
-      <component type="atmos_daily" zInterp="ncep"  start="$(PP_START_YEAR_HIST)"  source="atmos_daily" sourceGrid="atmos-cubedsphere" xyInterp="360,576" >
+      <component type="atmos_daily" zInterp="ncep"  start="$(PP_START_YEAR_HIST)"  source="atmos_daily" sourceGrid="atmos-cubedsphere" xyInterp="180,288" >
 	<timeSeries freq="daily" source="atmos_daily" chunkLength="$(CHUNK_LENGTH_A)"/>
       </component>
-      <component type="atmos_4xdaily" zInterp="ncep"   start="$(PP_START_YEAR_HIST)" source="atmos_4xdaily" sourceGrid="atmos-cubedsphere" xyInterp="360,576" >
+      <component type="atmos_4xdaily" zInterp="ncep"   start="$(PP_START_YEAR_HIST)" source="atmos_4xdaily" sourceGrid="atmos-cubedsphere" xyInterp="180,288" >
         <timeSeries freq="6hr" source="atmos_4xdaily" chunkLength="$(CHUNK_LENGTH_A)"/>
       </component>
-      <component type="atmos_4xdaily_avg" zInterp="ncep"   start="$(PP_START_YEAR_HIST)" source="atmos_4xdaily_avg" sourceGrid="atmos-cubedsphere" xyInterp="360,576" >
+      <component type="atmos_4xdaily_avg" zInterp="ncep"   start="$(PP_START_YEAR_HIST)" source="atmos_4xdaily_avg" sourceGrid="atmos-cubedsphere" xyInterp="180,288" >
         <timeSeries freq="6hr" source="atmos_4xdaily_avg" chunkLength="$(CHUNK_LENGTH_A)"/>
       </component>
-      <component type="atmos" zInterp="ncep" start="$(PP_START_YEAR_HIST)"  sourceGrid="atmos-cubedsphere" xyInterp="360,576" >
+      <component type="atmos" zInterp="ncep" start="$(PP_START_YEAR_HIST)"  sourceGrid="atmos-cubedsphere" xyInterp="180,288" >
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="atmos_month"/>
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="atmos_month_refined"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="atmos_month"/>
@@ -6719,7 +6719,7 @@ cd ..
         </timeAverage>
       </component>
 
-      <component type="atmos_month_aer"  start="$(PP_START_YEAR_HIST)" source="atmos_month_aer" sourceGrid="atmos-cubedsphere" xyInterp="360,576">
+      <component type="atmos_month_aer"  start="$(PP_START_YEAR_HIST)" source="atmos_month_aer" sourceGrid="atmos-cubedsphere" xyInterp="180,288">
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"/>
@@ -6758,10 +6758,10 @@ cd ..
         <timeAverage source="annual"  interval="$(CHUNK_LENGTH_A)"/>
         <timeAverage source="annual"  interval="$(CHUNK_LENGTH_C)"/>
       </component>
-      <component type="land_daily"  start="$(PP_START_YEAR_HIST)"  source="land_daily" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="360,576">
+      <component type="land_daily"  start="$(PP_START_YEAR_HIST)"  source="land_daily" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="180,288">
 	<timeSeries freq="daily" source="land_daily" chunkLength="$(CHUNK_LENGTH_A)"/>
       </component>
-      <component type="land"  start="$(PP_START_YEAR_HIST)"  source="land_month" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="360,576">
+      <component type="land"  start="$(PP_START_YEAR_HIST)"  source="land_month" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="180,288">
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"/>
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
@@ -6769,7 +6769,7 @@ cd ..
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
       </component>
-      <component type="land_inst_month"   start="$(PP_START_YEAR_HIST)" source="land_month_inst" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="360,576">
+      <component type="land_inst_month"   start="$(PP_START_YEAR_HIST)" source="land_month_inst" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="180,288">
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
       </component>
@@ -6782,10 +6782,10 @@ cd ..
         <timeAverage source="monthly" interval="$(CHUNK_LENGTH_A)" />
       </component>
       
-      <component type="river_daily"  start="$(PP_START_YEAR_HIST)"  source="river_daily" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="360,576">
+      <component type="river_daily"  start="$(PP_START_YEAR_HIST)"  source="river_daily" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="180,288">
 	<timeSeries freq="daily" source="river_daily" chunkLength="$(CHUNK_LENGTH_A)"/>
       </component>
-      <component type="river"  start="$(PP_START_YEAR_HIST)"  source="river_month" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="360,576">
+      <component type="river"  start="$(PP_START_YEAR_HIST)"  source="river_month" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="180,288">
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"/>
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
@@ -6793,7 +6793,7 @@ cd ..
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
       </component>
-      <component type="river_inst_month"   start="$(PP_START_YEAR_HIST)" source="river_month_inst" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="360,576">
+      <component type="river_inst_month"   start="$(PP_START_YEAR_HIST)" source="river_month_inst" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="180,288">
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
       </component>
@@ -6843,9 +6843,8 @@ cd ..
         <timeAverage source="monthly" interval="$(CHUNK_LENGTH_C)" />
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month_refined"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_z_month">
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_z_month"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_z_month_refined"/>
-        </timeSeries>  
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
       </component>

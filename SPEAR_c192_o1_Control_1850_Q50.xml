@@ -6,7 +6,7 @@ Quick start guide
 =================
 
 ```
-module load fre/bronx-17
+module load fre/bronx-18
 fremake -x SPEAR_experiments_Q.xml -p ncrc4.intel16 -t repro,openmp SPEAR_Q_nonsymMOM6_exec
 frerun  -x SPEAR_experiments_Q.xml -p ncrc4.intel16 -t repro,openmp SPEAR_c96_o1_Control_1850_Q50 -r basic_prodsettings
 ```
@@ -60,7 +60,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
   <!-- FRE specific properties -->
   <property name="FRE_STEM" value="SPEAR_experiments_Q" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-17" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_VERSION" value="bronx-18" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
@@ -265,6 +265,10 @@ configuration.
     </platform>
 
     <platform name="gfdl.ncrc4-intel16">
+      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
+    <platform name="gfdl.ncrc4-intel18">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
@@ -8696,7 +8700,10 @@ Added daily ocean SST diagnostic for TIW investigation. Will run this for the we
 Removed daily ocean SST diagnostic.'''
   </description>
 
+<!--
 <executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
+-->
+<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q_20200812/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
 
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
@@ -9000,7 +9007,7 @@ $baseDate
       <!--
          <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_nodaily</dataSource>
       -->
-         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_20180515</dataSource>
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_20200318</dataSource>
       <!--
          <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_TIW</dataSource>
       -->
@@ -9206,6 +9213,11 @@ set nyblocks = $dummy
         <run months="3" >
           <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A384x1_O36_c192']/node())"/>
           </run>
+      </regression>
+      <regression name="basic_noOMP">
+        <run days="8" >
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x1_O72_c192']/node())"/>
+        </run>
       </regression>
       <regression name="basic_prodsettings">
         <run days="8" >

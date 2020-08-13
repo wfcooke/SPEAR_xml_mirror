@@ -5,7 +5,7 @@
 <!--
 Quick start guide
 
-module load fre/bronx-17
+module load fre/bronx-18
 fremake -x SPEAR_reforecast.xml -p ncrc4.intel16 -t repro,openmp SPEAR_R_nonsymMOM6_exec
 frerun  -x SPEAR_reforecast.xml -p ncrc4.intel16 -t repro,openmp SPEAR_c96_o1_ECDA_test -r basic_prodsettings
 
@@ -52,7 +52,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
 
   <property name="FRE_STEM" value="SPEAR_reforecast" />
-  <property name="FRE_VERSION" value="bronx-17" />
+  <property name="FRE_VERSION" value="bronx-18" />
   <property name="FRE_NCTOOLS" value="fre-nctools/tikal" />
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
@@ -251,7 +251,6 @@ configuration.
       <property name="FNL_ARCHIVE_ROOT"  value="/archive"/>
       <property name="DJP_ARCHIVE_ROOT"  value="/archive"/>
       <property name="CMIP6_ARCHIVE_ROOT" value="/archive/oar.gfdl.cmip6/datasets"/>
-      <property name="NCORE_PER_NODE"     value="1"/>
       <property name="platform_gs"        value="$(PLATFORM_GS_GFDL)"/>
 
       <directory stem="$(FRE_STEM)" >
@@ -285,6 +284,10 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
+    <platform name="gfdl.ncrc4-intel18">
+      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
     <platform name="gfdl.ncrc4-gnu">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
@@ -314,7 +317,6 @@ configuration.
       <property name="FNL_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/Feiyu.Lu"/>
       <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
       <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NCORE_PER_NODE"      value="32"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
       <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
 
@@ -345,7 +347,6 @@ configuration.
       <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
       <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
       <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NCORE_PER_NODE"      value="36"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
       <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
       <property name="FNL_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/Feiyu.Lu"/>
@@ -359,6 +360,31 @@ configuration.
         ]]>
       </csh>
       -->
+    </platform>
+
+    <platform name="ncrc4.intel18">
+      <freVersion>$(FRE_VERSION)</freVersion>
+      <compiler type="intel" version="18.0.6.288" />
+
+      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
+      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+ 
+      <project>gfdl_sd</project>
+
+      <directory stem="$(FRE_STEM)">
+        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
+        <!--
+        <include>$HOME/SPEAR/SPEAR_include</include>
+        -->
+      </directory>
+
     </platform>
   </setup>
 
@@ -1706,7 +1732,6 @@ cd ..
         concurrent = .true.
         use_lag_fluxes=.true.
         check_stocks=0
-        <!--ncores_per_node = $(NCORE_PER_NODE)-->
       </namelist>
       <namelist name="cg_drag_nml">
         cg_drag_freq = 1200,
@@ -1975,11 +2000,17 @@ $baseDate
 
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c192_LM4_SPEAR']/input/node())"/>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-	<dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/landuse/LUH2/v2.0h/transitions.nc</dataSource>
+      <dataFile label="input" target="INPUT/transitions.nc" chksum="" size="" timestamp="">
+	<!--
+        <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/landuse/LUH2/v2.0h/transitions.nc</dataSource>
+        -->
+	<dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/1949_2040/landuse_transitions/transitions.Hist_SSP585_1940_2040.nc</dataSource>
       </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+      <dataFile label="input" target="INPUT/states.nc" chksum="" size="" timestamp="">
+        <!--
         <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/landuse/LUH2/v2.0h/states.nc</dataSource>
+        -->
+        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/1949_2040/landuse_transitions/states.Hist_SSP585_1940_2040.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/landuse/LUH2/v2.0h/landfrac.nc</dataSource>
@@ -2288,7 +2319,6 @@ set nyblocks = $dummy
         concurrent = .true.
         use_lag_fluxes=.true.
         check_stocks=0
-        <!--ncores_per_node = $(NCORE_PER_NODE)-->
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource site="ncrc">/lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19920101.tar</dataSource>
@@ -2320,7 +2350,6 @@ set nyblocks = $dummy
         concurrent = .true.
         use_lag_fluxes=.true.
         check_stocks=0
-        <!--ncores_per_node = $(NCORE_PER_NODE)-->
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource site="ncrc">/lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19930101.tar</dataSource>
@@ -2352,7 +2381,6 @@ set nyblocks = $dummy
         concurrent = .true.
         use_lag_fluxes=.true.
         check_stocks=0
-        <!--ncores_per_node = $(NCORE_PER_NODE)-->
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource site="ncrc">/lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19940101.tar</dataSource>
@@ -2385,7 +2413,6 @@ set nyblocks = $dummy
         concurrent = .true.
         use_lag_fluxes=.true.
         check_stocks=0
-        <!--ncores_per_node = $(NCORE_PER_NODE)-->
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource site="ncrc">/lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19960101.tar</dataSource>
@@ -2448,7 +2475,6 @@ set nyblocks = $dummy
         concurrent = .true.
         use_lag_fluxes=.true.
         check_stocks=0
-        <!--ncores_per_node = $(NCORE_PER_NODE)-->
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource site="ncrc">/lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19980101.tar</dataSource>
@@ -2480,7 +2506,6 @@ set nyblocks = $dummy
         concurrent = .true.
         use_lag_fluxes=.true.
         check_stocks=0
-        <!--ncores_per_node = $(NCORE_PER_NODE)-->
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
 	<dataSource site="ncrc">/lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19990101.tar</dataSource>

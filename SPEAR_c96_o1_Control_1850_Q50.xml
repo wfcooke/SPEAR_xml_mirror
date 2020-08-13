@@ -6,7 +6,7 @@ Quick start guide
 =================
 
 ```
-module load fre/bronx-17
+module load fre/bronx-18
 fremake -x SPEAR_experiments_Q.xml -p ncrc4.intel16 -t repro,openmp SPEAR_Q_nonsymMOM6_exec
 frerun  -x SPEAR_experiments_Q.xml -p ncrc4.intel16 -t repro,openmp SPEAR_c96_o1_Control_1850_Q50 -r basic_prodsettings
 ```
@@ -60,7 +60,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
   <!-- FRE specific properties -->
   <property name="FRE_STEM" value="SPEAR_experiments_Q" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-17" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_VERSION" value="bronx-18" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
@@ -1022,7 +1022,25 @@ set domains_stack_size = "5097152"
                    segRuntime="0:30:00" >
                <atm ranks="144" threads="1"   layout = "4,6"   io_layout = "1,1" />
 	       <lnd                           layout = "4,6"   io_layout = "1,1" />
-	       <ice                           layout = "144,1" io_layout = "1,1" />
+	       <ice                           layout = "72,2" io_layout = "1,1" />
+	       <ocn ranks="72" threads="1"    layout = "6,12"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+   <freInclude name="resourceparams_A72x1_O72_test">
+	     <resources jobWallclock="1:00:00"
+                   segRuntime="0:30:00" >
+               <atm ranks="72" threads="1"    layout = "2,6"   io_layout = "1,1" />
+	       <lnd                           layout = "2,6"   io_layout = "1,1" />
+	       <ice                           layout = "72,1" io_layout = "1,1" />
+	       <ocn ranks="72" threads="1"    layout = "6,12"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+   <freInclude name="resourceparams_A288x1_O72_test">
+	     <resources jobWallclock="1:00:00"
+                   segRuntime="0:30:00" >
+               <atm ranks="288" threads="1"   layout = "8,6"   io_layout = "1,1" />
+	       <lnd                           layout = "8,6"   io_layout = "1,1" />
+	       <ice                           layout = "72,4" io_layout = "1,1" />
 	       <ocn ranks="72" threads="1"    layout = "6,12"  io_layout = "1,1" mask_table="MOM_mask_table" />
 	     </resources>
    </freInclude>
@@ -1031,7 +1049,7 @@ set domains_stack_size = "5097152"
 	     <resources jobWallclock="1:00:00" >
                <atm ranks="144" threads="1"   layout = "4,6"   io_layout = "1,1" />
 	       <lnd                           layout = "4,6"   io_layout = "1,1" />
-	       <ice                           layout = "144,1" io_layout = "1,1" />
+	       <ice                           layout = "72,2" io_layout = "1,1" />
 	       <ocn ranks="72" threads="1"    layout = "6,12"  io_layout = "1,1" mask_table="MOM_mask_table" />
 	     </resources>
    </freInclude>
@@ -1412,6 +1430,24 @@ set domains_stack_size = "5097152"
 	       <lnd                           layout = "6,8"   io_layout = "1,4" />
 	       <ice                           layout = "72,4" io_layout = "1,1" />
 	       <ocn ranks="180" threads="1"   layout = "9,20"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A72x2_O36">
+	     <resources jobWallclock="01:00:00">
+               <atm ranks="72" threads="2"    layout = "3,4"   io_layout = "1,1" />
+	       <lnd                           layout = "3,4"   io_layout = "1,1" />
+	       <ice                           layout = "72,1" io_layout = "1,1" />
+	       <ocn ranks="36" threads="1"    layout = "9,4"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A84x2_O50">
+	     <resources jobWallclock="01:00:00">
+               <atm ranks="84" threads="2"   layout = "2,7"   io_layout = "1,1" />
+	       <lnd                          layout = "2,7"   io_layout = "1,1" />
+	       <ice                          layout = "84,1" io_layout = "1,1" />
+	       <ocn ranks="50" threads="1"   layout = "10,5"  io_layout = "1,1" mask_table="MOM_mask_table" />
 	     </resources>
    </freInclude>
 
@@ -2125,6 +2161,7 @@ LAYOUT_EOF
         </run>
       </regression>
       <regression label="test_ice_model_layout">
+        <!--
         <run days="2" months="0"
              overrideParams="fms_nml:clock_grain='ROUTINE';
                              random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
@@ -2174,6 +2211,28 @@ LAYOUT_EOF
                              icebergs_nml: Runge_not_Verlet = .FALSE.;
                              xgrid_nml:make_exchange_reproduce=.TRUE.;">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A36x1_ice9_4']/node())"/>
+        </run>
+        <run days="2" months="0"
+             overrideParams="fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
+        </run>
+        <run days="2" months="0"
+             overrideParams="fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A84x2_O50']/node())"/>
+        </run>
+        -->
+        <run days="2" months="0"
+             overrideParams="fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A72x2_O36']/node())"/>
         </run>
       </regression>
       <regression label="ice_model_layout">
@@ -8265,7 +8324,11 @@ These are all set to TRUE for now.
 Test individually to see if answers change.
 
   </description>
+<!--
 <executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
+-->
+
+<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q_20200812/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
@@ -8590,7 +8653,10 @@ $baseDate
 "ocean_model_z", "thetao", "thetao", "ocean_z_daily", "all", "mean", "-300.0 60.0 -20.0 20.0 0 300", 2
       </diagTable>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
+         <!--
          <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_nodaily</dataSource>
+         -->
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_20200318</dataSource>
       </dataFile>
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
@@ -8813,6 +8879,28 @@ set nyblocks = $dummy
         </run>
       </regression>
       <regression name="oneday_coldstart">
+        <run days="1" >
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
+        </run>
+      </regression>
+      <regression name="oneday_noOMP">
+        <run days="1" >
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A72x1_O72_test']/node())"/>
+        </run>
+        <run days="1" >
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A144x1_O72_test']/node())"/>
+        </run>
+        <run days="1" >
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x1_O72_test']/node())"/>
+        </run>
+      </regression>
+      <regression name="oneday_OMP">
+        <run days="1" >
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A72x2_O72']/node())"/>
+        </run>
+        <run days="1" >
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A144x2_O72']/node())"/>
+        </run>
         <run days="1" >
       <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
         </run>
