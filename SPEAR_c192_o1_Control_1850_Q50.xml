@@ -8700,10 +8700,7 @@ Added daily ocean SST diagnostic for TIW investigation. Will run this for the we
 Removed daily ocean SST diagnostic.'''
   </description>
 
-<!--
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
--->
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q_20200812/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
+<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
 
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>

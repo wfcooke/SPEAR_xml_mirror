@@ -3625,7 +3625,7 @@ set nyblocks = $dummy
     </csh>
   </input>
   <runtime>
-    <production simTime="100" units="years" >
+    <production simTime="200" units="years" >
       <segment simTime="1" units="years"/>
       <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x4_O72_production_c384']/node())"/>
       <!--

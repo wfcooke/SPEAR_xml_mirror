@@ -60,7 +60,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_Q_20200812" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_STEM" value="SPEAR_experiments_Q" />   <!-- Stem use in FRE directories -->
   <property name="FRE_VERSION" value="bronx-18" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
@@ -417,13 +417,13 @@ configuration.
                    communityGrid=""/>
       <source versionControl="git"
               root="http://github.com/NOAA-GFDL">
-        <codeBase version="2020.02">
+        <codeBase version="2019.01.03">
           FMS.git
         </codeBase>
         <!--
         <csh><![CDATA[
           # Equivalent to checking out the following
-          ( cd FMS && git checkout d34bb9fa1 )
+          ( cd FMS && git checkout f61416fef691d9ba39a40df1ce72aa574f54c390 )
           ]]>
         </csh>
         -->
@@ -929,10 +929,6 @@ configuration.
       </compile>
     </component>
   </experiment>
-
-
-
-
 
 <!--============================-->
 <!--= TEMPLATES FOR INPUT DATA =-->
