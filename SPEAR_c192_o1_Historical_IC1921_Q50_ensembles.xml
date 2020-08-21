@@ -55,8 +55,11 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="MOM6_DATE"    value="2017.10.05"/>              <!-- git tag date for MOM6 source code -->
   <property name="MOM6_GIT_TAG" value="dev/SPEAR"/> <!-- git tag for MOM6 source code -->
   <property name="AWG_GIT_TAG"  value="xanadu"/>           <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"  value="2020.03-beta2"/>           <!-- git tag for FMS source code -->
   <property name="LAND_GIT_TAG"  value="testing_20170929"/>    <!-- git tag for Land source code -->
 
+<!-- Fill in your GFDL group -->
+  <property name="GFDL_YGL"  value="gfdl_f"/> 
 
   <!-- FRE specific properties -->
   <property name="FRE_STEM" value="SPEAR_experiments_Q" />   <!-- Stem use in FRE directories -->
@@ -284,7 +287,7 @@ configuration.
       <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
  
-      <project>gfdl_sd</project>
+      <project>$(GFDL_YGL)</project>
 
       <directory stem="$(FRE_STEM)">
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
@@ -320,7 +323,7 @@ configuration.
       <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
  
-      <project>gfdl_sd</project>
+      <project>$(GFDL_YGL)</project>
 
       <directory stem="$(FRE_STEM)">
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
@@ -359,7 +362,7 @@ configuration.
       <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
  
-      <project>gfdl_sd</project>
+      <project>$(GFDL_YGL)</project>
 
       <directory stem="$(FRE_STEM)">
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
@@ -369,6 +372,9 @@ configuration.
         -->
       </directory>
 
+    </platform>
+    <platform name="ncrc3.intel18">
+      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
     </platform>
 
     <platform name="ncrc4.gnu">
@@ -383,7 +389,7 @@ configuration.
       <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
  
-      <project>gfdl_sd</project>
+      <project>$(GFDL_YGL)</project>
 
       <directory stem="$(FRE_STEM)">
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
@@ -2535,7 +2541,7 @@ LAYOUT_EOF
   <freInclude name="regression_OMP_c384">
     <runtime>
       <regression label="basic">
-        <run days="8" months="0"
+        <run days="1" months="0"
              overrideParams="atmos_model_nml:nxblocks=2;
                              atmos_model_nml:nyblocks=2;
                              fms_nml:clock_grain='ROUTINE';
@@ -8161,6 +8167,9 @@ cd ..
      </postProcess>
   </freInclude>
 
+  <!-- Include the compile XML/experiment -->
+  <xi:include href="SPEAR_experiments_compile.xml" xpointer="xpointer(//experiment[@name='SPEAR_Q$(FMS_GIT_TAG)_nonsymMOM6_exec'])"/>
+
 
 <experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_04_06" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03">
   <input>
@@ -8247,12 +8256,12 @@ cd ..
   </input>
 </experiment>
 
-<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03" >
+<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03" inherit="SPEAR_Q$(FMS_GIT_TAG)_nonsymMOM6_exec">
   <description>
 9/4/2018
 Ensemble member 1 to 3 for c192
   </description>
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
+<!--<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>-->
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
