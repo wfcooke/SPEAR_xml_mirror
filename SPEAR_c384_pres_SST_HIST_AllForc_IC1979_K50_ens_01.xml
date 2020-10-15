@@ -1655,7 +1655,7 @@ set domains_stack_size = "5097152"
                <atm ranks="1152" threads="2"   layout = "12,16"  io_layout = "1,4" />
 	       <lnd                           layout = "12,16"  io_layout = "1,4" />
 	       <ice                           layout = "72,16"  io_layout = "1,1" />
-	       <ocn ranks="0"   threads="1"   layout = "24,48"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	       <ocn ranks="0"   threads="0"   layout = "24,48"  io_layout = "1,1" mask_table="MOM_mask_table" />
 	     </resources>
    </freInclude>
 
@@ -1665,7 +1665,7 @@ set domains_stack_size = "5097152"
                <atm ranks="1152" threads="2"   layout = "12,16"  io_layout = "1,4" />
 	       <lnd                           layout = "12,16"  io_layout = "1,4" />
 	       <ice                           layout = "72,16"  io_layout = "1,1" />
-	       <ocn ranks="0"   threads="1"   layout = "24,48"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	       <ocn ranks="0"   threads="0"   layout = "24,48"  io_layout = "1,1" mask_table="MOM_mask_table" />
 	     </resources>
    </freInclude>
 
@@ -7358,7 +7358,7 @@ Experienced a sat_vapor_pres error in 1995/8/9-19 timeframe.
 Flip make_exchange_reproduce to .false. and extend run.
 
   </description>
-<executable file="/lustre/f2/dev/gfdl/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_AMIP_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_Q2020.02_AMIP_exec.x"/>
+<executable file="/lustre/f2/dev/gfdl/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.03_AMIP_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.03_AMIP_exec.x"/>
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>

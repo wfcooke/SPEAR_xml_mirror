@@ -8164,7 +8164,7 @@ AMIP version of SPEAR_c96_o1_Control_1850_K50.
 <!--
 <executable file="/lustre/f2/dev/gfdl/Hiroyuki.Murakami/SPEAR_experiments_K/SPEAR_K_AMIP_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_K_AMIP_exec.x"/>
 -->
-<executable file="/lustre/f2/dev/gfdl/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_AMIP_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_Q2020.02_AMIP_exec.x"/>
+<executable file="/lustre/f2/dev/gfdl/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.03_AMIP_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.03_AMIP_exec.x"/>
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>

@@ -374,6 +374,8 @@ configuration.
       
       <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+      <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
+      <property name="FNL_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/Feiyu.Lu"/>
  
       <project>gfdl_sd</project>
 
@@ -1632,7 +1634,7 @@ cd ..
 <experiment name="i19950101_OTA_IceAtmRes_L33" inherit="SPEAR_Q_nonsymMOM6_OTA_exec">
   <description>
   </description>
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
+<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.03_nonsymMOM6_exec.x"/>
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>

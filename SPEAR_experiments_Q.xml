@@ -401,10 +401,11 @@ configuration.
    <property name="MOM6_EXAMPLES"  value="$root/$(LIBS_ROOT)/src/mom6"/>
 
 
-  <experiment name="SPEAR_Q2020.02_nonsymMOM6_exec">
+  <experiment name="SPEAR_Q2020.03_nonsymMOM6_exec">
     <description>
       Experiment to build executable. See git log for source code provenance.
-      FMS, FMScoupler, GFDL_atmos_cubed_sphere = 2020.02
+      FMS, FMScoupler = 2020.03
+      GFDL_atmos_cubed_sphere = 2020.02
       atmos_drivers = 2020.01
       MOM6 user/wfc/SPEAR_20100428
     </description>
@@ -417,7 +418,7 @@ configuration.
                    communityGrid=""/>
       <source versionControl="git"
               root="http://github.com/NOAA-GFDL">
-        <codeBase version="2019.01.03">
+        <codeBase version="2020.03">
           FMS.git
         </codeBase>
         <!--
@@ -434,6 +435,7 @@ configuration.
           -Duse_libMPI
           -Duse_netCDF
           -DMAXFIELDMETHODS_=500
+          -Duse_mpp_io
         </cppDefs>
       </compile>
     </component>
@@ -651,7 +653,7 @@ configuration.
                    communityGrid=""/>
       <source versionControl="git"
               root="http://github.com/NOAA-GFDL">
-        <codeBase version="2020.02"> FMScoupler.git </codeBase>
+        <codeBase version="2020.03"> FMScoupler.git </codeBase>
         <!--
         <csh><![CDATA[
           # Equivalent to checking out the following
@@ -670,7 +672,7 @@ configuration.
     </component>
   </experiment>
 
-  <experiment name="SPEAR_Q2020.02_AMIP_exec">
+  <experiment name="SPEAR_Q2020.03_AMIP_exec">
     <description>
       Experiment to build AMIP (atmosphere/land/ice only) executable. See git log for source code provenance.
       Requires SIS rather than SIS2 for reproducibility across restarts.
@@ -684,7 +686,7 @@ configuration.
                    communityGrid=""/>
       <source versionControl="git"
               root="http://github.com/NOAA-GFDL">
-        <codeBase version="2020.02">
+        <codeBase version="2020.03">
           FMS.git
         </codeBase>
         <!--
@@ -702,6 +704,7 @@ configuration.
           -Duse_netCDF
           -DMAXFIELDMETHODS_=500
           -D__PGI
+          -Duse_mpp_io
         </cppDefs>
       </compile>
     </component>
@@ -911,7 +914,7 @@ configuration.
                    communityGrid=""/>
       <source versionControl="git"
               root="http://github.com/NOAA-GFDL">
-        <codeBase version="2020.02"> FMScoupler.git </codeBase>
+        <codeBase version="2020.03"> FMScoupler.git </codeBase>
         <!--
         <csh><![CDATA[
           # Equivalent to checking out the following

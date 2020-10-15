@@ -3822,7 +3822,7 @@ Probably needs to be run at least a year to let the stratosphere adjust.
 FATAL from PE   845: soil_radiation: soil_refl_dir(VIS) out of range: value=                    NaN at lon= 129.5994 lat= -19.0910 i= 145 j=  12 tile=   1 face=   4 time=0030-11-21 23:00:00
 Flipped make_exchange_reproduce to false.
   </description>
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
+<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.03_nonsymMOM6_exec.x"/>
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
