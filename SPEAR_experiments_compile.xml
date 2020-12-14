@@ -383,7 +383,7 @@ from integrations with these models.
           # Equivalent to checking out the following
           ( cd atmos_drivers && git checkout 2020.01 )
           # Updates for pv350K and pv550K diagnostics and 65 level model.
-          ( cd GFDL_atmos_cubed_sphere && git checkout 2020.04-alpha2 )
+          ( cd GFDL_atmos_cubed_sphere && git checkout $(FMS_GIT_TAG) )
           ]]>
         </csh>
       </source>
