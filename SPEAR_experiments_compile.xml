@@ -48,7 +48,7 @@ from integrations with these models.
   <experiment name="SPEAR_Q$(FMS_GIT_TAG)_nonsymMOM6_exec">
     <description>
       Experiment to build executable. See git log for source code provenance.
-      FMS, FMScoupler, GFDL_atmos_cubed_sphere = 2020.02
+      FMS, FMScoupler, GFDL_atmos_cubed_sphere = $(FMS_GIT_TAG)
       atmos_drivers = 2020.01
       MOM6 user/wfc/SPEAR_20100428
     </description>
@@ -84,8 +84,7 @@ from integrations with these models.
 
     <component name="atmos_phys"
                requires="FMS"
-               paths="atmos_param
-                      atmos_shared">
+               paths="atmos_phys">
       <description domainName=""
                    communityName=""
                    communityVersion="$(RELEASE)"
@@ -93,15 +92,8 @@ from integrations with these models.
       <source versionControl="git"
               root="http://gitlab.gfdl.noaa.gov/fms">
         <codeBase version="$(AWG_GIT_TAG)">
-          atmos_shared.git
-          atmos_param.git
+          atmos_phys.git
         </codeBase>
-        <csh><![CDATA[
-          # Equivalent to checking out the following
-          ( cd atmos_shared && git checkout a7eb424f )
-          ( cd atmos_param  && git checkout 8814f6a412bd00a6b79b0b184e643e393f9c719a )
-          ]]>
-        </csh>
       </source>
       <compile>
         <cppDefs>
@@ -122,7 +114,7 @@ from integrations with these models.
                requires="FMS
                          atmos_phys">
       <source versionControl="git"
-              root="https://github.com/wfcooke">
+              root="https://github.com/NOAA-GFDL">
         <codeBase version="master">
           atmos_drivers.git
           GFDL_atmos_cubed_sphere.git
@@ -131,10 +123,7 @@ from integrations with these models.
           # Equivalent to checking out dc8cd8d17f111460d30fd7924c98ca861b07ca4d
           ( cd atmos_drivers && git checkout 2020.01 )
           # Updates for pv350K and pv550K diagnostics and 65 level model.
-          ( cd GFDL_atmos_cubed_sphere && git checkout 2020.02 )
-
-#          ( cd atmos_drivers && git checkout xanadu )
-#          ( cd GFDL_atmos_cubed_sphere && git checkout xanadu )
+          ( cd GFDL_atmos_cubed_sphere && git checkout $(FMS_GIT_TAG) )
           ]]>
         </csh>
       </source>
@@ -317,7 +306,7 @@ from integrations with these models.
     </component>
   </experiment>
 
-  <experiment name="SPEAR_Q2020.02_AMIP_exec">
+  <experiment name="SPEAR_Q$(FMS_GIT_TAG)_AMIP_exec">
     <description>
       Experiment to build AMIP (atmosphere/land/ice only) executable. See git log for source code provenance.
       Requires SIS rather than SIS2 for reproducibility across restarts.
@@ -355,8 +344,7 @@ from integrations with these models.
 
     <component name="atmos_phys"
                requires="FMS"
-               paths="atmos_param
-                      atmos_shared">
+               paths="atmos_phys">
       <description domainName=""
                    communityName=""
                    communityVersion="$(RELEASE)"
@@ -364,15 +352,8 @@ from integrations with these models.
       <source versionControl="git"
               root="http://gitlab.gfdl.noaa.gov/fms">
         <codeBase version="$(AWG_GIT_TAG)">
-          atmos_shared.git
-          atmos_param.git
+          atmos_phys.git
         </codeBase>
-        <csh><![CDATA[
-          # Equivalent to checking out the following
-          ( cd atmos_shared && git checkout a7eb424f )
-          ( cd atmos_param  && git checkout 8814f6a412bd00a6b79b0b184e643e393f9c719a )
-          ]]>
-        </csh>
       </source>
       <compile>
         <cppDefs>
@@ -393,7 +374,7 @@ from integrations with these models.
                requires="FMS
                          atmos_phys">
       <source versionControl="git"
-              root="https://github.com/wfcooke">
+              root="https://github.com/NOAA-GFDL">
         <codeBase version="master">
           atmos_drivers.git
           GFDL_atmos_cubed_sphere.git
@@ -402,7 +383,7 @@ from integrations with these models.
           # Equivalent to checking out the following
           ( cd atmos_drivers && git checkout 2020.01 )
           # Updates for pv350K and pv550K diagnostics and 65 level model.
-          ( cd GFDL_atmos_cubed_sphere && git checkout 25b3383362db5659f84677f38d2f079349fe6d1d )
+          ( cd GFDL_atmos_cubed_sphere && git checkout 2020.04-alpha2 )
           ]]>
         </csh>
       </source>
@@ -558,7 +539,7 @@ from integrations with these models.
                    communityGrid=""/>
       <source versionControl="git"
               root="http://github.com/NOAA-GFDL">
-        <codeBase version="2020.02"> FMScoupler.git </codeBase>
+        <codeBase version="$(FMS_GIT_TAG)"> FMScoupler.git </codeBase>
         <!--
         <csh><![CDATA[
           # Equivalent to checking out the following
