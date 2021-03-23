@@ -278,15 +278,7 @@ configuration.
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
       <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
       <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR"/>
-<!--
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2-tds/dev/gfdl/William.Cooke"/>
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2-tds/pdata/gfdl/gfdl_sd/SPEAR"/>
--->
-
       <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-<!--
-      <property name="CMIP6_ARCHIVE_ROOT"   value="/lustre/f2-tds/dev/gfdl/William.Cooke/copy_of_pdata_cmip6_datasets_CM4"/>
--->
       <property name="NCORE_PER_NODE"      value="36"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
       <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
@@ -299,22 +291,6 @@ configuration.
         <!--
         <include>$HOME/SPEAR/SPEAR_include</include>
         -->
-        <!-- USE FOR F2-TDS setup -->
-<!--
-        <root>/lustre/f2-tds/dev/gfdl/$USER/$(FRE_STEM)</root>
-        <src>/lustre/f2-tds/dev/gfdl/$USER/$(FRE_STEM)/$(name)/src</src>
-        <exec>/lustre/f2-tds/dev/gfdl/$USER/$(FRE_STEM)/$(name)/$(platform)-$(target)/exec</exec>
-        <scripts>/lustre/f2-tds/dev/gfdl/$USER/$(FRE_STEM)/$(name)/$(platform)-$(target)/scripts</scripts>
-        <stdout>/lustre/f2-tds/scratch/$USER/$(FRE_STEM)/$(name)/$(platform)-$(target)/stdout</stdout>
-        <state>/lustre/f2-tds/dev/gfdl/$USER/$(FRE_STEM)/$(name)/$(platform)-$(target)/state</state>
-        <work>/lustre/f2-tds/scratch/$USER/work/$FRE_JOBID</work>
-        <ptmp>/lustre/f2-tds/scratch/$USER/ptmp</ptmp>
-        <stmp>/lustre/f2-tds/scratch/$USER/stmp</stmp>
-        <archive>/lustre/f2-tds/scratch/$USER/$(FRE_STEM)/$(name)/$(platform)-$(target)</archive>
-        <postProcess>/lustre/f2-tds/scratch/$USER/$(FRE_STEM)/$(name)/$(platform)-$(target)/pp</postProcess>
-        <analysis>/lustre/f2-tds/scratch/$USER/$(FRE_STEM)/$(name)/$(platform)-$(target)/analysis</analysis>
-        <include>$(xmlDir)/SPEAR_include</include>
--->
       </directory>
 
       <!-- Uncomment the <csh> section if needing to run with DDT -->
@@ -742,9 +718,6 @@ setenv MAIN_PROGRAM coupler/coupler_main.o
        <dataSource platform="$(platform)">$CPERM/Huan.Guo/INPUT/drag/c192_topo_rough_land.nc.tar</dataSource>
        -->
        <dataSource platform="$(platform)">/lustre/f2/pdata//gfdl/gfdl_M/Huan.Guo/INPUT/drag/c192_topo_rough_land.nc.tar</dataSource>
-       <!--
-       <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/Huan.Guo/INPUT/drag/c192_topo_rough_land.nc.tar</dataSource>
-       -->
      </dataFile> 
     </input>
   </freInclude>
@@ -856,10 +829,6 @@ set domains_stack_size = "5097152"
 <!--================================-->
 
    <freInclude name="resourceparams_A576x2_O108_production_c192">
-<!--
-             <resources jobWallclock="1:40:00"
-                   segRuntime="1:40:00" >
--->
              <resources jobWallclock="16:00:00"
                    segRuntime="4:20:00" >
                <atm ranks="576" threads="2"  layout = "8,12"   io_layout = "1,4" />
@@ -2771,7 +2740,6 @@ FATAL from PE   516: soil_radiation: soil_refl_dir(VIS) out of range: value=    
   </input>
 </experiment>
 
-
 <experiment name="SPEAR_c192_o1_NATURAL_IC1921_K50_ens_13_15" inherit="SPEAR_c192_o1_NATURAL_IC1921_K50_ens_01_03">
 <description>
 8/31/2019
@@ -3772,10 +3740,10 @@ set nyblocks = $dummy
         <timeAverage source="annual"  interval="$(CHUNK_LENGTH_A)"/>
         <timeAverage source="annual"  interval="$(CHUNK_LENGTH_C)"/>
       </component>
-      <component type="land_daily"  start="$(PP_START_YEAR_HIST)"  source="land_daily" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="384,768">
+      <component type="land_daily"  start="$(PP_START_YEAR_HIST)"  source="land_daily" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="360,576">
 	<timeSeries freq="daily" source="land_daily" chunkLength="$(CHUNK_LENGTH_A)"/>
       </component>
-      <component type="land"  start="$(PP_START_YEAR_HIST)"  source="land_month" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="384,768">
+      <component type="land"  start="$(PP_START_YEAR_HIST)"  source="land_month" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="360,576">
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"/>
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
@@ -3783,14 +3751,14 @@ set nyblocks = $dummy
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
       </component>
-      <component type="land_inst_month"   start="$(PP_START_YEAR_HIST)" source="land_month_inst" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="384,768">
+      <component type="land_inst_month"   start="$(PP_START_YEAR_HIST)" source="land_month_inst" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="360,576">
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
       </component>
-      <component type="river_daily"  start="$(PP_START_YEAR_HIST)"  source="river_daily" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="384,768">
+      <component type="river_daily"  start="$(PP_START_YEAR_HIST)"  source="river_daily" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="360,576">
 	<timeSeries freq="daily" source="river_daily" chunkLength="$(CHUNK_LENGTH_A)"/>
       </component>
-      <component type="river"  start="$(PP_START_YEAR_HIST)"  source="river_month" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="384,768">
+      <component type="river"  start="$(PP_START_YEAR_HIST)"  source="river_month" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="360,576">
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"/>
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
@@ -3798,7 +3766,7 @@ set nyblocks = $dummy
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
       </component>
-      <component type="river_inst_month"   start="$(PP_START_YEAR_HIST)" source="river_month_inst" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="384,768">
+      <component type="river_inst_month"   start="$(PP_START_YEAR_HIST)" source="river_month_inst" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="360,576">
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
       </component>
