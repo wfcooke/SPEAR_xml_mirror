@@ -57,7 +57,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
   <!-- FRE specific properties -->
   <property name="FRE_STEM" value="SPEAR_experiments_K" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-15" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_VERSION" value="bronx-18" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
@@ -255,6 +255,10 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
+    <platform name="gfdl.ncrc4-intel18">
+      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
     <platform name="gfdl.ncrc3-intel16">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
@@ -272,6 +276,39 @@ configuration.
     </platform>
 
     <!-- NCRC Platforms -->
+    <platform name="ncrc4.intel18">
+      <freVersion>$(FRE_VERSION)</freVersion>
+      <compiler type="intel" version="18.0.6.288" />
+
+      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <property name="NCORE_PER_NODE"      value="36"/>
+      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+      <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
+ 
+      <project>gfdl_sd</project>
+
+      <directory stem="$(FRE_STEM)">
+        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
+        <!--
+        <include>$HOME/SPEAR/SPEAR_include</include>
+        -->
+      </directory>
+
+      <!-- Uncomment the <csh> section if needing to run with DDT -->
+      <!--
+      <csh><![CDATA[
+         module load ddt
+         setenv DDTMPIRUN /opt/cray/alps/default/bin/aprun
+         alias runCommand ddt  -n $npes  ./$executable:t 
+        ]]>
+      </csh>
+      -->
+    </platform>
 
     <platform name="ncrc4.intel16">
       <freVersion>$(FRE_VERSION)</freVersion>
@@ -3605,7 +3642,15 @@ set nyblocks = $dummy
       </regression>
       <regression name="oneyear">
         <run months="12" >
+      <!--
       <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180_long']/node())"/>
+      -->
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108']/node())"/>
+        </run>
+      </regression>
+      <regression name="sixmonth_test">
+        <run months="6" >
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108']/node())"/>
         </run>
       </regression>
       <regression name="oneday_coldstart">

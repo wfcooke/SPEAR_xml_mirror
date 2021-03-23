@@ -57,7 +57,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
   <!-- FRE specific properties -->
   <property name="FRE_STEM" value="SPEAR_experiments_K" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-15" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_VERSION" value="bronx-18" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
@@ -261,6 +261,10 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
+    <platform name="gfdl.ncrc4-intel18">
+      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
     <platform name="gfdl.ncrc4-gnu">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
@@ -337,6 +341,33 @@ configuration.
 
     <platform name="ncrc4.intel">
       <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel16']/node())" />
+    </platform>
+    
+    <platform name="ncrc4.intel18">
+      <freVersion>$(FRE_VERSION)</freVersion>
+      <compiler type="intel" version="18.0.6.288" />
+
+      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
+      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      <property name="NCORE_PER_NODE"      value="36"/>
+      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+ 
+      <project>gfdl_sd</project>
+
+      <directory stem="$(FRE_STEM)">
+        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
+        <!--
+        <include>$HOME/SPEAR/SPEAR_include</include>
+        -->
+      </directory>
+
     </platform>
 
     <platform name="ncrc4.gnu">
@@ -18933,6 +18964,134 @@ set nyblocks = $dummy
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_o1_Hist_AllForc_IC1921_K50_ens_28_30/SPEAR_c192_o1_Control_1850_K50_IC641_ens01_03.tar</dataSource>
      </dataFile> 
   </input>
+</experiment>
+
+<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_K50_ens_28_30_rerun_1959" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_K50_ens_01_03">
+<description>
+11/19/2020
+Values for several atmospheric variables were corrupt (zero-value) for December 1959.
+Rerunning experiment for 1 year to correct this.
+</description>
+  <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
+     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_Hist_AllForc_IC1921_K50_ens_28_30/19590101.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/SPEAR/SPEAR_c192_o1_Hist_AllForc_IC1921_K50_ens_28_30/restart/19590101.tar</dataSource>
+     </dataFile> 
+      <csh type="always"><![CDATA[
+######BEGIN MOM6 and SIS2 layout setup################
+##THIS HAS TO BE PART OF csh type=always###
+
+touch $work/INPUT/MOM_override
+
+cat > $work/INPUT/MOM_override << EOF
+#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
+#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
+NUM_DIAG_COORDS = 2             ! default = 1
+                                ! The number of diagnostic vertical coordinates to use.
+                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
+DIAG_COORDS = "z Z ZSTAR", "rho2 RHO2 RHO" !
+
+DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
+                                ! Determines how to specify the coordinate
+                                ! resolution. Valid options are:
+                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
+                                !  UNIFORM[:N] - uniformly distributed
+                                !  FILE:string - read from a file. The string specifies
+                                !                the filename and variable name, separated
+                                !                by a comma or space, e.g. FILE:lev.nc,dz
+                                !                or FILE:lev.nc,interfaces=zw
+                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
+                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
+                                !  HYBRID:string - read from a file. The string specifies
+                                !                the filename and two variable names, separated
+                                !                by a comma or space, for sigma-2 and dz. e.g.
+                                !                HYBRID:vgrid.nc,sigma2,dz
+
+EOF
+
+touch $work/INPUT/SIS_override
+
+cat > $work/INPUT/SIS_override << EOF
+#override CP_SEAWATER = 3992.
+#override CP_BRINE = 3992.
+#override ICE_BULK_SALINITY = 0.0
+#override ICE_RELATIVE_SALINITY = 0.17
+#override SIS2_FILLING_FRAZIL = T
+#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
+#override SIS_CONTINUITY_SCHEME = "PCM"
+#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
+EOF
+
+#scan auxiliary_nml
+#set OCN_MASK_TABLE = 
+#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+
+cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
+#override IO_LAYOUT = $ocn_io_layout
+#override LAYOUT    = $ocn_layout
+#override MASKTABLE = $ocn_mask_table
+MOM_LAYOUT_EOF
+
+#scan auxiliary_nml
+#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+
+cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
+#override IO_LAYOUT = $ice_io_layout
+#override LAYOUT    = $ice_layout
+#override MASKTABLE = $ocn_mask_table
+SIS_LAYOUT_EOF
+
+######END MOM6 and SIS2 layout setup################
+
+cd $work/INPUT
+
+cd $work
+
+#------------------------------------------
+## Find out whether to restart.
+# MOM6 restart switch
+   set restart_flag = 'r'
+   set sis_restart_flag = 'r'
+cd $work
+
+## Run the model
+#------------------------------------------
+###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
+set OCN_MASK_TABLE  =  $ocn_mask_table
+set OCN_LAYOUT    = $ocn_layout
+set OCN_IO_LAYOUT = $ocn_io_layout
+set ICE_LAYOUT    = $ice_layout
+set ICE_IO_LAYOUT = $ice_io_layout
+set atmos_npes = $atm_ranks
+set ocean_npes = $ocn_ranks
+set fv_layout = $atm_layout
+set fv_io_layout  = $atm_io_layout
+set land_layout   = $lnd_layout
+set land_io_layout = $lnd_io_layout
+set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nxblocks = $dummy
+set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nyblocks = $dummy
+]]>
+    </csh>
+  </input>
+  <runtime>
+    <production simTime="1" units="years" >
+      <segment simTime="1" units="years"/>
+      <!--
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x4_O252_production_c192']/node())"/>
+      -->
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108_production_c192']/node())"/>
+    </production> 
+    </runtime>
 </experiment>
 
 <experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_K50_ens_01_03" inherit="SPEAR_K_nonsymMOM6_exec">
