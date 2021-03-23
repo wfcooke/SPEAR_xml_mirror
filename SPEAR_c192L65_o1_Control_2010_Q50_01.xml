@@ -3822,7 +3822,7 @@ Probably needs to be run at least a year to let the stratosphere adjust.
 FATAL from PE   845: soil_radiation: soil_refl_dir(VIS) out of range: value=                    NaN at lon= 129.5994 lat= -19.0910 i= 145 j=  12 tile=   1 face=   4 time=0030-11-21 23:00:00
 Flipped make_exchange_reproduce to false.
   </description>
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.03_nonsymMOM6_exec.x"/>
+<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20210210/SPEAR_R2020.04_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.04_nonsymMOM6_exec.x"/>
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
@@ -4279,6 +4279,29 @@ $baseDate
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override DEFAULT_2018_ANSWERS = T
+
+
+#override REMAP_UV_USING_OLD_ALG = True
+#override Z_INIT_REMAP_OLD_ALG = True
+#override FIX_USTAR_GUSTLESS_BUG =False
+#override GRID_ROTATION_ANGLE_BUGS = True
+#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
+#override KAPPA_SHEAR_ITER_BUG = True
+#override USE_GM_WORK_BUG = True
+#override USE_MLD_ITERATION = False
+#override USE_TRIPOLAR_GEOLONB_BUG =True 
+#override GUST_CONST = 0.02
+#override MEKE_ALPHA_EADY = 0.05
+#override MEKE_ALPHA_RHINES = 0.05
+#override MIN_SALINITY = 0.01
+
+#override RESTART_CHECKSUMS_REQUIRED=False
+
+#override USE_INACCURATE_PGF_RHO_ANOM=True
+#override USE_DIABATIC_TIME_BUG=True
+#override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
+#override KH_BG_2D_BUG=True
 #override TOPO_EDITS_FILE = "topo_edits_011818.nc"
 #override CHANNEL_LIST_FILE = MOM_channels_SPEAR
 NUM_DIAG_COORDS = 3             ! default = 1
@@ -4316,6 +4339,11 @@ cat > $work/INPUT/SIS_override << EOF
 #override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
 #override SIS_CONTINUITY_SCHEME = "PCM"
 #override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
+#override GRID_ROTATION_ANGLE_BUGS =True
+#override USE_TRIPOLAR_GEOLONB_BUG = True
+
+#override INCONSISTENT_COVER_BUG = True
+#override CFL_MASS_NEGLECT_BUG=True
 EOF
 
 #scan auxiliary_nml

@@ -8375,6 +8375,192 @@ cd ..
 
 
 
+<experiment name="SPEAR_c96_o1_Control_1850_Q50_new" inherit="SPEAR_c96_o1_Control_1850_Q50">
+<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q_20201130/SPEAR_Q2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.03_nonsymMOM6_exec.x"/>
+  <input>
+      <csh type="always"><![CDATA[
+######BEGIN MOM6 and SIS2 layout setup################
+##THIS HAS TO BE PART OF csh type=always###
+
+# out for 15 through 23, back in for 24
+#override REMAP_UV_USING_OLD_ALG = True
+#override Z_INIT_REMAP_OLD_ALG = True
+
+# out for 20, in for 21,22,23
+#override FIX_USTAR_GUSTLESS_BUG =False
+#override GRID_ROTATION_ANGLE_BUGS = True
+#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
+#override KAPPA_SHEAR_ITER_BUG = True
+
+# in for 20,23 out for 21,22
+#override USE_GM_WORK_BUG = True
+#override USE_MLD_ITERATION = False
+#override USE_TRIPOLAR_GEOLONB_BUG =True 
+
+#out for 22
+#override GUST_CONST = 0.02
+#override MEKE_ALPHA_EADY = 0.05
+#override MEKE_ALPHA_RHINE = 0.05
+#override MIN_SALINITY = 0.01
+
+#out for 23
+#override MEKE_ALPHA_EADY = 0.05
+#override MEKE_ALPHA_RHINE = 0.05
+
+#back in for 25 (THIS IS THE CAUSE OF THE HANG
+#override MEKE_ALPHA_EADY = 0.05
+
+# run 26  revert to K exec and change ENERGYSAVEDAYS/IC_STATS_INTERVAL to 0.125
+
+#back in for 27
+#override MEKE_ALPHA_RHINE = 0.05
+#out for 27
+#override MEKE_ALPHA_EADY = 0.05
+
+
+# NONE of these were used prior to debug run 16
+#override MEKE_ALPHA_RHINE = 0.05               #Added in debug run 16
+#override GUST_CONST = 0.02                     #Added in debug run 16
+#override MIN_SALINITY = 0.01                   #Added in debug run 16
+#override USE_TRIPOLAR_GEOLONB_BUG =True        #Added in debug run 16
+#override FIX_USTAR_GUSTLESS_BUG =False         #Added in debug run 17
+#override GRID_ROTATION_ANGLE_BUGS = True       #Added in debug run 18
+#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True  #Added in debug run 19
+#override KAPPA_SHEAR_ITER_BUG = True           #Added in debug run 20
+#override USE_GM_WORK_BUG = True                #Added in debug run 21
+#override USE_MLD_ITERATION = False             #Added in debug run 22
+#override REMAP_UV_USING_OLD_ALG = True         #Added in debug run 23
+#override Z_INIT_REMAP_OLD_ALG = True           #Added in debug run 24
+
+
+touch $work/INPUT/MOM_override
+
+# DEFAULT_2018_ANSWERS=T for run 16
+cat > $work/INPUT/MOM_override << EOF
+#override DEFAULT_2018_ANSWERS = T
+
+
+#override MEKE_ALPHA_RHINES = 0.05
+#override GUST_CONST = 0.02
+#override MIN_SALINITY = 0.01
+#override USE_TRIPOLAR_GEOLONB_BUG =True 
+#override FIX_USTAR_GUSTLESS_BUG =False
+#override GRID_ROTATION_ANGLE_BUGS = True
+#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
+#override KAPPA_SHEAR_ITER_BUG = True 
+#override USE_GM_WORK_BUG = True
+#override USE_MLD_ITERATION = False
+#override REMAP_UV_USING_OLD_ALG = True
+#override Z_INIT_REMAP_OLD_ALG = True 
+
+#override ENERGYSAVEDAYS = 0.125
+
+#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
+#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
+NUM_DIAG_COORDS = 3             ! default = 1
+                                ! The number of diagnostic vertical coordinates to use.
+                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
+DIAG_COORDS = "z Z ZSTAR, rho2 RHO2 RHO, ztop ZTOP300 ZSTAR"
+
+DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
+                                ! Determines how to specify the coordinate
+                                ! resolution. Valid options are:
+                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
+                                !  UNIFORM[:N] - uniformly distributed
+                                !  FILE:string - read from a file. The string specifies
+                                !                the filename and variable name, separated
+                                !                by a comma or space, e.g. FILE:lev.nc,dz
+                                !                or FILE:lev.nc,interfaces=zw
+                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
+                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
+                                !  HYBRID:string - read from a file. The string specifies
+                                !                the filename and two variable names, separated
+                                !                by a comma or space, for sigma-2 and dz. e.g.
+                                !                HYBRID:vgrid.nc,sigma2,dz
+
+DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
+EOF
+
+touch $work/INPUT/SIS_override
+
+cat > $work/INPUT/SIS_override << EOF
+#override CP_SEAWATER = 3992.
+#override CP_BRINE = 3992.
+#override ICE_BULK_SALINITY = 0.0
+#override ICE_RELATIVE_SALINITY = 0.17
+#override SIS2_FILLING_FRAZIL = T
+#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
+#override SIS_CONTINUITY_SCHEME = "PCM"
+#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
+#override ICE_STATS_INTERVAL = 0.125
+EOF
+
+#scan auxiliary_nml
+#set OCN_MASK_TABLE = 
+#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+
+cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
+#override IO_LAYOUT = $ocn_io_layout
+#override LAYOUT    = $ocn_layout
+#override MASKTABLE = $ocn_mask_table
+MOM_LAYOUT_EOF
+
+#scan auxiliary_nml
+#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+
+cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
+#override IO_LAYOUT = $ice_io_layout
+#override LAYOUT    = $ice_layout
+#override MASKTABLE = $ocn_mask_table
+SIS_LAYOUT_EOF
+
+######END MOM6 and SIS2 layout setup################
+
+cd $work/INPUT
+
+if ( $currentSeg == 1 ) then
+     rm -f coupler.res
+endif
+cd $work
+
+#------------------------------------------
+## Find out whether to restart.
+# MOM6 restart switch
+if ( $currentSeg == 1 ) then
+   set restart_flag = 'n'
+else
+   set restart_flag = 'r'
+endif
+   set sis_restart_flag = 'r'
+cd $work
+
+## Run the model
+#------------------------------------------
+###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
+set OCN_MASK_TABLE  =  $ocn_mask_table
+set OCN_LAYOUT    = $ocn_layout
+set OCN_IO_LAYOUT = $ocn_io_layout
+set ICE_LAYOUT    = $ice_layout
+set ICE_IO_LAYOUT = $ice_io_layout
+set atmos_npes = $atm_ranks
+set ocean_npes = $ocn_ranks
+set fv_layout = $atm_layout
+set fv_io_layout  = $atm_io_layout
+set land_layout   = $lnd_layout
+set land_io_layout = $lnd_io_layout
+set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nxblocks = $dummy
+set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nyblocks = $dummy
+]]>
+    </csh>
+  </input>
+</experiment>
+
 <experiment name="SPEAR_c96_o1_Control_1850_Q50" >
   <description>
 2/1/2018
@@ -8401,8 +8587,41 @@ the old code you are not adversely affected. The flags are:
 These are all set to TRUE for now.
 Test individually to see if answers change.
 
+
+1/20/2021
+USE_INACCURATE_PGF_RHO_ANOM=True
+USE_DIABATIC_TIME_BUG=True
+NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
+KH_BG_2D_BUG=True
+
+2/10/2021
+MOM_override needs
+ DEFAULT_2018_ANSWERS = T
+ REMAP_UV_USING_OLD_ALG = True
+ Z_INIT_REMAP_OLD_ALG = True
+ FIX_USTAR_GUSTLESS_BUG =False
+ GRID_ROTATION_ANGLE_BUGS = True
+ KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
+ KAPPA_SHEAR_ITER_BUG = True
+ USE_GM_WORK_BUG = True
+ USE_MLD_ITERATION = False
+ USE_TRIPOLAR_GEOLONB_BUG =True 
+ GUST_CONST = 0.02
+ MEKE_ALPHA_EADY = 0.05
+ MEKE_ALPHA_RHINES = 0.05
+ MIN_SALINITY = 0.01
+ USE_INACCURATE_PGF_RHO_ANOM=True
+ USE_DIABATIC_TIME_BUG=True
+ NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
+ KH_BG_2D_BUG=True
+
+Add the following to SIS_override
+GRID_ROTATION_ANGLE_BUGS =True
+USE_TRIPOLAR_GEOLONB_BUG = True
+
+
   </description>
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.03_nonsymMOM6_exec.x"/>
+<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20210210/SPEAR_R2020.04_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.04_nonsymMOM6_exec.x"/>
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
@@ -8791,6 +9010,30 @@ $baseDate
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override DEFAULT_2018_ANSWERS = T
+
+
+#override REMAP_UV_USING_OLD_ALG = True
+#override Z_INIT_REMAP_OLD_ALG = True
+#override FIX_USTAR_GUSTLESS_BUG =False
+#override GRID_ROTATION_ANGLE_BUGS = True
+#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
+#override KAPPA_SHEAR_ITER_BUG = True
+#override USE_GM_WORK_BUG = True
+#override USE_MLD_ITERATION = False
+#override USE_TRIPOLAR_GEOLONB_BUG =True 
+#override GUST_CONST = 0.02
+#override MEKE_ALPHA_EADY = 0.05
+#override MEKE_ALPHA_RHINES = 0.05
+#override MIN_SALINITY = 0.01
+
+
+#override USE_INACCURATE_PGF_RHO_ANOM=True
+#override USE_DIABATIC_TIME_BUG=True
+#override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
+#override KH_BG_2D_BUG=True
+
+
 #override TOPO_EDITS_FILE = "topo_edits_011818.nc"
 #override CHANNEL_LIST_FILE = MOM_channels_SPEAR
 NUM_DIAG_COORDS = 3             ! default = 1
@@ -8817,49 +9060,6 @@ DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default 
 DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
 EOF
 
-#cat > $work/INPUT/MOM_override << EOF
-##override DEBUG = FALSE
-##override EPBL_MSTAR_SCHEME = "OM4"
-##override EPBL_2018_ANSWERS  = TRUE
-##override HOR_VISC_2018_ANSWERS  = TRUE
-##override OPTICS_2018_ANSWERS  = TRUE
-##override SET_DIFF_2018_ANSWERS  = TRUE
-##override SET_VISC_2018_ANSWERS  = TRUE
-##override SURFACE_FORCING_2018_ANSWERS  = TRUE
-##override TIDAL_MIXING_2018_ANSWERS  = TRUE
-##override WIND_GYRES_2018_ANSWERS  = TRUE
-#
-##override ENERGYSAVEDAYS = 0.25
-##override TOPO_EDITS_FILE = "topo_edits_011818.nc"
-##override CHANNEL_LIST_FILE = MOM_channels_SPEAR
-#NUM_DIAG_COORDS = 5             ! default = 1
-#                                ! The number of diagnostic vertical coordinates to use.
-#                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
-#DIAG_COORDS = "z Z ZSTAR, rho2 RHO2 RHO, ztop ZTOP300 ZSTAR, za  ZA  ZSTAR,abc  ZB  ZSTAR"
-#
-#DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
-#                                ! Determines how to specify the coordinate
-#                                ! resolution. Valid options are:
-#                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
-#                                !  UNIFORM[:N] - uniformly distributed
-#                                !  FILE:string - read from a file. The string specifies
-#                                !                the filename and variable name, separated
-#                                !                by a comma or space, e.g. FILE:lev.nc,dz
-#                                !                or FILE:lev.nc,interfaces=zw
-#                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
-#                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
-#                                !  HYBRID:string - read from a file. The string specifies
-#                                !                the filename and two variable names, separated
-#                                !                by a comma or space, for sigma-2 and dz. e.g.
-#                                !                HYBRID:vgrid.nc,sigma2,dz
-#
-#DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600."
-#DIAG_COORD_DEF_ZA  =  "WOA09"
-#DIAG_COORD_DEF_ZB  =  "UNIFORM:10,20."
-#
-#
-#EOF
-
 touch $work/INPUT/SIS_override
 
 cat > $work/INPUT/SIS_override << EOF
@@ -8871,6 +9071,11 @@ cat > $work/INPUT/SIS_override << EOF
 #override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
 #override SIS_CONTINUITY_SCHEME = "PCM"
 #override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
+#override GRID_ROTATION_ANGLE_BUGS =True
+#override USE_TRIPOLAR_GEOLONB_BUG = True
+
+#override INCONSISTENT_COVER_BUG = True
+#override CFL_MASS_NEGLECT_BUG=True
 EOF
 
 #scan auxiliary_nml
