@@ -108,7 +108,8 @@ from integrations with these models.
                paths="atmos_drivers/coupled
                       GFDL_atmos_cubed_sphere/driver/GFDL
                       GFDL_atmos_cubed_sphere/model
-                      GFDL_atmos_cubed_sphere/model_nh_null
+                      GFDL_atmos_cubed_sphere/driver/SHiELD/cloud_diagnosis.F90
+                      GFDL_atmos_cubed_sphere/driver/SHiELD/gfdl_cloud_microphys.F90
                       GFDL_atmos_cubed_sphere/tools
                       GFDL_atmos_cubed_sphere/GFDL_tools"
                requires="FMS
@@ -120,10 +121,10 @@ from integrations with these models.
           GFDL_atmos_cubed_sphere.git
         </codeBase>
         <csh><![CDATA[
-          # Equivalent to checking out dc8cd8d17f111460d30fd7924c98ca861b07ca4d
           ( cd atmos_drivers && git checkout 2020.01 )
-          # Updates for pv350K and pv550K diagnostics and 65 level model.
-          ( cd GFDL_atmos_cubed_sphere && git checkout 2020.04 )
+
+          # fa9ee63 = 2021 fv3 science updates + fix for FMS-2021.02
+          ( cd GFDL_atmos_cubed_sphere && git checkout fa9ee63 )
           ]]>
         </csh>
       </source>

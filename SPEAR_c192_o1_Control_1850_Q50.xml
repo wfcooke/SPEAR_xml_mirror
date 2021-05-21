@@ -57,7 +57,7 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="MOM6_GIT_TAG" value="dev/SPEAR"/> <!-- git tag for MOM6 source code -->
   <property name="AWG_GIT_TAG"  value="xanadu"/>           <!-- git tag for AWG source code -->
   <property name="LAND_GIT_TAG"  value="testing_20170929"/>    <!-- git tag for Land source code -->
-  <property name="FMS_GIT_TAG"  value="2021.01"/>           <!-- git tag for FMS source code -->
+  <property name="FMS_GIT_TAG"  value="2021.02"/>           <!-- git tag for FMS source code -->
 
 <!-- Fill in your GFDL group -->
   <property name="GFDL_YGL"  value="gfdl_YOURGROUPLETTER"/>
