@@ -44,14 +44,26 @@ SPEAR_c192_omlp25_Control_2010_A01
 <experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2001/XInclude">
 
   <!--User should set the following properties according to the plan for the production run-->
-  <property name="RELEASE" value="dev/awg" />
-  <property name="MOM6_DATE"    value="2017.10.05"/>              <!-- git tag date for MOM6 source code -->
-  <property name="MOM6_GIT_TAG" value="dev/gfdl/$(MOM6_DATE)"/> <!-- git tag for MOM6 source code -->
-  <property name="AWG_GIT_TAG"  value="xanadu"/>           <!-- git tag for AWG source code -->
-  <property name="LAND_GIT_TAG"  value="xanadu"/>    <!-- git tag for Land source code -->
+<!--  <property name="RELEASE" value="dev/awg" />
+  <property name="MOM6_DATE"    value="2017.10.05"/>            
+  <property name="MOM6_GIT_TAG" value="dev/gfdl/$(MOM6_DATE)"/> 
+  <property name="AWG_GIT_TAG"  value="xanadu"/>     
+  <property name="LAND_GIT_TAG"  value="xanadu"/>    
 
 
   <property name="FRE_STEM" value="SPEAR_reforecast" />
+-->
+  <!-- Properties for the source code versions -->
+  <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
+  <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
+  <property name="AWG_GIT_TAG"  value="xanadu"/>           <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG" value="2020.03"/>
+  <property name="LAND_GIT_TAG"  value="testing_20170929"/>    <!-- git tag for Land source code -->
+  <property name="ATMOS_DRIVERS_TAG"  value="2020.01"/>           <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG"  value="2020.03"/>           <!-- git tag for atmos_cubed_sphere source code -->
+
+  <!-- FRE specific properties -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20210427" />   <!-- Stem use in FRE directories -->
   <property name="FRE_VERSION" value="bronx-18" />
   <property name="FRE_NCTOOLS" value="fre-nctools/tikal" />
   <property name="ANALYSIS_SWITCH" value="on"/>
@@ -276,6 +288,10 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
+    <platform name="gfdl.ncrc3-intel18">
+      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
     <platform name="gfdl.ncrc4-intel">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
@@ -329,6 +345,25 @@ configuration.
         ]]>
       </csh>
       -->
+    </platform>
+
+    <platform name="ncrc3.intel18">
+      <freVersion>$(FRE_VERSION)</freVersion>
+      <compiler type="intel" version="18.0.6.288" />
+      <project>gfdl_sd</project>
+      <directory stem="$(FRE_STEM)">
+	<scripts>$DEV/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
+      </directory>
+
+      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
+      <property name="WFC_ARCHIVE_ROOT" value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
+      <property name="FNL_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/Feiyu.Lu"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
+      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+      <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
     </platform>
 
     <platform name="ncrc4.intel16">
@@ -394,506 +429,11 @@ configuration.
 <!--= COMPILE =-->
 <!--===========-->
 
-  <experiment name="SPEAR_Q_nonsymMOM6_OTA_exec">
-    <description>
-      Experiment to build executable. See git log for source code provenance.
-    </description>
+  <!--The property MOM6_EXAMPLES should point to the mom6 directory that is checked out. It is needed by MOM6 to access its inpu data files-->
+   <property name="MOM6_EXAMPLES"  value="$root/$(LIBS_ROOT)/src/mom6"/>
 
-    <component name="FMS"
-               paths="FMS">
-      <description domainName="infrastructure"
-                   communityName="FMS"
-                   communityVersion="$(RELEASE)"
-                   communityGrid=""/>
-      <source versionControl="git"
-              root="http://github.com/NOAA-GFDL">
-        <codeBase version="master">
-          FMS.git
-        </codeBase>
-        <!--
-        <csh><![CDATA[
-          # Equivalent to checking out the following
-          # Need to use this hash to reproduce old control/hist/assimilation results.
-          ( cd FMS && git checkout cb85999e0f9c168f41a169548d8272e738f5eb1a )
-          ]]>
-        </csh>
-        -->
-      </source>
-      <compile>
-        <cppDefs>
-          $(F2003_FLAGS)
-          -Duse_libMPI
-          -Duse_netCDF
-          -DMAXFIELDMETHODS_=500
-          -D__PGI
-        </cppDefs>
-      </compile>
-    </component>
-    <component name="atmos_phys"
-               requires="FMS"
-               paths="atmos_param
-                      atmos_shared">
-      <description domainName=""
-                   communityName=""
-                   communityVersion="$(RELEASE)"
-                   communityGrid=""/>
-      <source versionControl="git"
-              root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="$(AWG_GIT_TAG)">
-          atmos_shared.git
-          atmos_param.git
-        </codeBase>
-        <!--
-        <csh><![CDATA[
-          # Equivalent to checking out the following
-          ( cd atmos_shared && git checkout 23054287c2edd2f4148e6ea8fd2db152ec5b470c )
-          ( cd atmos_param  && git checkout 8814f6a412bd00a6b79b0b184e643e393f9c719a )
-          ]]>
-        </csh>
-        -->
-      </source>
-      <compile>
-        <cppDefs>
-          $(F2003_FLAGS)
-          -DCLUBB
-          -DAM3_CHEM
-        </cppDefs>
-      </compile>
-    </component>
-    <component name="atmos_dyn"
-               paths="atmos_drivers/coupled
-                      atmos_cubed_sphere/driver/coupled
-                      atmos_cubed_sphere/model
-                      atmos_cubed_sphere/model_nh_null
-                      atmos_cubed_sphere/tools
-                      atmos_cubed_sphere/GFDL_tools"
-               requires="FMS
-                         atmos_phys">
-      <source versionControl="git"
-              root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="master">
-          atmos_drivers.git
-          atmos_cubed_sphere.git
-        </codeBase>
-        <csh><![CDATA[
-          # Equivalent to checking out the following
-          ( cd atmos_drivers && git checkout 3be6ed406de2db29766746a69115fd6a47048692 )
-          # Updates for pv350K and pv550K diagnostics and 65 level model.
-          ( cd atmos_cubed_sphere && git checkout 9a92a8fa0551ca27a8382a046ed72d33f13f40e3 )
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs>
-          $(F2003_FLAGS)
-          -DSPMD
-          -D__PGI
-        </cppDefs>
-      </compile>
-    </component>
-    <component name="land_lad2"
-               requires="FMS"
-               paths="land_lad2">
-      <description domainName="LM3"
-                   communityName="land_lad2"
-                   communityVersion="lad2_20170209_slm"
-                   communityGrid=""/>
-      <source versionControl="git"
-              root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="$(LAND_GIT_TAG)">
-          land_lad2.git
-        </codeBase>
-        <csh><![CDATA[
-          ( cd land_lad2 && git checkout 7a8a4fcaf6b49b02926cd739f225e20f42d01615)
-          ]]>
-        </csh>
-      </source>
-      <compile doF90Cpp="yes">
-        <cppDefs>
-          $(F2003_FLAGS)
-          -nostdinc
-        </cppDefs>
-      </compile>
-    </component>
-    <component name="mom6"
-               requires="FMS"
-               paths="MOM6/config_src/dynamic
-                      MOM6/config_src/coupled_driver
-                      MOM6/src/*/
-                      MOM6/src/*/*/
-                      MOM6/ECDA/ ">
-      <description domainName="Ocean"
-                   communityName="GFDL-MOM6"
-                   communityVersion="$(MOM6_GIT_TAG)"
-                   communityGrid="Tripolar"/>
-      <source versionControl="git"
-              root="http://github.com/feiyulu">
-        <codeBase version="dev/SPEAR_ODA">
-          MOM6.git
-        </codeBase>
-        <csh><![CDATA[
-          ( cd MOM6 && git clone -b GFDL https://gitlab.gfdl.noaa.gov/Feiyu.Lu/ECDA.git ECDA )
-          # Commit 7ca307aa8edc4392ebb9ff529b02504016f409e8
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          $(F2003_FLAGS)
-          -DMAX_FIELDS_=100
-          ]]>
-        </cppDefs>
-        <makeOverrides>OPENMP=""</makeOverrides> <!-- openmp switch for MOM6 may cause crash -->
-      </compile>
-    </component>
-    <component name="ice_param"
-               requires="FMS"
-               paths="ice_param"
-               includeDir="$(srcDir)/FMS/include">
-      <source versionControl="git"
-              root="https://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="dev/master">
-          ice_param.git
-        </codeBase>
-        <!--
-        <csh><![CDATA[
-          # Equivalent to checking out the following
-          ( cd ice_param && git checkout 0b6a807971d612deca1b234ed9438d33b02cf614)
-          ]]>
-        </csh>
-        -->
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          $(F2003_FLAGS)
-          ]]>
-        </cppDefs>
-      </compile>
-    </component>
-    <component name="sis2"
-               requires="FMS
-                         mom6
-                         ice_param
-                         icebergs"
-               paths="SIS2/config_src/dynamic_symmetric
-                      SIS2/src"
-               includeDir="$(srcDir)/MOM6/src/framework" >
-      <source versionControl="git"
-              root="http://github.com/NOAA-GFDL">
-        <codeBase version="dev/gfdl">
-          SIS2.git
-        </codeBase>
-        <!--
-        <csh><![CDATA[
-          # Equivalent to checking out the following
-          ( cd SIS2 && git checkout 29e266def5f7780fff3daafb729644e101bbd44c )
-          ]]>
-        </csh>
-        -->
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          $(F2003_FLAGS)
-          -DSYMMETRIC_MEMORY_
-          ]]>
-        </cppDefs>
-      </compile>
-    </component>
-    <component name="icebergs"
-               requires="FMS"
-               paths="icebergs">
-      <description domainName="N/A"
-                   communityName="N/A"
-                   communityVersion="$(RELEASE)"
-                   communityGrid="N/A"/>
-      <source versionControl="git"
-              root="http://github.com/NOAA-GFDL">
-        <codeBase version="dev/gfdl">
-          icebergs.git
-        </codeBase>
-        <!--
-        <csh><![CDATA[
-          # Equivalent to checking out the following
-          ( cd icebergs && git checkout b114a809187317909e19fdca7ff843f2a603f011 )
-          ]]>
-        </csh>
-        -->
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          ]]>
-        </cppDefs>
-      </compile>
-    </component>
-    <component name="coupler"
-               paths="FMScoupler/full
-                      FMScoupler/shared"
-               requires="FMS
-                         atmos_dyn
-                         atmos_phys
-                         land_lad2
-                         sis2
-                         mom6
-                         icebergs">
-      <description domainName="FMS Coupler"
-                   communityName="coupler"
-                   communityVersion="$(RELEASE)"
-                   communityGrid=""/>
-      <source versionControl="git"
-              root="http://github.com/NOAA-GFDL">
-        <codeBase version="master"> FMScoupler.git </codeBase>
-        <!--
-        <csh><![CDATA[
-          # Equivalent to checking out the following
-          # Specify exact hash
-          ( cd FMScoupler && git checkout f48e67ba9c343152045182e80df5c14021130d47 )
-          ]]>
-        </csh>
-        -->
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          $(F2003_FLAGS)
-          ]]>
-        </cppDefs>
-      </compile>
-    </component>
-  </experiment>
-
-
-  <experiment name="SPEAR_R_nonsymMOM6_exec">
-    <description>
-      Experiment to build executable. See git log for source code provenance.
-    </description>
-
-    <component name="FMS"
-               paths="FMS">
-      <description domainName="infrastructure"
-                   communityName="FMS"
-                   communityVersion="$(RELEASE)"
-                   communityGrid=""/>
-      <source versionControl="git"
-              root="http://github.com/NOAA-GFDL">
-        <codeBase version="$(AWG_GIT_TAG)">
-          FMS.git
-        </codeBase>
-      </source>
-      <compile>
-        <cppDefs>
-          $(F2003_FLAGS)
-          -Duse_libMPI
-          -Duse_netCDF
-          -DMAXFIELDMETHODS_=500
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="atmos_phys"
-               requires="FMS"
-               paths="atmos_param
-                      atmos_shared">
-      <description domainName=""
-                   communityName=""
-                   communityVersion="$(RELEASE)"
-                   communityGrid=""/>
-      <source versionControl="git"
-              root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="$(AWG_GIT_TAG)">
-          atmos_shared.git
-          atmos_param.git
-        </codeBase>
-      </source>
-      <compile>
-        <cppDefs>
-          $(F2003_FLAGS)
-          -DCLUBB
-          -DAM3_CHEM
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="atmos_dyn"
-               paths="atmos_drivers/coupled
-                      atmos_cubed_sphere/driver/coupled
-                      atmos_cubed_sphere/model
-                      atmos_cubed_sphere/model_nh_null
-                      atmos_cubed_sphere/tools
-                      atmos_cubed_sphere/GFDL_tools"
-               requires="FMS
-                         atmos_phys">
-      <source versionControl="git"
-              root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="$(AWG_GIT_TAG)">
-          atmos_drivers.git
-          atmos_cubed_sphere.git
-        </codeBase>
-      </source>
-      <compile>
-        <cppDefs>
-          $(F2003_FLAGS)
-          -DSPMD
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="land_lad2"
-               requires="FMS"
-               paths="land_lad2">
-      <description domainName="LM3"
-                   communityName="land_lad2"
-                   communityVersion="lad2_20170209_slm"
-                   communityGrid=""/>
-      <source versionControl="git"
-              root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="$(LAND_GIT_TAG)">
-          land_lad2.git
-        </codeBase>
-        <csh><![CDATA[
-          ( cd land_lad2 && git checkout 8f183e36b7868d870bb432cf839b62481f7e1555)
-          ]]>
-        </csh>
-      </source>
-      <compile doF90Cpp="yes">
-        <cppDefs>
-          $(F2003_FLAGS)
-          -nostdinc
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="mom6"
-               requires="FMS"
-               paths="MOM6/config_src/dynamic
-                      MOM6/config_src/coupled_driver
-                      MOM6/src/*/
-                      MOM6/src/*/*/
-		      MOM6/ECDA/ ">
-      <description domainName="Ocean"
-                   communityName="GFDL-MOM6"
-                   communityVersion="$(MOM6_GIT_TAG)"
-                   communityGrid="Tripolar"/>
-      <source versionControl="git"
-              root="http://github.com/feiyulu">
-        <codeBase version="dev/SPEAR_ODA">
-          MOM6.git
-        </codeBase>
-
-        <csh><![CDATA[
-          ( cd MOM6 && git clone -b GFDL https://gitlab.gfdl.noaa.gov/Feiyu.Lu/ECDA.git ECDA )
-          ]]>
-        </csh>
-
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          $(F2003_FLAGS)
-          -DMAX_FIELDS_=100
-          ]]>
-        </cppDefs>
-        <makeOverrides>OPENMP=""</makeOverrides> <!-- openmp switch for MOM6 may cause crash -->
-      </compile>
-    </component>
-
-    <component name="ice_param"
-               requires="FMS"
-               paths="ice_param"
-               includeDir="$(srcDir)/FMS/include">
-      <source versionControl="git"
-	      root="http://github.com/NOAA-GFDL">
-        <codeBase version="dev/master">
-          ice_param.git
-        </codeBase>
-	<!--<csh><![CDATA[-->
-	  <!--( cd ice_param && git checkout bf6e4fca190d809e8fb6e7b9be9fb68e47cfdc06 )-->
-	  <!--]]>-->
-        <!--</csh>-->
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          $(F2003_FLAGS)
-          ]]>
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="sis2"
-               requires="FMS
-                         mom6
-                         ice_param
-                         icebergs"
-               paths="SIS2/config_src/dynamic_symmetric
-                      SIS2/src"
-               includeDir="$(srcDir)/MOM6/src/framework" >
-      <source versionControl="git"
-              root="http://github.com/NOAA-GFDL">
-        <codeBase version="dev/gfdl">
-          SIS2.git
-        </codeBase>
-        <csh><![CDATA[
-          ( cd SIS2 && git checkout d9bf8341a280ec0927a50c0036e81283050ec967 )
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          $(F2003_FLAGS)
-          -DSYMMETRIC_MEMORY_
-          ]]>
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="icebergs"
-               requires="FMS"
-               paths="icebergs">
-      <description domainName="N/A"
-                   communityName="N/A"
-                   communityVersion="$(RELEASE)"
-                   communityGrid="N/A"/>
-      <source versionControl="git"
-              root="http://github.com/NOAA-GFDL">
-        <codeBase version="dev/gfdl">
-          icebergs.git
-        </codeBase>
-        <csh><![CDATA[
-          ( cd icebergs && git checkout b114a809187317909e19fdca7ff843f2a603f011 )
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          ]]>
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="coupler"
-               paths="FMScoupler"
-               requires="FMS
-                         atmos_dyn
-                         atmos_phys
-                         land_lad2
-                         sis2
-                         mom6
-                         icebergs">
-      <description domainName="FMS Coupler"
-                   communityName="coupler"
-                   communityVersion="$(RELEASE)"
-                   communityGrid=""/>
-      <source versionControl="git"
-              root="http://github.com/NOAA-GFDL">
-        <codeBase version="$(AWG_GIT_TAG)"> FMScoupler.git </codeBase>
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          $(F2003_FLAGS)
-          ]]>
-        </cppDefs>
-      </compile>
-    </component>
-  </experiment>
-
-
+<!--compile xml-->
+<xi:include href="SPEAR_experiments_R.xml" xpointer="xpointer(//experiment[@name='SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec'])"/>
 
 <!--============================-->
 <!--= TEMPLATES FOR INPUT DATA =-->
@@ -1060,213 +600,6 @@ set domains_stack_size = "3097152"
     </input>
   </freInclude>
 
-<!--================================-->
-<!--= LAYOUTS FOR C192 EXPERIMENTS =-->
-<!--================================-->
-
-<freInclude name="resourceparams_A288x1_O64_c192">
-	<resources jobWallclock="16:00:00"
-                   segRuntime="1:20:00" >
-               <atm ranks="288" threads="1"  layout = "6,8"   io_layout = "1,4" />
-               <lnd                          layout = "6,8"   io_layout = "1,4" />
-               <ice                          layout = "72,4"  io_layout = "1,1" />
-               <ocn ranks="64"  threads="1"  layout = "8,8"   io_layout = "1,1" mask_table="MOM_mask_table" />
-             </resources>
-   </freInclude>
-
- <freInclude name="resourceparams_A432x1_O64_c192">
-	  <resources jobWallclock="16:00:00"
-                   segRuntime="1:20:00" >
-               <atm ranks="432" threads="1"  layout = "6,12"   io_layout = "1,4" />
-               <lnd                          layout = "6,12"   io_layout = "1,4" />
-               <ice                          layout = "72,6"  io_layout = "1,1" />
-               <ocn ranks="64"  threads="1"  layout = "8,8"   io_layout = "1,1" mask_table="MOM_mask_table" />
-             </resources>
-   </freInclude>
-
-<freInclude name="resourceparams_A384x1_O36_c192">
-                    <resources jobWallclock="16:00:00"
-                   segRuntime="12:00:00" >
-               <atm ranks="384" threads="1"  layout = "8,8"   io_layout = "1,4" />
-               <lnd                          layout = "8,8"   io_layout = "1,4" />
-               <ice                          layout = "48,8"  io_layout = "1,1" />
-               <ocn ranks="36"  threads="1"  layout = "6,6"   io_layout = "1,1" mask_table="MOM_mask_table" />
-             </resources>
-   </freInclude>
-
-<freInclude name="resourceparams_A432x1_O36_c192">
-          <resources jobWallclock="16:00:00"
-                   segRuntime="12:00:00" >
-               <atm ranks="432" threads="1"  layout = "6,12"   io_layout = "1,4" />
-               <lnd                          layout = "6,12"   io_layout = "1,4" />
-               <ice                          layout = "72,6"  io_layout = "1,1" />
-               <ocn ranks="36"  threads="1"  layout = "6,6"   io_layout = "1,1" mask_table="MOM_mask_table" />
-             </resources>
-   </freInclude>
-
-
-
-<!--================================-->
-<!--= LAYOUTS FOR C96 EXPERIMENTS  =-->
-<!--================================-->
-
-   <freInclude name="resourceparams_A108x1_O36_production">
-	     <resources jobWallclock="16:00:00"
-                   segRuntime="12:00:00" >
-               <atm ranks="108" threads="1"   layout = "3,6"   io_layout = "1,1" />
-	       <lnd                           layout = "3,6"   io_layout = "1,1" />
-	       <ice                           layout = "108,1" io_layout = "1,1" />
-	       <ocn ranks="36" threads="1"    layout = "6,6"  io_layout = "1,1" mask_table="MOM_mask_table" />
-	     </resources>
-   </freInclude>
-
-    <freInclude name="resourceparams_A108x1_O36_prod2">
-	     <resources jobWallclock="13:00:00"
-                   segRuntime="3:15:00" >
-               <atm ranks="108" threads="1"   layout = "3,6"   io_layout = "1,1" />
-	       <lnd                           layout = "3,6"   io_layout = "1,1" />
-	       <ice                           layout = "108,1" io_layout = "1,1" />
-	       <ocn ranks="36" threads="1"    layout = "6,6"  io_layout = "1,1" mask_table="MOM_mask_table" />
-	     </resources>
-   </freInclude>
-
-  <freInclude name="resourceparams_A108x1_O36_month">
-	     <resources jobWallclock="16:00:00"
-                   segRuntime="1:20:00" >
-               <atm ranks="108" threads="1"   layout = "3,6"   io_layout = "1,1" />
-	       <lnd                           layout = "3,6"   io_layout = "1,1" />
-	       <ice                           layout = "108,1" io_layout = "1,1" />
-	       <ocn ranks="36" threads="1"    layout = "6,6"  io_layout = "1,1" mask_table="MOM_mask_table" />
-	     </resources>
-   </freInclude>
-
-   <freInclude name="resourceparams_A108x1_O36">
-	     <resources jobWallclock="16:00:00"
-                   segRuntime="1:20:00" >
-               <atm ranks="108" threads="1"   layout = "3,6"   io_layout = "1,1" />
-	       <lnd                           layout = "3,6"   io_layout = "1,1" />
-	       <ice                           layout = "108,1" io_layout = "1,1" />
-	       <ocn ranks="36" threads="1"    layout = "6,6"  io_layout = "1,1" mask_table="MOM_mask_table" />
-	     </resources>
-   </freInclude>
-
-   <freInclude name="resourceparams_A108x1_O36_seg">
-	     <resources jobWallclock="16:00:00"
-                   segRuntime="2:40:00" >
-               <atm ranks="108" threads="1"   layout = "3,6"   io_layout = "1,1" />
-	       <lnd                           layout = "3,6"   io_layout = "1,1" />
-	       <ice                           layout = "108,1" io_layout = "1,1" />
-	       <ocn ranks="36" threads="1"    layout = "6,6"  io_layout = "1,1" mask_table="MOM_mask_table" />
-	     </resources>
-   </freInclude>
-
-   <freInclude name="resourceparams_A108x1_O36_test">
-	     <resources jobWallclock="0:30:00" >
-               <atm ranks="108" threads="1"   layout = "3,6"   io_layout = "1,1" />
-	       <lnd                           layout = "3,6"   io_layout = "1,1" />
-	       <ice                           layout = "108,1" io_layout = "1,1" />
-	       <ocn ranks="36" threads="1"    layout = "6,6"  io_layout = "1,1" mask_table="MOM_mask_table" />
-	     </resources>
-   </freInclude>
-
-   <freInclude name="resourceparams_A108x2_O72_production">
-	     <resources jobWallclock="6:40:00"
-                   segRuntime="1:40:00" >
-               <atm ranks="108" threads="2"   layout = "3,6"   io_layout = "1,1" />
-	       <lnd                           layout = "3,6"   io_layout = "1,1" />
-	       <ice                           layout = "108,1" io_layout = "1,1" />
-	       <ocn ranks="72" threads="1"    layout = "6,12"  io_layout = "1,1" mask_table="MOM_mask_table" />
-	     </resources>
-   </freInclude>
-
-   <freInclude name="resourceparams_A108x2_O72_test">
-	     <resources jobWallclock="0:30:00" >
-               <atm ranks="108" threads="2"   layout = "3,6"   io_layout = "1,1" />
-	       <lnd                           layout = "3,6"   io_layout = "1,1" />
-	       <ice                           layout = "108,1" io_layout = "1,1" />
-	       <ocn ranks="72" threads="1"    layout = "6,12"  io_layout = "1,1" mask_table="MOM_mask_table" />
-	     </resources>
-   </freInclude>
-
-   <freInclude name="resourceparams_A144x1_O72_production">
-	     <resources jobWallclock="16:00:00"
-                   segRuntime="3:36:00" >
-               <atm ranks="144" threads="1"   layout = "4,6"   io_layout = "1,1" />
-	       <lnd                           layout = "4,6"   io_layout = "1,1" />
-	       <ice                           layout = "144,1" io_layout = "1,1" />
-	       <ocn ranks="72" threads="1"    layout = "6,12"  io_layout = "1,1" mask_table="MOM_mask_table" />
-	     </resources>
-   </freInclude>
-
-   <freInclude name="resourceparams_A144x1_O72_test">
-	     <resources jobWallclock="1:00:00"
-                   segRuntime="0:30:00" >
-               <atm ranks="144" threads="1"   layout = "4,6"   io_layout = "1,1" />
-	       <lnd                           layout = "4,6"   io_layout = "1,1" />
-	       <ice                           layout = "144,1" io_layout = "1,1" />
-	       <ocn ranks="72" threads="1"    layout = "6,12"  io_layout = "1,1" mask_table="MOM_mask_table" />
-	     </resources>
-   </freInclude>
-
-   <freInclude name="resourceparams_A144x1_O72">
-	     <resources jobWallclock="2:00:00" >
-               <atm ranks="144" threads="1"   layout = "4,6"   io_layout = "1,1" />
-	       <lnd                           layout = "4,6"   io_layout = "1,1" />
-	       <ice                           layout = "144,1" io_layout = "1,1" />
-	       <ocn ranks="72" threads="1"    layout = "6,12"  io_layout = "1,1" mask_table="MOM_mask_table" />
-	     </resources>
-   </freInclude>
-
-   <freInclude name="resourceparams_A144x1_O72_debug">
-	     <resources jobWallclock="1:00:00" >
-               <atm ranks="144" threads="1"   layout = "4,6"   io_layout = "1,1" />
-	       <lnd                           layout = "4,6"   io_layout = "1,1" />
-	       <ice                           layout = "144,1" io_layout = "1,1" />
-	       <ocn ranks="72" threads="1"    layout = "6,12"  io_layout = "1,1" mask_table="MOM_mask_table" />
-	     </resources>
-   </freInclude>
-
-   <freInclude name="resourceparams_A54x2_O32_production">
-             <resources jobWallclock="16:00:00"
-                   segRuntime="4:00:00" >
-               <atm ranks="54" threads="2"   layout = "3,3"  io_layout = "1,1" />
-               <lnd                           layout = "3,3"  io_layout = "1,1" />
-               <ice                           layout = "27,2"  io_layout = "1,1" />
-               <ocn ranks="32" threads="1"   layout = "8,4" io_layout = "1,1" mask_table="MOM_mask_table" />
-             </resources>
-   </freInclude>
-
-   <freInclude name="resourceparams_A54x2_O32_test">
-             <resources jobWallclock="1:00:00" >
-               <atm ranks="54" threads="2"   layout = "3,3"  io_layout = "1,1" />
-               <lnd                           layout = "3,3"  io_layout = "1,1" />
-               <ice                           layout = "27,2"  io_layout = "1,1" />
-               <ocn ranks="32" threads="1"   layout = "8,4" io_layout = "1,1" mask_table="MOM_mask_table" />
-             </resources>
-   </freInclude>
-
-  <freInclude name="SPEAR_domain_decomp">
-    <input>
-      <csh><![CDATA[
-set domains_stack_size = "3097152"
-#set ocn_mask_table = "MOM_mask_table"
-
-cat > $work/INPUT/MOM_layout << LAYOUT_EOF
-#override LAYOUT = $ocn_layout
-#override IO_LAYOUT = $ocn_io_layout
-MASKTABLE = $ocn_mask_table
-LAYOUT_EOF
-
-cat > $work/INPUT/SIS_layout << LAYOUT_EOF
-#override LAYOUT = $ice_layout
-#override IO_LAYOUT = $ice_io_layout
-MASKTABLE = $ocn_mask_table
-LAYOUT_EOF
-
-      ]]></csh>
-
-    </input>
-  </freInclude>
 
 <!--================================-->
 <!--= TEMPLATES FOR POSTPROCESSING =-->
@@ -1631,10 +964,221 @@ cd ..
 
 </freInclude>
 
-<experiment name="i19950101_OTA_IceAtmRes_L33" inherit="SPEAR_Q_nonsymMOM6_OTA_exec">
+<experiment name="i19950101_OTA_IceAtmRes_L33_new" inherit="i19950101_OTA_IceAtmRes_L33">
+
+<!--
+<executable file="/lustre/f2/dev/gfdl/William.Cooke/SPEAR_experiments_R_20210210/SPEAR_R2020.04_MJH_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.04_MJH_nonsymMOM6_exec.x"/>
+
+<executable file="/lustre/f2/dev/gfdl/William.Cooke/SPEAR_experiments_R_20210210/SPEAR_R2020.04_MJH_nonsymMOM6_exec/ncrc4.intel18-debug/exec/fms_SPEAR_R2020.04_MJH_nonsymMOM6_exec.x"/>
+-->
+<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20210415/SPEAR_R2020.03_nonsymMOM6_20210416_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.03_nonsymMOM6_20210416_exec.x"/>
+<input>
+       <xi:include xpointer="xpointer(//freInclude[@name='csh_adjust_dry_mass']/input/node())"/>
+        <csh type="always"><![CDATA[
+
+cat > ocean_obs_table <<EOF
+EOF
+
+######BEGIN MOM6 and SIS2 layout setup################
+##THIS HAS TO BE PART OF csh type=always###
+
+cat > $work/INPUT/MOM_override_00 << EOF
+#override COORD_DEF = "FILE:vgrid_oda.nc,dz"
+#override COORD_FILE = "coord_oda.nc"
+#override REGRIDDING_COORDINATE_MODE = "ZSTAR"
+#override ALE_COORDINATE_CONFIG = "FILE:vgrid_oda.nc,dz"
+#override NK = 75
+#override MAXIMUM_INT_DEPTH_CONFIG = "NONE"
+#override MAX_LAYER_THICKNESS_CONFIG = "NONE"
+NJHALO_ODA = 12
+NIHALO_ODA = 8
+#override REMAPPING_SCHEME = "PPM_H4"
+#override USE_BASIN_MASK = False
+
+! === module ODA ===
+ASSIM_METHOD = "NO_ASSIM"
+ASSIM_FREQUENCY = 24
+BASIN_FILE = "basin.nc"         ! default = "basin.nc"
+TEMP_SALT_ADJUSTMENT_FILE ="inc.nc"
+
+#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
+#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
+#override MIXEDLAYER_RESTRAT = False
+RESTART_CONTROL = 2
+
+#override DEFAULT_2018_ANSWERS = T
+
+#override REMAP_UV_USING_OLD_ALG = True
+#override Z_INIT_REMAP_OLD_ALG = True
+#override FIX_USTAR_GUSTLESS_BUG =False
+#override GRID_ROTATION_ANGLE_BUGS = True
+#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
+#override KAPPA_SHEAR_ITER_BUG = True
+#override USE_GM_WORK_BUG = True
+#override USE_MLD_ITERATION = False
+#override USE_TRIPOLAR_GEOLONB_BUG =True 
+#override GUST_CONST = 0.02
+#override MEKE_ALPHA_EADY = 0.05
+#override MEKE_ALPHA_RHINES = 0.05
+#override MIN_SALINITY = 0.01
+
+
+#override USE_INACCURATE_PGF_RHO_ANOM=True
+#override USE_DIABATIC_TIME_BUG=True
+#override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
+#override KH_BG_2D_BUG=True
+
+#override RESTART_CHECKSUMS_REQUIRED=False
+#override APPLY_TRACER_TENDENCY_ADJUSTMENT =True
+EOF
+
+
+
+cat > $work/INPUT/MOM_override_01 << EOF
+#override DEFAULT_2018_ANSWERS = T
+
+#override REMAP_UV_USING_OLD_ALG = True
+#override Z_INIT_REMAP_OLD_ALG = True
+#override FIX_USTAR_GUSTLESS_BUG =False
+#override GRID_ROTATION_ANGLE_BUGS = True
+#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
+#override KAPPA_SHEAR_ITER_BUG = True
+#override USE_GM_WORK_BUG = True
+#override USE_MLD_ITERATION = False
+#override USE_TRIPOLAR_GEOLONB_BUG =True 
+#override GUST_CONST = 0.02
+#override MEKE_ALPHA_EADY = 0.05
+#override MEKE_ALPHA_RHINES = 0.05
+#override MIN_SALINITY = 0.01
+
+
+#override USE_INACCURATE_PGF_RHO_ANOM=True
+#override USE_DIABATIC_TIME_BUG=True
+#override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
+#override KH_BG_2D_BUG=True
+
+#override RESTART_CHECKSUMS_REQUIRED=False
+#override USE_BASIN_MASK = True
+
+#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
+#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
+#override MIXEDLAYER_RESTRAT = False
+ENSEMBLE_OCEAN = True
+RESTART_CONTROL = 2
+EOF
+
+
+set ENS_I = 2
+while ( $ENS_I <= 9 )
+	cp $work/INPUT/MOM_override_01 $work/INPUT/MOM_override_0$ENS_I
+	@ ENS_I++
+end
+set ENS_I = 10
+while ( $ENS_I <= 30 )
+	cp $work/INPUT/MOM_override_01 $work/INPUT/MOM_override_$ENS_I
+	@ ENS_I++
+end
+
+touch $work/INPUT/SIS_override
+
+
+cat > $work/INPUT/SIS_override << EOF
+#override CP_SEAWATER = 3992.
+#override CP_BRINE = 3992.
+#override ICE_BULK_SALINITY = 0.0
+#override ICE_RELATIVE_SALINITY = 0.17
+#override SIS2_FILLING_FRAZIL = T
+#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
+#override SIS_CONTINUITY_SCHEME = "PCM"
+#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
+#override GRID_ROTATION_ANGLE_BUGS =True
+#override USE_TRIPOLAR_GEOLONB_BUG = True
+
+#override INCONSISTENT_COVER_BUG = True
+#override CFL_MASS_NEGLECT_BUG=True
+EOF
+
+#scan auxiliary_nml
+#set OCN_MASK_TABLE =
+#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+
+cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
+#override IO_LAYOUT = $ocn_io_layout
+#override LAYOUT    = $ocn_layout
+#override MASKTABLE = $ocn_mask_table
+MOM_LAYOUT_EOF
+
+#scan auxiliary_nml
+#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+
+cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
+#override IO_LAYOUT = $ice_io_layout
+#override LAYOUT    = $ice_layout
+#override MASKTABLE = $ocn_mask_table
+SIS_LAYOUT_EOF
+
+######END MOM6 and SIS2 layout setup################
+
+cd $work/INPUT
+
+if ( $currentSeg == 1 ) then
+     rm -f coupler.res
+endif
+cd $work
+
+#if ( $currentSeg == 1 ) then
+ #  #  rm -f coupler.res
+  #   foreach i ( MOM.res*nc)
+   #    chmod u+w $i
+    #   ncrename -v Kv_shear,Kv_turb -v Kd_shear,Kd_turb $i
+    # end
+#endif
+#cd $work
+
+#------------------------------------------
+## Find out whether to restart.
+# MOM6 restart switch
+if ( $currentSeg == 1 ) then
+   set restart_flag = 'n'
+else
+   set restart_flag = 'r'
+endif
+   set sis_restart_flag = 'r'
+
+cd $work
+
+## Run the model
+#------------------------------------------
+###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
+set OCN_MASK_TABLE  =  $ocn_mask_table
+set OCN_LAYOUT    = $ocn_layout
+set OCN_IO_LAYOUT = $ocn_io_layout
+set ICE_LAYOUT    = $ice_layout
+set ICE_IO_LAYOUT = $ice_io_layout
+set atmos_npes = $atm_ranks
+set ocean_npes = $ocn_ranks
+set fv_layout = $atm_layout
+set fv_io_layout  = $atm_io_layout
+set land_layout   = $lnd_layout
+set land_io_layout = $lnd_io_layout
+set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nxblocks = $dummy
+set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nyblocks = $dummy
+
+    ]]></csh>
+
+</input>
+</experiment>
+
+<experiment name="i19950101_OTA_IceAtmRes_L33" inherit="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec" >
   <description>
   </description>
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.03_nonsymMOM6_exec.x"/>
+
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
@@ -1973,7 +1517,11 @@ cd ..
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-	<dataSource site="ncrc">/lustre/f2/dev/gfdl/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19950101.tar</dataSource>
+        
+        <dataSource site="ncrc">/lustre/f2/dev/gfdl/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19950101.tar</dataSource>
+        <!--
+        <dataSource site="ncrc">/lustre/f2/scratch/William.Cooke/tmp_20210402/spear_med_Jan_Reforecast_1mem.tar</dataSource>
+        -->
      </dataFile>
 
      <!--<dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
@@ -2035,7 +1583,7 @@ $baseDate
       <xi:include xpointer="xpointer(//freInclude[@name='c192_stack_size']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='csh_adjust_dry_mass']/input/node())"/>
 
-      <xi:include xpointer="xpointer(//freInclude[@name='SPEAR_domain_decomp']/input/node())"/>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='SPEAR_domain_decomp']/input/node())"/>
 
       <!--MOM6 Input datasets-->
       <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/>
@@ -2103,12 +1651,18 @@ cat > $work/INPUT/MOM_override_00 << EOF
 NJHALO_ODA = 12
 NIHALO_ODA = 8
 #override REMAPPING_SCHEME = "PPM_H4"
+#override USE_BASIN_MASK = False
 
 ! === module ODA ===
-ASSIM_METHOD = 'NONE'
+ASSIM_METHOD = 'NO_ASSIM'
 ASSIM_FREQUENCY = 24
 BASIN_FILE = "basin.nc"         ! default = "basin.nc"
+TEMP_SALT_ADJUSTMENT_FILE ="inc.nc"
 
+#override DEFAULT_2018_ANSWERS = T
+#override REMAP_UV_USING_OLD_ALG = True
+#override USE_TRIPOLAR_GEOLONB_BUG =True 
+#override APPLY_TRACER_TENDENCY_ADJUSTMENT =True
 #override TOPO_EDITS_FILE = "topo_edits_011818.nc"
 #override CHANNEL_LIST_FILE = MOM_channels_SPEAR
 RESTART_CONTROL = 2
@@ -2135,7 +1689,27 @@ DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default 
 
 EOF
 
+
 cat > $work/INPUT/MOM_override_01 << EOF
+#override DEFAULT_2018_ANSWERS = T
+#override REMAP_UV_USING_OLD_ALG = True
+#override Z_INIT_REMAP_OLD_ALG = True
+#override FIX_USTAR_GUSTLESS_BUG =False
+#override GRID_ROTATION_ANGLE_BUGS = True
+#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
+#override KAPPA_SHEAR_ITER_BUG = True
+#override USE_GM_WORK_BUG = True
+#override USE_MLD_ITERATION = False
+#override USE_TRIPOLAR_GEOLONB_BUG =True 
+#override GUST_CONST = 0.02
+#override MEKE_ALPHA_EADY = 0.05
+#override MEKE_ALPHA_RHINES = 0.05
+#override MIN_SALINITY = 0.01
+#override USE_INACCURATE_PGF_RHO_ANOM=True
+#override USE_DIABATIC_TIME_BUG=True
+#override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
+#override KH_BG_2D_BUG=True
+
 #override TOPO_EDITS_FILE = "topo_edits_011818.nc"
 #override CHANNEL_LIST_FILE = MOM_channels_SPEAR
 #override MIXEDLAYER_RESTRAT = False
@@ -2187,7 +1761,14 @@ cat > $work/INPUT/SIS_override << EOF
 #override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
 #override SIS_CONTINUITY_SCHEME = "PCM"
 #override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
+#override GRID_ROTATION_ANGLE_BUGS =True
+#override USE_TRIPOLAR_GEOLONB_BUG = True
+#override INCONSISTENT_COVER_BUG = True
+#override CFL_MASS_NEGLECT_BUG=True
+#override RESTART_CHECKSUMS_REQUIRED =False
+
 EOF
+
 
 #scan auxiliary_nml
 #set OCN_MASK_TABLE =
@@ -2267,27 +1848,32 @@ set nyblocks = $dummy
   <runtime>
 <!--    <production simTime="3" units="years" >
       <segment simTime="1" units="years"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O72_production']/node())"/>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O72_production']/node())"/>
     </production> 
     <production simTime="1" units="years" >
       <segment simTime="3" units="months"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O72_production']/node())"/>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O72_production']/node())"/>
     </production> -->
     <production simTime="1" units="years" >
       <segment simTime="1" units="years"/>
-      <!--<xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A108x1_O36_production']/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x1_O64_c192']/node())"/>-->
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A384x1_O36_c192']/node())"/>
+      <!--<xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A108x1_O36_production']/node())"/>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x1_O64_c192']/node())"/>-->
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A384x1_O36_c192']/node())"/>
     </production>
 
       <regression name="basic_prodsettings">
         <run days="8" >
-          <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A384x1_O36_c192']/node())"/>
+          <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A384x1_O36_c192']/node())"/>
+        </run>
+      </regression>
+      <regression name="debug_prodsettings">
+        <run days="1" >
+          <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A384x1_O36_c192']/node())"/>
         </run>
       </regression>
       <regression name="debug_288">
         <run days="5" >
-          <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O72_test']/node())"/>
+          <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O72_test']/node())"/>
           </run>
       </regression>
       <reference restart="/lustre/f2/dev/William.Cooke/reference/i19950101_OTA_IceAtmRes_L33/ncrc4.intel16-repro-openmp/1x0m8d_1152x1a_108x1o/restart/19950109.tar"/>
