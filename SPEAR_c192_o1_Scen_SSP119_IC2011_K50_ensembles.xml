@@ -253,11 +253,7 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
-    <platform name="gfdl.ncrc4-intel16">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc3-intel16">
+    <platform name="gfdl.ncrc4-intel18">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
@@ -279,9 +275,9 @@ configuration.
 
     <!-- NCRC Platforms -->
 
-    <platform name="ncrc4.intel16">
+    <platform name="ncrc4.intel18">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="16.0.3.210" />
+      <compiler type="intel" version="18.0.6.288" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
@@ -313,9 +309,9 @@ configuration.
       -->
     </platform>
 
-    <platform name="ncrc3.intel16">
+    <platform name="ncrc3.intel18">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="16.0.3.210" />
+      <compiler type="intel" version="18.0.6.288" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
@@ -334,32 +330,8 @@ configuration.
       </directory>
     </platform>
 
-    <platform name="ncrc4.intel18">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="18.0.6.288" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR"/>
-      <property name="NCORE_PER_NODE"      value="36"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
-      </directory>
-
-    </platform>
-
     <platform name="ncrc4.intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel16']/node())" />
+      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
     </platform>
 
     <platform name="ncrc4.gnu">
@@ -450,7 +422,6 @@ setenv MAIN_PROGRAM coupler/coupler_main.o
 <xi:include href="SPEAR_experiments_R.xml" xpointer="xpointer(//experiment[@name='SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec'])"/>
 
 
-
 <!--============================-->
 <!--= TEMPLATES FOR INPUT DATA =-->
 <!--============================-->
@@ -531,7 +502,7 @@ setenv MAIN_PROGRAM coupler/coupler_main.o
     </input>
   </freInclude>
 
-  <freInclude name="common_cmip6_ssp245">
+  <freInclude name="common_cmip6_ssp534OS">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.isoprene.1x1.2000.nc</dataSource>
@@ -540,10 +511,27 @@ setenv MAIN_PROGRAM coupler/coupler_main.o
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.terpenes.1x1.2000.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp245/cmip6_Scenario_ssp245_GHG_ODS_conc_2500.tar</dataSource>
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp534-over/cmip6_Scenario_ssp534_GHG_ODS_conc_2500.tar</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/o3.climatology.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp245/mmro3_ScenarioMIP-ssp245_200001-210112.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/pdata/gfdl/gfdl_sd/datasets/ScenarioMIP/ssp534-over/mmro3_ScenarioMIP-ssp534os_200001-210112_updated.nc</dataSource>
+      </dataFile>
+    </input>
+  </freInclude>
+
+  <freInclude name="common_cmip6_ssp119">
+    <input>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.isoprene.1x1.2000.nc</dataSource>
+      </dataFile>
+       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.terpenes.1x1.2000.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp119/cmip6_Scenario_ssp119_GHG_ODS_conc_2500.tar</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/o3.climatology.nc" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">/lustre/f2/pdata/gfdl/gfdl_sd/datasets/ScenarioMIP/ssp119/mmro3_ScenarioMIP-ssp119_200001-210112.nc</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -556,10 +544,18 @@ setenv MAIN_PROGRAM coupler/coupler_main.o
     </input>
   </freInclude>
 
-  <freInclude name="CO2_timeseries_ssp245">
+  <freInclude name="CO2_timeseries_ssp534OS">
     <input>
       <dataFile label="input" target="INPUT/co2_data.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp245/co2_ssp245_3D_0to2499.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/ScenarioMIP/ssp534-over/co2_SSP534OS_gblannualdata_0001-2500_2x2_julian.nc</dataSource>
+      </dataFile>
+    </input>
+  </freInclude>
+
+  <freInclude name="CO2_timeseries_ssp119">
+    <input>
+      <dataFile label="input" target="INPUT/co2_data.nc" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">/lustre/f2/pdata/gfdl/gfdl_sd/datasets/ScenarioMIP/ssp119/co2_SSP119_gblannualdata_0001-2500_2x2.nc</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -596,13 +592,24 @@ setenv MAIN_PROGRAM coupler/coupler_main.o
     </input>
   </freInclude>
 
-  <freInclude name="emissions_cmip6_ssp245">
+  <freInclude name="emissions_cmip6_ssp534OS">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp245/emissions.fastchem.0.5x0.5.2010-2101.tar</dataSource>
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp534-over/emissions.fastchem.5x0.5.2010-2101.tar</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/anthro_so2.2010_2101.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp245/emissions.simple.so2.0.5x0.5.2010-2101.nc</dataSource>
+        <dataSource platform="$(platform)">/lustre/f2/pdata/gfdl/gfdl_sd/datasets/ScenarioMIP/ssp534-over/emissions.simple.so2.0.5x0.5.2010-2101.nc</dataSource>
+      </dataFile>
+    </input>
+  </freInclude>
+
+  <freInclude name="emissions_cmip6_ssp119">
+    <input>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp119/emissions.fastchem.0.5x0.5.2010-2101.tar</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/anthro_so2.2010_2101.nc" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp119/emissions.simple.so2.0.5x0.5.2010-2101.nc</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -642,7 +649,6 @@ set domains_stack_size = "5097152"
       ]]></csh>
     </input>
   </freInclude>
-
 
 <!--================================-->
 <!--= TEMPLATES FOR POSTPROCESSING =-->
@@ -725,6 +731,7 @@ set domains_stack_size = "5097152"
                              xgrid_nml:make_exchange_reproduce=.TRUE.;">
             <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A144x2_O63']/node())"/>
         </run>
+        
         
       </regression>
       <regression label="short_test">
@@ -991,8 +998,15 @@ cd ..
     </input>
   </freInclude>
 
-<experiment name="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_04_06" inherit="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_01_03">
+
+<experiment name="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_04_06" inherit="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_01_03">
+<description>
+</description>
   <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_SSP_Scenario/ens_04_06/20110101.tar</dataSource>
        <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_SSP_Scenario/ens_04_06/20110101.tar</dataSource>
@@ -1000,33 +1014,14 @@ cd ..
   </input>
 </experiment>
 
-<experiment name="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_07_09" inherit="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_01_03">
+<experiment name="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_07_09" inherit="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_01_03">
 <description>
-Flipped make_exchange reproduce to false starting in year 2086 (sat vapor pres error)
-Time = 2086 12 17  0  0  0    ch4 = 1736.743308ppb  n2o =  375.189219ppb
-       co2  =  594.338927ppm  f11 =   70.450654ppt  f12 =  248.360068ppt
-       f113 =   31.989095ppt  f22 =    2.269662ppt
-
-FATAL from PE   812: compute_qs: saturation vapor pressure table overflow, nbad=    363
-
-FATAL from PE   804: compute_qs: saturation vapor pressure table overflow, nbad=    132
-
-
-2020/01/15
-Flipped make_exchange reproduce to true
-Time = 2088  4 20  0  0  0    ch4 = 1729.654383ppb  n2o =  375.497261ppb
-       co2  =  595.765260ppm  f11 =   68.628671ppt  f12 =  244.820801ppt
-       f113 =   31.490059ppt  f22 =    2.009089ppt
-
-FATAL from PE  1481: compute_qs: saturation vapor pressure table overflow, nbad=     33
-
-
 </description>
   <input>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
-      </namelist> 
+      </namelist>
       <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_SSP_Scenario/ens_07_09/20110101.tar</dataSource>
        <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_SSP_Scenario/ens_07_09/20110101.tar</dataSource>
@@ -1034,8 +1029,19 @@ FATAL from PE  1481: compute_qs: saturation vapor pressure table overflow, nbad=
   </input>
 </experiment>
 
-<experiment name="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_10_12" inherit="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_01_03">
+<experiment name="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_10_12" inherit="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_01_03">
+<description>
+
+FATAL from PE  1071: soil_radiation: soil_refl_dir(VIS) out of range: value=                    NaN at lon= 289.5646 lat= -13.6931 i= 127 j= 156 tile=   1 face=   5 time=2036-05-07 16:00:00
+
+
+Flip make_Exchange_repro to false and extend
+</description>
   <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .false.
+        interp_method = 'second_order'
+      </namelist> 
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_SSP_Scenario/ens_10_12/20110101.tar</dataSource>
        <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_SSP_Scenario/ens_10_12/20110101.tar</dataSource>
@@ -1043,8 +1049,19 @@ FATAL from PE  1481: compute_qs: saturation vapor pressure table overflow, nbad=
   </input>
 </experiment>
 
-<experiment name="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_13_15" inherit="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_01_03">
+<experiment name="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_13_15" inherit="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_01_03">
+<description>
+Time = 2060  3  1  0  0  0    ch4 = 1308.065194ppb  n2o =  345.832301ppb
+
+FATAL from PE   492: compute_qs: saturation vapor pressure table overflow, nbad=     33
+
+Flip make_Exchange_reproduce to false and extend.
+</description>
   <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .false.
+        interp_method = 'second_order'
+      </namelist> 
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_SSP_Scenario/ens_13_15/20110101.tar</dataSource>
        <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_SSP_Scenario/ens_13_15/20110101.tar</dataSource>
@@ -1052,8 +1069,30 @@ FATAL from PE  1481: compute_qs: saturation vapor pressure table overflow, nbad=
   </input>
 </experiment>
 
-<experiment name="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_16_18" inherit="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_01_03">
+<experiment name="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_16_18" inherit="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_01_03">
+<description>
+SIS Date   2014/07/14 00:00:00   4656: Area 7.063442957291E+12 1.465127497776E+13, Mass  1.29130864827E+16 7.84710583344E+15
+ Total Ice Mass:   2.0760192316136620E+16, Change: -2.77166E+15 Error:  2.28152E+00 ( 1.1E-16)
+ Total Ice Salt:   1.0872108410879390E+11, Change: -1.37832E+10 Error:  1.27173E-05 ( 1.2E-16)
+ Total Ice Heat:  -6.4615298580843478E+21, Change:  1.15928E+21 Error: -2.96682E+08 ( 4.6E-14)
+
+FATAL from PE   982: compute_qs: saturation vapor pressure table overflow, nbad=     33
+
+Flip make_Exchange_reproduce to false and extend.
+
+2021/4/7
+Time = 2046  3  2  0  0  0    ch4 = 1495.126155ppb  n2o =  342.395356ppb
+
+FATAL from PE  1074: compute_qs: saturation vapor pressure table overflow, nbad=     33
+
+Flip make_Exchange_reproduce to true and extend.
+
+</description>
   <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_SSP_Scenario/ens_16_18/20110101.tar</dataSource>
        <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_SSP_Scenario/ens_16_18/20110101.tar</dataSource>
@@ -1061,10 +1100,14 @@ FATAL from PE  1481: compute_qs: saturation vapor pressure table overflow, nbad=
   </input>
 </experiment>
 
-<experiment name="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_19_21" inherit="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_01_03">
+<experiment name="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_19_21" inherit="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_01_03">
 <description>
 </description>
   <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_SSP_Scenario/ens_19_21/20110101.tar</dataSource>
        <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_SSP_Scenario/ens_19_21/20110101.tar</dataSource>
@@ -1072,7 +1115,7 @@ FATAL from PE  1481: compute_qs: saturation vapor pressure table overflow, nbad=
   </input>
 </experiment>
 
-<experiment name="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_22_24" inherit="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_01_03">
+<experiment name="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_22_24" inherit="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_01_03">
   <input>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_SSP_Scenario/ens_22_24/20110101.tar</dataSource>
@@ -1081,8 +1124,19 @@ FATAL from PE  1481: compute_qs: saturation vapor pressure table overflow, nbad=
   </input>
 </experiment>
 
-<experiment name="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_25_27" inherit="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_01_03">
+<experiment name="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_25_27" inherit="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_01_03">
+<description>
+4/16/2021
+Time = 2088  4 30  0  0  0    ch4 = 1100.498629ppb  n2o =  351.485527ppb
+FATAL from PE    73: compute_qs: saturation vapor pressure table overflow, nbad=     33
+
+Flip make_exchange_reproduce to .false. and extend run.
+</description>
   <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .false.
+        interp_method = 'second_order'
+      </namelist> 
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_SSP_Scenario/ens_25_27/20110101.tar</dataSource>
        <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_SSP_Scenario/ens_25_27/20110101.tar</dataSource>
@@ -1090,8 +1144,7 @@ FATAL from PE  1481: compute_qs: saturation vapor pressure table overflow, nbad=
   </input>
 </experiment>
 
-
-<experiment name="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_28_30" inherit="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_01_03">
+<experiment name="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_28_30" inherit="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_01_03">
 <description>
 </description>
   <input>
@@ -1102,7 +1155,7 @@ FATAL from PE  1481: compute_qs: saturation vapor pressure table overflow, nbad=
   </input>
 </experiment>
 
-<experiment name="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_01_03" inherit="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec">
+<experiment name="SPEAR_c192_o1_Scen_SSP119_IC2011_K50_ens_01_03" inherit="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec">
   <description>
 9/4/2018
 Ensemble member 1 to 3 for c192
@@ -1194,6 +1247,19 @@ Ensemble member 1 to 3 for c192
         pH_cloud=4.5
         no_biobur_if_no_pbl = .false.
       </namelist>
+      <!--
+          anthro_filename='emissions.simple.so2.0.5x0.5.2010-2101.nc',
+          anthro_time_dependency_type='time_varying',anthro_dataset_entry=$baseDate
+        biobur_source='do_biobur',
+          biobur_emission_name(1)='so2bb',
+          biobur_emission_name(2)='so4bb',
+          biobur_filename='emissions.simple.so2.0.5x0.5.2010-2101.nc',
+          biobur_time_dependency_type='time_varying',biobur_dataset_entry=$baseDate
+        cloud_chem_solver="f1p"
+        pH_cloud=4.5
+        no_biobur_if_no_pbl = .false.
+      </namelist>
+      -->
       <namelist name="icebergs_nml">
         make_calving_reproduce=.TRUE.
         really_debug=.FALSE.
@@ -1512,12 +1578,24 @@ $baseDate
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C192.OM360x320.20171213/mosaic.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
+
+      <!--
       <dataFile label="input" target="INPUT/transitions.nc" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/cmip6/datasets/ScenarioMIP/ssp245/RCP4.5_SSP2_2001-2100_transitions_v20180926.nc</dataSource>
+        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/cmip6/datasets/ScenarioMIP/ssp585/RCP8.5_SSP5_2001-2100_transitions_v20180926.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/states.nc" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/cmip6/datasets/ScenarioMIP/ssp245/RCP4.5_SSP2_2001-2100_states_v20180926.nc</dataSource>
+        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/cmip6/datasets/ScenarioMIP/ssp585/RCP8.5_SSP5_2001-2100_states_v20180926.nc</dataSource>
       </dataFile>
+
+      -->
+      <dataFile label="input" target="INPUT/transitions.nc" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/cmip6/datasets/ScenarioMIP/ssp119/ssp119_2001-2100_transitions_v20190304.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/states.nc" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/cmip6/datasets/ScenarioMIP/ssp119/ssp119_2001-2100_states_v20190304.nc</dataSource>
+      </dataFile>
+      
+
       <dataFile label="input" target="INPUT/landfrac.nc" chksum="" size="" timestamp="">
         <dataSource site="ncrc">/lustre/f2/pdata/gfdl/cmip6/datasets/CM4/forcings/landuse/LUH2/v2.0h/landfrac.nc</dataSource>
       </dataFile>
@@ -1527,10 +1605,25 @@ $baseDate
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C192.OM360x320.20171213/SPEAR_c192_hydrography.v20171218.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6_ssp245']/input/node())"/>
+      
+      <!--
+      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6_ssp585']/input/node())"/>
+      
+      -->
+      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6_ssp119']/input/node())"/>
+      
+
       <xi:include xpointer="xpointer(//freInclude[@name='Volcano_Solar_TimeSeries_cmip6_v3']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_ssp245']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='CO2_timeseries_ssp245']/input/node())"/>
+
+      <!--
+      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_ssp585']/input/node())"/>
+      
+      <xi:include xpointer="xpointer(//freInclude[@name='CO2_timeseries']/input/node())"/>
+      -->
+
+      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_ssp119']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='CO2_timeseries_ssp119']/input/node())"/>
+      
       <xi:include xpointer="xpointer(//freInclude[@name='L32_gas_conc']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c192_stack_size']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='csh_adjust_dry_mass']/input/node())"/>
@@ -1706,19 +1799,42 @@ set nyblocks = $dummy
       -->
       <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108_production_c192']/node())"/>
     </production> 
-      <regression name="threemonth">
-        <run months="3" >
-          <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A384x1_O36_c192']/node())"/>
-          </run>
-      </regression>
       <regression name="debug_216">
         <run days="1" >
           <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A144x1_O72_debug']/node())"/>
           </run>
       </regression>
+      <regression name="twoyear_check_prod">
+        <run months="12 12" >
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108_production_c192']/node())"/>
+        </run>
+      </regression>
+      <regression name="twoyear_check_threading">
+        <run months="12 12" >
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x1_O108_production_c192']/node())"/>
+        </run>
+      </regression>
       <regression name="oneyear">
         <run months="12" >
+      <!--
       <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180_long']/node())"/>
+      -->
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108']/node())"/>
+        </run>
+      </regression>
+      <regression name="twomonth_test">
+        <run months="2" >
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108']/node())"/>
+        </run>
+      </regression>
+      <regression name="onemonth_test">
+        <run months="1" >
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108']/node())"/>
+        </run>
+      </regression>
+      <regression name="sixmonth_test">
+        <run months="6" >
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108']/node())"/>
         </run>
       </regression>
       <regression name="oneday_coldstart">
@@ -1920,7 +2036,7 @@ set nyblocks = $dummy
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
 	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
       </component>
-      
+
       <component type="land_cubic" start="$(PP_START_YEAR_HIST)" source="land_month" sourceGrid="land-cubedsphere" cmip="off">
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" >
           <variables> LWS FWS LWSg_lake FWSg_lake lake_T water_lake </variables>
@@ -1980,7 +2096,7 @@ set nyblocks = $dummy
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
       </component>
       <!--
-      <component type="ocean_z_refined" start="$(PP_START_YEAR_HIST)" source="ocean_z_month_refined" sourceGrid="ocean-tripolar" cmip="on">
+      <component type="ocean_z_month_refined" start="$(PP_START_YEAR_HIST)" source="ocean_z_month_refined" sourceGrid="ocean-tripolar" cmip="on">
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month_refined"/>
         <timeAverage source="monthly" interval="$(CHUNK_LENGTH_A)" />
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month_refined"/>
@@ -2021,8 +2137,8 @@ set nyblocks = $dummy
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_top300"> </timeSeries>
         <timeAverage source="monthly" interval="$(CHUNK_LENGTH_A)" />
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
-      </component>
-      -->
+       </component>
+       -->
       <component type="ocean_rho2" start="$(PP_START_YEAR_HIST)" source="ocean_month_rho2" sourceGrid="ocean-tripolar">  
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_month_rho2"/>
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_month_rho2"/>
