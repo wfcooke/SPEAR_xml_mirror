@@ -98,8 +98,26 @@ from integrations with these models.
     </component>
 
     <component name="atmos_dyn"
-               paths="atmos_drivers/coupled
-                      GFDL_atmos_cubed_sphere/driver/GFDL
+               paths="atmos_drivers/coupled"
+               requires="FMS
+                         atmos_phys
+                         fv3">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="2021.02">
+          atmos_drivers.git
+        </codeBase>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DSPMD
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="fv3"
+               paths="GFDL_atmos_cubed_sphere/driver/GFDL
                       GFDL_atmos_cubed_sphere/model
                       GFDL_atmos_cubed_sphere/driver/SHiELD/cloud_diagnosis.F90
                       GFDL_atmos_cubed_sphere/driver/SHiELD/gfdl_cloud_microphys.F90
@@ -109,8 +127,7 @@ from integrations with these models.
                          atmos_phys">
       <source versionControl="git"
               root="https://github.com/NOAA-GFDL">
-        <codeBase version="2021.02">
-          atmos_drivers.git
+        <codeBase version="2021.03">
           GFDL_atmos_cubed_sphere.git
         </codeBase>
       </source>
@@ -240,6 +257,7 @@ from integrations with these models.
                       FMScoupler/shared"
                requires="FMS
                          atmos_dyn
+                         fv3
                          atmos_phys
                          land_lad2
                          sis2
