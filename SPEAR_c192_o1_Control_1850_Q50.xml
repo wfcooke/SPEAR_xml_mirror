@@ -57,7 +57,7 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="MOM6_GIT_TAG" value="dev/SPEAR"/> <!-- git tag for MOM6 source code -->
   <property name="AWG_GIT_TAG"  value="xanadu"/>           <!-- git tag for AWG source code -->
   <property name="LAND_GIT_TAG"  value="testing_20170929"/>    <!-- git tag for Land source code -->
-  <property name="FMS_GIT_TAG"  value="2021.02"/>           <!-- git tag for FMS source code -->
+  <property name="FMS_GIT_TAG"  value="2021.03"/>           <!-- git tag for FMS source code -->
 
 <!-- Fill in your GFDL group -->
   <property name="GFDL_YGL"  value="gfdl_F"/>
@@ -1567,7 +1567,7 @@ set domains_stack_size = "5097152"
    </freInclude>
 
    <freInclude name="resourceparams_A288x2_O180_long">
-	     <resources jobWallclock="05:00:00">
+	     <resources jobWallclock="16:00:00">
                <atm ranks="288" threads="2"   layout = "6,8"   io_layout = "1,4" />
 	       <lnd                           layout = "6,8"   io_layout = "1,4" />
 	       <ice                           layout = "72,4" io_layout = "1,1" />
@@ -9232,8 +9232,8 @@ set nyblocks = $dummy
           <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A144x1_O72_debug']/node())"/>
           </run>
       </regression>
-      <regression name="oneyear">
-        <run months="12" >
+      <regression name="twoyear">
+        <run months="12 12" >
       <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180_long']/node())"/>
         </run>
       </regression>
