@@ -6,13 +6,10 @@ Quick start guide
 =================
 
 ```
-module load fre/bronx-18
-fremake -x SPEAR_experiments_Q.xml -p ncrc4.intel16 -t repro,openmp SPEAR_Q_nonsymMOM6_exec
-frerun  -x SPEAR_experiments_Q.xml -p ncrc4.intel16 -t repro,openmp SPEAR_c96_o1_Control_1850_Q50 -r basic_prodsettings
+module load fre/bronx-12
+fremake -x SPEAR_experiments_slab_A.xml -p ncrc4.intel16 -t repro,openmp SPEAR_A_slab_exec
+frerun  -x SPEAR_experiments_slab_A.xml -p ncrc4.intel16 -t repro,openmp SPEAR_c96_o1_Control_1850_N45 -r basic_prodsettings
 ```
-The Q-series takes Xanadu code for atmos/land/coupler and dev/gfdl (as of 5/21/2019) for MOM6/SIS2 (with revertions for answer 
-changing code updates in MOM6).
-Answers should be reproducible from earlier (E,F,K) experiment runs.
 
 SPEAR (Seamless system for Predictions and EArth system Research)
 
@@ -53,16 +50,15 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
-  <property name="AWG_GIT_TAG"            value="2021.02"/>               <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2021.03"/>
-  <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>    <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"      value="2021.02"/>         <!-- git tag for atmos_drivers -->
-  <property name="ATMOS_CUBED_SPHERE_TAG" value="2021.03"/>    <!-- git tag for atmos_cubed_sphere source code -->
-  <property name="ICE_PARAM_GIT_TAG"      value="2021.02"/>         <!-- git tag for AWG source code -->
+  <property name="AWG_GIT_TAG"  value="xanadu"/>           <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG" value="2020.03"/>
+  <property name="LAND_GIT_TAG"  value="testing_20170929"/>    <!-- git tag for Land source code -->
+  <property name="ATMOS_DRIVERS_TAG"  value="2020.01"/>           <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG"  value="2020.03"/>           <!-- git tag for atmos_cubed_sphere source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20211102" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-19" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20210427" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_VERSION" value="bronx-18" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
@@ -70,17 +66,17 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="PROD_SIMTIME"     value="40"/>   <!--simulation length in years-->
 
   <property name="PP_START_YEAR"   value="0001"/>
-  <property name="PP_START_YEAR_HIST"   value="1981"/>
+  <property name="PP_START_YEAR_HIST"   value="2041"/>
 
   <property name="PP_AMIP_CHUNK" value="5yr"/>
   <property name="PP_AMIP_START_YEAR"  value="1981"/>
   <property name="ANA_AMIP_START" value="1981"/>
-  <property name="ANA_AMIP_END"   value="2010"/>
+  <property name="ANA_AMIP_END"   value="2011"/>
   <property name="ANA_AMIP_LEN"   value="30yr"/>
 
-   <property name="CHUNK_LENGTH_A" value="1yr"/>
-   <property name="CHUNK_LENGTH_B" value="100yr"/>
-   <property name="CHUNK_LENGTH_C" value="163yr"/>
+   <property name="CHUNK_LENGTH_A" value="10yr"/>
+   <property name="CHUNK_LENGTH_B" value="10yr"/>
+   <property name="CHUNK_LENGTH_C" value="60yr"/>
    <property name="CHUNK_LENGTH_A_c384" value="10yr"/>
    <property name="CHUNK_LENGTH_B_c384" value="100yr"/>
    <property name="CHUNK_LENGTH_C_c384" value="1000yr"/>
@@ -94,6 +90,9 @@ SPEAR_c192_omlp25_Control_2010_A01
       and are not needed for the run or post-processing -->   
   <property name="EXP_CPLD_START"   value="0001"/> <!--simulation start year--> 
   <property name="EXP_CPLD_END"     value="0100"/> <!--simulation end   year--> 
+
+  <property name="PLATFORM_GS_GFDL" value="/archive/h1g/INPUT/c96_awg" />
+  <property name="PLATFORM_GS_GAEA" value="$CPERM/Huan.Guo/INPUT/grid" />
 
   <!--The rest of the properties need not to be changed by the user unless to customize the run-->
 
@@ -229,14 +228,14 @@ configuration.
 
       <property name="NB_ROOT"            value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
       <property name="F2003_FLAGS"        value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/archive"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/archive"/>
+      <property name="WFC_ARCHIVE_ROOT"   value="/archive"/>
       <property name="CMIP6_ARCHIVE_ROOT" value="/archive/oar.gfdl.cmip6/datasets"/>
-      <property name="SD_ARCHIVE_ROOT"   value="/archive"/>
+      <property name="NCORE_PER_NODE"     value="1"/>
+      <property name="platform_gs"        value="$(PLATFORM_GS_GFDL)"/>
 
       <directory stem="$(FRE_STEM)" >
         <root>/home/$USER/SPEAR</root>
-        <archive>/archive/$USER/SPEAR_lo/fluxadj/$(name)</archive>
+        <archive>/archive/$USER/SPEAR/$(name)</archive>
         <include>$(rootDir)/SPEAR_include</include> 
         <analysis>/nbhome/$USER/$(stem)/$(name)</analysis>
       </directory>
@@ -249,19 +248,7 @@ configuration.
       </csh>
     </platform>
 
-    <platform name="gfdl.ncrc3-intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc3-intel16">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
     <platform name="gfdl.ncrc4-intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc4-intel16">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
@@ -269,83 +256,23 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
+    <platform name="gfdl.ncrc3-intel18">
+      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
     <platform name="gfdl.ncrc4-gnu">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
+    <platform name="gfdl.ncrc4-cray">
+      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
+    <platform name="gfdl.ncrc4-pgi">
+      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
     <!-- NCRC Platforms -->
-    <platform name="ncrc3.intel16">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="16.0.3.210" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR_lo/fluxadj/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>/ncrc/home2/William.Cooke/SPEAR_xml/xml//SPEAR_include</include>
-      </directory>
-
-      <!-- Uncomment the <csh> section if needing to run with DDT -->
-      <!--
-      <csh><![CDATA[
-         module load ddt
-         setenv DDTMPIRUN /opt/cray/alps/default/bin/aprun
-         alias runCommand ddt  -n $npes  ./$executable:t 
-        ]]>
-      </csh>
-      -->
-    </platform>
-
-    <platform name="ncrc3.intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc3.intel16']/node())" />
-    </platform>
-
-    <platform name="ncrc4.intel16">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="16.0.3.210" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR_lo/fluxadj//$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>/ncrc/home2/William.Cooke/SPEAR_xml/xml/SPEAR_include</include>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
-      </directory>
-
-      <!-- Uncomment the <csh> section if needing to run with DDT -->
-      <!--
-      <csh><![CDATA[
-         module load ddt
-         setenv DDTMPIRUN /opt/cray/alps/default/bin/aprun
-         alias runCommand ddt  -n $npes  ./$executable:t 
-        ]]>
-      </csh>
-      -->
-    </platform>
-
-    <platform name="ncrc4.intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel16']/node())" />
-    </platform>
 
     <platform name="ncrc4.intel18">
       <freVersion>$(FRE_VERSION)</freVersion>
@@ -353,13 +280,12 @@ configuration.
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
+      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR"/>
       <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      <property name="NCORE_PER_NODE"      value="36"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+      <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
  
       <project>gfdl_sd</project>
 
@@ -371,6 +297,40 @@ configuration.
         -->
       </directory>
 
+      <!-- Uncomment the <csh> section if needing to run with DDT -->
+      <!--
+      <csh><![CDATA[
+         module load ddt
+         setenv DDTMPIRUN /opt/cray/alps/default/bin/aprun
+         alias runCommand ddt  -n $npes  ./$executable:t 
+        ]]>
+      </csh>
+      -->
+    </platform>
+
+    <platform name="ncrc3.intel18">
+      <freVersion>$(FRE_VERSION)</freVersion>
+      <compiler type="intel" version="18.0.6.288" />
+
+      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <property name="NCORE_PER_NODE"      value="32"/>
+      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+      <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
+ 
+      <project>gfdl_sd</project>
+
+      <directory stem="$(FRE_STEM)">
+        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
+      </directory>
+    </platform>
+
+    <platform name="ncrc4.intel">
+      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
     </platform>
 
     <platform name="ncrc4.gnu">
@@ -379,17 +339,69 @@ configuration.
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
       <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <property name="NCORE_PER_NODE"      value="36"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+      <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
  
       <project>gfdl_sd</project>
 
       <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR_lo/fluxadj/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>/ncrc/home2/William.Cooke/SPEAR_xml/xml/SPEAR_include</include>
+        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
+        <!--
+        <include>$HOME/SPEAR/SPEAR_include</include>
+        -->
+      </directory>
+    <csh><![CDATA[
+setenv MAIN_PROGRAM coupler/coupler_main.o
+ ]]></csh>
+    </platform>
+
+    <platform name="ncrc4.cray">
+      <freVersion>$(FRE_VERSION)</freVersion>
+      <compiler type="cce" version="8.5.0" />
+
+      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <property name="NCORE_PER_NODE"      value="36"/>
+      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+      <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
+ 
+      <project>gfdl_sd</project>
+
+      <directory stem="$(FRE_STEM)">
+        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
+        <!--
+        <include>$HOME/SPEAR/SPEAR_include</include>
+        -->
+      </directory>
+    </platform>
+
+    <platform name="ncrc4.pgi">
+      <freVersion>$(FRE_VERSION)</freVersion>
+      <compiler type="pgi" version="16.5.0" />
+
+      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <property name="NCORE_PER_NODE"      value="36"/>
+      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+      <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
+ 
+      <project>gfdl_sd</project>
+
+      <directory stem="$(FRE_STEM)">
+        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
         <!--
         <include>$HOME/SPEAR/SPEAR_include</include>
         -->
@@ -415,7 +427,7 @@ configuration.
   <freInclude name="common_LM4">
     <input>
       <dataFile label="input" target="INPUT/soil_type.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/common_LM4/soil_type_hwsd_5minute.nc</dataSource>
+         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/common_LM4/soil_type_hwsd_5minute.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/common_LM4/biodata.nc</dataSource>
@@ -444,11 +456,13 @@ configuration.
  <freInclude name="c96_LM4_SPEAR">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
+        <dataSource platform="$(platform)">$CDATA/gfdl_M/Huan.Guo/INPUT/drag/c96_topo_rough_land.nc.tar</dataSource>
+        -->
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/c96_LM4/c96_topo_rough_land.nc.tar</dataSource>
       </dataFile>
     </input>
   </freInclude>
-
 
  <freInclude name="c192_LM4_SPEAR">
     <input>
@@ -466,85 +480,7 @@ configuration.
     </input>
   </freInclude>
 
- <freInclude name="c384_LM4_SPEAR">
-    <input>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C384_OM360x320.20180503/SPEAR_c384_hydrography.v20180510.tar</dataSource>
-        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C384_OM360x320.20180503/SPEAR_c384_hydrography.v20180510.tar</dataSource> 
-      </dataFile>
-
-     <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <!--
-       <dataSource platform="$(platform)">/lustre/f1/unswept/Baoqiang.Xiang/archive/cm4_develop/C384/drag/c384_topo_rough_land.nc.tar</dataSource>
-       -->
-       <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/SPEAR_HI_data/cm4_develop/C384/drag/c384_topo_rough_land.nc.tar</dataSource>
-       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/datasets/SPEAR_HI_data/cm4_develop/C384/drag/c384_topo_rough_land.nc.tar</dataSource>
-     </dataFile> 
-    </input>
-  </freInclude>
-
-  <freInclude name="common_amip">
-    <input>
-      <dataTable>
-"ICE", "sic_obs", "ice", "INPUT/hadisst_ice.data.nc", "bilinear", 0.01
-"ICE", "sit_obs", "",    "INPUT/hadisst_ice.data.nc", "none",     2.0
-"ICE", "sst_obs", "sst", "INPUT/hadisst_sst.data.nc", "bilinear", 1.0
-"LND", "phot_co2","co2", "INPUT/co2_data.nc",         "bilinear", 1.e-6
-      </dataTable>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-         <!--
-         <dataSource site="ncrc">/lustre/f1/pdata/gfdl_M/cm3/ipcc_ar5/input/common/hadisst.186912-201301.tar</dataSource>
-         -->
-         <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_M/Larry.Horowitz/archive/cm3/ipcc_ar5/input/common/hadisst.186912-201301.tar</dataSource>
-      </dataFile>
-    </input>
-  </freInclude>
-
-  <freInclude name="common_amip_v20190412">
-    <input>
-      <dataTable>
-"ICE", "sic_obs", "ice", "INPUT/hadisst_ice.data.nc", "bilinear", 0.01
-"ICE", "sit_obs", "",    "INPUT/hadisst_ice.data.nc", "none",     2.0
-"ICE", "sst_obs", "sst", "INPUT/hadisst_sst.data.nc", "bilinear", 1.0
-"LND", "phot_co2","co2", "INPUT/co2_data.nc",         "bilinear", 1.e-6
-      </dataTable>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/hadisst/hadisst.186912-201812.tar</dataSource>
-         <dataSource site="gfdl">/archive/wfc/data/hadisst/20190412/fms/hadisst.186912-201812.tar</dataSource>
-      </dataFile>
-    </input>
-  </freInclude>
-
-
-  <freInclude name="common_cmip6">
-    <input>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/cmip6_GHG_ODS_conc_2016.tar</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/chemlbf" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/chemlbf_CMIP6_merge_RCP45</dataSource>
-      </dataFile>
-
-      <dataFile label="input" target="INPUT/o3.climatology.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/mmro3_CMIP6_184901-201512.nc</dataSource>
-      </dataFile>
-
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <!--
-        <dataSource platform="$(platform)">$(LWH_ARCHIVE_ROOT)/cm3/ipcc_ar5/input/2000/emissions.isoprene.1x1.2000.nc</dataSource>
-        -->
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.isoprene.1x1.2000.nc</dataSource>
-      </dataFile>
-       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <!--
-        <dataSource platform="$(platform)">$(LWH_ARCHIVE_ROOT)/cm3/ipcc_ar5/input/2000/emissions.terpenes.1x1.2000.nc</dataSource>
-        -->
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.terpenes.1x1.2000.nc</dataSource>
-      </dataFile>
-   </input>
-  </freInclude>
-
- <freInclude name="common_cmip6_ssp585_combined">
+  <freInclude name="common_cmip6_ssp585">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.isoprene.1x1.2000.nc</dataSource>
@@ -555,181 +491,88 @@ configuration.
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp585/cmip6_Scenario_ssp585_GHG_ODS_conc_2500.tar</dataSource>
       </dataFile>
+      <!--dataFile label="input" target="INPUT/chemlbf" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp585/chemlbf_REMIND-MAGPIE-ssp585-1-2-0</dataSource>
+      </dataFile-->
+
       <dataFile label="input" target="INPUT/o3.climatology.nc" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/1849_2101/ozone/mmro3_CMIP6_SSP585_184901-210112.nc</dataSource>
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp585/mmro3_ScenarioMIP-ssp585_200001-210112.nc</dataSource>
       </dataFile>
     </input>
   </freInclude>
 
-  <freInclude name="Volcano_Solar_TimeSeries_cmip6">
+  <freInclude name="common_cmip6_ssp534OS">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/extsw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.isoprene.1x1.2000.nc</dataSource>
+      </dataFile>
+       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.terpenes.1x1.2000.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/omgsw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp534-over/cmip6_Scenario_ssp534_GHG_ODS_conc_2500.tar</dataSource>
       </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/asmsw_data.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/extlw_data.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Solar/lean_solar_spectral_data.dat</dataSource>
+      <dataFile label="input" target="INPUT/o3.climatology.nc" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">/lustre/f2/pdata/gfdl/gfdl_sd/datasets/ScenarioMIP/ssp534-over/mmro3_ScenarioMIP-ssp534os_200001-210112_updated.nc</dataSource>
       </dataFile>
     </input>
   </freInclude>
 
-  <freInclude name="Volcano_Solar_TimeSeries_cmip6_V2">
+  <freInclude name="CO2_timeseries">
     <input>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano_V2/extsw_data.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano_V2/omgsw_data.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano_V2/asmsw_data.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano_V2/extlw_data.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Solar/lean_solar_spectral_data.dat</dataSource>
-      </dataFile>
-    </input>
-  </freInclude>
-
-  <freInclude name="Volcano_Solar_2010_cmip6">
-    <input>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/AVG_2010/extsw_data.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/AVG_2010/omgsw_data.nc</dataSource>
-      </dataFile>
-        <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-      <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/AVG_2010/asmsw_data.nc</dataSource>
-      </dataFile>
-        <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-      <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/AVG_2010/extlw_data.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Solar/AVG_2010/lean_solar_spectral_data.dat</dataSource>
-      </dataFile>
-    </input>
-  </freInclude>
-
-  <freInclude name="Volcano_Solar_2010_cmip6_v2">
-    <input>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano_V2/AVG_2010/extsw_data.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano_V2/AVG_2010/omgsw_data.nc</dataSource>
-      </dataFile>
-        <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-      <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano_V2/AVG_2010/asmsw_data.nc</dataSource>
-      </dataFile>
-        <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-      <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano_V2/AVG_2010/extlw_data.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Solar/AVG_2010/lean_solar_spectral_data.dat</dataSource>
-      </dataFile>
-    </input>
-  </freInclude>
-
-  <freInclude name="Volcano_Solar_1850_cmip6">
-    <input>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/AVG_1850/extsw_data.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/AVG_1850/omgsw_data.nc</dataSource>
-      </dataFile>
-        <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-      <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/AVG_1850/asmsw_data.nc</dataSource>
-      </dataFile>
-        <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-      <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Volcano/AVG_1850/extlw_data.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Solar/AVG_1850/lean_solar_spectral_data.dat</dataSource>
-      </dataFile>
-    </input>
-  </freInclude>
-
-  <freInclude name="Volcano_Solar_1850_cmip6_v2">
-    <input>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <!--
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/extsw_data.nc</dataSource>
-        -->
-        <dataSource platform="$(platform)">$PDATA/gfdl/cmip6/datasets/CM4/forcings/Volcano_Solar_1850_cmip6_v2/extsw_data.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <!--
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/omgsw_data.nc</dataSource>
-        -->
-        <dataSource platform="$(platform)">$PDATA/gfdl/cmip6/datasets//CM4/forcings/Volcano_Solar_1850_cmip6_v2/omgsw_data.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/asmsw_data.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <!--
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/extlw_data.nc</dataSource>
-        -->
-        <dataSource platform="$(platform)">$PDATA/gfdl/cmip6/datasets//CM4/forcings/Volcano_Solar_1850_cmip6_v2/extlw_data.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/lean_solar_spectral_data.dat</dataSource>
-      </dataFile>
-    </input>
-  </freInclude>
-
-  <freInclude name="emissions_cmip6_v20170518">
-    <input>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/emissions_cmip6_v20170518/emissions.fastchem.0.5x0.5.1849-2017.tar</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/anthro_so2.1849_2017.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/emissions_cmip6_v20170518/emissions.simple.so2.0.5x0.5.1849-2017.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/co2_data.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/CO2/co2_historical_3D_0to2016.nc</dataSource>
-      </dataFile>
-    </input>
-  </freInclude>
-
-
-  <freInclude name="emissions_cmip6_v20161213">
-    <input>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_M/Vaishali.Naik/input/cmip6_forcing_dataset/emissions/v2016-12-13/1849_2016/emissions.0.5x0.5.1849-2016.tar</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/anthro_so2.1849_2016.nc" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_M/Vaishali.Naik/input/cmip6_forcing_dataset/emissions/v2016-12-13/fast_chemistry/emissions.simple.so2.0.5x0.5.1849-2016.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/co2_data.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/CO2/co2_historical_3D_0to2016.nc</dataSource>
-      </dataFile>
-    </input>
-  </freInclude>
-
-<freInclude name="emissions_cmip6_ssp585_combined">
-    <input>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/1849_2101/emissions/emissions.fastchem.0.5x0.5.1849-2101.tar</dataSource>
-        <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/datasets/1849_2101_SSP585/emissions/emissions.fastchem.0.5x0.5.1849-2101.tar</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/anthro_so2.1849_2101.nc" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/1849_2101/emissions/emissions.simple.so2.0.5x0.5.1849-2101.nc</dataSource>
-      </dataFile>
       <dataFile label="input" target="INPUT/co2_data.nc" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp585/co2_ssp585_3D_0to2499.nc</dataSource>
+      </dataFile>
+    </input>
+  </freInclude>
+
+  <freInclude name="CO2_timeseries_ssp534OS">
+    <input>
+      <dataFile label="input" target="INPUT/co2_data.nc" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/ScenarioMIP/ssp534-over/co2_SSP534OS_gblannualdata_0001-2500_2x2_julian.nc</dataSource>
+      </dataFile>
+    </input>
+  </freInclude>
+
+
+  <freInclude name="Volcano_Solar_TimeSeries_cmip6_v3">
+    <input>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_TimeSeries_cmip6_v3/extsw_data.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_TimeSeries_cmip6_v3/omgsw_data.nc</dataSource>
+      </dataFile>
+        <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+      <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_TimeSeries_cmip6_v3/asmsw_data.nc</dataSource>
+      </dataFile>
+        <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+      <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_TimeSeries_cmip6_v3/extlw_data.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_TimeSeries_cmip6_v3/lean_solar_spectral_data.dat</dataSource>
+      </dataFile>
+    </input>
+  </freInclude>
+
+  <freInclude name="emissions_cmip6_ssp585">
+    <input>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp585/emissions.fastchem.0.5x0.5.2010-2101.tar</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/anthro_so2.2010_2101.nc" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp585/emissions.simple.so2.0.5x0.5.2010-2101.nc</dataSource>
+      </dataFile>
+    </input>
+  </freInclude>
+
+  <freInclude name="emissions_cmip6_ssp534OS">
+    <input>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp534-over/emissions.fastchem.5x0.5.2010-2101.tar</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/anthro_so2.2010_2101.nc" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">/lustre/f2/pdata/gfdl/gfdl_sd/datasets/ScenarioMIP/ssp534-over/emissions.simple.so2.0.5x0.5.2010-2101.nc</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -738,6 +581,9 @@ configuration.
   <freInclude name="L32_gas_conc">
     <input>
       <dataFile label="input" target="INPUT/gas_conc_3D_am3p9.nc" chksum="" size="" timestamp="">
+        <!--
+        <dataSource platform="$(platform)">/lustre/f1/pdata/gfdl_M/cjg/archive/mdt/liteChem/input/aerosol/gas_conc_3D32L_am3p9.nc</dataSource>
+        -->
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/L32_gas_conc/gas_conc_3D32L_am3p9.nc</dataSource>
       </dataFile>
     </input>
@@ -766,6 +612,7 @@ set domains_stack_size = "5097152"
       ]]></csh>
     </input>
   </freInclude>
+
 
 <!--================================-->
 <!--= TEMPLATES FOR POSTPROCESSING =-->
@@ -797,31 +644,93 @@ set domains_stack_size = "5097152"
             <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A48x2_O32']/node())"/>
         </run>
       </regression>
+      <regression label="short12hr">
+        <run hours="12" months="0"
+             overrideParams="atmos_model_nml:nxblocks=2;
+                             atmos_model_nml:nyblocks=2;
+                             fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A48x2_O32']/node())"/>
+        </run>
+        <run hours="6 6" months="0 0"
+             overrideParams="atmos_model_nml:nxblocks=2;
+                             atmos_model_nml:nyblocks=2;
+                             fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A48x2_O32']/node())"/>
+        </run>
+      </regression>
       <regression label="scaling">
+      <!--
+        <run days="8" months="0"
+             overrideParams="atmos_model_nml:nxblocks=2;
+                             atmos_model_nml:nyblocks=2;
+                             fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A48x2_O64']/node())"/>
+        </run>
         <run days="8" months="0"
              overrideParams="fms_nml:clock_grain='ROUTINE';
                              random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
                              icebergs_nml:make_calving_reproduce=.TRUE.;
                              xgrid_nml:make_exchange_reproduce=.TRUE.;">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A72x2_O72']/node())"/>
+            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A60x2_O36']/node())"/>
+        </run> 
+        <run days="8" months="0"
+             overrideParams="fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O72']/node())"/>
         </run>
-        
+        -->
+        <run days="8" months="0"
+             overrideParams="fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A144x2_O96']/node())"/>
+        </run>
         
         <run days="8" months="0"
              overrideParams="fms_nml:clock_grain='ROUTINE';
                              random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
                              icebergs_nml:make_calving_reproduce=.TRUE.;
                              xgrid_nml:make_exchange_reproduce=.TRUE.;">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A144x2_O72']/node())"/>
+            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
         </run>
-        
+
         <run days="8" months="0"
              overrideParams="fms_nml:clock_grain='ROUTINE';
                              random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
                              icebergs_nml:make_calving_reproduce=.TRUE.;
                              xgrid_nml:make_exchange_reproduce=.TRUE.;">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A144x2_O108']/node())"/>
+            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A144x2_O64']/node())"/>
         </run>
+        <run days="8" months="0"
+             overrideParams="fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A144x2_O63']/node())"/>
+        </run>
+        
+        
+        <!--
+        <run days="8" months="0"
+             overrideParams="fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O432']/node())"/>
+        </run>
+        
         
         <run days="8" months="0"
              overrideParams="fms_nml:clock_grain='ROUTINE';
@@ -830,7 +739,23 @@ set domains_stack_size = "5097152"
                              xgrid_nml:make_exchange_reproduce=.TRUE.;">
             <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A864x2_O864']/node())"/>
         </run>
-        
+        -->
+      </regression>
+      <regression label="short_test">
+        <run hours="24" months="0"
+             overrideParams="fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A144x2_O64']/node())"/>
+        </run>
+        <run hours="24" months="0"
+             overrideParams="fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A144x2_O63']/node())"/>
+        </run>
       </regression>
       <regression label="onedaychksum">
         <run days="1" months="0"
@@ -841,58 +766,6 @@ set domains_stack_size = "5097152"
                              icebergs_nml:make_calving_reproduce=.TRUE.;
                              xgrid_nml:make_exchange_reproduce=.TRUE.;">
             <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
-        </run>
-      </regression>
-      <regression label="test_ice_model_layout">
-        <run days="2" months="0"
-             overrideParams="fms_nml:clock_grain='ROUTINE';
-                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
-                             icebergs_nml:make_calving_reproduce=.TRUE.;
-                             icebergs_nml: Runge_not_Verlet = .TRUE.;
-                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A36x1_ice36_1']/node())"/>
-        </run>
-        <run days="2" months="0"
-             overrideParams="fms_nml:clock_grain='ROUTINE';
-                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
-                             icebergs_nml:make_calving_reproduce=.TRUE.;
-                             icebergs_nml: Runge_not_Verlet = .TRUE.;
-                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A36x1_ice18_2']/node())"/>
-        </run>
-        <run days="2" months="0"
-             overrideParams="fms_nml:clock_grain='ROUTINE';
-                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
-                             icebergs_nml:make_calving_reproduce=.TRUE.;
-                             icebergs_nml: Runge_not_Verlet = .TRUE.;
-                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A36x1_ice9_4']/node())"/>
-        </run>
-
-
-        <run days="2" months="0"
-             overrideParams="fms_nml:clock_grain='ROUTINE';
-                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
-                             icebergs_nml:make_calving_reproduce=.TRUE.;
-                             icebergs_nml: Runge_not_Verlet = .FALSE.;
-                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A36x1_ice36_1']/node())"/>
-        </run>
-        <run days="2" months="0"
-             overrideParams="fms_nml:clock_grain='ROUTINE';
-                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
-                             icebergs_nml:make_calving_reproduce=.TRUE.;
-                             icebergs_nml: Runge_not_Verlet = .FALSE.;
-                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A36x1_ice18_2']/node())"/>
-        </run>
-        <run days="2" months="0"
-             overrideParams="fms_nml:clock_grain='ROUTINE';
-                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
-                             icebergs_nml:make_calving_reproduce=.TRUE.;
-                             icebergs_nml: Runge_not_Verlet = .FALSE.;
-                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A36x1_ice9_4']/node())"/>
         </run>
       </regression>
       <regression label="ice_model_layout">
@@ -967,11 +840,24 @@ set domains_stack_size = "5097152"
         </run>
       </regression>
       <regression label="timing_omp">
+
         <run days="0" months="3" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A54x2_O72']/node())"/>
+            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A432x2_O324']/node())"/>
         </run>
         <run days="0" months="3" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O108']/node())"/>
+            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A432x2_O360']/node())"/>
+        </run>
+        <run days="0" months="3" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O432']/node())"/>
+        </run>
+        <run days="0" months="3" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A864x2_O864']/node())"/>
+        </run>
+        <run days="0" months="3" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A864x2_O720']/node())"/>
+        </run>
+        <run days="0" months="3" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x4_O864']/node())"/>
         </run>
       </regression>
 
@@ -998,6 +884,7 @@ set domains_stack_size = "5097152"
     </runtime>
   </freInclude>
 
+
   <freInclude name="FLOR2_MOM6_data">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
@@ -1016,6 +903,9 @@ set domains_stack_size = "5097152"
        <dataSource platform="$(platform)">$(includeDir)/ice_ocean_SIS2/OM4_025/INPUT/vgrid_75_2m.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+          <!--
+          <dataSource site="ncrc">/lustre/f1/unswept/Matthew.Harrison/MOM6_datasets/FLOR2/diag_vgrid.nc</dataSource>
+          -->
           <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/MOM6_datasets/FLOR2/diag_vgrid.nc</dataSource>
           <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/FLOR2/diag_vgrid.nc</dataSource>
       </dataFile>
@@ -1023,9 +913,15 @@ set domains_stack_size = "5097152"
        <dataSource platform="$(platform)">$(includeDir)/ice_ocean_SIS2/OM4_025/INPUT/WOA05_pottemp_salt.nc </dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
+        <dataSource site="ncrc">/lustre/f1/unswept/Matthew.Harrison/MOM6_datasets/FLOR2/edits_012016.nc</dataSource>
+        -->
         <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/MOM6_datasets/FLOR2/edits_012016.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <!--
+        <dataSource site="ncrc">/lustre/f1/unswept/Matthew.Harrison/MOM6_datasets/FLOR2/edits_013016a.nc</dataSource>
+        -->
         <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/MOM6_datasets/FLOR2/edits_013016a.nc</dataSource>
       </dataFile>
     </input>
@@ -1111,146 +1007,143 @@ cd ..
   </freInclude>
 
 
-<experiment name="spear_lo_Q50_FA_ens_01_05_repro" inherit="spear_lo_K50.restore25s25n_override90s65n_H1.P.ens_01">
-  <description>
-   test expt to bitwise reproduce /archive/fjz/SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_ens_01_05 output
-  </description>
+<experiment name="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_04_06" inherit="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_01_03">
+<description>
+</description>
   <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        /lustre/f2/dev/gfdl/Fanrong.Zeng/module_data/SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_ens_01_05_restart_19580101.combined.tar
-     </dataFile>
-      <dataTable> 
-"LND", "phot_co2","co2", "INPUT/co2_data.nc",         .false., 1.e-6
-     </dataTable>
-      <namelist name="ensemble_nml">
-        ensemble_size=2
-      </namelist>
-      <csh type="always"><![CDATA[
-######BEGIN MOM6 and SIS2 layout setup################
-##THIS HAS TO BE PART OF csh type=always###
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_ScenSSP534-overshoot/ens_04_06/20410101.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_o1_ScenSSP534-overshoot/ens_04_06/20410101.tar</dataSource>
+     </dataFile> 
+  </input>
+</experiment>
 
-touch $work/INPUT/MOM_override
+<experiment name="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_07_09" inherit="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_01_03">
+<description>
+</description>
+  <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
+      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_ScenSSP534-overshoot/ens_07_09/20410101.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_o1_ScenSSP534-overshoot/ens_07_09/20410101.tar</dataSource>
+     </dataFile> 
+  </input>
+</experiment>
 
-cat > $work/INPUT/MOM_override << EOF
-#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
-#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
-NUM_DIAG_COORDS = 3             ! default = 1
-                                ! The number of diagnostic vertical coordinates to use.
-                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
-DIAG_COORDS = "z Z ZSTAR, rho2 RHO2 RHO, ztop ZTOP300 ZSTAR"
+<experiment name="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_10_12" inherit="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_01_03">
+  <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
+     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_ScenSSP534-overshoot/ens_10_12/20410101.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_o1_ScenSSP534-overshoot/ens_10_12/20410101.tar</dataSource>
+     </dataFile> 
+  </input>
+</experiment>
 
-DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
-                                ! Determines how to specify the coordinate
-                                ! resolution. Valid options are:
-                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
-                                !  UNIFORM[:N] - uniformly distributed
-                                !  FILE:string - read from a file. The string specifies
-                                !                the filename and variable name, separated
-                                !                by a comma or space, e.g. FILE:lev.nc,dz
-                                !                or FILE:lev.nc,interfaces=zw
-                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
-                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
-                                !  HYBRID:string - read from a file. The string specifies
-                                !                the filename and two variable names, separated
-                                !                by a comma or space, for sigma-2 and dz. e.g.
-                                !                HYBRID:vgrid.nc,sigma2,dz
+<experiment name="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_13_15" inherit="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_01_03">
+  <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
+     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_ScenSSP534-overshoot/ens_13_15/20410101.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_o1_ScenSSP534-overshoot/ens_13_15/20410101.tar</dataSource>
+     </dataFile> 
+  </input>
+</experiment>
 
-DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
-EOF
+<experiment name="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_16_18" inherit="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_01_03">
+  <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
+     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_ScenSSP534-overshoot/ens_16_18/20410101.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_o1_ScenSSP534-overshoot/ens_16_18/20410101.tar</dataSource>
+     </dataFile> 
+  </input>
+</experiment>
 
-touch $work/INPUT/SIS_override
+<experiment name="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_19_21" inherit="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_01_03">
+<description>
+</description>
+  <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
+     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_ScenSSP534-overshoot/ens_19_21/20410101.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_o1_ScenSSP534-overshoot/ens_19_21/20410101.tar</dataSource>
+     </dataFile> 
+  </input>
+</experiment>
 
-cat > $work/INPUT/SIS_override << EOF
-#override CP_SEAWATER = 3992.
-#override CP_BRINE = 3992.
-#override ICE_BULK_SALINITY = 0.0
-#override ICE_RELATIVE_SALINITY = 0.17
-#override SIS2_FILLING_FRAZIL = T
-#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
-#override SIS_CONTINUITY_SCHEME = "PCM"
-#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
-EOF
+<experiment name="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_22_24" inherit="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_01_03">
+  <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
+     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_ScenSSP534-overshoot/ens_22_24/20410101.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_o1_ScenSSP534-overshoot/ens_22_24/20410101.tar</dataSource>
+     </dataFile> 
+  </input>
+</experiment>
 
-#scan auxiliary_nml
-#set OCN_MASK_TABLE = 
-#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+<experiment name="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_25_27" inherit="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_01_03">
+  <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
+     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_ScenSSP534-overshoot/ens_25_27/20410101.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_o1_ScenSSP534-overshoot/ens_25_27/20410101.tar</dataSource>
+     </dataFile> 
+  </input>
+</experiment>
 
-cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
-#override IO_LAYOUT = $ocn_io_layout
-#override LAYOUT    = $ocn_layout
-#override MASKTABLE = $ocn_mask_table
-MOM_LAYOUT_EOF
-
-#scan auxiliary_nml
-#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
-#override IO_LAYOUT = $ice_io_layout
-#override LAYOUT    = $ice_layout
-#override MASKTABLE = $ocn_mask_table
-SIS_LAYOUT_EOF
-
-######END MOM6 and SIS2 layout setup################
-
-cd $work/INPUT
-
-if ( $currentSeg == 1 ) then
-  #   rm -f coupler.res
-  #   foreach i ( MOM.res*nc)
-  #     chmod u+w $i
-  #     ncrename -v Kv_turb,Kv_shear -v Kd_turb,Kd_shear $i
-  #   end
-endif
-cd $work
-
-#------------------------------------------
-## Find out whether to restart.
-# MOM6 restart switch
-   set restart_flag = 'r'
-   set sis_restart_flag = 'r'
-cd $work
-
-## Run the model
-#------------------------------------------
-###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
-set OCN_MASK_TABLE  =  $ocn_mask_table
-set OCN_LAYOUT    = $ocn_layout
-set OCN_IO_LAYOUT = $ocn_io_layout
-set ICE_LAYOUT    = $ice_layout
-set ICE_IO_LAYOUT = $ice_io_layout
-set atmos_npes = $atm_ranks
-set ocean_npes = $ocn_ranks
-set fv_layout = $atm_layout
-set fv_io_layout  = $atm_io_layout
-set land_layout   = $lnd_layout
-set land_io_layout = $lnd_io_layout
-set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nxblocks = $dummy
-set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nyblocks = $dummy
-]]>
-    </csh>
+<experiment name="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_28_30" inherit="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_01_03">
+<description>
+</description>
+  <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
+     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_ScenSSP534-overshoot/ens_28_30/20410101.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_o1_ScenSSP534-overshoot/ens_28_30/20410101.tar</dataSource>
+     </dataFile> 
   </input>
 </experiment>
 
 
-<experiment name="spear_lo_K50.restore25s25n_override90s65n_H1.P.ens_01" inherit="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec">
-
+<experiment name="SPEAR_c192_o1_Scen_SSP534OS_IC2041_restore_PRCmE_minus_p2Sv_K50_ens_01_03" inherit="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec">
   <description>
-  Ensemble member 1 to 5 of historical run with F50 model settings.
-  Model to start in 1851 and run to 2010 with the intention of eventually extending to 2100.
-  Ensemble initial conditions taken from years 101, 121, 141, 161 and 181 of SPEAR_c96_o1_Control_1850_E50
-  Get the land restart files from the initial condition of SPEAR_c96_o1_1701_1850_K45_spinup_nobridge.
+6/3/2021
+Ensemble member 1 to 3 for c192 SSP534OS with 0.2S water removed in North Atlantic.
+This is expected to allow the AMOC to strengthen relative to the SSP534OS scenario run.
   </description>
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
-      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c192L33.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_amip.nml"/>
       <namelist name="ensemble_nml">
         ensemble_size=1
@@ -1263,33 +1156,29 @@ set nyblocks = $dummy
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
       </namelist> 
-<namelist name="atmos_tracer_utilities_nml">
- scale_aerosol_wetdep = 1.
- drydep_exp = .true.
-</namelist>
       <namelist name="carbon_aerosol_nml">
       bcff_source = 'gocart_2007',
         bcff_input_name(1)='anthro',
-        bcff_filename='emissions.bc.0.5x0.5.1849-2101.nc',
+        bcff_filename='emissions.bc.0.5x0.5.2010-2101.nc',
         bcff_time_dependency_type='time_varying',bcff_dataset_entry=$baseDate
       omff_source = 'gocart_2007',
         omff_input_name(1)='anthro',
-        omff_filename='emissions.om.0.5x0.5.1849-2101.nc',
+        omff_filename='emissions.om.0.5x0.5.2010-2101.nc',
         omff_time_dependency_type='time_varying',omff_dataset_entry=$baseDate
       omsh_source = 'gocart_2007',
         omsh_input_name(1)='ship',
-        omsh_filename='emissions.om.0.5x0.5.1849-2101.nc',
+        omsh_filename='emissions.om.0.5x0.5.2010-2101.nc',
         omsh_time_dependency_type='time_varying',omsh_dataset_entry=$baseDate
       bcsh_source = 'gocart_2007',
         bcsh_input_name(1)='ship',
-        bcsh_filename='emissions.bc.0.5x0.5.1849-2101.nc',
+        bcsh_filename='emissions.bc.0.5x0.5.2010-2101.nc',
         bcsh_time_dependency_type='time_varying',bcsh_dataset_entry=$baseDate
       bcav_source = 'do_aircraft'
         bcav_input_name(1)='fuel',
-        bcav_filename='emissions.aircraft.aero.0.5x0.5.1849-2101.nc',
+        bcav_filename='emissions.aircraft.aero.0.5x0.5.2010-2101.nc',
         bcav_time_dependency_type='time_varying',bcav_dataset_entry=$baseDate
       bcbb_source = 'AEROCOM',
-        bcbb_filename='emissions.bc.0.5x0.5.1849-2101.nc',
+        bcbb_filename='emissions.bc.0.5x0.5.2010-2101.nc',
         bcbb_input_name(1)='bb_l1'
         bcbb_input_name(2)='bb_l2'
         bcbb_input_name(3)='bb_l3'
@@ -1298,7 +1187,7 @@ set nyblocks = $dummy
         bcbb_input_name(6)='bb_l6'
         bcbb_time_dependency_type='time_varying',bcbb_dataset_entry=$baseDate
       ombb_source = 'AEROCOM',
-        ombb_filename='emissions.om.0.5x0.5.1849-2101.nc',
+        ombb_filename='emissions.om.0.5x0.5.2010-2101.nc',
         ombb_input_name(1)='bb_l1'
         ombb_input_name(2)='bb_l2'
         ombb_input_name(3)='bb_l3'
@@ -1319,24 +1208,37 @@ set nyblocks = $dummy
         expl_volc_source='do_expl_volc'
           aerocom_emission_filename='so2_0.25_volcanoes.nc'
         aircraft_source='do_aircraft',
-          aircraft_filename='emissions.aircraft.aero.0.5x0.5.1849-2101.nc',
+          aircraft_filename='emissions.aircraft.aero.0.5x0.5.2010-2101.nc',
           aircraft_emission_name(1)='fuel'
           so2_aircraft_EI=0.001
           aircraft_time_dependency_type='time_varying',aircraft_dataset_entry=$baseDate
         anthro_source='do_anthro',
           anthro_emission_name(1)='so2ff',
           anthro_emission_name(2)='so4ff',
-          anthro_filename='anthro_so2.1849_2101.nc',
+          anthro_filename='anthro_so2.2010_2101.nc',
           anthro_time_dependency_type='time_varying',anthro_dataset_entry=$baseDate
         biobur_source='do_biobur',
           biobur_emission_name(1)='so2bb',
           biobur_emission_name(2)='so4bb',
-          biobur_filename='anthro_so2.1849_2101.nc',
+          biobur_filename='anthro_so2.2010_2101.nc',
           biobur_time_dependency_type='time_varying',biobur_dataset_entry=$baseDate
         cloud_chem_solver="f1p"
         pH_cloud=4.5
         no_biobur_if_no_pbl = .false.
       </namelist>
+      <!--
+          anthro_filename='emissions.simple.so2.0.5x0.5.2010-2101.nc',
+          anthro_time_dependency_type='time_varying',anthro_dataset_entry=$baseDate
+        biobur_source='do_biobur',
+          biobur_emission_name(1)='so2bb',
+          biobur_emission_name(2)='so4bb',
+          biobur_filename='emissions.simple.so2.0.5x0.5.2010-2101.nc',
+          biobur_time_dependency_type='time_varying',biobur_dataset_entry=$baseDate
+        cloud_chem_solver="f1p"
+        pH_cloud=4.5
+        no_biobur_if_no_pbl = .false.
+      </namelist>
+      -->
       <namelist name="icebergs_nml">
         make_calving_reproduce=.TRUE.
         really_debug=.FALSE.
@@ -1387,10 +1289,10 @@ set nyblocks = $dummy
         do_chksum = .false.
         months = $months,
         days   = $days,
-        current_date = 1851,1,1,0,0,0,
+        current_date = 2011,1,1,0,0,0,
         calendar = 'julian',
-        dt_cpld = 1800,
-        dt_atmos = 1800,
+        dt_cpld = 3600,
+        dt_atmos = 1200,
         do_atmos = .true.,
         do_land = .true.,
         do_ice = .true.,
@@ -1405,7 +1307,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
       <namelist name="cg_drag_nml">
-        cg_drag_freq = 1800,
+        cg_drag_freq = 1200,
         cg_drag_offset = 0,
         Bt_0 =  0.005,
         Bt_aug= 0.000,
@@ -1427,6 +1329,19 @@ set nyblocks = $dummy
         max_files_r = 100,
         max_files_w = 100,
         checksum_required =.false.
+     </namelist>
+     <namelist name="icebergs_nml">
+        make_calving_reproduce=.TRUE.
+        really_debug=.FALSE.
+        debug=.FALSE.
+        verbose=.FALSE.
+        verbose_hrs=7200
+        use_operator_splitting=.TRUE.
+        bergy_bit_erosion_fraction=0.0
+        sicn_shift=0.1
+        parallel_reprod=.TRUE.
+        traj_sample_hrs=0
+        add_weight_to_ocean=.false.
      </namelist>
      <namelist name="landuse_nml">
        do_landuse_change = .TRUE.
@@ -1622,52 +1537,98 @@ set nyblocks = $dummy
      </namelist>
       <dataTable> 
 "LND", "phot_co2","co2", "INPUT/co2_data.nc",         .false., 1.e-6
-"OCN", "u_flux","u_flux",  "INPUT/ocean_sfc_tauxy_override.nc", .false., 1.0,   "0,359.25,-90.0,65.0", "inside_region"
-"OCN", "v_flux","v_flux",  "INPUT/ocean_sfc_tauxy_override.nc", .false., 1.0,   "0,359.25,-90.0,65.0", "inside_region"
      </dataTable>
+<!--"OCN", "prcme_adj","prcme_adj",  "INPUT/prcme_adj.nc", .true., 1.0
+     </dataTable>
+
+      <dataFile label="input" target="INPUT/prcme_adj.nc" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/datasets/PRCmE/ocean.201101-210101.PRCmE_EXTRA_remove_p2SV.nc</dataSource>
+-->
+        <!--
+        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/datasets/PRCmE/ocean.201101-210101.PRCmE_EXTRA_remove_p2SV_float.nc</dataSource>
+        -->
+        <!--
+        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/datasets/PRCmE/ocean.climo.PRCmE_EXTRA_remove_p2SV_v3.nc</dataSource>
+        -->
+<!--
+        <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/datasets/PRCmE/ocean.201101-210101.PRCmE_EXTRA_remove_p2SV.nc</dataSource>
+      </dataFile>
+-->
      <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-     /lustre/f2/dev/gfdl/Andrew.Wittenberg/run/spear/lo/nudge/v1/input/restart/20200211/19790101.tar
-     </dataFile>
-     <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">$(WFC_ARCHIVE_ROOT)/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
-     </dataFile>
+
+       <dataSource site="ncrc">/lustre/f2/scratch/gfdl/William.Cooke/ensemble_test-3EfGgquOgs/SPEAR_c192_o1_ScenSSP534-overshoot_mem1.tar</dataSource>
+
+       <!--
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_ScenSSP534-overshoot/ens_01_03/20410101.tar</dataSource>
+       --><dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_o1_ScenSSP534-overshoot/ens_01_03/20410101.tar</dataSource>
+
+     </dataFile> 
      <diagTable>
 $name
 $baseDate
+"ocean_model", "heat_added",               "heat_added",                 "ocean_month",     "all", "mean", "none",2
+"ocean_model", "salt_flux_added",          "salt_flux_added",            "ocean_month",     "all", "mean", "none",2
+"ocean_model", "vprec",          "vprec",            "ocean_month",     "all", "mean", "none",2
       </diagTable>
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-        /lustre/f2/dev/gfdl/Fanrong.Zeng/module_data/SPEAR/diag_table_SPEAR_Control_20180803_x1y_TD
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_20180904</dataSource>
       </dataFile>
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
-        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
+        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C192_OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C192.OM360x320.20171213/mosaic.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/cmip6/datasets/CM4/forcings/landuse/LUH2/v2.0h/transitions.nc</dataSource>
+
+      <!--
+      <dataFile label="input" target="INPUT/transitions.nc" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/cmip6/datasets/ScenarioMIP/ssp585/RCP8.5_SSP5_2001-2100_transitions_v20180926.nc</dataSource>
       </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/cmip6/datasets/CM4/forcings/landuse/LUH2/v2.0h/states.nc</dataSource>
+      <dataFile label="input" target="INPUT/states.nc" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/cmip6/datasets/ScenarioMIP/ssp585/RCP8.5_SSP5_2001-2100_states_v20180926.nc</dataSource>
       </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+
+      -->
+      <dataFile label="input" target="INPUT/transitions.nc" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/cmip6/datasets/ScenarioMIP/ssp534-over/ssp534_2001-2100_transitions_v20190708.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/states.nc" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/cmip6/datasets/ScenarioMIP/ssp534-over/ssp534_2001-2100_states_v20190708.nc</dataSource>
+      </dataFile>
+      
+
+      <dataFile label="input" target="INPUT/landfrac.nc" chksum="" size="" timestamp="">
         <dataSource site="ncrc">/lustre/f2/pdata/gfdl/cmip6/datasets/CM4/forcings/landuse/LUH2/v2.0h/landfrac.nc</dataSource>
       </dataFile>
+      <xi:include xpointer="xpointer(//freInclude[@name='c192_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
-        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
+        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C192_OM360x320.20171213/SPEAR_c192_hydrography.v20171218.tar</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C192.OM360x320.20171213/SPEAR_c192_hydrography.v20171218.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
-      <!--<xi:include xpointer="xpointer(//freInclude[@name='common_cmip6']/input/node())"/> -->
-      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6_ssp585_combined']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='Volcano_Solar_TimeSeries_cmip6_V2']/input/node())"/>
-      <!--<xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_v20170518']/input/node())"/> -->
-      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_ssp585_combined']/input/node())"/>
+      
+      <!--
+      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6_ssp585']/input/node())"/>
+      
+      -->
+      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6_ssp534OS']/input/node())"/>
+      
+
+      <xi:include xpointer="xpointer(//freInclude[@name='Volcano_Solar_TimeSeries_cmip6_v3']/input/node())"/>
+
+      <!--
+      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_ssp585']/input/node())"/>
+      
+      <xi:include xpointer="xpointer(//freInclude[@name='CO2_timeseries']/input/node())"/>
+      -->
+
+      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_ssp534OS']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='CO2_timeseries_ssp534OS']/input/node())"/>
+      
       <xi:include xpointer="xpointer(//freInclude[@name='L32_gas_conc']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='c96_stack_size']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='c192_stack_size']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='csh_adjust_dry_mass']/input/node())"/>
       <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='SPEAR_domain_decomp']/input/node())"/>
       <!--MOM6 Input datasets-->
@@ -1701,56 +1662,33 @@ $baseDate
          <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
          <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
-      <dataFile label="input" target="INPUT/ocean_sfc_tauxy_override.nc">
-        /lustre/f2/dev/gfdl/Andrew.Wittenberg/run/spear/lo/nudge/v2/input/target/final_for_model/20200218/tau_erai_monthly_197812-201907_latlon.nc
-      </dataFile>
-      <dataFile label="input" target="INPUT/temp_restore.nc" chksum="" size="" timestamp="">
-       /lustre/f2/dev/gfdl/Andrew.Wittenberg/run/spear/lo/nudge/v2/input/target/final_for_model/20200218/sst_hadisst_v2p1_and_oisst_v2_monthly_197801-201912_tripolar.nc
-      </dataFile>
+
+
       <dataFile label="input" target="INPUT/salt_restore.nc" chksum="" size="" timestamp="">
         <!-- /lustre/f2/dev/Fanrong.Zeng/module_data/LOAR/WOA_09.salinity_monthly_1deg_LOAR2_grid.nc -->
         /lustre/f2/dev/gfdl/Andrew.Wittenberg/run/spear/lo/nudge/v2/input/target/final_for_model/20200218/sss_woa18_clim_monthly_1975-2017_tripolar.nc
       </dataFile>
-      <dataFile label="input" target="INPUT/temp_restore_mask.nc">
-        /lustre/f2/dev/gfdl/Andrew.Wittenberg/run/spear/lo/nudge/v2/input/target/final_for_model/20200218/temp_restore_mask.nc
-      </dataFile>
       <dataFile label="input" target="INPUT/salt_restore_mask.nc">
-        /lustre/f2/dev/gfdl/Andrew.Wittenberg/run/spear/lo/nudge/v2/input/target/final_for_model/20200218/salt_restore_mask.nc
+        /lustre/f2/pdata/gfdl/gfdl_sd/datasets/PRCmE/prcme_mask3.nc
       </dataFile>
-
       <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################
 ##THIS HAS TO BE PART OF csh type=always###
 
 touch $work/INPUT/MOM_override
-#override T_RESCALE_POWER = 37
-#override Z_RESCALE_POWER = -5 
-#override T_RESCALE_POWER = 0
-#override Z_RESCALE_POWER = 0
-#override L_RESCALE_POWER = 0
-#override R_RESCALE_POWER = 0
-#override Q_RESCALE_POWER = 0
-
 
 cat > $work/INPUT/MOM_override << EOF
-
-#override INTERNAL_WAVE_SPEED_BETTER_EST =False
-
+#override ALLOW_FLUX_ADJUSTMENTS =True
 #override FLUXCONST = 0.0
-#override FLUXCONST_SALT = 0.05556
-#override FLUXCONST_TEMP = 5.0
-#override SRESTORE_AS_SFLUX = True
+#override FLUXCONST_SALT = -0.05556
+#override SRESTORE_AS_SFLUX = False
 #override RESTORE_SALINITY =  True
-#override RESTORE_TEMPERATURE =  True
-#override MAX_DELTA_TRESTORE = 10.0 
 #override MAX_DELTA_SRESTORE = 5.0 
-#override MASK_TRESTORE = True
 #override MASK_SRESTORE = True 
 
+
+
 #override DEFAULT_2018_ANSWERS = T
-
-#override RESTART_CHECKSUMS_REQUIRED=False
-
 #override REMAP_UV_USING_OLD_ALG = True
 #override Z_INIT_REMAP_OLD_ALG = True
 #override FIX_USTAR_GUSTLESS_BUG =False
@@ -1764,19 +1702,16 @@ cat > $work/INPUT/MOM_override << EOF
 #override MEKE_ALPHA_EADY = 0.05
 #override MEKE_ALPHA_RHINES = 0.05
 #override MIN_SALINITY = 0.01
-
-
 #override USE_INACCURATE_PGF_RHO_ANOM=True
-#override KH_BG_2D_BUG=True
 #override USE_DIABATIC_TIME_BUG=True
 #override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
-
+#override KH_BG_2D_BUG=True
 #override TOPO_EDITS_FILE = "topo_edits_011818.nc"
 #override CHANNEL_LIST_FILE = MOM_channels_SPEAR
-NUM_DIAG_COORDS = 3             ! default = 1
+NUM_DIAG_COORDS = 2             ! default = 1
                                 ! The number of diagnostic vertical coordinates to use.
                                 ! For each coordinate, an entry in DIAG_COORDS must be provided.
-DIAG_COORDS = "z Z ZSTAR, rho2 RHO2 RHO, ztop ZTOP300 ZSTAR"
+DIAG_COORDS = "z Z ZSTAR", "rho2 RHO2 RHO" !
 
 DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
                                 ! Determines how to specify the coordinate
@@ -1794,7 +1729,6 @@ DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default 
                                 !                by a comma or space, for sigma-2 and dz. e.g.
                                 !                HYBRID:vgrid.nc,sigma2,dz
 
-DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
 EOF
 
 touch $work/INPUT/SIS_override
@@ -1810,7 +1744,6 @@ cat > $work/INPUT/SIS_override << EOF
 #override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
 #override GRID_ROTATION_ANGLE_BUGS =True
 #override USE_TRIPOLAR_GEOLONB_BUG = True
-
 #override INCONSISTENT_COVER_BUG = True
 #override CFL_MASS_NEGLECT_BUG=True
 #override RESTART_CHECKSUMS_REQUIRED =False
@@ -1844,12 +1777,18 @@ SIS_LAYOUT_EOF
 cd $work/INPUT
 
 if ( $currentSeg == 1 ) then
-  #   rm -f coupler.res
-  #   foreach i ( MOM.res*nc)
-  #     chmod u+w $i
-  #     ncrename -v Kv_turb,Kv_shear -v Kd_turb,Kd_shear $i
-  #   end
+#     rm -f coupler.res
+     foreach i ( MOM.res*nc)
+       chmod u+w $i
+       ncrename -v Kv_turb,Kv_shear -v Kd_turb,Kd_shear $i
+     end
+
 endif
+
+#chmod 644 prcme_adj.nc
+#ncatted -a _FillValue,prcme_adj,m,f,0.0 prcme_adj.nc
+#ncatted -a missing_value,prcme_adj,m,f,0.0 prcme_adj.nc
+
 cd $work
 
 #------------------------------------------
@@ -1881,24 +1820,73 @@ set nyblocks = $dummy
     </csh>
   </input>
   <runtime>
-    <production simTime="40" units="years" >
+    <production simTime="60" units="years" >
       <segment simTime="1" units="years"/>
-      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180_production_c3']/node())"/>
-    </production>
+      <!--
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A864x4_O252_production_c192']/node())"/>
+      -->
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108_production_c192']/node())"/>
+    </production> 
+      <regression name="debug_216">
+        <run days="1" >
+          <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A144x1_O72_debug']/node())"/>
+          </run>
+      </regression>
+      <regression name="twoyear">
+        <run months="12 12" >
+      <!--
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A864x4_O252_production_c192']/node())"/>
+      -->
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108_production_c192']/node())"/>
+        </run>
+      </regression>
+      <regression name="oneyear">
+        <run months="12" >
+      <!--
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180_long']/node())"/>
+      -->
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108']/node())"/>
+        </run>
+      </regression>
+      <regression name="onemonth_test">
+        <run months="1" >
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108']/node())"/>
+        </run>
+      </regression>
+      <regression name="sixmonth_test">
+        <run months="6" >
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108']/node())"/>
+        </run>
+      </regression>
+      <regression name="oneday_coldstart">
+        <run days="1" >
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
+        </run>
+      </regression>
       <regression name="basic_prodsettings">
         <run days="8" >
-          <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
-          </run>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
+        </run>
       </regression>
-      <regression name="debug">
-        <run days="1" >
-          <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
-          </run>
+      <regression name="spinup_prodsettings">
+        <run months="3" >
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
+        </run>
       </regression>
-      <reference restart="/lustre/f2/dev/William.Cooke/reference/spear_lo_K50.restore25s25n_override90s65n_H1.P.ens_01/ncrc4.intel16-repro-openmp/1x0m8d_288x2a_180x1o/restart/19790109.tar"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='regression_OMP_c96']/runtime/node())"/>
+      <regression name="rts_2day">
+          <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O216_rts_1x2day']/node())"/>
+          <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O216_rts_2x1day']/node())"/>
+      </regression>
   </runtime>
   <postProcess>
-          <csh><![CDATA[
+      <xi:include xpointer="xpointer(//freInclude[@name='SPEAR_c192_PostP_Historical_ensemble']/postProcess/node())"/>
+  </postProcess>
+</experiment>
+
+  <freInclude name="SPEAR_c192_PostP_Historical_ensemble">
+      <postProcess> 
+         <csh><![CDATA[
          cd $work/RESTART
          ncrcat icebergs.res.nc.* icebergs.res.nc
          if(-e icebergs.res.nc) rm -f icebergs.res.nc.*
@@ -1919,53 +1907,271 @@ set nyblocks = $dummy
          </csh>
       <!--REFINE DIAG SCRIPT -->
       <!--By default a refineDiag script causes the annual data to be unpacked and saved in /ptmp/$USER-->
-      <!-- <refineDiag script="$(includeDir)/refineDiag/dummy_refineDiag.csh,$(includeDir)/refineDiag/SPEAR_refineDiag.csh"/> -->
+      <!--MOM6_refineDiag.csh is currently empty and is here only to cause the unpack annual history files in /ptmp-->
+      <!--
+      <refineDiag script="$(includeDir)/refineDiag/dummy_refineDiag.csh"/>
+      -->
+      <!--
+      <refineDiag script="$(includeDir)/refineDiag/refineDiag_data_stager_globalAve.csh,$(includeDir)/refineDiag/VertVelocity.csh,$(includeDir)/refineDiag/SPEAR_refineDiag.csh"/>
+      -->
+      <refineDiag script="$(includeDir)/refineDiag/netflx_ens.csh,$(includeDir)/refineDiag/VertVelocity_ens.csh,$(includeDir)/refineDiag/SPEAR_refineDiag.csh"/>
+      <!--
+      <refineDiag script="$(NB_ROOT)/mom6/tools/analysis/MOM6_refineDiag.csh,$(includeDir)/refineDiag/refineDiag_data_stager_globalAve.csh"/>
+      -->
+      <!-- Tony said to comment this out for now. -->
       <!--PostProcessing component models-->
-      <refineDiag script="$(includeDir)/refineDiag/VertVelocity.csh,$(includeDir)/refineDiag/netflx.csh,$(includeDir)/refineDiag/refineDiag_data_stager_globalAve.csh"/>
-      <component type="atmos_daily" zInterp="ncep"  start="1979"  source="atmos_daily" sourceGrid="atmos-cubedsphere" xyInterp="180,288" >
-        <timeSeries freq="daily" source="atmos_daily" chunkLength="$(CHUNK_LENGTH_A)"/>
+      <component type="atmos_daily" zInterp="ncep"  start="$(PP_START_YEAR_HIST)"  source="atmos_daily" sourceGrid="atmos-cubedsphere" xyInterp="360,576" >
+	<timeSeries freq="daily" source="atmos_daily" chunkLength="$(CHUNK_LENGTH_A)"/>
       </component>
-      <component type="atmos" zInterp="ncep" start="1979" source="atmos_month" sourceGrid="atmos-cubedsphere" xyInterp="180,288" >
+      <component type="atmos_4xdaily" zInterp="ncep"   start="$(PP_START_YEAR_HIST)" source="atmos_4xdaily" sourceGrid="atmos-cubedsphere" xyInterp="360,576" >
+        <timeSeries freq="6hr" source="atmos_4xdaily" chunkLength="$(CHUNK_LENGTH_A)"/>
+      </component>
+      <component type="atmos_4xdaily_avg" zInterp="ncep"   start="$(PP_START_YEAR_HIST)" source="atmos_4xdaily_avg" sourceGrid="atmos-cubedsphere" xyInterp="360,576" >
+        <timeSeries freq="6hr" source="atmos_4xdaily_avg" chunkLength="$(CHUNK_LENGTH_A)"/>
+      </component>
+      <component type="atmos" zInterp="ncep" start="$(PP_START_YEAR_HIST)"  sourceGrid="atmos-cubedsphere" xyInterp="360,576" >
+	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="atmos_month"/>
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="atmos_month_refined"/>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)" source="atmos_month_refined"/>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="atmos_month"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="atmos_month_refined"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_B)" source="atmos_month_refined"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_B)"/>
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)">
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="$FRE_ANALYSIS_HOME/cjg/stub/cjg_atmos_ts_mon.csh"/>
+          <!-- Analysis scripts from Andrew Wittenberg
+          annual and seasonal climatology -->
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a clim -t all,mam,son,djf,jja -v tau_x,tau_y,tau_curl,wind_div,ps,t_surf,t_diff,rh_ref,olr,tot_cld,hi_cld,mid_cld,lo_cld,wvp,cwp,u_ref,v_ref,tau_div vs_era40"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a clim -t all,mam,son,djf,jja vs_oaflux"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a clim -t all,mam,son,djf,jja vs_cmap_v2"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a clim -t all,mam,son,djf,jja vs_gpcp_v2"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a clim -t all,mam,son,djf,jja vs_qscat"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a clim -t all,mam,son,djf,jja vs_ersst_v3"/>
+          <!-- clim and anomaly stddevs, regressions -->
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a anom_regr_nino3 -t all -v tau_x,tau_y,tau_curl,wind_div,ps,t_surf,t_diff,rh_ref,olr,tot_cld,hi_cld,mid_cld,lo_cld,wvp,cwp,u_ref,v_ref,tau_div vs_era40"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a anom_regr_nino3,std -C clim -t all vs_oaflux"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a anom_regr_nino3,std,anom_std -C clim -t all vs_cmap_v2"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a anom_regr_nino3,std,anom_std -C clim -t all vs_gpcp_v2"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a std,anom_std -C clim -t all -v tau_x,tau_y,t_surf vs_era40"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a std,anom_std -C clim -t all -v tau_x,tau_y,wind vs_qscat"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a anom_regr_nino3,std,anom_std -C clim -t all vs_ersst_v3"/>
+          <!-- total correlations with local SST -->
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -C tot -f 0 -F 0 -t all -v tau_x,tau_y,tau_curl,wind_div,ps,t_diff,rh_ref,olr,tot_cld,hi_cld,mid_cld,lo_cld,wvp,cwp,u_ref,v_ref,tau_div vs_era40"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -C tot -f 0 -F 0 -t all vs_oaflux"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -C tot -f 0 -F 0 -t all vs_cmap_v2"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -C tot -f 0 -F 0 -t all vs_gpcp_v2"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -C tot -f 0 -F 0 -t all -v tau_x,tau_y,wind vs_qscat"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -C tot -f 0 -F 0 -t all vs_ersst_v3"/>
+          <!-- anomaly correlations with local SST -->
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -t all -v tau_x,tau_y,tau_curl,wind_div,ps,t_diff,rh_ref,olr,tot_cld,hi_cld,mid_cld,lo_cld,wvp,cwp,u_ref,v_ref,tau_div vs_era40"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -t all vs_oaflux"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -t all vs_cmap_v2"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -t all vs_gpcp_v2"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -t all -v tau_x,tau_y,wind vs_qscat"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -t all vs_ersst_v3"/>
+          <!-- wavelet plots of climate indices -->
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/index/frepp.atw_atmos_ts_monthly_index.csh -n -s -a tave_spectrum vs_obs"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/index/frepp.atw_atmos_ts_monthly_index.csh -n -s -a wavelet_density solo"/>
+          <!-- global analysis -->
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -a clim -t all -v t_surf -y -90,90,20,1 -N globe -p globe vs_era40"/>
+          <!-- Koppen climate types -->
+          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/koppen/frepp.atw_atmos_ts_monthly_koppen.csh -n -s vs_uea"/>
+        </timeSeries>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
+        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_C)">
+          <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/bw/stub/bw_atmos_av_mon.csh"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/bw/stub/bw_cru_precip.csh"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/bw/stub/bw_atmos_tauu_atl_pac.csh"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/bw/stub/pjk_atmos_av_mon.csh"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/bw/stub/tk_atmos_av_mon.csh"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/bw/stub/lwh_atmos_av_mon.csh"/> 
+          <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/cjg/stub/cjg_atmos_av_mon.csh"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/cjs/stub/radiation_atmos_av_mon.csh"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/cjs/stub/sak_atmos_av_mon.csh"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/cjs/stub/sak_lwp_atmos_av_mon.csh"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/cjs/stub/sak_precip_atmos_av_mon.csh"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/cjs/stub/yim_aer_cld.csh"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/cjs/stub/precip_water_atmos_av_mon.csh"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/cjs/stub/liquid_cloud_atmos_av_mon.csh"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/cjs/stub/ice_cloud_atmos_av_mon.csh"/>
+          <analysis switch="$(ANALYSIS_SWITCH)" script="$FRE_ANALYSIS_HOME/cjs/stub/surface_atmos_av_mon.csh"/>
+          <!--
+          <analysis switch="$(ANALYSIS_SWITCH)" cumulative="no" script="/home/fms/local/opt/fre-analysis/test/eem/code/pcmdi_metrics/frepp.pcmdi_metrics.atmos.csh -c amip"/>
+          -->
+          <analysis switch="$(ANALYSIS_SWITCH)" cumulative="no" script="$FRE_ANALYSIS_HOME/eem/code/pcmdi_metrics/frepp.pcmdi_metrics_v1p1p1.atmos.csh -c amip"/>
+        </timeAverage>
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)"/>
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)">
+          <analysis switch="$(ANALYSIS_SWITCH)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_av_annual/column/frepp.atw_atmos_av_annual_column.csh -s solo"/>
+        </timeAverage>
       </component>
-      <component type="ice" start="1979" sourceGrid="ocean-tripolar">
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"  source="ice_month"/>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)"  source="ice_month"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_B)"/>
-      </component>
-      <component type="ocean" start="1979" sourceGrid="ocean-tripolar">
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_month"/>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)" source="ocean_month"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_B)"/>
-      </component>
-      <component type="ocean_z" start="1979" sourceGrid="ocean-tripolar">
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month_refined"> </timeSeries>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month"> </timeSeries>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)" source="ocean_z_month_refined"> </timeSeries>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)" source="ocean_z_month"> </timeSeries>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_B)"/>
-      </component>
-      <component type="ocean_rho2" start="1979" source="ocean_month_rho2" sourceGrid="ocean-tripolar">
+
+      <component type="atmos_month_aer"  start="$(PP_START_YEAR_HIST)" source="atmos_month_aer" sourceGrid="atmos-cubedsphere" xyInterp="360,576">
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_B)"/>
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"/>
-        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_B)"/>
-      </component> 
-      <component type="ocean_z_top300" start="1979" source="ocean_z_top300" sourceGrid="ocean-tripolar">
-         <timeSeries freq="monthly" chunkLength="1yr" source="ocean_z_top300"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
       </component>
-  </postProcess>
-</experiment>
+      <component type="atmos_scalar" start="$(PP_START_YEAR_HIST)"  source="atmos_scalar">
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"  source="atmos_scalar"/>
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"  source="atmos_scalar"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
+      </component>
+      <component type="ice_daily" start="$(PP_START_YEAR_HIST)"   source="ice_daily">
+	<timeSeries freq="daily" source="ice_daily" chunkLength="$(CHUNK_LENGTH_A)"/>
+      </component>
+      <component type="ice"  start="$(PP_START_YEAR_HIST)" sourceGrid="ocean-tripolar">
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"  source="ice_month"/>
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)"  source="ice_month"/>
+        <timeAverage source="monthly"  interval="$(CHUNK_LENGTH_A)"/>
+        <timeAverage source="monthly"  interval="$(CHUNK_LENGTH_C)"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"  source="ice_month"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)"  source="ice_month"/>
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
+      </component>
+      <component type="iceberg"  start="$(PP_START_YEAR_HIST)" sourceGrid="ocean-tripolar">
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"  source="iceberg_month">
+	</timeSeries>
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)"  source="iceberg_month">
+	</timeSeries>
+        <timeAverage source="monthly"  interval="$(CHUNK_LENGTH_A)"/>
+        <timeAverage source="monthly"  interval="$(CHUNK_LENGTH_C)"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" > 
+	</timeSeries>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" > 
+	</timeSeries>
+        <timeAverage source="annual"  interval="$(CHUNK_LENGTH_A)"/>
+        <timeAverage source="annual"  interval="$(CHUNK_LENGTH_C)"/>
+      </component>
+      <component type="land_daily"  start="$(PP_START_YEAR_HIST)"  source="land_daily" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="360,576">
+	<timeSeries freq="daily" source="land_daily" chunkLength="$(CHUNK_LENGTH_A)"/>
+      </component>
+      <component type="land"  start="$(PP_START_YEAR_HIST)"  source="land_month" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="360,576">
+	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"/>
+	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
+      </component>
+      <component type="land_inst_month"   start="$(PP_START_YEAR_HIST)" source="land_month_inst" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="360,576">
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
+	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
+      </component>
+
+      <component type="land_cubic" start="$(PP_START_YEAR_HIST)" source="land_month" sourceGrid="land-cubedsphere" cmip="off">
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" >
+          <variables> LWS FWS LWSg_lake FWSg_lake lake_T water_lake </variables>
+          <analysis switch="on" cumulative="yes" script="$FRE_ANALYSIS_HOME/kap/stub/kap_land_basin_map.csh"/>
+        </timeSeries>
+        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_A)" />
+      </component>
+      
+      <component type="river_daily"  start="$(PP_START_YEAR_HIST)"  source="river_daily" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="360,576">
+	<timeSeries freq="daily" source="river_daily" chunkLength="$(CHUNK_LENGTH_A)"/>
+      </component>
+      <component type="river"  start="$(PP_START_YEAR_HIST)"  source="river_month" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="360,576">
+	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)"/>
+	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
+      </component>
+      <component type="river_inst_month"   start="$(PP_START_YEAR_HIST)" source="river_month_inst" interpMethod="conserve_order1" sourceGrid="land-cubedsphere" xyInterp="360,576">
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)"/>
+	<timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
+      </component>
+      <component type="river_cubic" start="$(PP_START_YEAR_HIST)" source="river_month" sourceGrid="land-cubedsphere" cmip="off">
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" >
+          <analysis switch="on" cumulative="yes" script="$FRE_ANALYSIS_HOME/kap/stub/kap_land_basin_map.csh"/>
+        </timeSeries>
+        <timeSeries freq="daily" source="river_daily" chunkLength="$(CHUNK_LENGTH_A)">
+          <analysis switch="on" cumulative="yes" script="$FRE_ANALYSIS_HOME/kap/stub/kap_land_ts_bas_dly.csh"/>
+        </timeSeries>
+        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_A)" />
+      </component>
+      <component type="ocean_scalar" start="$(PP_START_YEAR_HIST)"  source="ocean_scalar_month"  sourceGrid="ocean-tripolar">  
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" />
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" />
+        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_A)" />
+        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_C)" />
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" />
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" />
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
+      </component> 
+      <component type="ocean" start="$(PP_START_YEAR_HIST)"   sourceGrid="ocean-tripolar">  
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_month"/>
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_month"/>
+        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_A)" />
+        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_C)" />
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" />
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" />
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
+      </component>
+      <component type="ocean_annual" start="$(PP_START_YEAR_HIST)"  source="ocean_annual" sourceGrid="ocean-tripolar">
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_annual"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_annual"/>
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
+      </component>
+      <!--
+      <component type="ocean_z_month_refined" start="$(PP_START_YEAR_HIST)" source="ocean_z_month_refined" sourceGrid="ocean-tripolar" cmip="on">
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month_refined"/>
+        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_A)" />
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month_refined"/>
+        <timeAverage source="annual"  interval="$(CHUNK_LENGTH_A)"/>
+      </component>
+      -->
+      <component type="ocean_z"   start="$(PP_START_YEAR_HIST)" sourceGrid="ocean-tripolar">
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month"/>
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_z_month"/>
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month_refined"/>
+        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_A)" />
+        <timeAverage source="annual"  interval="$(CHUNK_LENGTH_A)"/>
+        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_A)" />
+        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_C)" />
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month_refined"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_z_month">
+        <!--
+        <analysis switch="$(ANALYSIS_SWITCH)" cumulative="no" script="$(NB_ROOT)/mom6/ice_ocean_SIS/OM4_025/ocn_monthly.frepp"/>
+        -->
+        </timeSeries>  
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
+      </component>
+      <component type="ocean_z_ann"   start="$(PP_START_YEAR_HIST)" source="ocean_z_annual" sourceGrid="ocean-tripolar">
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_annual" ></timeSeries> 
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_z_annual" ></timeSeries> 
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" >  
+        <!--
+        <analysis switch="$(ANALYSIS_SWITCH)" cumulative="no" script="$(NB_ROOT)/mom6/ice_ocean_SIS/OM4_025/ocn_annual.frepp"/>
+        -->
+        </timeAverage>
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
+      </component>
+      <!--
+      <component type="ocean_z_top300"  source="ocean_z_top300" sourceGrid="ocean-tripolar">
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_top300"/>
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_top300"> </timeSeries>
+        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_A)" />
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
+       </component>
+       -->
+      <component type="ocean_rho2" start="$(PP_START_YEAR_HIST)" source="ocean_month_rho2" sourceGrid="ocean-tripolar">  
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_month_rho2"/>
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_month_rho2"/>
+        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_A)" />
+        <timeAverage source="monthly" interval="$(CHUNK_LENGTH_C)" />
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" />
+        <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" />
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
+      </component> 
+     </postProcess>
+  </freInclude>
 
 
 </experimentSuite>

@@ -47,7 +47,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 <!--  <property name="RELEASE" value="dev/awg" />
   <property name="MOM6_DATE"    value="2017.10.05"/>            
   <property name="MOM6_GIT_TAG" value="dev/gfdl/$(MOM6_DATE)"/> 
-  <property name="AWG_GIT_TAG"  value="xanadu"/>     
+  <property name="AWG_GIT_TAG"            value="2021.02"/>     
   <property name="LAND_GIT_TAG"  value="xanadu"/>    
 
 
@@ -56,15 +56,16 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
-  <property name="AWG_GIT_TAG"  value="xanadu"/>           <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG" value="2020.03"/>
-  <property name="LAND_GIT_TAG"  value="testing_20170929"/>    <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"  value="2020.01"/>           <!-- git tag for atmos_drivers -->
-  <property name="ATMOS_CUBED_SPHERE_TAG"  value="2020.03"/>           <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="AWG_GIT_TAG"            value="2021.02"/>               <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"            value="2021.03"/>
+  <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>    <!-- git tag for Land source code -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2021.02"/>         <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG" value="2021.03"/>    <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="ICE_PARAM_GIT_TAG"      value="2021.02"/>         <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20210427" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-18" />
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20211102" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_VERSION" value="bronx-19" />
   <property name="FRE_NCTOOLS" value="fre-nctools/tikal" />
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
@@ -966,11 +967,6 @@ cd ..
 
 <experiment name="i19950101_OTA_IceAtmRes_L33_new" inherit="i19950101_OTA_IceAtmRes_L33">
 
-<!--
-<executable file="/lustre/f2/dev/gfdl/William.Cooke/SPEAR_experiments_R_20210210/SPEAR_R2020.04_MJH_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.04_MJH_nonsymMOM6_exec.x"/>
-
-<executable file="/lustre/f2/dev/gfdl/William.Cooke/SPEAR_experiments_R_20210210/SPEAR_R2020.04_MJH_nonsymMOM6_exec/ncrc4.intel18-debug/exec/fms_SPEAR_R2020.04_MJH_nonsymMOM6_exec.x"/>
--->
 <executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20210415/SPEAR_R2020.03_nonsymMOM6_20210416_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.03_nonsymMOM6_20210416_exec.x"/>
 <input>
        <xi:include xpointer="xpointer(//freInclude[@name='csh_adjust_dry_mass']/input/node())"/>
@@ -992,7 +988,7 @@ cat > $work/INPUT/MOM_override_00 << EOF
 #override MAX_LAYER_THICKNESS_CONFIG = "NONE"
 NJHALO_ODA = 12
 NIHALO_ODA = 8
-#override REMAPPING_SCHEME = "PPM_H4"
+#override ODA_REMAPPING_SCHEME = "PPM_H4"
 #override USE_BASIN_MASK = False
 
 ! === module ODA ===
@@ -1007,6 +1003,7 @@ TEMP_SALT_ADJUSTMENT_FILE ="inc.nc"
 RESTART_CONTROL = 2
 
 #override DEFAULT_2018_ANSWERS = T
+#override INTERNAL_WAVE_SPEED_BETTER_EST =False
 
 #override REMAP_UV_USING_OLD_ALG = True
 #override Z_INIT_REMAP_OLD_ALG = True
@@ -1036,6 +1033,7 @@ EOF
 
 cat > $work/INPUT/MOM_override_01 << EOF
 #override DEFAULT_2018_ANSWERS = T
+#override INTERNAL_WAVE_SPEED_BETTER_EST =False
 
 #override REMAP_UV_USING_OLD_ALG = True
 #override Z_INIT_REMAP_OLD_ALG = True
@@ -1188,6 +1186,10 @@ set nyblocks = $dummy
       <namelist name="ensemble_nml">
         ensemble_size=3
       </namelist>
+<namelist name="atmos_tracer_utilities_nml">
+ scale_aerosol_wetdep = 1.
+ drydep_exp = .true.
+</namelist>
       <namelist name="aerosolrad_driver_nml">
         do_swaerosol_forcing = .false.
         do_lwaerosol_forcing = .false.
@@ -1659,6 +1661,7 @@ ASSIM_FREQUENCY = 24
 BASIN_FILE = "basin.nc"         ! default = "basin.nc"
 TEMP_SALT_ADJUSTMENT_FILE ="inc.nc"
 
+#override INTERNAL_WAVE_SPEED_BETTER_EST =False
 #override DEFAULT_2018_ANSWERS = T
 #override REMAP_UV_USING_OLD_ALG = True
 #override USE_TRIPOLAR_GEOLONB_BUG =True 
@@ -1691,6 +1694,7 @@ EOF
 
 
 cat > $work/INPUT/MOM_override_01 << EOF
+#override INTERNAL_WAVE_SPEED_BETTER_EST =False
 #override DEFAULT_2018_ANSWERS = T
 #override REMAP_UV_USING_OLD_ALG = True
 #override Z_INIT_REMAP_OLD_ALG = True

@@ -249,7 +249,7 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
-    <platform name="gfdl.ncrc3-intel16">
+    <platform name="gfdl.ncrc3-intel18">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
@@ -299,6 +299,27 @@ configuration.
         ]]>
       </csh>
       -->
+    </platform>
+    <platform name="ncrc3.intel18">
+      <freVersion>$(FRE_VERSION)</freVersion>
+      <compiler type="intel" version="18.0.6.288" />
+
+      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
+      <property name="NCORE_PER_NODE"      value="32"/>
+      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+ 
+      <project>gfdl_sd</project>
+
+      <directory stem="$(FRE_STEM)">
+        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
+      </directory>
+
     </platform>
 
     <platform name="ncrc3.intel">
@@ -12325,6 +12346,13 @@ set nyblocks = $dummy
         <run days="1" >
           <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A144x1_O72_debug']/node())"/>
           </run>
+      </regression>
+      <regression name="twomember_twoyear">
+        <run months="12 12" 
+        overrideParams="ensemble_nml:ensemble_size=2;
+                        xgrid_nml:make_exchange_reproduce=.TRUE.;">
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A144x2_O144_production']/node())"/>
+        </run>
       </regression>
       <regression name="oneyear">
         <run months="12" >

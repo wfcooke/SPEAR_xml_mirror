@@ -53,15 +53,16 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
-  <property name="AWG_GIT_TAG"  value="xanadu"/>           <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG" value="2020.03"/>
-  <property name="LAND_GIT_TAG"  value="testing_20170929"/>    <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"  value="2020.01"/>           <!-- git tag for atmos_drivers -->
-  <property name="ATMOS_CUBED_SPHERE_TAG"  value="2020.03"/>           <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="AWG_GIT_TAG"            value="2021.02"/>               <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"            value="2021.03"/>
+  <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>    <!-- git tag for Land source code -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2021.02"/>         <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG" value="2021.03"/>    <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="ICE_PARAM_GIT_TAG"      value="2021.02"/>         <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20210427" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-18" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20211102" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_VERSION" value="bronx-19" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
@@ -1388,9 +1389,6 @@ PEN_SW_SCALE = 100.0
 PEN_SW_FRAC = 0.42
 
   </description>
-<!--
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20210210/SPEAR_R2020.04_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.04_nonsymMOM6_exec.x"/>
--->
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
@@ -1401,6 +1399,10 @@ PEN_SW_FRAC = 0.42
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
       </namelist> 
+<namelist name="atmos_tracer_utilities_nml">
+ scale_aerosol_wetdep = 1.
+ drydep_exp = .true.
+</namelist>
       <namelist name="icebergs_nml">
         make_calving_reproduce=.TRUE.
         really_debug=.FALSE.
@@ -1766,6 +1768,7 @@ touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
 #override DEFAULT_2018_ANSWERS = T
+#override INTERNAL_WAVE_SPEED_BETTER_EST =False
 
 
 #override REMAP_UV_USING_OLD_ALG = True

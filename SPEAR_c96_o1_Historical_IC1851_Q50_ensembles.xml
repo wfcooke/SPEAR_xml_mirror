@@ -53,15 +53,16 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
-  <property name="AWG_GIT_TAG"  value="xanadu"/>           <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG" value="2020.03"/>
-  <property name="LAND_GIT_TAG"  value="testing_20170929"/>    <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"  value="2020.01"/>           <!-- git tag for atmos_drivers -->
-  <property name="ATMOS_CUBED_SPHERE_TAG"  value="2020.03"/>           <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="AWG_GIT_TAG"            value="2021.02"/>               <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"            value="2021.03"/>
+  <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>    <!-- git tag for Land source code -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2021.02"/>         <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG" value="2021.03"/>    <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="ICE_PARAM_GIT_TAG"      value="2021.02"/>         <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20210427" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-18" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20211102" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_VERSION" value="bronx-19" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
@@ -1393,9 +1394,6 @@ cd ..
   </description>
 
 <executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20210210/SPEAR_R2020.04_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.04_nonsymMOM6_exec.x"/>
-<!--
-  <executable file="$(WFC_ARCHIVE_ROOT)/SPEAR_experiments_K/SPEAR_K_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_K_nonsymMOM6_exec.x"/>
--->
   <input>
       <namelist name="ensemble_nml">
         ensemble_size=1
@@ -1637,6 +1635,10 @@ set nyblocks = $dummy
       <namelist name="ensemble_nml">
         ensemble_size=5
       </namelist>
+<namelist name="atmos_tracer_utilities_nml">
+ scale_aerosol_wetdep = 1.
+ drydep_exp = .true.
+</namelist>
       <namelist name="aerosolrad_driver_nml">
         do_swaerosol_forcing = .false.
         do_lwaerosol_forcing = .false.
@@ -2084,6 +2086,7 @@ touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
 #override DEFAULT_2018_ANSWERS = T
+#override INTERNAL_WAVE_SPEED_BETTER_EST =False
 
 
 #override REMAP_UV_USING_OLD_ALG = True
@@ -2276,9 +2279,6 @@ set nyblocks = $dummy
   Ensemble initial conditions taken from years 201, 221, 241, 261 and 281 of SPEAR_c96_o1_Control_1850_E50
   Get the land restart files from the initial condition of SPEAR_c96_o1_1701_1850_K45_spinup_nobridge.
     </description>
-<!--
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.03_nonsymMOM6_exec.x"/>
--->
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
@@ -2288,6 +2288,10 @@ set nyblocks = $dummy
       <namelist name="ensemble_nml">
         ensemble_size=5
       </namelist>
+<namelist name="atmos_tracer_utilities_nml">
+ scale_aerosol_wetdep = 1.
+ drydep_exp = .true.
+</namelist>
       <namelist name="aerosolrad_driver_nml">
         do_swaerosol_forcing = .false.
         do_lwaerosol_forcing = .false.
@@ -2735,6 +2739,7 @@ touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
 #override DEFAULT_2018_ANSWERS = T
+#override INTERNAL_WAVE_SPEED_BETTER_EST =False
 
 
 #override REMAP_UV_USING_OLD_ALG = True
@@ -2914,9 +2919,6 @@ set nyblocks = $dummy
   Ensemble initial conditions taken from years 301, 321, 341, 361 and 381 of SPEAR_c96_o1_Control_1850_E50
   Get the land restart files from the initial condition of SPEAR_c96_o1_1701_1850_K45_spinup_nobridge.
   </description>
-<!--
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.03_nonsymMOM6_exec.x"/>
--->
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
@@ -2926,6 +2928,10 @@ set nyblocks = $dummy
       <namelist name="ensemble_nml">
         ensemble_size=5
       </namelist>
+<namelist name="atmos_tracer_utilities_nml">
+ scale_aerosol_wetdep = 1.
+ drydep_exp = .true.
+</namelist>
       <namelist name="aerosolrad_driver_nml">
         do_swaerosol_forcing = .false.
         do_lwaerosol_forcing = .false.
@@ -3373,6 +3379,7 @@ touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
 #override DEFAULT_2018_ANSWERS = T
+#override INTERNAL_WAVE_SPEED_BETTER_EST =False
 
 
 #override REMAP_UV_USING_OLD_ALG = True
@@ -3552,9 +3559,6 @@ set nyblocks = $dummy
   Ensemble initial conditions taken from years 401, 421, 441, 461 and 481 of SPEAR_c96_o1_Control_1850_E50
   Get the land restart files from the initial condition of SPEAR_c96_o1_1701_1850_K45_spinup_nobridge.
   </description>
-<!--
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.03_nonsymMOM6_exec.x"/>
--->
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
@@ -3564,6 +3568,10 @@ set nyblocks = $dummy
       <namelist name="ensemble_nml">
         ensemble_size=5
       </namelist>
+<namelist name="atmos_tracer_utilities_nml">
+ scale_aerosol_wetdep = 1.
+ drydep_exp = .true.
+</namelist>
       <namelist name="aerosolrad_driver_nml">
         do_swaerosol_forcing = .false.
         do_lwaerosol_forcing = .false.
@@ -4011,6 +4019,7 @@ touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
 #override DEFAULT_2018_ANSWERS = T
+#override INTERNAL_WAVE_SPEED_BETTER_EST =False
 
 
 #override REMAP_UV_USING_OLD_ALG = True
@@ -4190,9 +4199,6 @@ set nyblocks = $dummy
   Ensemble initial conditions taken from years 501, 521, 541, 561 and 581 of SPEAR_c96_o1_Control_1850_E50
   Get the land restart files from the initial condition of SPEAR_c96_o1_1701_1850_K45_spinup_nobridge.
   </description>
-<!--
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.03_nonsymMOM6_exec.x"/>
--->
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
@@ -4202,6 +4208,10 @@ set nyblocks = $dummy
       <namelist name="ensemble_nml">
         ensemble_size=5
       </namelist>
+<namelist name="atmos_tracer_utilities_nml">
+ scale_aerosol_wetdep = 1.
+ drydep_exp = .true.
+</namelist>
       <namelist name="aerosolrad_driver_nml">
         do_swaerosol_forcing = .false.
         do_lwaerosol_forcing = .false.
@@ -4649,6 +4659,7 @@ touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
 #override DEFAULT_2018_ANSWERS = T
+#override INTERNAL_WAVE_SPEED_BETTER_EST =False
 
 
 #override REMAP_UV_USING_OLD_ALG = True
@@ -4828,9 +4839,6 @@ set nyblocks = $dummy
   Ensemble initial conditions taken from years 601, 621, 641, 661 and 681 of SPEAR_c96_o1_Control_1850_E50
   Get the land restart files from the initial condition of SPEAR_c96_o1_1701_1850_K45_spinup_nobridge.
   </description>
-<!--
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.03_nonsymMOM6_exec.x"/>
--->
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
@@ -4840,6 +4848,10 @@ set nyblocks = $dummy
       <namelist name="ensemble_nml">
         ensemble_size=5
       </namelist>
+<namelist name="atmos_tracer_utilities_nml">
+ scale_aerosol_wetdep = 1.
+ drydep_exp = .true.
+</namelist>
       <namelist name="aerosolrad_driver_nml">
         do_swaerosol_forcing = .false.
         do_lwaerosol_forcing = .false.
@@ -5287,6 +5299,7 @@ touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
 #override DEFAULT_2018_ANSWERS = T
+#override INTERNAL_WAVE_SPEED_BETTER_EST =False
 
 
 #override REMAP_UV_USING_OLD_ALG = True

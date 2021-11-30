@@ -53,15 +53,17 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
-  <property name="AWG_GIT_TAG"  value="xanadu"/>           <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG" value="2020.03"/>
-  <property name="LAND_GIT_TAG"  value="testing_20170929"/>    <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"  value="2020.01"/>           <!-- git tag for atmos_drivers -->
-  <property name="ATMOS_CUBED_SPHERE_TAG"  value="2020.03"/>           <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="AWG_GIT_TAG"            value="2021.02"/>               <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"            value="2021.03"/>
+  <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>    <!-- git tag for Land source code -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2021.02"/>         <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG" value="2021.03"/>    <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="ICE_PARAM_GIT_TAG"      value="2021.02"/>         <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20210427" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-18" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20211102" />   <!-- Stem use in FRE directories -->
+
+  <property name="FRE_VERSION" value="bronx-19" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
@@ -361,30 +363,6 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel16']/node())" />
     </platform>
 
-    <platform name="ncrc4.gnu">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="gnu" version="7.2.0" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NCORE_PER_NODE"      value="36"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
-      </directory>
-    </platform>
-
     <platform name="ncrc4.intel19">
       <freVersion>$(FRE_VERSION)</freVersion>
       <compiler type="intel" version="19.0.5.281" />
@@ -440,7 +418,7 @@ configuration.
 
     <platform name="ncrc4.gnu">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="gnu" version="7.2.0" />
+      <compiler type="gnu" version="8.3.0" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
@@ -3513,9 +3491,6 @@ cd ..
 
 
 <experiment name="SPEAR_c96_o1_Control_1850_Q50_new" inherit="SPEAR_c96_o1_Control_1850_Q50">
-<!--
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q_20201130/SPEAR_Q2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.03_nonsymMOM6_exec.x"/>
--->
   <executable file="$(WFC_ARCHIVE_ROOT)/SPEAR_experiments_K/SPEAR_K_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_K_nonsymMOM6_exec.x"/>
   <input>
       <csh type="always"><![CDATA[
@@ -3700,6 +3675,21 @@ set nyblocks = $dummy
   </input>
 </experiment>
 
+<experiment name="SPEAR_c96_o1_Control_1850_Q50_check_diags" inherit="SPEAR_c96_o1_Control_1850_Q50">
+  <description>
+  Test of land diags.
+  </description>
+  <input>
+     <diagTable>
+$name
+$baseDate
+      </diagTable>
+      <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_20210930</dataSource>
+      </dataFile>
+  </input>
+</experiment>
+
 <experiment name="SPEAR_c96_o1_Control_1850_Q50" inherit="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec">
   <description>
 2/1/2018
@@ -3758,12 +3748,15 @@ Add the following to SIS_override
 GRID_ROTATION_ANGLE_BUGS =True
 USE_TRIPOLAR_GEOLONB_BUG = True
 
-
+10/15/2021
+Need to add 
+INTERNAL_WAVE_SPEED_BETTER_EST =False
+to MOM_override to reproduce older results.
   </description>
 <!--
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20210210/SPEAR_R2020.04_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.04_nonsymMOM6_exec.x"/>
+<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20210427/SPEAR_R2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.03_nonsymMOM6_exec.x"/>
 
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20210415/SPEAR_R2020.03_nonsymMOM6_20210416_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.03_nonsymMOM6_20210416_exec.x"/>
+<executable file="/lustre/f2/dev/gfdl/William.Cooke/SPEAR_experiments_R_20211022/SPEAR_R2021.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2021.03_nonsymMOM6_exec.x"/>
 -->
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
@@ -3780,6 +3773,10 @@ USE_TRIPOLAR_GEOLONB_BUG = True
         debug_affinity = .true.
       </namelist>
       -->
+<namelist name="atmos_tracer_utilities_nml">
+ scale_aerosol_wetdep = 1.
+ drydep_exp = .true.
+</namelist>
       <namelist name="icebergs_nml">
         make_calving_reproduce=.TRUE.
         really_debug=.FALSE.
@@ -4082,12 +4079,14 @@ $baseDate
 "ocean_model_z", "thetao", "thetao", "ocean_z_daily", "all", "mean", "-300.0 60.0 -10.0 10.0 0 500", 2
       </diagTable>
 -->
+<!--
      <diagTable>
 "ocean_z_top300",        24,  "hours",   1, "days", "time"
 "ocean_z_daily",        24,  "hours",   1, "days", "time"
 "ocean_model_ztop", "thetao", "thetao", "ocean_z_top300", "all", "mean", "none", 2
 "ocean_model_z", "thetao", "thetao", "ocean_z_daily", "all", "mean", "-300.0 60.0 -20.0 20.0 0 300", 2
       </diagTable>
+-->
       <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
          <!--
          <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_nodaily</dataSource>
@@ -4152,8 +4151,17 @@ $baseDate
 
 touch $work/INPUT/MOM_override
 
+#override T_RESCALE_POWER = 0
+#override Z_RESCALE_POWER = 0
+#override L_RESCALE_POWER = 0
+#override R_RESCALE_POWER = 0
+#override Q_RESCALE_POWER = 32
+#override DEBUG = True 
+
+
 cat > $work/INPUT/MOM_override << EOF
 #override DEFAULT_2018_ANSWERS = T
+#override INTERNAL_WAVE_SPEED_BETTER_EST = False
 
 
 #override REMAP_UV_USING_OLD_ALG = True
@@ -4170,12 +4178,10 @@ cat > $work/INPUT/MOM_override << EOF
 #override MEKE_ALPHA_RHINES = 0.05
 #override MIN_SALINITY = 0.01
 
-
-#override USE_INACCURATE_PGF_RHO_ANOM=True
-#override USE_DIABATIC_TIME_BUG=True
-#override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
 #override KH_BG_2D_BUG=True
-
+#override USE_DIABATIC_TIME_BUG=True
+#override USE_INACCURATE_PGF_RHO_ANOM=True
+#override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
 
 #override TOPO_EDITS_FILE = "topo_edits_011818.nc"
 #override CHANNEL_LIST_FILE = MOM_channels_SPEAR
@@ -4214,12 +4220,13 @@ cat > $work/INPUT/SIS_override << EOF
 #override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
 #override SIS_CONTINUITY_SCHEME = "PCM"
 #override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
+
 #override GRID_ROTATION_ANGLE_BUGS =True
 #override USE_TRIPOLAR_GEOLONB_BUG = True
+#override RESTART_CHECKSUMS_REQUIRED =False
 
 #override INCONSISTENT_COVER_BUG = True
 #override CFL_MASS_NEGLECT_BUG=True
-#override RESTART_CHECKSUMS_REQUIRED =False
 EOF
 
 #scan auxiliary_nml
@@ -4295,6 +4302,17 @@ set nyblocks = $dummy
         <run days="1" >
           <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A144x1_O72_debug']/node())"/>
           </run>
+      </regression>
+      <regression name="do_chksums">
+        <run days="1" 
+        overrideParams="atmos_model_nml:nxblocks=2;
+                             coupler_nml:do_chksum=.true.;
+                             fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
+        </run>
       </regression>
       <regression name="oneyear">
         <run months="12" >
