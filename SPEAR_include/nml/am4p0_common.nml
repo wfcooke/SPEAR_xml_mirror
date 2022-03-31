@@ -427,6 +427,7 @@
  &ssalt_nml
      coef_emis_fine=1.33, coef_emis_coarse=1.33,
      use_sj_sedimentation_solver=.true.
+     min_scale_marthenson = -999999999
 /
 
  &stable_bl_turb_nml

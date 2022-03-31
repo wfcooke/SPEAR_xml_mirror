@@ -2,8 +2,8 @@ Repository for SPEAR model.
 
 This contains the XML and related files to run the SPEAR model.
 
-git clone -b 2021.03 https://gitlab.gfdl.noaa.gov/SPEAR/xml.git
-fremake -x SPEAR_c192_o1_Historical_IC1921_Q50_ensembles.xml -p ncrc4.intel18 -t prod-openmp SPEAR_Q2021.03_nonsymMOM6_exec
+git clone -b 2022.01 https://gitlab.gfdl.noaa.gov/SPEAR/xml.git
+fremake -x SPEAR_c192_o1_Historical_IC1921_Q50_ensembles.xml -p ncrc4.intel18 -t prod-openmp SPEAR_Q2022.01_nonsymMOM6_exec
 
 frerun -x SPEAR_c192_o1_Historical_IC1921_Q50_ensembles.xml -p ncrc4.intel18 -t prod-openmp -r basic_prodsettings SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03 --overwrite --no-transfer -s
 
