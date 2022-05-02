@@ -104,7 +104,7 @@ from integrations with these models.
                          fv3">
       <source versionControl="git"
               root="https://github.com/NOAA-GFDL">
-        <codeBase version="2022.01">
+        <codeBase version="2022.02">
           atmos_drivers.git
         </codeBase>
       </source>
