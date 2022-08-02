@@ -84,7 +84,7 @@ from integrations with these models.
                    communityGrid=""/>
       <source versionControl="git"
               root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="2022.01">
+        <codeBase version="2022.03">
           atmos_phys.git
         </codeBase>
       </source>
@@ -127,7 +127,7 @@ from integrations with these models.
                          atmos_phys">
       <source versionControl="git"
               root="https://github.com/NOAA-GFDL">
-        <codeBase version="2022.01">
+        <codeBase version="2022.03">
           GFDL_atmos_cubed_sphere.git
         </codeBase>
       </source>
@@ -182,7 +182,7 @@ from integrations with these models.
           MOM6.git
         </codeBase>
           <csh><![CDATA[
-            ( cd MOM6  && git checkout  eae86d64b53c0af968b3329d435a93f5aca25607 )
+            ( cd MOM6  && git checkout  835b1661c0204b0f91e51e8593555eed1f6577e2 )
                        ]]>
           </csh>
       </source>
@@ -202,7 +202,7 @@ from integrations with these models.
                includeDir="$(srcDir)/FMS/include">
       <source versionControl="git"
               root="https://github.com/NOAA-GFDL">
-        <codeBase version="2021.02">
+        <codeBase version="2021.03">
           ice_param.git
         </codeBase>
       </source>
@@ -229,7 +229,7 @@ from integrations with these models.
           SIS2.git
         </codeBase>
           <csh><![CDATA[
-            ( cd SIS2  && git checkout 9fdff09dfa798908f4775371ab7649d450b34925 )
+            ( cd SIS2  && git checkout 6e0eda1d4bd085bc30da38574d53047a5c2ec5f7 )
                        ]]>
           </csh>
       </source>
