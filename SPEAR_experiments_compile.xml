@@ -71,6 +71,7 @@ from integrations with these models.
           -Duse_libMPI
           -Duse_netCDF
           -DMAXFIELDMETHODS_=500
+          -Duse_yaml
         </cppDefs>
       </compile>
     </component>
@@ -84,7 +85,7 @@ from integrations with these models.
                    communityGrid=""/>
       <source versionControl="git"
               root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="2022.03">
+        <codeBase version="2022.04">
           atmos_phys.git
         </codeBase>
       </source>
@@ -104,7 +105,7 @@ from integrations with these models.
                          fv3">
       <source versionControl="git"
               root="https://github.com/NOAA-GFDL">
-        <codeBase version="2022.02">
+        <codeBase version="2022.04">
           atmos_drivers.git
         </codeBase>
       </source>
@@ -127,7 +128,7 @@ from integrations with these models.
                          atmos_phys">
       <source versionControl="git"
               root="https://github.com/NOAA-GFDL">
-        <codeBase version="2022.03">
+        <codeBase version="2022.04">
           GFDL_atmos_cubed_sphere.git
         </codeBase>
       </source>

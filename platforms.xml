@@ -32,11 +32,23 @@
       <xi:include xpointer="xpointer(//freInclude/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
-    <platform name="gfdl.ncrc3-gnu">
+    <platform name="gfdl.ncrc3-intel22">
       <xi:include xpointer="xpointer(//freInclude/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
-    <platform name="gfdl.ncrc4-gnu">
+    <platform name="gfdl.ncrc4-intel22">
+      <xi:include xpointer="xpointer(//freInclude/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
+    <platform name="gfdl.ncrc5-intel22">
+      <xi:include xpointer="xpointer(//freInclude/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
+    <platform name="gfdl.ncrc3-gcc">
+      <xi:include xpointer="xpointer(//freInclude/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
+    <platform name="gfdl.ncrc4-gcc">
       <xi:include xpointer="xpointer(//freInclude/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
@@ -62,9 +74,9 @@
       <xi:include xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel18']/node())" />
     </platform>
 
-    <platform name="ncrc4.gnu">
+    <platform name="ncrc4.gcc">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="gnu" version="9.3.0" />
+      <compiler type="gcc" version="9.3.0" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
@@ -80,13 +92,13 @@
       </directory>
     </platform>
 
-    <platform name="ncrc3.gnu">
-      <xi:include xpointer="xpointer(//freInclude/platform[@name='ncrc4.gnu']/node())" />
+    <platform name="ncrc3.gcc">
+      <xi:include xpointer="xpointer(//freInclude/platform[@name='ncrc4.gcc']/node())" />
     </platform>
 
-    <platform name="ncrc4.intel21">
+    <platform name="ncrc4.intel22">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="intel-classic-2021.3.0" />
+      <compiler type="intel" version="intel-classic-2022.0.2" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
@@ -108,8 +120,27 @@
       ]]></csh>
     </platform>
 
-    <platform name="ncrc3.intel21">
-      <xi:include xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel21']/node())" />
+    <platform name="ncrc5.intel22">
+      <freVersion>$(FRE_VERSION)</freVersion>
+      <compiler type="intel-classic" version="2022.0.2" />
+
+      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
+      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+ 
+      <project>$(GFDL_YGL)</project>
+
+      <directory stem="$(FRE_STEM)">
+        <include>$(xmlDir)/SPEAR_include</include>
+      </directory>
+
+    </platform>
+
+    <platform name="ncrc3.intel22">
+      <xi:include xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel22']/node())" />
     </platform>
 
 </freInclude>
