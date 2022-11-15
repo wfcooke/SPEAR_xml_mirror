@@ -30,11 +30,6 @@
       microphys_form = 'predicted'
 /
 
- &clouds_nml
-      do_zonal_clouds = .false.,
-      do_obs_clouds  = .false.
-/
-
  &cu_mo_trans_nml
       transport_scheme='diffusive'
       diff_norm = 2.5
@@ -45,12 +40,6 @@
       linvers = .false., lcnvcld = .false.,
       l_theqv = .true., lomega = .true.,
       low_lev_cloud_index = 16, nofog = .false.
-/
-
- &diag_cloud_rad_nml
-      l_har_anvil   = .true.,
-      l_har_coldcld = .true.,
-      l_anom_abs_v  = .true.
 /
 
  &diag_integral_nml
@@ -77,15 +66,6 @@
       uthresh = 3.5
       coef_emis = 2.0e-10
       use_sj_sedimentation_solver=.true.
-/
-
- &edt_nml
-      n_print_levels = 14,
-      use_qcmin = .true.,
-      num_pts_ij = 0,
-      min_adj_time = 1.0,
-      do_gaussian_cloud = .false.,
-      use_extrapolated_ql = .false.
 /
 
  &esfsw_driver_nml
@@ -246,7 +226,6 @@
 /
 
  &microphys_rad_nml
-      do_orig_donner_stoch = .false.,
       lwem_form = 'fuliou'
 /
 
@@ -258,13 +237,6 @@
       stable_option =  2,
       rich_crit = 1.0,
       zeta_trans =  0.5
-/
-
- &my25_turb_nml
-      do_thv_stab = .true.,
-      TKEmin = 1.e-8,
-      AKmin_land = 5.,
-      AKmin_sea  = 0.
 /
 
  &photosynthesis_nml
@@ -301,31 +273,6 @@
 
  &radiation_driver_diag_nml
       all_step_diagnostics = .true.,
-/
-
- &ras_nml
-      aratio = 0.9,
-      modify_pbl=.true.
-      rn_frac_bot = 0.5,
-      rn_pbot = 800.0e2,
-      puplim =  500.0e02,
-      rn_ptop = 500.0e2,
-      rn_frac_top = 0.975,
-      Tokioka_on = .true.,
-      Tokioka_con = 0.025,
-      Tokioka_plim = 500.0e2,
-      cufric =.false.
-      do_rasdeep = .false.
-      do_fixed_pres_deep = .true.
-      prevent_unreasonable =.true.
-      a = 1.6851, 1.1686, 0.7663, 0.5255, 0.4100, 0.3677,
-          0.3151, 0.2216, 0.1521, 0.0750, 0.0000, 0.0000,
-          0.0000, 0.0000, 0.0000
-/
-
- &rh_based_clouds_nml
-      cirrus_cld_prop_form = 'part', 
-      cldht_type_form = '93'
 /
 
  &river_nml

@@ -77,15 +77,15 @@ from integrations with these models.
 
     <component name="atmos_phys"
                requires="FMS"
-               paths="atmos_phys">
+               paths="am5_phys">
       <description domainName=""
                    communityName=""
                    communityVersion="$(RELEASE)"
                    communityGrid=""/>
       <source versionControl="git"
               root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="2022.01">
-          atmos_phys.git
+        <codeBase version="2022.01-alpha1">
+          am5_phys.git
         </codeBase>
       </source>
       <compile>

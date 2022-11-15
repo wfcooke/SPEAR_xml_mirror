@@ -8261,8 +8261,6 @@ Ensemble member 1 to 3 for c192
         Bt_aug= 0.000,
         Bt_nh=  0.002,
         Bt_sh= -0.00025,
-        Bt_eq=  0.000,
-        Bt_eq_width= 4.0,
         phi0n =  30.,
         phi0s = -30.,
         dphin =  5.0,

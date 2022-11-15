@@ -22,13 +22,9 @@
  &convection_driver_nml
         cmt_mass_flux_source='uw',
         do_cmt=.true., 
-        do_donner_before_uw = .false.,
-        do_donner_conservation_checks = .false.,
         do_gust_cv = .false.,
         do_gust_cv_new = .false.,
-        do_limit_donner = .false.,
         do_limit_uw = .false.,
-        force_donner_moist_conserv = .false.,
 /
 
  &deep_conv_nml
@@ -57,51 +53,6 @@
         do_cgust_dp  = .true.
         cgust_choice = 1
         include_emf_d = .false.
-/
-
- &donner_deep_clouds_W_nml
-      using_dge_sw = .true.,
-      using_dge_lw = .true.
-/
-
- &donner_deep_nml
-      parcel_launch_level = 2
-      model_levels_in_sfcbl = 0
-      donner_deep_freq = 1200
-      write_reduced_restart_file = .true.
-      allow_mesoscale_circulation = .true.
-      do_donner_cape    = .false.
-      do_donner_plume   = .false.
-      do_donner_closure = .false.
-      do_donner_lscloud = .true.
-      do_dcape          = .false.
-      do_lands          = .false.
-      do_freezing_for_cape = .true.
-      do_freezing_for_closure = .true.
-      gama              = 0.0
-      tau               = 28800.
-      tke0              = 0.5
-      cape0             = 1000.
-      lochoice          = 10
-      do_capetau_land   = .false.
-      use_llift_criteria= .false.
-      do_ice            = .true.
-      atopevap  = 0.1
-      auto_rate = 1.e-3
-      auto_th   = 0.5e-3
-      frac      = 1.65
-      ttend_max = 0.005
-      EVAP_IN_DOWNDRAFTS  = 0.00
-      EVAP_IN_ENVIRON     = 0.00
-      ENTRAINED_INTO_MESO = 1.00
-      ANVIL_PRECIP_EFFICIENCY = 0.55
-      MESO_DOWN_EVAP_FRACTION = 0.4
-      MESO_UP_EVAP_FRACTION   = 0.05
-      wmin_ratio      = 0.05,
-      arat =  1.0, 0.26, 0.35, 0.32, 0.3, 0.54, 0.66
-      erat =  1.0, 1.30, 1.80, 2.50, 3.3, 4.50, 10.0
-      frc_internal_enthalpy_conserv = .true.
-      limit_pztm_to_tropo = .true.
 /
 
 &interpolator_nml
@@ -141,9 +92,6 @@
         rthresh = 8.5,
         U_evap_snow = 1.0
         vfact = 0.9
-/
-
- &strat_clouds_W_nml
 /
 
  &surface_flux_nml
@@ -238,12 +186,8 @@
 
  &vert_turb_driver_nml
       gust_scheme      = 'beljaars',
-      do_mellor_yamada = .false.,
       do_entrain       = .true.,
-      do_edt           = .false.,
-      do_diffusivity   = .false.,
       do_stable_bl     = .true.,
-      do_shallow_conv  = .false.
 /
 
 
