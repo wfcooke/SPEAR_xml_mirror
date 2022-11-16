@@ -2,7 +2,7 @@ Repository for SPEAR model.
 
 This contains the XML and related files to run the SPEAR model.
 
-git clone -b 2022.01 https://gitlab.gfdl.noaa.gov/SPEAR/xml.git
+git clone -b 2022.01_pruned https://gitlab.gfdl.noaa.gov/SPEAR/xml.git
 fremake -x SPEAR_c192_o1_Historical_IC1921_Q50_ensembles.xml -p ncrc4.intel18 -t prod-openmp SPEAR_Q2022.01_nonsymMOM6_exec
 
 ! Run experiments:
