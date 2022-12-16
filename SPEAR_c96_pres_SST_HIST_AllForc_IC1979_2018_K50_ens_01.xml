@@ -57,7 +57,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
   <!-- FRE specific properties -->
   <property name="FRE_STEM" value="SPEAR_experiments_K" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-15" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_VERSION" value="bronx-19" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
@@ -1001,6 +1001,20 @@ configuration.
     </input>
   </freInclude>
 
+  <freInclude name="common_amip_v20220124">
+    <input>
+      <dataTable>
+"ICE", "sic_obs", "ice", "INPUT/hadisst_ice.data.nc", "bilinear", 0.01
+"ICE", "sit_obs", "",    "INPUT/hadisst_ice.data.nc", "none",     2.0
+"ICE", "sst_obs", "sst", "INPUT/hadisst_sst.data.nc", "bilinear", 1.0
+"LND", "phot_co2","co2", "INPUT/co2_data.nc",         "bilinear", 1.e-6
+      </dataTable>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+         <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/hadisst/hadisst.186912-202110.tar</dataSource>
+         <dataSource site="gfdl">/archive/wfc/data/hadisst/20220124/fms/hadisst.186912-202110.tar</dataSource>
+      </dataFile>
+    </input>
+  </freInclude>
 
   <freInclude name="common_cmip6">
     <input>
@@ -2023,6 +2037,24 @@ set domains_stack_size = "5097152"
 	     </resources>
    </freInclude>
 
+   <freInclude name="AMIP_A24x1">
+	     <resources jobWallclock="01:00:00">
+               <atm ranks="24" threads="1"    layout = "1,4"   io_layout = "1,1" />
+	       <lnd                           layout = "1,4"   io_layout = "1,1" />
+	       <ice                           layout = "12,2"  io_layout = "1,1" />
+	       <ocn ranks="0" threads="0"     layout = "12,2"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
+   <freInclude name="AMIP_A36x1">
+	     <resources jobWallclock="01:00:00">
+               <atm ranks="36" threads="1"    layout = "1,6"   io_layout = "1,1" />
+	       <lnd                           layout = "1,6"   io_layout = "1,1" />
+	       <ice                           layout = "12,3"  io_layout = "1,1" />
+	       <ocn ranks="0" threads="0"     layout = "12,3"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
    <freInclude name="AMIP_A36x4">
 	     <resources jobWallclock="00:30:00">
                <atm ranks="36" threads="4"    layout = "1,6"   io_layout = "1,1" />
@@ -2091,7 +2123,7 @@ set domains_stack_size = "5097152"
                <atm ranks="288" threads="2"   layout = "6,8"   io_layout = "1,1" />
 	       <lnd                           layout = "6,8"   io_layout = "1,1" />
 	       <ice                           layout = "72,4"  io_layout = "1,1" />
-	       <ocn ranks="0"  threads="1"    layout = "12,24" io_layout = "1,1" mask_table="MOM_mask_table" />
+	       <ocn ranks="0"  threads="0"    layout = "12,24" io_layout = "1,1" mask_table="MOM_mask_table" />
 	     </resources>
    </freInclude>
 
@@ -2128,7 +2160,7 @@ set domains_stack_size = "5097152"
                <atm ranks="576" threads="2"   layout = "6,16"  io_layout = "1,4" />
 	       <lnd                           layout = "6,16"  io_layout = "1,4" />
 	       <ice                           layout = "72,8"  io_layout = "1,1" />
-	       <ocn ranks="0"   threads="1"   layout = "24,24"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	       <ocn ranks="0"   threads="0"   layout = "24,24"  io_layout = "1,1" mask_table="MOM_mask_table" />
 	     </resources>
    </freInclude>
 
@@ -2479,6 +2511,26 @@ LAYOUT_EOF
                              icebergs_nml:make_calving_reproduce=.TRUE.;
                              xgrid_nml:make_exchange_reproduce=.TRUE.;">
             <xi:include xpointer="xpointer(//freInclude[@name='AMIP_A864x2']/node())"/>
+        </run>
+      </regression>
+
+      <regression label="onenode_c4">
+        <run days="8" months="0"
+             overrideParams="fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+            <xi:include xpointer="xpointer(//freInclude[@name='AMIP_A36x1']/node())"/>
+        </run>
+      </regression>
+
+      <regression label="onenode_c3">
+        <run days="8" months="0"
+             overrideParams="fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+            <xi:include xpointer="xpointer(//freInclude[@name='AMIP_A24x1']/node())"/>
         </run>
       </regression>
 
@@ -7972,6 +8024,9 @@ Follow the procedure at
 https://cobweb.gfdl.noaa.gov/~cjg/awg/utils/hadisst2fms.html
 Data prior to 12/2012 should be reproduced.
 NO CHANGE IN ANSWERS.
+
+2022/01/25
+Extend data to 2021-10 and extend experiment to end of 2020 using common_amip_v20220124.
   </description>
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
@@ -8420,8 +8475,10 @@ $baseDate
       <!--AMIP Input datasets-->
       <!--
       <xi:include xpointer="xpointer(//freInclude[@name='common_amip']/input/node())"/>
-      -->
       <xi:include xpointer="xpointer(//freInclude[@name='common_amip_v20190412']/input/node())"/>
+      -->
+      <xi:include xpointer="xpointer(//freInclude[@name='common_amip_v20220124']/input/node())"/>
+
       <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
          <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
          <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
@@ -8542,7 +8599,7 @@ set nyblocks = $dummy
     </csh>
   </input>
   <runtime>
-    <production simTime="48" units="years" >
+    <production simTime="50" units="years" >
       <segment simTime="1" units="years"/>
       <xi:include xpointer="xpointer(//freInclude[@name='AMIP_A576x2_production']/node())"/>
     </production> 

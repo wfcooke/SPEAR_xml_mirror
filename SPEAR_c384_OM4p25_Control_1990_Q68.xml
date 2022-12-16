@@ -55,18 +55,21 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
   <property name="AWG_GIT_TAG"  value="xanadu"/>           <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG" value="2020.03"/>  <!-- value="2020.03"/> -->
+  <property name="FMS_GIT_TAG"            value="2022.03"/>
   <property name="LAND_GIT_TAG"  value="testing_20170929"/>    <!-- git tag for Land source code -->
   <property name="ATMOS_DRIVERS_TAG"  value="2020.01"/>           <!-- git tag for atmos_drivers -->
   <property name="ATMOS_CUBED_SPHERE_TAG"  value="2020.03"/>           <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="ICE_PARAM_GIT_TAG"      value="2020.03"/>             <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20210427" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-19" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20220817" /> 
+
+  <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
+
+  <property name="FRE_VERSION" value="bronx-20" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
-
   <property name="PROD_SIMTIME"     value="40"/>   <!--simulation length in years-->
 
   <property name="PP_START_YEAR"   value="0001"/>
@@ -264,7 +267,7 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
-    <platform name="gfdl.ncrc4-gnu">
+    <platform name="gfdl.ncrc5-intel-classic">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
@@ -326,15 +329,14 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
     </platform>
 
-    <platform name="ncrc4.gnu">
+    <platform name="ncrc5.intel-classic">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="gnu" version="7.2.0" />
+      <compiler type="intel" version="2022.0.2" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
       <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
       <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
       <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
       <property name="NCORE_PER_NODE"      value="36"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
@@ -344,9 +346,6 @@ configuration.
       <directory stem="$(FRE_STEM)">
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
         <include>$(xmlDir)/SPEAR_include</include>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
       </directory>
     </platform>
 
@@ -1448,6 +1447,7 @@ cd ..
   </freInclude>
 
 
+
 <experiment name="SPEAR_c384_OM4p25_Control_1990_Q68" inherit="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec">
   <description>
 Run SPEAR_HI with 1/4 degree ocean
@@ -1536,6 +1536,20 @@ This run is the same as the Q67
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
       </namelist> 
+
+<namelist name="atmos_tracer_utilities_nml">
+ scale_aerosol_wetdep = 1.
+ drydep_exp = .true.
+</namelist>
+      <namelist name="ssalt_nml">
+        coef_emis_fine=1.33, 
+        coef_emis_coarse=1.33,
+        use_sj_sedimentation_solver=.true.
+        min_scale_marthenson = -999999999
+      </namelist>
+<!-- After 2021.03
+-->
+
       <namelist name="carbon_aerosol_nml">
       bcff_source = 'gocart_2007',
         bcff_input_name(1)='anthro',
@@ -2002,6 +2016,8 @@ This run is the same as the Q67
       </namelist>
 
       <namelist name="fv_core_nml">
+twowaynest=F
+fv_debug=.false.
         layout   = $atm_layout
         io_layout = $atm_io_layout
          npx      = 385,
@@ -2020,9 +2036,6 @@ This run is the same as the Q67
         n_sponge = 0
         d2_bg_k1 = 0.16
         d2_bg_k2 = 0.02
-        kord_tm = -10
-        kord_mt =  10
-        kord_tr =  10
         hydrostatic = .T.
         d_ext = 0.
         d2_bg = 0.
@@ -2035,8 +2048,8 @@ This run is the same as the Q67
         hord_mt = 5      
         hord_vt = 5      
         hord_tm = 5      
-        hord_dp =-5     
-        hord_tr =-5     
+        hord_dp =6     
+        hord_tr =6     
         kord_tm = -9    
         kord_mt = 9     
         kord_wz = 9     
@@ -2378,6 +2391,9 @@ cat > $work/INPUT/MOM_override << EOF
 #override VERTEX_SHEAR = True
 #override USE_RESTRICTIVE_TOLERANCE_CHECK = True
 
+#override INTERNAL_WAVE_SPEED_BETTER_EST = False
+#override EPBL_MLD_BISECTION = True
+
 #override MSTAR_MODE = -1
 #override TKE_DECAY = 0.001
 #override EPBL_MSTAR_SCHEME = "REICHL_H18"
@@ -2510,12 +2526,12 @@ set nyblocks = $dummy
     </production> 
       <regression name="debug">
         <run days="1" >
-          <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O1125_production']/node())"/>
+          <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A1152x2_O1125_production']/node())"/>
           </run>
       </regression>
       <regression name="oneyear">
         <run months="12" >
-      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A1728x4_O1125_production_c384']/node())"/>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O1125_production']/node())"/>
         </run>
       </regression>
       <regression name="fourmonth">
@@ -2547,6 +2563,11 @@ set nyblocks = $dummy
       <regression name="basic_prodsettings">
         <run days="8" >
       <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O1125_production']/node())"/>
+        </run>
+      </regression>
+      <regression name="basic_prodsettings_smaller">
+        <run days="8" >
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A1152x2_O1125_production']/node())"/>
         </run>
       </regression>
       <regression name="spinup_prodsettings">

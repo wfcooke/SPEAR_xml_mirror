@@ -1,0 +1,11 @@
+6/29/2022
+Copied files to this directory from 
+xml/awg_include/refineDiag/atmos_refine_scripts
+of  
+git clone git@gitlab.gfdl.noaa.gov:mdt/xml.git
+
+Also copied ../refineDiag_atmos_cmip6.csh
+
+Also modified atmos_daily_cmip to atmos_daily for t_ref_min/max update in refineDiag_atmos.csh
+Commented out aerosol and surface albedo calculations.
+

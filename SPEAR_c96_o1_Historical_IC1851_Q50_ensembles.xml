@@ -53,16 +53,19 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
-  <property name="AWG_GIT_TAG"            value="2021.02"/>               <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2021.03"/>
+  <property name="AWG_GIT_TAG"            value="2022.03"/>               <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"            value="2022.03"/>
   <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>    <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"      value="2021.02"/>         <!-- git tag for atmos_drivers -->
-  <property name="ATMOS_CUBED_SPHERE_TAG" value="2021.03"/>    <!-- git tag for atmos_cubed_sphere source code -->
-  <property name="ICE_PARAM_GIT_TAG"      value="2021.02"/>         <!-- git tag for AWG source code -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2022.03"/>         <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG" value="2022.03"/>    <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>         <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20211102" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-19" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20220817" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_VERSION" value="bronx-20" />              <!-- FRE version for use in this XML -->
+
+  <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
+
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
@@ -78,7 +81,7 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="ANA_AMIP_END"   value="2010"/>
   <property name="ANA_AMIP_LEN"   value="30yr"/>
 
-   <property name="CHUNK_LENGTH_A" value="1yr"/>
+   <property name="CHUNK_LENGTH_A" value="10yr"/>
    <property name="CHUNK_LENGTH_B" value="100yr"/>
    <property name="CHUNK_LENGTH_C" value="163yr"/>
    <property name="CHUNK_LENGTH_A_c384" value="10yr"/>
@@ -257,6 +260,10 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
+    <platform name="gfdl.ncrc3-intel18">
+      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
     <platform name="gfdl.ncrc4-intel">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
@@ -269,57 +276,34 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
-    <platform name="gfdl.ncrc4-gnu">
+    <platform name="gfdl.ncrc4-intel-oneapi-21_3">
+      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
+    <platform name="gfdl.ncrc5-intel-classic">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
     <!-- NCRC Platforms -->
-    <platform name="ncrc3.intel16">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="16.0.3.210" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
-      </directory>
-
-      <!-- Uncomment the <csh> section if needing to run with DDT -->
-      <!--
-      <csh><![CDATA[
-         module load ddt
-         setenv DDTMPIRUN /opt/cray/alps/default/bin/aprun
-         alias runCommand ddt  -n $npes  ./$executable:t 
-        ]]>
-      </csh>
-      -->
-    </platform>
 
     <platform name="ncrc3.intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc3.intel16']/node())" />
+      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
     </platform>
 
-    <platform name="ncrc4.intel16">
+    <platform name="ncrc3.intel18">
+      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
+    </platform>
+
+    <platform name="ncrc4.intel-oneapi-21_3">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="16.0.3.210" />
+      <compiler type="intel" version="intel-oneapi-2021.3.0" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
       <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
       <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
       <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      
       <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
  
       <project>gfdl_sd</project>
@@ -327,6 +311,7 @@ configuration.
       <directory stem="$(FRE_STEM)">
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
         <include>$(xmlDir)/SPEAR_include</include>
+ <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
         <!--
         <include>$HOME/SPEAR/SPEAR_include</include>
         -->
@@ -344,7 +329,7 @@ configuration.
     </platform>
 
     <platform name="ncrc4.intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel16']/node())" />
+      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
     </platform>
 
     <platform name="ncrc4.intel18">
@@ -356,9 +341,7 @@ configuration.
       <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
       <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
       <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      
       <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
  
       <project>gfdl_sd</project>
@@ -366,6 +349,7 @@ configuration.
       <directory stem="$(FRE_STEM)">
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
         <include>$(xmlDir)/SPEAR_include</include>
+ <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
         <!--
         <include>$HOME/SPEAR/SPEAR_include</include>
         -->
@@ -373,9 +357,9 @@ configuration.
 
     </platform>
 
-    <platform name="ncrc4.gnu">
+    <platform name="ncrc5.intel-classic">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="gnu" version="7.2.0" />
+      <compiler type="intel" version="2022.0.2" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
@@ -390,6 +374,7 @@ configuration.
       <directory stem="$(FRE_STEM)">
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
         <include>$(xmlDir)/SPEAR_include</include>
+ <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
         <!--
         <include>$HOME/SPEAR/SPEAR_include</include>
         -->
@@ -1102,7 +1087,10 @@ cd ..
          </csh>
       <!--REFINE DIAG SCRIPT -->
       <!--By default a refineDiag script causes the annual data to be unpacked and saved in /ptmp/$USER-->
+      <!--
       <refineDiag script="$(includeDir)/refineDiag/dummy_refineDiag.csh,$(includeDir)/refineDiag/SPEAR_refineDiag.csh"/>
+      -->
+      <refineDiag script="$(includeDir)/refineDiag/netflx_ens.csh,$(includeDir)/refineDiag/VertVelocity_ens.csh,$(includeDir)/refineDiag/SPEAR_refineDiag.csh"/>
       <!--PostProcessing component models-->
       <component type="atmos_daily" zInterp="ncep"  start="$(PP_START_YEAR_HIST)"  source="atmos_daily" sourceGrid="atmos-cubedsphere" xyInterp="180,288" >
 	<timeSeries freq="daily" source="atmos_daily" chunkLength="$(CHUNK_LENGTH_A)"/>
@@ -1482,6 +1470,7 @@ $baseDate
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override DEFAULT_ANSWER_DATE=20181231
 #override DEFAULT_2018_ANSWERS = T
 
 
@@ -1505,8 +1494,7 @@ cat > $work/INPUT/MOM_override << EOF
 #override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
 #override KH_BG_2D_BUG=True
 
-#override DEBUG=True
-#override ENERGYSAVEDAYS=0.01
+#override ENERGYSAVEDAYS=30
 #override TOPO_EDITS_FILE = "topo_edits_011818.nc"
 #override CHANNEL_LIST_FILE = MOM_channels_SPEAR
 NUM_DIAG_COORDS = 3             ! default = 1
@@ -1619,6 +1607,21 @@ set nyblocks = $dummy
   </input>
 </experiment>
 
+<experiment name="SPEAR_c96_o1_Hist_AllForc_IC1851_Q50_ens_01_05_c5"  inherit="SPEAR_c96_o1_Hist_AllForc_IC1851_Q50_ens_01_05">
+  <description>
+  Ensemble member 1 to 5 of historical run with F50 model settings.
+  
+  Rerun on c5 for comparison.
+  
+  </description>
+  <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
+  </input>
+</experiment>
+
 <experiment name="SPEAR_c96_o1_Hist_AllForc_IC1851_Q50_ens_01_05"  inherit="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec">
   <description>
   Ensemble member 1 to 5 of historical run with F50 model settings.
@@ -1639,6 +1642,12 @@ set nyblocks = $dummy
  scale_aerosol_wetdep = 1.
  drydep_exp = .true.
 </namelist>
+<namelist name="ssalt_nml">
+     coef_emis_fine=1.33, 
+     coef_emis_coarse=1.33,
+     use_sj_sedimentation_solver=.true.
+     min_scale_marthenson = -999999999
+ </namelist>
       <namelist name="aerosolrad_driver_nml">
         do_swaerosol_forcing = .false.
         do_lwaerosol_forcing = .false.
@@ -2085,6 +2094,7 @@ $baseDate
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override DEFAULT_ANSWER_DATE=20181231
 #override DEFAULT_2018_ANSWERS = T
 #override INTERNAL_WAVE_SPEED_BETTER_EST =False
 
@@ -2292,6 +2302,12 @@ set nyblocks = $dummy
  scale_aerosol_wetdep = 1.
  drydep_exp = .true.
 </namelist>
+<namelist name="ssalt_nml">
+     coef_emis_fine=1.33, 
+     coef_emis_coarse=1.33,
+     use_sj_sedimentation_solver=.true.
+     min_scale_marthenson = -999999999
+ </namelist>
       <namelist name="aerosolrad_driver_nml">
         do_swaerosol_forcing = .false.
         do_lwaerosol_forcing = .false.
@@ -2738,6 +2754,7 @@ $baseDate
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override DEFAULT_ANSWER_DATE=20181231
 #override DEFAULT_2018_ANSWERS = T
 #override INTERNAL_WAVE_SPEED_BETTER_EST =False
 
@@ -2932,6 +2949,12 @@ set nyblocks = $dummy
  scale_aerosol_wetdep = 1.
  drydep_exp = .true.
 </namelist>
+<namelist name="ssalt_nml">
+     coef_emis_fine=1.33, 
+     coef_emis_coarse=1.33,
+     use_sj_sedimentation_solver=.true.
+     min_scale_marthenson = -999999999
+ </namelist>
       <namelist name="aerosolrad_driver_nml">
         do_swaerosol_forcing = .false.
         do_lwaerosol_forcing = .false.
@@ -3378,6 +3401,7 @@ $baseDate
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override DEFAULT_ANSWER_DATE=20181231
 #override DEFAULT_2018_ANSWERS = T
 #override INTERNAL_WAVE_SPEED_BETTER_EST =False
 
@@ -3572,6 +3596,12 @@ set nyblocks = $dummy
  scale_aerosol_wetdep = 1.
  drydep_exp = .true.
 </namelist>
+<namelist name="ssalt_nml">
+     coef_emis_fine=1.33, 
+     coef_emis_coarse=1.33,
+     use_sj_sedimentation_solver=.true.
+     min_scale_marthenson = -999999999
+ </namelist>
       <namelist name="aerosolrad_driver_nml">
         do_swaerosol_forcing = .false.
         do_lwaerosol_forcing = .false.
@@ -4018,6 +4048,7 @@ $baseDate
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override DEFAULT_ANSWER_DATE=20181231
 #override DEFAULT_2018_ANSWERS = T
 #override INTERNAL_WAVE_SPEED_BETTER_EST =False
 
@@ -4212,6 +4243,12 @@ set nyblocks = $dummy
  scale_aerosol_wetdep = 1.
  drydep_exp = .true.
 </namelist>
+<namelist name="ssalt_nml">
+     coef_emis_fine=1.33, 
+     coef_emis_coarse=1.33,
+     use_sj_sedimentation_solver=.true.
+     min_scale_marthenson = -999999999
+ </namelist>
       <namelist name="aerosolrad_driver_nml">
         do_swaerosol_forcing = .false.
         do_lwaerosol_forcing = .false.
@@ -4658,6 +4695,7 @@ $baseDate
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override DEFAULT_ANSWER_DATE=20181231
 #override DEFAULT_2018_ANSWERS = T
 #override INTERNAL_WAVE_SPEED_BETTER_EST =False
 
@@ -4852,6 +4890,12 @@ set nyblocks = $dummy
  scale_aerosol_wetdep = 1.
  drydep_exp = .true.
 </namelist>
+<namelist name="ssalt_nml">
+     coef_emis_fine=1.33, 
+     coef_emis_coarse=1.33,
+     use_sj_sedimentation_solver=.true.
+     min_scale_marthenson = -999999999
+ </namelist>
       <namelist name="aerosolrad_driver_nml">
         do_swaerosol_forcing = .false.
         do_lwaerosol_forcing = .false.
@@ -5298,6 +5342,7 @@ $baseDate
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override DEFAULT_ANSWER_DATE=20181231
 #override DEFAULT_2018_ANSWERS = T
 #override INTERNAL_WAVE_SPEED_BETTER_EST =False
 

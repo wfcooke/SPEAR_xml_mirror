@@ -35,9 +35,9 @@ echo ""
 #Generate this year's analysis figures based on the unpacked history files
 #
 #Try setting fre version to the caller version
-if ( ! $?FREVERSION ) set FREVERSION = fre/bronx-15
+if ( ! $?FREVERSION ) set FREVERSION = fre/bronx-19
 set fremodule = $FREVERSION
-set freanalysismodule = fre-analysis/test
+set freanalysismodule = $FREVERSION
 
 set src_dir=/home/wfc/SPEAR/SPEAR_include
 # The following variables are set by frepp, but frepp is not called yet at refineDiag stage of FRE workflow,
@@ -55,7 +55,9 @@ if (`gfdl_platform` == "hpcs-csc") then
    module load $freanalysismodule
    module load gcc
    module load netcdf/4.2
-   module load python/2.7.3
+#   module load python/2.7.3
+#   module load python/2.7.12
+#   module load python/3.7.7
 else
    echo "ERROR: invalid platform"
    exit 1

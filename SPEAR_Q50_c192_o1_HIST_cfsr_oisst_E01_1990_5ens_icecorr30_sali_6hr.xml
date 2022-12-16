@@ -54,16 +54,19 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
-  <property name="AWG_GIT_TAG"            value="2021.02"/>               <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2021.03"/>
+  <property name="AWG_GIT_TAG"            value="2022.03"/>               <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"            value="2022.03"/>
   <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>    <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"      value="2021.02"/>         <!-- git tag for atmos_drivers -->
-  <property name="ATMOS_CUBED_SPHERE_TAG" value="2021.03"/>    <!-- git tag for atmos_cubed_sphere source code -->
-  <property name="ICE_PARAM_GIT_TAG"      value="2021.02"/>         <!-- git tag for AWG source code -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2022.03"/>         <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG" value="2022.03"/>    <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>         <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20211102" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-19" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20220817" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_VERSION" value="bronx-20" />              <!-- FRE version for use in this XML -->
+
+  <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
+
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
@@ -258,6 +261,10 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
+    <platform name="gfdl.ncrc3-intel18">
+      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
     <platform name="gfdl.ncrc4-intel">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
@@ -270,57 +277,34 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
-    <platform name="gfdl.ncrc4-gnu">
+    <platform name="gfdl.ncrc4-intel-oneapi-21_3">
+      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
+    <platform name="gfdl.ncrc5-intel-classic">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
     <!-- NCRC Platforms -->
-    <platform name="ncrc3.intel16">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="16.0.3.210" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
-      </directory>
-
-      <!-- Uncomment the <csh> section if needing to run with DDT -->
-      <!--
-      <csh><![CDATA[
-         module load ddt
-         setenv DDTMPIRUN /opt/cray/alps/default/bin/aprun
-         alias runCommand ddt  -n $npes  ./$executable:t 
-        ]]>
-      </csh>
-      -->
-    </platform>
 
     <platform name="ncrc3.intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc3.intel16']/node())" />
+      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
     </platform>
 
-    <platform name="ncrc4.intel16">
+    <platform name="ncrc3.intel18">
+      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
+    </platform>
+
+    <platform name="ncrc4.intel-oneapi-21_3">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="16.0.3.210" />
+      <compiler type="intel" version="intel-oneapi-2021.3.0" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
       <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
       <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
       <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      
       <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/gfdl_sd"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
  
       <project>gfdl_sd</project>
@@ -328,6 +312,7 @@ configuration.
       <directory stem="$(FRE_STEM)">
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
         <include>$(xmlDir)/SPEAR_include</include>
+ <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
         <!--
         <include>$HOME/SPEAR/SPEAR_include</include>
         -->
@@ -345,7 +330,7 @@ configuration.
     </platform>
 
     <platform name="ncrc4.intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel16']/node())" />
+      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
     </platform>
 
     <platform name="ncrc4.intel18">
@@ -357,9 +342,7 @@ configuration.
       <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
       <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
       <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      
       <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/gfdl_sd"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
  
       <project>gfdl_sd</project>
@@ -367,6 +350,7 @@ configuration.
       <directory stem="$(FRE_STEM)">
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
         <include>$(xmlDir)/SPEAR_include</include>
+ <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
         <!--
         <include>$HOME/SPEAR/SPEAR_include</include>
         -->
@@ -374,9 +358,9 @@ configuration.
 
     </platform>
 
-    <platform name="ncrc4.gnu">
+    <platform name="ncrc5.intel-classic">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="gnu" version="7.2.0" />
+      <compiler type="intel" version="2022.0.2" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
@@ -391,6 +375,7 @@ configuration.
       <directory stem="$(FRE_STEM)">
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
         <include>$(xmlDir)/SPEAR_include</include>
+ <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
         <!--
         <include>$HOME/SPEAR/SPEAR_include</include>
         -->
@@ -408,505 +393,6 @@ configuration.
 
 <!--compile xml-->
 <xi:include href="SPEAR_experiments_R.xml" xpointer="xpointer(//experiment[@name='SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec'])"/>
-
-
-  <experiment name="SPEAR_Q_nonsymMOM6_exec">
-    <description>
-      Experiment to build executable. See git log for source code provenance.
-    </description>
-
-    <component name="FMS"
-               paths="FMS">
-      <description domainName="infrastructure"
-                   communityName="FMS"
-                   communityVersion="$(RELEASE)"
-                   communityGrid=""/>
-      <source versionControl="git"
-              root="http://github.com/NOAA-GFDL">
-        <codeBase version="$(AWG_GIT_TAG)">
-          FMS.git
-        </codeBase>
-        <csh><![CDATA[
-          # Specify exact hash
-          ( cd FMS && git checkout 3cde6bb9fc3f860eacfbf52d095ec2d81e29b272 )
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs>
-          $(F2003_FLAGS)
-          -Duse_libMPI
-          -Duse_netCDF
-          -DMAXFIELDMETHODS_=500
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="atmos_phys"
-               requires="FMS"
-               paths="atmos_param
-                      atmos_shared">
-      <description domainName=""
-                   communityName=""
-                   communityVersion="$(RELEASE)"
-                   communityGrid=""/>
-      <source versionControl="git"
-              root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="$(AWG_GIT_TAG)">
-          atmos_shared.git
-          atmos_param.git
-        </codeBase>
-        <csh><![CDATA[
-          ( cd atmos_shared && git checkout a7eb424f60b3a5d7adbbcb2e6cf26e4e2e1c6f1b )
-          ( cd atmos_param  && git checkout 8814f6a412bd00a6b79b0b184e643e393f9c719a )
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs>
-          $(F2003_FLAGS)
-          -DCLUBB
-          -DAM3_CHEM
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="atmos_dyn"
-               paths="atmos_drivers/coupled
-                      atmos_cubed_sphere/driver/coupled
-                      atmos_cubed_sphere/model
-                      atmos_cubed_sphere/model_nh_null
-                      atmos_cubed_sphere/tools
-                      atmos_cubed_sphere/GFDL_tools"
-               requires="FMS
-                         atmos_phys">
-      <source versionControl="git"
-              root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="$(AWG_GIT_TAG)">
-          atmos_drivers.git
-          atmos_cubed_sphere.git
-        </codeBase>
-        <csh><![CDATA[
-          ( cd atmos_drivers && git checkout 3be6ed406de2db29766746a69115fd6a47048692 )
-          ( cd atmos_cubed_sphere && git checkout 9a92a8fa0551ca27a8382a046ed72d33f13f40e3 )
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs>
-          $(F2003_FLAGS)
-          -DSPMD
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="land_lad2"
-               requires="FMS"
-               paths="land_lad2">
-      <description domainName="LM3"
-                   communityName="land_lad2"
-                   communityVersion="lad2_20170209_slm"
-                   communityGrid=""/>
-      <source versionControl="git"
-              root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="$(LAND_GIT_TAG)">
-          land_lad2.git
-        </codeBase>
-        <csh><![CDATA[
-          ( cd land_lad2 && git checkout 7a8a4fcaf6b49b02926cd739f225e20f42d01615)
-          ]]>
-        </csh>
-      </source>
-      <compile doF90Cpp="yes">
-        <cppDefs>
-          $(F2003_FLAGS)
-          -nostdinc
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="mom6"
-               requires="FMS"
-               paths="MOM6/config_src/dynamic
-                      MOM6/config_src/coupled_driver
-                      MOM6/src/*/
-                      MOM6/src/*/*/ ">
-      <description domainName="Ocean"
-                   communityName="GFDL-MOM6"
-                   communityVersion="$(MOM6_GIT_TAG)"
-                   communityGrid="Tripolar"/>
-      <source versionControl="git"
-              root="http://github.com/wfcooke">
-        <codeBase version="dev/SPEAR">
-          MOM6.git
-        </codeBase>
-        <csh><![CDATA[
-          ( cd MOM6 && git checkout 68eb36564b79641c8d3fc636358e01121302ed8f )
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          $(F2003_FLAGS)
-          -DMAX_FIELDS_=100
-          ]]>
-        </cppDefs>
-        <makeOverrides>OPENMP=""</makeOverrides> <!-- openmp switch for MOM6 may cause crash -->
-      </compile>
-    </component>
-
-    <component name="ice_param"
-               requires="FMS"
-               paths="ice_param"
-               includeDir="$(srcDir)/FMS/include">
-      <source versionControl="git"
-              root="https://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="dev/master">
-          ice_param.git
-        </codeBase>
-        <csh><![CDATA[
-          ( cd ice_param && git checkout bf6e4fca190d809e8fb6e7b9be9fb68e47cfdc06 )
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          $(F2003_FLAGS)
-          ]]>
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="sis2"
-               requires="FMS
-                         mom6
-                         ice_param
-                         icebergs"
-               paths="SIS2/config_src/dynamic_symmetric
-                      SIS2/src"
-               includeDir="$(srcDir)/MOM6/src/framework" >
-      <source versionControl="git"
-              root="http://github.com/NOAA-GFDL">
-        <codeBase version="dev/gfdl">
-          SIS2.git
-        </codeBase>
-        <csh><![CDATA[
-          ( cd SIS2 && git checkout d9bf8341a280ec0927a50c0036e81283050ec967 )
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          $(F2003_FLAGS)
-          -DSYMMETRIC_MEMORY_
-          ]]>
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="icebergs"
-               requires="FMS"
-               paths="icebergs">
-      <description domainName="N/A"
-                   communityName="N/A"
-                   communityVersion="$(RELEASE)"
-                   communityGrid="N/A"/>
-      <source versionControl="git"
-              root="http://github.com/NOAA-GFDL">
-        <codeBase version="dev/gfdl">
-          icebergs.git
-        </codeBase>
-        <csh><![CDATA[
-          ( cd icebergs && git checkout b114a809187317909e19fdca7ff843f2a603f011 )
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          ]]>
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="coupler"
-               paths="FMScoupler"
-               requires="FMS
-                         atmos_dyn
-                         atmos_phys
-                         land_lad2
-                         sis2
-                         mom6
-                         icebergs">
-      <description domainName="FMS Coupler"
-                   communityName="coupler"
-                   communityVersion="$(RELEASE)"
-                   communityGrid=""/>
-      <source versionControl="git"
-              root="http://github.com/NOAA-GFDL">
-        <codeBase version="$(AWG_GIT_TAG)"> FMScoupler.git </codeBase>
-        <csh><![CDATA[
-          # Specify exact hash
-          ( cd FMScoupler && git checkout 14578f09a25c8e6101faba18342630af267cdba9 )
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          $(F2003_FLAGS)
-          ]]>
-        </cppDefs>
-      </compile>
-    </component>
-  </experiment>
-
-
-
-
-
-
-  <experiment name="SPEAR_Q_AMIP_exec">
-    <description>
-      Experiment to build AMIP (atmosphere/land/ice only) executable. See git log for source code provenance.
-      Requires SIS rather than SIS2 for reproducibility across restarts.
-    </description>
-
-    <component name="FMS"
-               paths="FMS">
-      <description domainName="infrastructure"
-                   communityName="FMS"
-                   communityVersion="$(RELEASE)"
-                   communityGrid=""/>
-      <source versionControl="git"
-              root="http://github.com/NOAA-GFDL">
-        <codeBase version="$(AWG_GIT_TAG)">
-          FMS.git
-        </codeBase>
-        <csh><![CDATA[
-          # Specify exact hash
-          ( cd FMS && git checkout 3cde6bb9fc3f860eacfbf52d095ec2d81e29b272 )
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs>
-          $(F2003_FLAGS)
-          -Duse_libMPI
-          -Duse_netCDF
-          -DMAXFIELDMETHODS_=500
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="atmos_phys"
-               requires="FMS"
-               paths="atmos_param
-                      atmos_shared">
-      <description domainName=""
-                   communityName=""
-                   communityVersion="$(RELEASE)"
-                   communityGrid=""/>
-      <source versionControl="git"
-              root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="$(AWG_GIT_TAG)">
-          atmos_shared.git
-          atmos_param.git
-        </codeBase>
-        <csh><![CDATA[
-          ( cd atmos_shared && git checkout a7eb424f60b3a5d7adbbcb2e6cf26e4e2e1c6f1b )
-          ( cd atmos_param  && git checkout 8814f6a412bd00a6b79b0b184e643e393f9c719a )
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs>
-          $(F2003_FLAGS)
-          -DCLUBB
-          -DAM3_CHEM
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="atmos_dyn"
-               paths="atmos_drivers/coupled
-                      atmos_cubed_sphere/driver/coupled
-                      atmos_cubed_sphere/model
-                      atmos_cubed_sphere/model_nh_null
-                      atmos_cubed_sphere/tools
-                      atmos_cubed_sphere/GFDL_tools"
-               requires="FMS
-                         atmos_phys">
-      <source versionControl="git"
-              root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="$(AWG_GIT_TAG)">
-          atmos_drivers.git
-          atmos_cubed_sphere.git
-        </codeBase>
-        <csh><![CDATA[
-          ( cd atmos_drivers && git checkout 3be6ed406de2db29766746a69115fd6a47048692 )
-          ( cd atmos_cubed_sphere && git checkout 9a92a8fa0551ca27a8382a046ed72d33f13f40e3 )
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs>
-          $(F2003_FLAGS)
-          -DSPMD
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="land_lad2"
-               requires="FMS"
-               paths="land_lad2">
-      <description domainName="LM3"
-                   communityName="land_lad2"
-                   communityVersion="lad2_20170209_slm"
-                   communityGrid=""/>
-      <source versionControl="git"
-              root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="$(LAND_GIT_TAG)">
-          land_lad2.git
-        </codeBase>
-        <csh><![CDATA[
-          ( cd land_lad2 && git checkout 7a8a4fcaf6b49b02926cd739f225e20f42d01615)
-          ]]>
-        </csh>
-      </source>
-      <compile doF90Cpp="yes">
-        <cppDefs>
-          $(F2003_FLAGS)
-          -nostdinc
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="mom6"
-               requires="FMS"
-               paths="MOM6/config_src/dynamic
-                      MOM6/config_src/coupled_driver
-                      MOM6/src/*/
-                      MOM6/src/*/*/ ">
-      <description domainName="Ocean"
-                   communityName="GFDL-MOM6"
-                   communityVersion="$(MOM6_GIT_TAG)"
-                   communityGrid="Tripolar"/>
-      <source versionControl="git"
-              root="http://github.com/wfcooke">
-        <codeBase version="dev/SPEAR">
-          MOM6.git
-        </codeBase>
-        <csh><![CDATA[
-          ( cd MOM6 && git checkout 68eb36564b79641c8d3fc636358e01121302ed8f)
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          $(F2003_FLAGS)
-          -DMAX_FIELDS_=100
-          ]]>
-        </cppDefs>
-        <makeOverrides>OPENMP=""</makeOverrides> <!-- openmp switch for MOM6 may cause crash -->
-      </compile>
-    </component>
-
-    <component name="ice_param"
-               requires="FMS"
-               paths="ice_param"
-               includeDir="$(srcDir)/FMS/include">
-      <source versionControl="git"
-              root="https://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="dev/master">
-          ice_param.git
-        </codeBase>
-        <csh><![CDATA[
-          ( cd ice_param && git checkout bf6e4fca190d809e8fb6e7b9be9fb68e47cfdc06 )
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          $(F2003_FLAGS)
-          ]]>
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="ice_sis" 
-               requires="FMS mom6 ice_param" 
-               paths="ice_sis">
-      <source  versionControl="git" 
-               root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="dev/master"> ice_sis.git</codeBase>
-        <!--
-        <csh><![CDATA[
-          ( cd ice_sis    && git checkout $(AWG_GIT_TAG) )
-          ( cd ice_param  && git checkout $(AWG_GIT_TAG) )
-         ]]>
-        </csh>
-        -->
-      </source>
-      <compile>
-        <cppDefs>$(F2003_FLAGS) -Duse_netCDF</cppDefs>
-      </compile>
-    </component>
-
-    <component name="icebergs"
-               requires="FMS"
-               paths="icebergs">
-      <description domainName="N/A"
-                   communityName="N/A"
-                   communityVersion="$(RELEASE)"
-                   communityGrid="N/A"/>
-      <source versionControl="git"
-              root="http://github.com/NOAA-GFDL">
-        <codeBase version="dev/gfdl">
-          icebergs.git
-        </codeBase>
-        <csh><![CDATA[
-          ( cd icebergs && git checkout b114a809187317909e19fdca7ff843f2a603f011 )
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          ]]>
-        </cppDefs>
-      </compile>
-    </component>
-
-    <component name="coupler"
-               paths="FMScoupler"
-               requires="FMS
-                         atmos_dyn
-                         atmos_phys
-                         land_lad2
-                         ice_sis
-                         mom6
-                         icebergs">
-      <description domainName="FMS Coupler"
-                   communityName="coupler"
-                   communityVersion="$(RELEASE)"
-                   communityGrid=""/>
-      <source versionControl="git"
-              root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="$(AWG_GIT_TAG)"> coupler.git </codeBase>
-        <csh><![CDATA[
-          # Specify exact hash
-          ( cd coupler && git checkout 14578f09a25c8e6101faba18342630af267cdba9 )
-          ]]>
-        </csh>
-      </source>
-      <compile>
-        <cppDefs><![CDATA[
-          $(F2003_FLAGS)
-          ]]>
-        </cppDefs>
-      </compile>
-    </component>
-  </experiment>
-
-
 
 <!--============================-->
 <!--= TEMPLATES FOR INPUT DATA =-->
@@ -1545,12 +1031,15 @@ cd ..
 
 
 <experiment name="SPEAR_Q50_c192_o1_Hist_AllForc_IC1990_cfsr_oisst_5ens_icecorr30_sali_6hr" inherit="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec">
-<!--
-<experiment name="SPEAR_Q50_c192_o1_Hist_AllForc_IC1990_cfsr_oisst_5ens_icecorr30_sali_6hr" inherit="SPEAR_Q_nonsymMOM6_exec">
--->
   <description>
 11/14/2019
 Q50 atmosphere-nudging and sst-restoring
+
+12/15/2021
+Adding 
+override SPEAR_ECDA_SST_RESTORE_TFREEZE = T
+override SPEAR_DTFREEZE_DS = -0.0539
+to MOM_override
   </description>
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
@@ -1565,6 +1054,12 @@ Q50 atmosphere-nudging and sst-restoring
  scale_aerosol_wetdep = 1.
  drydep_exp = .true.
 </namelist>
+<namelist name="ssalt_nml">
+     coef_emis_fine=1.33, 
+     coef_emis_coarse=1.33,
+     use_sj_sedimentation_solver=.true.
+     min_scale_marthenson = -999999999
+ </namelist>
 <!--<namelist name="land_debug_nml">
         watch_point = 57,158,1,2
 	start_watching = 2010,9,19
@@ -2124,8 +1619,10 @@ touch $work/INPUT/MOM_override
 #override R_RESCALE_POWER = 0
 #override Q_RESCALE_POWER = 0
 cat > $work/INPUT/MOM_override << EOF
+#override DEFAULT_ANSWER_DATE=20181231
 #override DEFAULT_2018_ANSWERS = T
-
+#override SPEAR_ECDA_SST_RESTORE_TFREEZE = T
+#override SPEAR_DTFREEZE_DS = -0.0539
 #override INTERNAL_WAVE_SPEED_BETTER_EST =False
 
 #override REMAP_UV_USING_OLD_ALG = True

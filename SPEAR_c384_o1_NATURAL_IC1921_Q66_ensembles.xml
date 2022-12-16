@@ -3888,7 +3888,7 @@ Flip make_exchange_reproduce to false and extend.
       <namelist file="$(includeDir)/nml/am4p0_c384L33.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_amip.nml"/>
       <namelist name="xgrid_nml">
-        make_exchange_reproduce = .false.
+        make_exchange_reproduce = .true.
         interp_method = 'second_order'
       </namelist> 
       <namelist name="radiative_gases_nml">
@@ -4601,6 +4601,12 @@ Ensemble member 2 for Natural run (1921-2100) for SPEAR_HI
 Initial condition taken from 1921 land of experiment SPEAR_c384_o1_Hist_AllForc_IC1851_Q66_ens_01
 and ocean/ice/atmos of year 121 of SPEAR_c384_o1_Control_1850_Q66
 
+12/7/2021
+Time = 2068  1  1  0  0  0    ch4 = 1028.640177ppb  n2o =  284.984125ppb
+
+FATAL from PE   565: compute_qs: saturation vapor pressure table overflow, nbad=     33
+
+Flip make_exchange_reproduce to false and extend.
   </description>
 <!--
 <executable file="/lustre/f2/dev/gfdl/William.Cooke/SPEAR_experiments_K_20200819/SPEAR_K_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_K_nonsymMOM6_exec.x"/>
@@ -4609,7 +4615,7 @@ and ocean/ice/atmos of year 121 of SPEAR_c384_o1_Control_1850_Q66
 
   <input>
       <namelist name="xgrid_nml">
-        make_exchange_reproduce = .true.
+        make_exchange_reproduce = .false.
         interp_method = 'second_order'
       </namelist> 
 

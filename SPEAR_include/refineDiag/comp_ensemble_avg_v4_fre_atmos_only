@@ -1,0 +1,353 @@
+#!/bin/csh -f
+
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# 08/17/10 version. added statistics (just rms) 
+# 04/01/11 version v3. running on gaea output, analysis nodes
+# VERSION ON GAEA
+set argv = (`getopt y:b:c:d:o:p:x:w:P:s:vh $*`)
+
+while ("$argv[1]" != "--")
+    switch ($argv[1])
+        case -y:
+            set process1yr = $argv[2]; shift argv; breaksw
+        case -b:
+            set begindate = $argv[2]; shift argv; breaksw
+        case -c:
+            set pp_ens_member = $argv[2]; shift argv; breaksw 
+        case -d:
+            set hisdir = $argv[2]; shift argv; breaksw
+        case -o:
+            set outdir = $argv[2]; shift argv; breaksw
+        case -p:
+            set pp = $argv[2]; shift argv; breaksw
+        case -x:
+            set xmlfile = $argv[2]; shift argv; breaksw
+        case -s:
+            set compstat = $argv[2]; shift argv; breaksw
+        case -w:
+            set workdir = $argv[2]; shift argv; breaksw
+	case -P:
+            set ptmpDir = $argv[2]; shift argv; breaksw
+        case -v:
+            set debug; breaksw
+        case -h:
+            set help; breaksw
+    endsw
+    shift argv
+end
+shift argv
+
+# Experiment name
+set name = $argv
+
+
+#######
+if (${?help} == 1 || $name == "" || ${?begindate} == 0 || ${?hisdir} == 0 || ${?xmlfile} == 0  ) then
+   echo
+   echo "Description:"
+   echo
+   echo "This script creates ensemble mean of all the ensemble members and"
+   echo "post-process the ensemble mean and each member"
+   echo
+   echo "Usage: $0:t  -options exptname"
+   echo "      -y process1yr: flag (.true.||.false.) whether to process a whole"
+   echo "              year, from the month to Dec. (.true.) or just the month"
+   echo "              (.false. == default) for monthly history files"
+   echo "  *   -b begin date:  an 8-digit number, ex. 18610101, which is the year"
+   echo "              to compute ensemble mean"
+   echo "      -c pp_ens_member: flag (.true.||.false.) whether to FREPP all the" 
+   echo "              individual ensemble members or not. default=.false."
+   echo "  *   -d hisdir:  the path of your expt history dir, ex."
+   echo "              /archive/rgg/CM2.1R_ECDA_v3.1/ncrc.intel-prod/history"
+   echo "      -o outdir: the dir to store ensemble mean."
+   echo "              Default is  hisdir/{ensemble,ens_01,...}"
+   echo "      -p pp:  flag (.true.||.false.) inicating whether to run FREPP or"
+   echo "              not. Default=.true."
+   echo "      -s compstat:  flag (.true.||.false.) whether to compute"
+   echo "              statitstics (stddev for now) among all the members."
+   echo "              Default=.false."
+   echo "  *   -x xmlfile: XML file which contains the experiment name"
+   echo "      -w workdir: Location of the workdir.  Useful if script ran as a"
+   echo "              refineDiag script."
+   echo "      -P ptmpDir: Location of the ptmp directory.  Needed for"
+   echo '              hsm{get,put} calls.  Default is $TMPDIR/ptmp/$hisdir.'
+   echo "      -v        : verbose flag "
+   echo "      -h        : help"
+   echo
+   echo "NOTE: options with * and an experiment name are required to run this program "
+   echo
+   echo "Examples:"
+   echo
+   echo " 1. Processing monthly history files for the specified month only with"
+   echo "    the -s .true. option"
+   echo
+   echo " $0:t  -b 19490101 -d /archive/decp/snz -s .true. \\"
+   echo "     -x CM2.1R_ECDA_v3.0_1940_pp.xml CM2.1R_ECDA_v3.0_1940"
+   echo
+   echo " 2. Processing monthly history files for Feb. to Dec. typically for"
+   echo "    offline use"
+   echo
+   echo " $0:t -y .true. -b 19610101 -d /archive/decp/snz \\"
+   echo "      -x /home/fjz/gaea/CM2.1R/CM2.1R_ECDA_v3.1_1960.xml -s .true. \\"
+   echo "      -d /archive/snz/archive/CM2.1R_ECDA_v3.1_1960/history \\"
+   echo "      -o /archive/fjz/testing CM2.1R_ECDA_v3.1_1960"
+   echo
+   echo " 3. Post process each individule member with the -c .true. option"
+   echo
+   echo " $0:t -b 18610101 -c .true. -d /archive/decp/fjz \\"
+   echo "      -x /home/decp/fjz/CM2.1R/xml/CM2.1R_Control-1860.xml \\"
+   echo "      CM2.1R_1861_2040_AllForc_A1B_A"
+   echo
+   exit 0
+endif
+
+# If run in the queue, keep the ensembles from 
+# job schooling
+setenv PBS_O_QUEUE stage
+
+# Set some defaults
+if ( ${?FRE_PLATFORM} == 0 ) then
+    echo "ERROR: FRE_PLATFORM must be set"
+    exit 1
+endif
+if ( ${?FRE_TARGET} == 0 ) then
+    echo "ERROR: FRE_TARGET must be set"
+    exit 1
+endif
+####
+if (${?debug} == 1 ) set echo
+echo "Starting on `date`"
+echo $HOST
+
+# TODO:
+# -  Check if FRE is loaded?
+#    And if all external commands needed are available.
+# -  Add error checking and take appropriate actions
+setenv NC_BLKSZ 64K
+alias ncks "ncks --64bit --hdr_pad 15000"
+alias ncrcat "ncrcat --64bit -t 2"
+
+which ncks
+which ncrcat
+which ncea
+
+echo "Using $TMPDIR as TMPDIR"
+
+# HSM settings
+set hsmget = "hsmget -v -m $FRE_COMMANDS_HOME/site/gfdl/hsmget.mk -t";
+set hsmput = "hsmput -v -m $FRE_COMMANDS_HOME/site/gfdl/hsmput.mk -t";
+if ( $?HSM_HOME ) then
+   if ( -d $HSM_HOME ) then
+     set hsmget = 'hsmget -v -t';
+     set hsmput = 'hsmput -v -t';
+   endif
+endif
+
+###### default settings
+if ( ${?TMPDIR} == 0 ) setenv TMPDIR /tmp
+if ( ${?workdir} == 0 ) set workdir = $TMPDIR/$begindate.$$
+if ( ${?ptmpDir} == 0 ) set ptmpDir = ${TMPDIR}/ptmp${hisdir}
+if ( ${?pp_ens_member} == 0 ) set pp_ens_member = .false.
+if ( ${?pp} == 0 ) set pp = .true.
+if ( ${?compstat} == 0 ) set compstat = .false.
+if ( ${?process1yr} == 0 )  set process1yr = .false.
+if ( $process1yr == .true.) then
+   @ maxmon = 12
+else
+   @ maxmon = 1
+endif
+
+# Statistic commands
+set stddev = /home/fjz/util/comp.ensembleMembers.stddev.csh
+
+
+set atmos_statvars = ( )
+if ( $compstat == .true. ) then
+   set atmos_statvars = (t_ref precip)
+
+   echo " This version will compute compute stddev for these fields:"
+   echo -n "atmos_statvars = "
+endif
+set atmos_statvarsStr  = `echo $atmos_statvars:gr:gr  |   sed -e 's/\ /,/g' `
+
+#######
+set mmdd =  `echo $begindate | awk '{print substr($begindate,5,8)}'`
+set mo = `echo $mmdd | awk '{print substr($mmdd,1,2)}'`
+@ mo = `expr $mo + 0`
+if ($mo > $maxmon) then
+     @ maxmon = $mo
+     echo "maxmon is changed to $maxmon"
+endif
+
+while ( $mo <= $maxmon )
+  echo process date: $begindate
+  set hsmdate = $begindate.nc
+
+  if ( ${?outdir} == 0 ) set outdir = $hisdir/ensemble
+
+  echo " submitted on `date` via: "
+  echo " $0 -b $begindate -y $process1yr -c $pp_ens_member -d $hisdir -o $outdir -p $pp -s $compstat -x $xmlfile $name "
+
+  #
+  $hsmget -a $hisdir \
+          -p $ptmpDir/history \
+          -w $workdir \
+          $hsmdate/\*
+
+  cd $workdir/$hsmdate
+
+  # Give files the correct permissions destroyed by hsmget
+  chmod u+w *
+
+  # find out the components from the first member
+  set varlist = (`ls *.ens_01*.nc`)
+
+  # find out all the ensemble members from the first component
+  set numEns = `ls $varlist[1]:s/ens_01/ens_??/ | wc -l`
+
+  ####### ensemble average of all the members for all the components
+
+  ### atmos_month
+  foreach file ( `ls -1 $begindate.atmos_month.ens_01*.nc` )
+    ${stddev} "$atmos_statvarsStr" "$file:s/ens_01/ens_??/" $file:s/.ens_01//  || goto err
+  end
+
+  set v = $begindate.atmos_month.ens_01.tile1.nc
+  @ Nmons = ` ncdump -h $v | grep -i '.*=.*unlimited.*currently' | awk '{print $6}' | sed -e 's/(//' `;
+
+
+  ### other than atmos_month and ocean_month components
+  foreach v ($varlist)
+     if ( $v =~ '*ocean_month.ens*' ) continue 
+     if ( $v =~ '*ocean_z_month.ens*' ) continue 
+     if ( $v =~ '*atmos_month.ens*' ) continue
+   
+     echo "ncea $v ... "
+     set output=`ncea -O ${v:s/ens_01/ens_??/} ${v:s/.ens_01//}`
+     if ( $status == 0 ) then
+        echo "ncea created ${v:s/.ens_01//}"
+     else
+        # This specific error message will be ignored.
+        set err_msg = "ncea: ERROR no variables fit criteria for processing ncea: HINT Extraction list must contain a non-coordinate variable that is not NC_BYTE, NC_UBYTE, NC_CHAR, or NC_STRING"
+        if ( "$output" == "$err_msg" ) then
+           echo "ncea skipping ${v:s/.ens_01//}.  File only contains coordinate variables."
+        else
+           echo $output
+           goto err
+        endif
+     endif
+     unset output
+     unset err_msg
+  end  #foreach v ($varlist)
+
+  # save ensemble mean 
+  # Move file to temporary directory first
+  mkdir -p $workdir/tmp/$hsmdate
+  mv ${varlist:gs/.ens_01//} $workdir/tmp/$hsmdate
+  $hsmput -s tar \
+          -a $outdir \
+          -p $ptmpDir/ensemble/history \
+          -w $workdir/tmp \
+          $hsmdate
+  
+  set year = `echo $begindate | awk '{print substr($begindate,1,4)}'`
+  set mmdd = `echo $begindate | awk '{print substr($begindate,5,4)}'`
+  @ year = `expr $year + 0`
+  @ mmdd = `expr $mmdd + 0`
+  echo "year: $year mmdd: $mmdd"
+
+  # launch frepp when it is right time
+  if ( ( $pp == ".true." &&  $Nmons == 1 && $mmdd == 1201 ) || ( $pp == ".true." &&  $Nmons == 12 ) ) then 
+    echo " frepp -P ${FRE_PLATFORM} -T ${FRE_TARGET} -c split -s  -x $xmlfile  -u ensemble -d $outdir -t $begindate $name"
+    frepp -P ${FRE_PLATFORM} -T ${FRE_TARGET} -c split -s  -x $xmlfile  -u ensemble -d $outdir -t $begindate $name
+    if ( $status != 0) then
+      Mail -s"'Problem with frepp for ensemble average for timeslice '$begindate' of '$name'" $USER  << EOF
+Command issued was 
+frepp -P ${FRE_PLATFORM} -T ${FRE_TARGET} -c split -s  -x $xmlfile  -u ensemble -d $outdir -t $begindate $name
+Check your stdout for more details.
+EOF
+      goto err
+    endif
+  endif
+  ####### each member
+  if ( $pp_ens_member == .false. ) then
+    echo "Not processing ensemble members"
+  else 
+    foreach ensNum ( `seq 1 $numEns` )
+
+       set eee = `printf "ens_%2.2d" $ensNum`
+  
+       #if ( -e ${archive}/${ens}/${hsmdate}.tar.ok ) then
+       if ( -e ${hisdir}/../${eee}/history/${hsmdate}.tar.ok ) then
+           echo "NOTE: Ensemble member file for ${hsmdate:r} already exists.  Skipping"
+       else
+          echo "Processing ensemble member: $eee"
+          cd $workdir/$hsmdate
+         if ( -e $workdir/$eee/$hsmdate ) then
+            rm -fr $workdir/$eee/$hsmdate
+          endif
+          mkdir -p $workdir/$eee/$hsmdate
+          foreach vvv ( `ls ${begindate}.*.${eee}*.nc` )
+            eval set var = \${vvv:s/.${eee}//}
+            mv $vvv $workdir/$eee/$hsmdate/$var
+          end
+
+          # save to output dir
+          set odir =  "$outdir:h/$eee/"
+          $hsmput -s tar \
+                  -a $odir \
+                  -p $ptmpDir/$eee/history \
+                  -w $workdir/$eee \
+                  $hsmdate
+
+       endif
+       if ( ( $pp == ".true." &&  $Nmons == 1 && $mmdd == 1201 ) || ( $pp == ".true." &&  $Nmons == 12 ) ) then
+         echo "frepp -P ${FRE_PLATFORM} -T ${FRE_TARGET} -c split -s -x "$xmlfile"  -u $eee  -d "$outdir:h/$eee" -t $begindate $name "
+         frepp -P ${FRE_PLATFORM} -T ${FRE_TARGET} -c split -s -x "$xmlfile"  -u $eee  -d "$outdir:h/$eee" -t $begindate $name
+         if ( $status != 0) then
+           Mail -s"'Problem with frepp for ensemble member '$eee' for timeslice '$begindate' of '$name" $USER  << EOF
+Command issued was 
+frepp -P ${FRE_PLATFORM} -T ${FRE_TARGET} -c split -s -x "$xmlfile"  -u $eee  -d "$outdir:h/$eee" -t $begindate $name
+Check your stdout for more details.
+EOF
+           goto err
+         endif
+       endif
+    end # foreach ensNum
+
+  endif #if ( $pp_ens_member
+
+  # process next month ?
+
+  set year = `echo $begindate | awk '{print substr($begindate,1,4)}'`
+
+  if ( $Nmons == 12 || $mo == 12 ) then
+     echo "Natural end of year $begindate"
+     exit 0
+  else
+     @ mo ++
+     if ( $mo < 10 ) then
+       set begindate = {$year}0$mo{01}
+     else
+       set begindate = $year$mo{01}
+     endif
+  endif
+
+  echo "mo: $mo"
+end  #endwhile ( $mo <= $maxmon )
+
+# process next year?
+# needed?
+
+# clean up
+if (${?debug} == 0 ) then
+  rm -fr $workdir
+  echo "deleted workdir: $workdir"
+endif
+
+exit 0
+
+###
+err:
+echo Abort on Error 
+exit 1
