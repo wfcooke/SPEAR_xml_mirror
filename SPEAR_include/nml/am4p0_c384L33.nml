@@ -21,7 +21,7 @@
          n_split  = 7,
          a2b_ord  = 4,
          adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
+         adj_mass_vmr    = 1,
          print_freq = 0,
          grid_type = 0,
          tau = 0.

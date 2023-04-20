@@ -136,6 +136,9 @@
       <directory stem="$(FRE_STEM)">
         <include>$(xmlDir)/SPEAR_include</include>
       </directory>
+     <csh><![CDATA[
+       module unload cray-libsci
+      ]]></csh>
 
     </platform>
 

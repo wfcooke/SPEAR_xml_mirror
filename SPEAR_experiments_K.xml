@@ -21449,7 +21449,7 @@ set nyblocks = $dummy
          n_split  = 7,                       
          a2b_ord  = 4,                       
          adjust_dry_mass = .true.,           
-         adj_mass_vmr    = .true.,           
+         adj_mass_vmr    = 1,           
          print_freq = 0,                     
          grid_type = 0,                      
          tau = 0.                            
@@ -24780,7 +24780,7 @@ Update of c384 G50 experiment with auto_th0 and auto_th0_d reverted to 0.2e-3 (s
          n_split  = 7,
          a2b_ord  = 4,
          adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
+         adj_mass_vmr    = 1,
          print_freq = 0,
          grid_type = 0,
          tau = 0.
@@ -25341,7 +25341,7 @@ Change dt_atmos to 1200s (from 600), k_split =6 (from 3), cg_drag_freq=1200 (fro
          n_split  = 7,
          a2b_ord  = 4,
          adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
+         adj_mass_vmr    = 1,
          print_freq = 0,
          grid_type = 0,
          tau = 0.
@@ -26982,7 +26982,7 @@ Need to  rm -f cg_drag* physics_driver*
         n_split  = 8,
         a2b_ord  = 4,
         adjust_dry_mass = $adjust_dry_mass,
-        adj_mass_vmr    = .true.,
+        adj_mass_vmr    = 1,
         print_freq = 0,
         grid_type = 0,
         tau = 0.      
@@ -28126,7 +28126,7 @@ AMIP version of SPEAR_c192_o1_Control_1850_K50 with 63 atmospheric levels.
         n_split  = 8,
         a2b_ord  = 4,
         adjust_dry_mass = $adjust_dry_mass,
-        adj_mass_vmr    = .true.,
+        adj_mass_vmr    = 1,
         print_freq = 0,
         grid_type = 0,
         tau = 0.      

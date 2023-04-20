@@ -6,7 +6,7 @@ Quick start guide
 =================
 
 -->
-<experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2001/XInclude">
+<experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2003/XInclude">
 
 <!--
 GFDL FAIR USE POLICY
@@ -85,14 +85,13 @@ from integrations with these models.
                    communityGrid=""/>
       <source versionControl="git"
               root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="2022.04">
+        <codeBase version="2023.01">
           atmos_phys.git
         </codeBase>
       </source>
       <compile>
         <cppDefs>
           $(F2003_FLAGS)
-          -DCLUBB
           -DAM3_CHEM
         </cppDefs>
       </compile>
@@ -105,7 +104,7 @@ from integrations with these models.
                          fv3">
       <source versionControl="git"
               root="https://github.com/NOAA-GFDL">
-        <codeBase version="2022.04">
+        <codeBase version="2023.01">
           atmos_drivers.git
         </codeBase>
       </source>
@@ -128,7 +127,7 @@ from integrations with these models.
                          atmos_phys">
       <source versionControl="git"
               root="https://github.com/NOAA-GFDL">
-        <codeBase version="2022.04">
+        <codeBase version="2023.01">
           GFDL_atmos_cubed_sphere.git
         </codeBase>
       </source>
@@ -170,6 +169,7 @@ from integrations with these models.
                       MOM6/config_src/external/GFDL_ocean_BGC
                       MOM6/config_src/external/ODA_hooks
                       MOM6/config_src/external/drifters
+                      MOM6/config_src/external/database_comms
                       MOM6/src/*/
                       MOM6/src/*/*/
                       MOM6/pkg/GSW-Fortran/ ">
@@ -183,7 +183,7 @@ from integrations with these models.
           MOM6.git
         </codeBase>
           <csh><![CDATA[
-            ( cd MOM6  && git checkout  835b1661c0204b0f91e51e8593555eed1f6577e2 )
+            ( cd MOM6  && git checkout  b22617c1673770e47e2f03405cd2541476eec356 )
                        ]]>
           </csh>
       </source>
@@ -230,7 +230,7 @@ from integrations with these models.
           SIS2.git
         </codeBase>
           <csh><![CDATA[
-            ( cd SIS2  && git checkout 6e0eda1d4bd085bc30da38574d53047a5c2ec5f7 )
+            ( cd SIS2  && git checkout 54314f8d262b6a0f4957aae5765b251d47a53115 )
                        ]]>
           </csh>
       </source>

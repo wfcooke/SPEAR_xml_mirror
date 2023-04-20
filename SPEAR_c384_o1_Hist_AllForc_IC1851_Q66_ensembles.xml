@@ -3678,7 +3678,7 @@ natural vegetation by setting scale_non_ntrl=0.0 in land_model_nml.
          n_split  = 7,
          a2b_ord  = 4,
          adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
+         adj_mass_vmr    = 1,
          print_freq = 0,
          grid_type = 0,
          tau = 0.
@@ -4466,7 +4466,7 @@ Flipping make_exchange_reproduce to false after yet another not representable er
          n_split  = 7,
          a2b_ord  = 4,
          adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
+         adj_mass_vmr    = 1,
          print_freq = 0,
          grid_type = 0,
          tau = 0.

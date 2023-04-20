@@ -48,7 +48,7 @@ SPEAR_c192_omlp25_Control_2010_A01
   * c192 atmosphere coupled to ocean mixed layer model, 0.25 degree resolution, with constant 2010 radiative forcing
 -->
 
-<experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2001/XInclude">
+<experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2003/XInclude">
 
   <!--User should set the following properties according to the plan for the production run-->	
 
@@ -57,14 +57,14 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="MOM6_DATE"    value="2017.10.05"/>              <!-- git tag date for MOM6 source code -->
   <property name="MOM6_GIT_TAG" value="dev/SPEAR"/> <!-- git tag for MOM6 source code -->
   <property name="AWG_GIT_TAG"  value="xanadu"/>           <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"  value="2022.04"/>           <!-- git tag for FMS source code -->
+  <property name="FMS_GIT_TAG"  value="2023.01"/>           <!-- git tag for FMS source code -->
   <property name="LAND_GIT_TAG"  value="testing_20170929"/>    <!-- git tag for Land source code -->
 
 <!-- Fill in your GFDL group -->
   <property name="GFDL_YGL"  value="gfdl_F"/>
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_Q_2022.04" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_STEM" value="SPEAR_experiments_Q_2023.01" />   <!-- Stem use in FRE directories -->
   <property name="FRE_VERSION" value="bronx-20" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
@@ -8604,7 +8604,13 @@ DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default 
                                 !                by a comma or space, for sigma-2 and dz. e.g.
                                 !                HYBRID:vgrid.nc,sigma2,dz
 
-DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
+DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600."
+
+#override KV_ML_INVZ2 = 1.0E-04
+#override BAROTROPIC_TIDAL_SAL_BUG = False
+#override LAYER_Z_INIT_IC_EXTRAP_BUG = False
+#override KAPPA_SHEAR_VERTEX_PSURF_BUG = False
+
 EOF
 
 touch $work/INPUT/SIS_override
