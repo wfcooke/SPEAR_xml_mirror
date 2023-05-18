@@ -6,8 +6,8 @@ Quick start guide
 =================
 
 ```
-module load fre/bronx-18
-fremake -x SPEAR_c96L63_o1_Control_2010_Q50.xml -p ncrc4.intel16 -t repro,openmp SPEAR_Q_nonsymMOM6_exec
+module load fre/bronx-20
+fremake -x SPEAR_c96L63_o1_Control_2010_Q50.xml -p ncrc4.intel16 -t repro,openmp SPEAR_R2022.03_nonsymMOM6_exec
 frerun  -x SPEAR_c96L63_o1_Control_2010_Q50.xml -p ncrc4.intel16 -t repro,openmp SPEAR_c96L65_o1_Control_2010_K50 -r basic_prodsettings
 ```
 

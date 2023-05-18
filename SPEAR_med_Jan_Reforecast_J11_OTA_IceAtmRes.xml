@@ -5,7 +5,7 @@
 <!--
 Quick start guide
 
-module load fre/bronx-18
+module load fre/bronx-20
 fremake -x SPEAR_reforecast.xml -p ncrc4.intel16 -t repro,openmp SPEAR_R_nonsymMOM6_exec
 frerun  -x SPEAR_reforecast.xml -p ncrc4.intel16 -t repro,openmp SPEAR_c96_o1_ECDA_test -r basic_prodsettings
 
