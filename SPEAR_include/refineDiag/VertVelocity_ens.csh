@@ -69,7 +69,8 @@ if (`gfdl_platform` == "hpcs-csc") then
    module load netcdf/4.2
 #   module load python/2.7.3
 #   module load python/2.7.12
-   module load python/3.7.7
+#   module load python/3.7.7
+   module load python/3.9
 else
    echo "ERROR: invalid platform"
    exit 1

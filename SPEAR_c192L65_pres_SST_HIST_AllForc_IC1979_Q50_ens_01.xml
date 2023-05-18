@@ -46,7 +46,7 @@ SPEAR_c192_omlp25_Control_2010_A01
   * c192 atmosphere coupled to ocean mixed layer model, 0.25 degree resolution, with constant 2010 radiative forcing
 -->
 
-<experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2001/XInclude">
+<experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2003/XInclude">
 
   <!--User should set the following properties according to the plan for the production run-->	
 
@@ -355,7 +355,7 @@ configuration.
 
     <platform name="ncrc5.intel-classic">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="2022.0.2" />
+      <compiler type="intel-classic" version="2022.0.2" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
@@ -753,78 +753,6 @@ set domains_stack_size = "5097152"
   </freInclude>
 
 
-
-  <freInclude name="regression_AMIP_OMP_c192">
-    <runtime>
-      <regression label="basic">
-        <run days="8" months="0"
-             overrideParams="fms_nml:clock_grain='ROUTINE';
-                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
-                             icebergs_nml:make_calving_reproduce=.TRUE.;
-                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A288x2']/node())"/>
-        </run>
-      </regression>
-      <regression label="restarts">
-        <run days="4 4" months="0"
-             overrideParams="fms_nml:clock_grain='ROUTINE';
-                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
-                             icebergs_nml:make_calving_reproduce=.TRUE.;
-                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A288x2']/node())"/>
-        </run>
-      </regression>
-      <regression label="scaling">
-        <run days="8" months="0"
-             overrideParams="fms_nml:clock_grain='ROUTINE';
-                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
-                             icebergs_nml:make_calving_reproduce=.TRUE.;
-                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A432x2']/node())"/>
-        </run>
-      </regression>
-      <regression label="timing_omp">
-<!--
-        <run days="0" months="3" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A48x2']/node())"/>
-        </run>
-        <run days="0" months="3" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A60x2']/node())"/>
-        </run>
-        <run days="0" months="3" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A96x2']/node())"/>
-        </run>
-        <run days="0" months="3" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A108x2']/node())"/>
-        </run>
-        <run days="0" months="3" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A144x2']/node())"/>
-        </run>
-        <run days="0" months="3" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A216x2']/node())"/>
-        </run>
--->
-        <run days="0" months="3" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A288x2']/node())"/>
-        </run>
-        <run days="0 0 0" months="1 1 1" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A288x2']/node())"/>
-        </run>
-        <run days="0" months="3" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A432x2']/node())"/>
-        </run>
-        <run days="0" months="3" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A576x2']/node())"/>
-        </run>
-        <run days="0" months="3" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A1152x2']/node())"/>
-        </run>
-        <run days="0" months="3" overrideParams="fms_nml:clock_grain='ROUTINE';">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A3456x4_c192']/node())"/>
-        </run>
-      </regression>
-    </runtime>
-  </freInclude>
 
   <freInclude name="FLOR2_MOM6_data">
     <input>
@@ -1621,6 +1549,7 @@ $baseDate
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+
 #override DEFAULT_ANSWER_DATE=20181231
 #override DO_ICEBERGS = False
 #override SPECIFIED_ICE = True
@@ -1773,7 +1702,7 @@ set nyblocks = $dummy
       <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
         </run>
       </regression>
-      <xi:include xpointer="xpointer(//freInclude[@name='regression_AMIP_OMP_c192']/runtime/node())"/>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='regression_AMIP_OMP_c192']/runtime/node())"/>
       <regression name="rts_2day">
           <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O216_rts_1x2day']/node())"/>
           <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O216_rts_2x1day']/node())"/>

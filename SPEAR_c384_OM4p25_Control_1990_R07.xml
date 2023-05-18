@@ -55,15 +55,23 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG"            value="dev/gfdl"/>              <!-- git tag for MOM6 source code -->
   <property name="AWG_GIT_TAG"            value="2021.02"/>                   <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2021.03"/>                    
+<!--
+  <property name="FMS_GIT_TAG"            value="2021.03"/>                    -->
   <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>    <!-- git tag for Land source code -->
   <property name="ATMOS_DRIVERS_TAG"      value="2021.02"/>             <!-- git tag for atmos_drivers -->
   <property name="ATMOS_CUBED_SPHERE_TAG" value="2021.03"/>        <!-- git tag for atmos_cubed_sphere source code -->
   <property name="ICE_PARAM_GIT_TAG"      value="2021.02"/>             <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20220309" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-19" />              <!-- FRE version for use in this XML -->
+<!--  <property name="FRE_STEM" value="SPEAR_experiments_R_20220309" /> -->  <!-- Stem use in FRE directories -->
+<!--  <property name="FRE_VERSION" value="bronx-19" />                  -->  <!-- FRE version for use in this XML -->
+
+<!-- FOR C5 -->
+  <property name="FMS_GIT_TAG"            value="2022.03"/>                    
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20220817" />  
+  <property name="FRE_VERSION" value="bronx-20" />      
+  <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
+
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
@@ -306,7 +314,7 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
-    <platform name="gfdl.ncrc4-gnu">
+    <platform name="gfdl.ncrc5-intel-classic">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
@@ -364,9 +372,9 @@ configuration.
 
     </platform>
 
-    <platform name="ncrc4.gnu">
+    <platform name="ncrc5.intel-classic">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="gnu" version="8.3.0" />
+      <compiler type="intel-classic" version="2022.0.2" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
@@ -1934,6 +1942,278 @@ cd ..
       </component>
      </postProcess>
   </freInclude>
+
+<experiment name="SPEAR_c384_OM4p25_Control_1990_R07_c5" inherit="SPEAR_c384_OM4p25_Control_1990_R07">
+  <description>
+Run SPEAR_HI with 1/4 degree ocean
+
+To get the CM4 settings and datasets for the ocean, we need to checkout the MOM6-examples directory tree. 
+Use the MOM6 checkout process from /home/oar.gfdl.cmip6/ncrc/xml/CM4/CM4Bling_am4p0c96L33_OM4p25_piControl_C.xml
+
+cd $DEV/$USER
+mkdir CM4
+          git clone -b om4/v1.0.1 https://github.com/NOAA-GFDL/MOM6-examples.git mom6
+          pushd mom6
+          git checkout om4/v1.0.1  #needed for older git on zeus
+          git submodule init src/MOM6 src/SIS2 src/icebergs tools/python/MIDAS
+          git clone --recursive https://github.com/NOAA-GFDL/MOM6.git src/MOM6 
+          git clone             https://github.com/NOAA-GFDL/SIS2.git src/SIS2
+          git clone             https://github.com/NOAA-GFDL/icebergs.git src/icebergs
+          git submodule update #This gets the right version of submodules
+          popd
+
+          pushd mom6
+          set platform_domain = `perl -T -e "use Net::Domain(hostdomain) ; print hostdomain"`
+          if ("${platform_domain}" =~ *"fairmont.rdhpcs.noaa.gov"* ) then
+            ln -s /scratch4/GFDL/gfdlscr/pdata/gfdl_O/datasets/ .datasets
+          else if ("${platform_domain}" =~ *"ccs.ornl.gov"* ) then
+            ln -s /lustre/atlas/proj-shared/cli061/pdata/gfdl_O/datasets/ .datasets
+          else
+            ln -s /lustre/f2/pdata/gfdl/gfdl_O/datasets/ .datasets
+          endif
+          popd	  
+
+          test -e mom6/.datasets
+          if ($status != 0) then
+            echo ""; echo "" ; echo "   WARNING:  .datasets link in MOM6 examples directory is invalid"; echo ""; echo ""
+          endif
+
+Change MOM6_EXAMPLES to $DEV/William.Cooke/CM4/mom6/
+
+5/18/2021
+Updating MOM6 override with suggestions from Alistair and Brandon
+
+VERTEX_SHEAR = True
+USE_RESTRICTIVE_TOLERANCE_CHECK = True
+
+TKE_DECAY = 0.001
+EPBL_MSTAR_SCHEME = "REICHL_H18"
+MSTAR_CONV_ADJ = 0.66
+EPBL_VEL_SCALE_SCHEME = "REICHL_H18"
+EPBL_VEL_SCALE_FACTOR = 0.5477
+VSTAR_SURF_FAC = 1.8258
+LT_MOD_LAC4 = 0.8
+LT_MOD_LAC5 = 0.8
+RH18_MSTAR_CN3 = -6.0
+WSTAR_USTAR_COEF = 15.
+MSTAR = 0.0
+LT_ENHANCE_COEF = 0.1056
+LT_ENHANCE_EXP = -1.
+LA_DEPTH_RATIO = 0.2
+
+BBL_EFFIC=0.01 
+
+
+
+3/8/2022
+Start 1850 Control run for SPEAR_c384_OM4p25 with updated 
+1) Glaciers (25km resolution rather than 1 degree)
+2) River timestep (1 hour vs 1 day)
+3) Use max_plain_slope of 0 (from 16e-5). This implies no backwaters in the land model.
+4) hord_dp and hord_tr = -5
+5) snow_nml : max_snow = 3000 (from 1000) for less snow "sweeping"
+
+Updated diag table to utilize new snow diagnostics.
+
+6/13/2022
+Run SPEAR_HI_25 with 1990 fixed forcings.
+Initialize from year 1990 of Historical run of SPEAR_c384_OM4p25_Hist_AllForc_IC1851_R05_ens_01
+
+
+Using 
+SHORTWAVE_DRIVER_NML
+ TIME_VARYING_SOLAR_CONSTANT     = F,
+ SOLAR_DATASET_ENTRY     =        1990, 2*1, 3*0,
+and 
+1990 volcanic aerosol dataset.
+
+Updated photosynthesis_nml and cana_nml to use 1990 levels of co2.
+
+
+1/3/2023
+Run SPEAR_25_R07 on c5. Dual run.
+Using SPEAR_experiments_R_20220817 version of executable and bronx-20
+
+
+1/30/2023
+SIS Date    119/03/13 00:00:00   3408: Area 1.487123851334E+13 2.569116966364E+12, Mass  2.56190632759E+16 1.21472470640E+15
+SIS Day   43170.000 Sea Ice Truncations 212
+FATAL from PE     0: write_ice_statistics: Sea ice velocity has been truncated too many times.
+
+Flip make_exchange_reproduce to false and extend.
+
+2/3/2023 
+Dual run did NOT fail at the same point. Running tie-breaker to see which run was incorrect.
+  </description>
+
+
+  <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .false.
+        interp_method = 'second_order'
+      </namelist> 
+</input>
+</experiment>
+
+<experiment name="SPEAR_c384_OM4p25_Control_1990_R07_R12initCond" inherit="SPEAR_c384_OM4p25_Control_1990_R07">
+  <description>
+  </description>
+  <input>
+     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">/lustre/f2/dev/William.Cooke/initCond_SPEAR/REMAP/C384/C384_LM3_MOM6_025_CanadianArchipelago.1850.remapped.v20201027.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/SPEAR_c384/initCond/REMAP/C384/C384_LM3_MOM6_025_CanadianArchipelago.1850.remapped.v20201027.tar</dataSource>
+     </dataFile> 
+      <csh type="always"><![CDATA[
+######BEGIN MOM6 and SIS2 layout setup################
+##THIS HAS TO BE PART OF csh type=always###
+
+touch $work/INPUT/MOM_override
+
+# blank out the CHANNEL_LIST_FILE for now.
+cat > $work/INPUT/MOM_override << EOF
+#override RESTART_CHECKSUMS_REQUIRED =False
+#override VERTEX_SHEAR = True
+#override USE_RESTRICTIVE_TOLERANCE_CHECK = True
+#override INTERNAL_WAVE_SPEED_BETTER_EST = False
+#override EPBL_MLD_BISECTION =True
+
+#override MSTAR_MODE = -1
+#override TKE_DECAY = 0.001
+#override EPBL_MSTAR_SCHEME = "REICHL_H18"
+#override MSTAR_CONV_ADJ = 0.66
+#override EPBL_VEL_SCALE_SCHEME = "REICHL_H18"
+#override EPBL_VEL_SCALE_FACTOR = 0.5477
+#override VSTAR_SURF_FAC = 1.8258
+#override LT_MOD_LAC4 = 0.8
+#override LT_MOD_LAC5 = 0.8
+#override RH18_MSTAR_CN3 = -6.0
+#override WSTAR_USTAR_COEF = 15.
+#override MSTAR = 0.0
+#override LT_ENHANCE_COEF = 0.1056
+#override LT_ENHANCE_EXP = -1.
+#override LA_DEPTH_RATIO = 0.2
+
+#override BBL_EFFIC=0.01 
+
+#override CHANNEL_LIST_FILE = "MOM_channels_global_025"
+! BLING parameters
+! Note defaults DT = 900.0 , DT_THERM = 3600.0
+#override DT_THERM = 7200.0
+#override USE_generic_tracer = False
+#override USE_RIVER_HEAT_CONTENT = False
+#override USE_CALVING_HEAT_CONTENT = False
+#override ENERGYSAVEDAYS = 30
+#override TOPO_FILE = "topog.nc"
+#override H2_FILE = "topog.nc"
+#override NUM_DIAG_COORDS = 3             ! default = 1
+                                ! The number of diagnostic vertical coordinates to use.
+                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
+#override DIAG_COORDS = "z Z ZSTAR, rho2 RHO2 RHO, ztop ZTOP300 ZSTAR"
+#override DIAG_COORD_DEF_Z = "FILE:vgrid_75_2m.nc,dz" 
+#override DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
+                                ! Determines how to specify the coordinate
+                                ! resolution. Valid options are:
+                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
+                                !  UNIFORM[:N] - uniformly distributed
+                                !  FILE:string - read from a file. The string specifies
+                                !                the filename and variable name, separated
+                                !                by a comma or space, e.g. FILE:lev.nc,dz
+                                !                or FILE:lev.nc,interfaces=zw
+                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
+                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
+                                !  HYBRID:string - read from a file. The string specifies
+                                !                the filename and two variable names, separated
+                                !                by a comma or space, for sigma-2 and dz. e.g.
+                                !                HYBRID:vgrid.nc,sigma2,dz
+
+DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
+EOF
+
+touch $work/INPUT/SIS_override
+
+cat > $work/INPUT/SIS_override << EOF
+#override CP_SEAWATER = 3992.
+#override CP_BRINE = 3992.
+#override ICE_BULK_SALINITY = 0.0
+#override ICE_RELATIVE_SALINITY = 0.17
+#override SIS2_FILLING_FRAZIL = T
+#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
+#override SIS_CONTINUITY_SCHEME = "PCM"
+#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
+#override ICE_STATS_INTERVAL = 30
+EOF
+
+cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
+#override IO_LAYOUT = $ocn_io_layout
+#override LAYOUT    = $ocn_layout
+#override MASKTABLE = $ocn_mask_table
+MOM_LAYOUT_EOF
+
+
+cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
+#override IO_LAYOUT = $ice_io_layout
+#override LAYOUT    = $ice_layout
+SIS_LAYOUT_EOF
+
+######END MOM6 and SIS2 layout setup################
+
+cd $work/INPUT
+
+if ( $currentSeg == 1 ) then
+     rm -f coupler.res
+     rm -f river.res*.nc
+endif
+
+cd $work
+
+# Remove the previous years MOM restart files/default to decomposed if present.
+if(-e $work/INPUT/MOM.res.nc.0000 ) \rm -rf $work/INPUT/MOM.res*.nc
+
+#------------------------------------------
+## Find out whether to restart.
+# MOM6 restart switch
+if ( $currentSeg == 1 ) then
+   set restart_flag = 'n'
+else
+   set restart_flag = 'r'
+endif
+   set sis_restart_flag = 'r'
+cd $work
+
+## Run the model
+#------------------------------------------
+###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
+set OCN_MASK_TABLE  =  $ocn_mask_table
+set OCN_LAYOUT    = $ocn_layout
+set OCN_IO_LAYOUT = $ocn_io_layout
+set ICE_LAYOUT    = $ice_layout
+set ICE_IO_LAYOUT = $ice_io_layout
+set atmos_npes = $atm_ranks
+set ocean_npes = $ocn_ranks
+set fv_layout = $atm_layout
+set fv_io_layout  = $atm_io_layout
+set land_layout   = $lnd_layout
+set land_io_layout = $lnd_io_layout
+set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nxblocks = $dummy
+set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nyblocks = $dummy
+]]>
+    </csh>
+  </input>
+  <runtime>
+    <production simTime="10" units="years" >
+      <segment simTime="1" units="years"/>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O1125_production']/node())"/>
+    </production> 
+      <regression name="basic_prodsettings">
+        <run days="8" >
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O1125_production']/node())"/>
+        </run>
+      </regression>
+  </runtime>
+
+</experiment>
 
 
 <experiment name="SPEAR_c384_OM4p25_Control_1990_R07" inherit="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec">

@@ -65,7 +65,10 @@ SPEAR_c192_omlp25_Control_2010_A01
 <!--  <property name="FRE_VERSION" value="bronx-19" />                  -->  <!-- FRE version for use in this XML -->
 
 <!-- FOR C5 -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20221111" />    <!-- Stem use in FRE directories -->
+<!-- For SPEAR_c192_o1_LM4p2_Hist_AllForc_IC1851_Q50_ens_01_c5 FRE_STEM= SPEAR_experiments_R_20221110
+     Otherwise FRE_STEM           =SPEAR_experiments_R_20221111
+-->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20221110" />    <!-- Stem use in FRE directories -->
   <property name="FRE_VERSION" value="bronx-20" />                     <!-- FRE version for use in this XML -->
 
   <property name="ANALYSIS_SWITCH" value="on"/>
@@ -85,7 +88,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
    <property name="CHUNK_LENGTH_A" value="10yr"/>
    <property name="CHUNK_LENGTH_B" value="100yr"/>
-   <property name="CHUNK_LENGTH_C" value="163yr"/>
+   <property name="CHUNK_LENGTH_C" value="250yr"/>
    <property name="CHUNK_LENGTH_A_c384" value="10yr"/>
    <property name="CHUNK_LENGTH_B_c384" value="180yr"/>
    <property name="CHUNK_LENGTH_C_c384" value="1000yr"/>
@@ -286,6 +289,10 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
+    <platform name="gfdl.ncrc5-intel-reallyclassic">
+      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
     <!-- NCRC Platforms -->
 
     <platform name="ncrc3.intel">
@@ -312,6 +319,7 @@ configuration.
 
       <directory stem="$(FRE_STEM)">
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <exec>/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20221111/SPEAR_R$(FMS_GIT_TAG)_LM4p2_nonsymMOM6_exec/$(platform)-$(target)/exec</exec>
         <include>$(xmlDir)/SPEAR_include</include>
         <!--
         <include>$HOME/SPEAR/SPEAR_include</include>
@@ -361,6 +369,31 @@ configuration.
     <platform name="ncrc5.intel-classic">
       <freVersion>$(FRE_VERSION)</freVersion>
       <compiler type="intel" version="2022.0.2" />
+
+      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
+      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+ 
+      <project>gfdl_sd</project>
+
+      <directory stem="$(FRE_STEM)">
+        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
+        <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
+        <!--
+        <include>$HOME/SPEAR/SPEAR_include</include>
+        -->
+      </directory>
+
+    </platform>
+
+    <platform name="ncrc5.intel-reallyclassic">
+      <freVersion>$(FRE_VERSION)</freVersion>
+      <compiler type="intel-classic" version="2022.0.2" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
@@ -531,6 +564,23 @@ configuration.
    </input>
   </freInclude>
 
+  <freInclude name="common_cmip6_ssp585_combined">
+    <input>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.isoprene.1x1.2000.nc</dataSource>
+      </dataFile>
+       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.terpenes.1x1.2000.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp585/cmip6_Scenario_ssp585_GHG_ODS_conc_2500.tar</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/o3.climatology.nc" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/1849_2101/ozone/mmro3_CMIP6_SSP585_184901-210112.nc</dataSource>
+      </dataFile>
+    </input>
+  </freInclude>
+
   <freInclude name="common_cmip6_climoozone">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
@@ -590,6 +640,26 @@ configuration.
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(DJP_ARCHIVE_ROOT)/CMIP6_INPUT/Solar/lean_solar_spectral_data.dat</dataSource>
+      </dataFile>
+    </input>
+  </freInclude>
+
+  <freInclude name="Volcano_Solar_TimeSeries_cmip6_v3">
+    <input>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_TimeSeries_cmip6_v3/extsw_data.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_TimeSeries_cmip6_v3/omgsw_data.nc</dataSource>
+      </dataFile>
+        <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+      <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_TimeSeries_cmip6_v3/asmsw_data.nc</dataSource>
+      </dataFile>
+        <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+      <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_TimeSeries_cmip6_v3/extlw_data.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_TimeSeries_cmip6_v3/lean_solar_spectral_data.dat</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -679,6 +749,21 @@ configuration.
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/lean_solar_spectral_data.dat</dataSource>
+      </dataFile>
+    </input>
+  </freInclude>
+
+  <freInclude name="emissions_cmip6_ssp585_combined">
+    <input>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/1849_2101/emissions/emissions.fastchem.0.5x0.5.1849-2101.tar</dataSource>
+        <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/datasets/1849_2101_SSP585/emissions/emissions.fastchem.0.5x0.5.1849-2101.tar</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/anthro_so2.1849_2101.nc" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/1849_2101/emissions/emissions.simple.so2.0.5x0.5.1849-2101.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/co2_data.nc" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp585/co2_ssp585_3D_0to2499.nc</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -2160,10 +2245,28 @@ Add postprocessing section to deal with new diagnostics.
 Same Fatal error as above (thankfully)
 Flip make_exchange_reproduce to false and extend
 
+1/22/2023
+WARNING from PE  1072: qscomp: temperature out of range: value=  379.5891888346776  at  65.091W   0.639S  (i,j,tile,face) = (  98, 168,   2,   5) time=2026-10-12 22:40:00
+FATAL from PE  1072: lookup_es: saturation vapor pressure table overflow, nbad=      1
+Flip make_exchange_repro to true and extend.
+
+1/24/2023
+WARNING from PE  1144: vegn_step_1: Tv of cohort(1) out of range: value= 0.2317825441540454-309  at  71.755W  48.098S  (i,j,tile,face) = (  17, 142,   1,   6) time=2032-01-01 00:00:00
+WARNING from PE  1144: qscomp: temperature out of range: value= 0.2317825441540454-309  at  71.755W  48.098S  (i,j,tile,face) = (  17, 142,   1,   6) time=2032-01-01 00:00:00
+FATAL from PE  1144: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip make_exchange_repro to false 
+Also drop back a year as this occured on Jan 1st.
+
+1/27/2023
+WARNING from PE   125: qscomp: temperature out of range: value=  67.40255447328224  at  24.474E   1.499S  (i,j,tile,face) = ( 167,  93,   8,   1) time=2037-03-02 18:40:00
+FATAL from PE   125: lookup_es: saturation vapor pressure table overflow, nbad=      1
+Flip make_exchange_repro to true and extend.
+
   </description>
   <input>
       <namelist name="xgrid_nml">
-        make_exchange_reproduce = .false.
+        make_exchange_reproduce = .true.
         interp_method = 'second_order'
       </namelist> 
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
@@ -2346,10 +2449,50 @@ As this occurs on 1/1
 Flip make_exchange_reproduce to false 
 AND
 move back a year via cp reload_commands_prev reload_commands
+
+1/3/2023
+WARNING from PE  1054: update_land_bc_fast: T_ca out of range: value=  375.7367709893513  at  68.177W   7.710N  (i,j,tile,face) = (  79, 161,   1,   5) time=1998-09-16 00:00:00
+FATAL from PE  1054: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip make_exchange_reproduce to true and extend
+
+1/17/2023
+WARNING from PE  1045: qscomp: temperature out of range: value=  380.0030840229191  at  69.980W   5.168S  (i,j,tile,face) = ( 108, 157,  14,   5) time=2047-10-11 23:00:00
+FATAL from PE  1045: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip make_exchange_reproduce to false and extend.
+
+
+1/18/2023
+WARNING from PE   941: vegn_step_1: Tv of cohort(12) out of range: value=  374.5977635369525  at 101.818W  40.386N  (i,j,tile,face) = (  12,  93,   6,   5) time=2049-07-30 02:40:00
+WARNING from PE   941: qscomp: temperature out of range: value=  374.5977635369525  at 101.818W  40.386N  (i,j,tile,face) = (  12,  93,   6,   5) time=2049-07-30 02:40:00
+FATAL from PE   941: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip make_exchange_reproduce to true and extend
+
+1/22/2023
+WARNING from PE  1067: qscomp: temperature out of range: value=  397.2552432323523  at  65.963W   1.937S  (i,j,tile,face) = ( 101, 166,   1,   5) time=2063-08-21 22:40:00
+FATAL from PE  1067: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip make_exchange_reproduce to false and extend
+
+1/23/2023
+WARNING from PE  1059: qscomp: temperature out of range: value=  395.8321362753773  at  67.286W   0.219S  (i,j,tile,face) = (  97, 163,  16,   5) time=2063-09-26 22:40:00
+FATAL from PE  1059: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+As this takes place in the same year as the previous sat-vapor-pres error, flipping to true will only hit that error.
+Leave at false and fall back a year to 2062/1/1.
+
+1/24/2023
+WARNING from PE  1111: update_land_bc_fast: T_ca out of range: value=  458.2663522308885  at  57.973W  19.419S  (i,j,tile,face) = ( 147, 185,   3,   5) time=2063-12-16 00:00:00
+FATAL from PE  1111: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip make_exchange_reproduce to true and extend.
   </description>
+  
   <input>
       <namelist name="xgrid_nml">
-        make_exchange_reproduce = .false.
+        make_exchange_reproduce = .true.
         interp_method = 'second_order'
       </namelist> 
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
@@ -2519,12 +2662,128 @@ There had been a divergence in the primary run (confirmed through a tie-breaker)
 Restarting this run along with the dual run. 
 Reset make_exchange_reproduce to true.
 Moved archive directory aside and removed state files at gfdl (to allow for new diagnostics to be produced)
+
+1/15/2023
+WARNING from PE   131: qscomp: temperature out of range: value=  382.1525651312637  at  13.488E   0.238S  (i,j,tile,face) = ( 143,  96,  13,   1) time=2023-02-01 17:20:00
+FATAL from PE   131: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip make_exchange_reproduce = .false. and extend 
+
+
+1/19/2023
+WARNING from PE   103: vegn_step_1: Tv of cohort(1) out of range: value= 0.1137027203830678-309  at  41.375W   5.539S  (i,j,tile,face) = (  33,  84,   2,   1) time=2037-01-01 00:00:00
+WARNING from PE   103: qscomp: temperature out of range: value= 0.1137027203830678-309  at  41.375W   5.539S  (i,j,tile,face) = (  33,  84,   2,   1) time=2037-01-01 00:00:00
+FATAL from PE   103: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip make_exchange_reproduce to true and extend. Also revert to previous year as this occurred on 1/1
+
+1/20/2023
+WARNING from PE   933: vegn_step_1: Tv of cohort(8) out of range: value= -194.3257704750564  at 107.511W  29.353N  (i,j,tile,face) = (  37,  82,   5,   5) time=2037-07-01 03:00:00
+WARNING from PE   933: qscomp: temperature out of range: value= -194.3257704750564  at 107.511W  29.353N  (i,j,tile,face) = (  37,  82,   5,   5) time=2037-07-01 03:00:00
+FATAL from PE   933: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip make_exchange_reproduce = .false. and extend
+
+1/27/2023
+WARNING from PE  1062: update_land_bc_fast: T_ca out of range: value=  485.3343096918599  at  66.843W   7.165S  (i,j,tile,face) = ( 113, 164,   2,   5) time=2065-10-16 00:00:00
+FATAL from PE  1062: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip make_exchange_reproduce to .true. and extend.
+
+Forgot to flip this and it failed again.
+Leaving as false to fail and adding a watchpoint.
+
+1/28/2023
+Flipped to true and extend (leave watchpoint in to compare difference)
+
+1/29/2023
+WARNING from PE  1055: update_land_bc_fast: T_ca out of range: value=  579.2006916491075  at  68.177W   7.271S  (i,j,tile,face) = ( 113, 161,   2,   5) time=2067-10-16 00:00:00
+FATAL from PE  1055: lookup_es: saturation vapor pressure table overflow, nbad=      1
+Flip to false and extend.
+
+
+1/31/2023
+Failure 
+WARNING from PE   122: qscomp: temperature out of range: value=  422.0687786807291  at  23.157E   1.957S  (i,j,tile,face) = ( 164,  92,  17,   1) time=2072-09-11 16:20:00
+FATAL from PE   122: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Rerun with watchpoint for 2072/9/5 through 15.
+It failed again. (good)
+Flip make_exchange_reproduce to true and extend. Leave watchpoint on.
+
+2/1/2023
+WARNING from PE  1072: qscomp: temperature out of range: value=  399.0833248835350  at  65.091W   8.716S  (i,j,tile,face) = ( 117, 168,  14,   5) time=2075-11-29 22:40:00
+FATAL from PE  1072: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Adjust watch_point. Resubmit.
+Flip make_exchange_reproduce to false and resubmit. Leave watchpoint on.
+
+Failed earlier in the same year!!
+
+WARNING from PE   135: vegn_step_1: Tv of cohort(5) out of range: value=  112.2262520171369  at  21.375E   0.665N  (i,j,tile,face) = ( 160,  98,   8,   1) time=2075-02-14 17:40:00
+WARNING from PE   135: vegn_step_1: Tv of cohort(6) out of range: value=  112.1126788110403  at  21.375E   0.665N  (i,j,tile,face) = ( 160,  98,   8,   1) time=2075-02-14 17:40:00
+WARNING from PE   135: qscomp: temperature out of range: value=  112.2262520171369  at  21.375E   0.665N  (i,j,tile,face) = ( 160,  98,   8,   1) time=2075-02-14 17:40:00
+FATAL from PE   135: lookup_es: saturation vapor pressure table overflow, nbad=      1
+Reset watchpoint. Resubmit.
+
+Flip make_exchange_reproduce to true and resubmit. Leave watchpoint on. (It will fail on 2075/11/29).
+
+2/2/2023
+Flip make_exchange_reproduce to false , revert to previous year (2074-01-01 restart) and resubmit.
+
+
+2/3/2023
+WARNING from PE  1047: vegn_step_1: Tv of cohort(1) out of range: value= 0.1148294113003955-309  at  69.527W   7.374N  (i,j,tile,face) = (  80, 158,   3,   5) time=2078-01-01 00:00:00
+WARNING from PE  1047: qscomp: temperature out of range: value= 0.1148294113003955-309  at  69.527W   7.374N  (i,j,tile,face) = (  80, 158,   3,   5) time=2078-01-01 00:00:00
+
+Flip make_exchange_reproduce to true , revert to previous year (2077-01-01 restart) and resubmit.
+
+2/4/2023
+WARNING from PE  1021: qscomp: temperature out of range: value=  392.1305131426782  at  74.612W   2.581S  (i,j,tile,face) = ( 102, 147,  17,   5) time=2080-10-10 23:20:00
+FATAL from PE  1021: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip make_exchange_reproduce to false.
+
+2/6/2023
+WARNING from PE   893: vegn_step_1: Tv of cohort(1) out of range: value= 0.1122989816398997-309  at 140.435E  34.511S  (i,j,tile,face) = ( 176,  37,   4,   4) time=2084-01-01 00:00:00
+WARNING from PE   893: qscomp: temperature out of range: value= 0.1122989816398997-309  at 140.435E  34.511S  (i,j,tile,face) = ( 176,  37,   4,   4) time=2084-01-01 00:00:00
+FATAL from PE   893: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip make_exchange_reproduce to true. Drop back a year to 2083-1-1
+
+2/9/2023
+WARNING from PE  1023: qscomp: temperature out of range: value=  382.5500755491793  at  74.141W   5.836S  (i,j,tile,face) = ( 109, 148,  17,   5) time=2092-03-06 23:20:00
+FATAL from PE  1023: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip make_exchange_reproduce to false and extend
+
+2/13/2023
+WARNING from PE   122: qscomp: temperature out of range: value=  377.1711612899652  at  21.823E   1.986S  (i,j,tile,face) = ( 161,  92,  16,   1) time=2097-04-05 16:40:00
+FATAL from PE   122: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip make_exchange_reproduce to true and extend
+
+2/23/2023
+WARNING from PE    29: vegn_step_1: Tv of cohort(6) out of range: value= -310.0640814331917  at  51.624W  22.597S  (i,j,tile,face) = (   9,  38,   7,   1) time=2099-02-14 01:20:00
+WARNING from PE    29: qscomp: temperature out of range: value= -310.0640814331917  at  51.624W  22.597S  (i,j,tile,face) = (   9,  38,   7,   1) time=2099-02-14 01:20:00
+FATAL from PE    29: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip make_exchange_reproduce to false and extend
+
   </description>
+<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20221110/SPEAR_R2022.04_LM4p2_nonsymMOM6_exec/ncrc5.intel-classic-repro-openmp/exec/fms_SPEAR_R2022.04_LM4p2_nonsymMOM6_exec.x"/>
   <input>
       <namelist name="xgrid_nml">
-        make_exchange_reproduce = .true.
+        make_exchange_reproduce = .false.
         interp_method = 'second_order'
       </namelist> 
+
+      <namelist name="land_debug_nml">
+       watch_point = 9,  38,   7,   1
+       start_watching = 2099, 2,10, 0,0,0
+       stop_watching =  2099, 2,20, 0,0,0
+      </namelist>
+
   </input>
 </experiment>
 
@@ -2564,6 +2823,62 @@ Flip make_exchange_reproduce to false and extend.
 Failure at start of year, so drop back a year and extend the job.
 
 
+1/3/2023
+WARNING from PE   114: land model input: sw.down.dif(1) out of range: value=                    NaN  at  13.965E   3.558S  (i,j,tile,face) = ( 144,  89,   1,   1) time=2012-06-21 15:00:00
+WARNING from PE   114: land model input: sw.down.dif(2) out of range: value=                    NaN  at  13.965E   3.558S  (i,j,tile,face) = ( 144,  89,   1,   1) time=2012-06-21 15:00:00
+FATAL from PE   114: send_tile_data_0d: temp out of range: value=                    NaN  at  13.965E   3.558S  (i,j,tile,face) = ( 144,  89,   1,   1) time=2012-06-21 15:00:00
+
+Flip         make_exchange_reproduce = true and extend
+
+1/4/2023
+WARNING from PE  1065: vegn_step_1: Tv of cohort(8) out of range: value=  76.27976116064542  at  66.402W  10.568S  (i,j,tile,face) = ( 121, 165,  12,   5) time=2016-01-10 00:00:00
+WARNING from PE  1065: qscomp: temperature out of range: value=  76.27976116064542  at  66.402W  10.568S  (i,j,tile,face) = ( 121, 165,  12,   5) time=2016-01-10 00:00:00
+FATAL from PE  1065: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip         make_exchange_reproduce = false and extend
+
+1/12/2023
+WARNING from PE  1078: update_land_bc_fast: T_ca out of range: value=  374.4641867636661  at  64.225W   9.463S  (i,j,tile,face) = ( 119, 170,   1,   5) time=2038-12-16 00:00:00
+FATAL from PE  1078: lookup_es: saturation vapor pressure table overflow, nbad=      1
+Flip         make_exchange_reproduce = true and extend
+
+1/13/2023
+FATAL from PE   140: send_tile_data_0d: npp out of range: value=-0.4642057175762424+196  at  23.598E   1.514N  (i,j,tile,face) = ( 165, 100,   5,   1) time=2040-02-02 18:00:00
+Flip         make_exchange_reproduce = false and extend
+
+1/15/2023
+WARNING from PE  1109: update_land_bc_fast: T_ca out of range: value=  376.0523786863641  at  58.376W  18.765S  (i,j,tile,face) = ( 145, 184,   2,   5) time=2042-12-16 00:00:00
+FATAL from PE  1109: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip         make_exchange_reproduce = true and extend
+
+1/17/2023
+WARNING from PE   350: qscomp: temperature out of range: value= 0.2317824649680495-309  at  88.026E  25.170N  (i,j,tile,face) = ( 112, 147,   5,   2) time=2046-01-01 00:00:00
+FATAL from PE   350: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip make_exchange_reproduce = false and extend
+As failure was on 1/1 replace reload_commands with reload_commands_prev. i.e. drop back a year.
+
+1/18/2023
+WARNING from PE  1075: updata_land_model_fast_0d: grnd_T out of range: value=  387.5471356443006  at  64.657W   8.249S  (i,j,tile,face) = ( 116, 169,   9,   5) time=2049-10-17 00:00:00
+WARNING from PE  1075: qscomp: temperature out of range: value=  387.5471356443006  at  64.657W   8.249S  (i,j,tile,face) = ( 116, 169,   9,   5) time=2049-10-17 00:00:00
+FATAL from PE  1075: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip make_exchange_reproduce to .true. and extend run.
+
+1/22/2023
+WARNING from PE   150: qscomp: temperature out of range: value=  384.2634992431825  at  27.483E   3.915N  (i,j,tile,face) = ( 174, 106,   8,   1) time=2056-09-16 16:20:00
+FATAL from PE   150: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+Flip make_exchange_reproduce to false and extend.
+
+1/23/2023
+WARNING from PE  1057: update_land_bc_fast: T_ca out of range: value=  412.1481340755126  at  67.730W   6.799S  (i,j,tile,face) = ( 112, 162,   2,   5) time=2056-10-15 00:00:00
+FATAL from PE  1057: lookup_es: saturation vapor pressure table overflow, nbad=      1
+
+As this takes place in the same year as the previous sat-vapor-pres error, flipping to true will only hit that error.
+Leave at false and fall back a year to 2055/1/1.
+
   </description>
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
@@ -2576,7 +2891,7 @@ Failure at start of year, so drop back a year and extend the job.
       </namelist>
       
       <namelist name="xgrid_nml">
-        make_exchange_reproduce = .false.
+        make_exchange_reproduce = .true.
         interp_method = 'second_order'
       </namelist> 
       
@@ -2983,6 +3298,7 @@ Failure at start of year, so drop back a year and extend the job.
         do_lwaerosol_forcing = .false.
       </namelist> 
 
+<!--
       <namelist name="carbon_aerosol_nml">
       bcff_source = 'gocart_2007',
         bcff_input_name(1)='anthro',
@@ -3053,6 +3369,80 @@ Failure at start of year, so drop back a year and extend the job.
         pH_cloud=4.5
         no_biobur_if_no_pbl = .false.
       </namelist>
+-->
+
+    <namelist name="carbon_aerosol_nml">
+      bcff_source = 'gocart_2007',
+        bcff_input_name(1)='anthro',
+        bcff_filename='emissions.bc.0.5x0.5.1849-2101.nc',
+        bcff_time_dependency_type='time_varying',bcff_dataset_entry=$baseDate
+      omff_source = 'gocart_2007',
+        omff_input_name(1)='anthro',
+        omff_filename='emissions.om.0.5x0.5.1849-2101.nc',
+        omff_time_dependency_type='time_varying',omff_dataset_entry=$baseDate
+      omsh_source = 'gocart_2007',
+        omsh_input_name(1)='ship',
+        omsh_filename='emissions.om.0.5x0.5.1849-2101.nc',
+        omsh_time_dependency_type='time_varying',omsh_dataset_entry=$baseDate
+      bcsh_source = 'gocart_2007',
+        bcsh_input_name(1)='ship',
+        bcsh_filename='emissions.bc.0.5x0.5.1849-2101.nc',
+        bcsh_time_dependency_type='time_varying',bcsh_dataset_entry=$baseDate
+      bcav_source = 'do_aircraft'
+        bcav_input_name(1)='fuel',
+        bcav_filename='emissions.aircraft.aero.0.5x0.5.1849-2101.nc',
+        bcav_time_dependency_type='time_varying',bcav_dataset_entry=$baseDate
+      bcbb_source = 'AEROCOM',
+        bcbb_filename='emissions.bc.0.5x0.5.1849-2101.nc',
+        bcbb_input_name(1)='bb_l1'
+        bcbb_input_name(2)='bb_l2'
+        bcbb_input_name(3)='bb_l3'
+        bcbb_input_name(4)='bb_l4'
+        bcbb_input_name(5)='bb_l5'
+        bcbb_input_name(6)='bb_l6'
+        bcbb_time_dependency_type='time_varying',bcbb_dataset_entry=$baseDate
+      ombb_source = 'AEROCOM',
+        ombb_filename='emissions.om.0.5x0.5.1849-2101.nc',
+        ombb_input_name(1)='bb_l1'
+        ombb_input_name(2)='bb_l2'
+        ombb_input_name(3)='bb_l3'
+        ombb_input_name(4)='bb_l4'
+        ombb_input_name(5)='bb_l5'
+        ombb_input_name(6)='bb_l6'
+        ombb_time_dependency_type='time_varying',ombb_dataset_entry=$baseDate
+      omna_source = '',
+      omss_source = 'ODowd'
+        omss_coef = 0.05
+      no_biobur_if_no_pbl = .false.
+      do_biobur_pbl_bug = .false.
+      </namelist>
+
+      <namelist name="simple_sulfate_nml">
+        gas_conc_filename='gas_conc_3D_am3p9.nc'
+        gas_conc_time_dependency_type='constant'
+        cont_volc_source='do_cont_volc'
+        expl_volc_source='do_expl_volc'
+          aerocom_emission_filename='so2_0.25_volcanoes.nc'
+        aircraft_source='do_aircraft',
+          aircraft_filename='emissions.aircraft.aero.0.5x0.5.1849-2101.nc',
+          aircraft_emission_name(1)='fuel'
+          so2_aircraft_EI=0.001
+          aircraft_time_dependency_type='time_varying',aircraft_dataset_entry=$baseDate
+        anthro_source='do_anthro',
+          anthro_emission_name(1)='so2ff',
+          anthro_emission_name(2)='so4ff',
+          anthro_filename='anthro_so2.1849_2101.nc',
+          anthro_time_dependency_type='time_varying',anthro_dataset_entry=$baseDate
+        biobur_source='do_biobur',
+          biobur_emission_name(1)='so2bb',
+          biobur_emission_name(2)='so4bb',
+          biobur_filename='anthro_so2.1849_2101.nc',
+          biobur_time_dependency_type='time_varying',biobur_dataset_entry=$baseDate
+        cloud_chem_solver="f1p"
+        pH_cloud=4.5
+        no_biobur_if_no_pbl = .false.
+      </namelist>
+
       <namelist name="icebergs_nml">       
         make_calving_reproduce=.TRUE.
         really_debug=.FALSE.
@@ -3841,9 +4231,14 @@ $baseDate
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C192.OM360x320.20171213/SPEAR_c192_hydrography.v20171218.tar</dataSource> 
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
+<!--
       <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='Volcano_Solar_TimeSeries_cmip6_V2']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_v20170518']/input/node())"/>
+-->
+      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6_ssp585_combined']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='Volcano_Solar_TimeSeries_cmip6_v3']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_ssp585_combined']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='L32_gas_conc']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c192_stack_size']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='csh_adjust_dry_mass']/input/node())"/>
@@ -4099,43 +4494,5 @@ set nyblocks = $dummy
   </postProcess>
 </experiment>
 
-
-
-
-
-<freInclude name="emissions_cmip6_ssp585_combined">
-    <input>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/1849_2101/emissions/emissions.fastchem.0.5x0.5.1849-2101.tar</dataSource>
-        <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/datasets/1849_2101_SSP585/emissions/emissions.fastchem.0.5x0.5.1849-2101.tar</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/anthro_so2.1849_2101.nc" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/1849_2101/emissions/emissions.simple.so2.0.5x0.5.1849-2101.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/co2_data.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp585/co2_ssp585_3D_0to2499.nc</dataSource>
-      </dataFile>
-    </input>
-  </freInclude>
-
- <freInclude name="common_cmip6_ssp585_combined_climoozone">
-    <input>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp585/cmip6_Scenario_ssp585_GHG_ODS_conc_2500.tar</dataSource>
-      </dataFile>
-
-      <dataFile label="input" target="INPUT/o3.climatology.nc" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/ozone/mmro3_CMIP6_climo195101-196012.nc</dataSource>
-        <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/datasets/climo_ozone/mmro3_CMIP6_climo195101-196012.nc</dataSource>
-      </dataFile>
-
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.isoprene.1x1.2000.nc</dataSource>
-      </dataFile>
-       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.terpenes.1x1.2000.nc</dataSource>
-      </dataFile>
-    </input>
-  </freInclude>
 
 </experimentSuite>
