@@ -85,7 +85,7 @@ from integrations with these models.
                    communityGrid=""/>
       <source versionControl="git"
               root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="2023.01">
+        <codeBase version="2023.02">
           atmos_phys.git
         </codeBase>
       </source>
@@ -104,7 +104,7 @@ from integrations with these models.
                          fv3">
       <source versionControl="git"
               root="https://github.com/NOAA-GFDL">
-        <codeBase version="2023.01">
+        <codeBase version="2023.02">
           atmos_drivers.git
         </codeBase>
       </source>
@@ -127,7 +127,7 @@ from integrations with these models.
                          atmos_phys">
       <source versionControl="git"
               root="https://github.com/NOAA-GFDL">
-        <codeBase version="2023.01">
+        <codeBase version="2023.02">
           GFDL_atmos_cubed_sphere.git
         </codeBase>
       </source>
@@ -148,7 +148,7 @@ from integrations with these models.
                    communityGrid=""/>
       <source versionControl="git"
               root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="land_lad2_2021.02">
+        <codeBase version="2023.02">
           land_lad2.git
         </codeBase>
       </source>
@@ -183,7 +183,7 @@ from integrations with these models.
           MOM6.git
         </codeBase>
           <csh><![CDATA[
-            ( cd MOM6  && git checkout  b22617c1673770e47e2f03405cd2541476eec356 )
+            ( cd MOM6  && git checkout 878fd1ef671456a804c598df606e4cf7c803c203)
                        ]]>
           </csh>
       </source>
@@ -229,8 +229,8 @@ from integrations with these models.
         <codeBase version="dev/gfdl">
           SIS2.git
         </codeBase>
-          <csh><![CDATA[
-            ( cd SIS2  && git checkout 54314f8d262b6a0f4957aae5765b251d47a53115 )
+         <csh><![CDATA[
+            ( cd SIS2  && git checkout fac2ec430b867bcffe7c7702cd207188cddb9991)
                        ]]>
           </csh>
       </source>
@@ -245,7 +245,7 @@ from integrations with these models.
 
     <component name="icebergs"
                requires="FMS"
-               paths="icebergs">
+               paths="icebergs/src">
       <description domainName="N/A"
                    communityName="N/A"
                    communityVersion="$(RELEASE)"
@@ -255,9 +255,14 @@ from integrations with these models.
         <codeBase version="dev/gfdl">
           icebergs.git
         </codeBase>
+          <csh><![CDATA[
+            ( cd icebergs  && git checkout 6a8944fc7544608942de9a42bd3b96f6e56684e0)
+                       ]]>
+          </csh>
       </source>
       <compile>
         <cppDefs><![CDATA[
+          -DUSE_FMS2_IO
           ]]>
         </cppDefs>
       </compile>
