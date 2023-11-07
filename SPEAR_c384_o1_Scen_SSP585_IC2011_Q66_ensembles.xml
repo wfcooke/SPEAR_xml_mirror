@@ -54,14 +54,14 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG"           value="dev/gfdl"/>              <!-- git tag for MOM6 source code -->
   <property name="AWG_GIT_TAG"            value="2022.03"/>               <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2022.03"/>       
+  <property name="FMS_GIT_TAG"            value="2023.01"/>       
   <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/> <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"      value="2022.03"/>               <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2022.02"/>               <!-- git tag for atmos_drivers -->
   <property name="ATMOS_CUBED_SPHERE_TAG" value="2022.03"/>               <!-- git tag for atmos_cubed_sphere source code -->
   <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>               <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20220817" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20231005" />   <!-- Stem use in FRE directories -->
   <property name="FRE_VERSION" value="bronx-20" />                    <!-- FRE version for use in this XML -->
 
   <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>          <!-- git tag for coupler source -->
@@ -243,18 +243,6 @@ configuration.
       </csh>
     </platform>
 
-    <platform name="gfdl.ncrc3-intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc3-intel16">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc3-intel18">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
     <platform name="gfdl.ncrc4-intel">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
@@ -267,19 +255,15 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
+    <platform name="gfdl.ncrc5-intel-classic">
+      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
+    </platform>
+
     <!-- NCRC Platforms -->
-
-    <platform name="ncrc3.intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
-    </platform>
-
-    <platform name="ncrc3.intel18">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
-    </platform>
 
     <platform name="ncrc4.intel18">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="18.0.6.288" />
+      <compiler type="intel-classic" version="2022.2.1" /><!--DO NOT COMPILE WITH THIS -->
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
@@ -1711,7 +1695,8 @@ $baseDate
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
-#override DEFAULT_2018_ANSWERS = T
+#override KV_ML_INVZ2 = 1.0E-4
+
 #override REMAP_UV_USING_OLD_ALG = True
 #override Z_INIT_REMAP_OLD_ALG = True
 #override FIX_USTAR_GUSTLESS_BUG =False
@@ -1954,8 +1939,9 @@ This experiment is a rerun of the final 2 decades of the SSP585 run to compare p
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override KV_ML_INVZ2 = 1.0E-4
 #override INTERNAL_WAVE_SPEED_BETTER_EST = False
-#override DEFAULT_2018_ANSWERS = T
+
 #override REMAP_UV_USING_OLD_ALG = True
 #override Z_INIT_REMAP_OLD_ALG = True
 #override FIX_USTAR_GUSTLESS_BUG =False
@@ -2181,8 +2167,9 @@ Flip make_exchange_reproduce to .true. and extend.
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override KV_ML_INVZ2 = 1.0E-4
 #override INTERNAL_WAVE_SPEED_BETTER_EST = False
-#override DEFAULT_2018_ANSWERS = T
+
 #override REMAP_UV_USING_OLD_ALG = True
 #override Z_INIT_REMAP_OLD_ALG = True
 #override FIX_USTAR_GUSTLESS_BUG =False
@@ -2404,8 +2391,9 @@ Needed for 2022.03 and after
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override KV_ML_INVZ2 = 1.0E-4
 #override DEFAULT_ANSWER_DATE=20181231
-#override DEFAULT_2018_ANSWERS = T
+
 #override INTERNAL_WAVE_SPEED_BETTER_EST = False
 
 
@@ -2572,8 +2560,10 @@ Flip make_echange_reproduce to false and extend.
 
 touch $work/INPUT/MOM_override
 
-#cat > $work/INPUT/MOM_override << EOF
-#override DEFAULT_2018_ANSWERS = T
+cat > $work/INPUT/MOM_override << EOF
+#override KV_ML_INVZ2 = 1.0E-4
+#override DEFAULT_ANSWER_DATE=20181231
+
 #override REMAP_UV_USING_OLD_ALG = True
 #override Z_INIT_REMAP_OLD_ALG = True
 #override FIX_USTAR_GUSTLESS_BUG =False
@@ -2591,7 +2581,6 @@ touch $work/INPUT/MOM_override
 #override USE_DIABATIC_TIME_BUG=True
 #override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
 #override KH_BG_2D_BUG=True
-cat > $work/INPUT/MOM_override << EOF
 #override TOPO_EDITS_FILE = "topo_edits_011818.nc"
 #override CHANNEL_LIST_FILE = MOM_channels_SPEAR
 NUM_DIAG_COORDS = 3             ! default = 1
@@ -2629,13 +2618,13 @@ cat > $work/INPUT/SIS_override << EOF
 #override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
 #override SIS_CONTINUITY_SCHEME = "PCM"
 #override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
-EOF
+
 #override GRID_ROTATION_ANGLE_BUGS =True
 #override USE_TRIPOLAR_GEOLONB_BUG = True
 #override INCONSISTENT_COVER_BUG = True
 #override CFL_MASS_NEGLECT_BUG=True
 #override RESTART_CHECKSUMS_REQUIRED =False
-#EOF
+EOF
 
 #scan auxiliary_nml
 #set OCN_MASK_TABLE = 
@@ -2798,7 +2787,8 @@ Leaving make_exchange_reproduce =false to continue the run.
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
-#override DEFAULT_2018_ANSWERS = T
+#override KV_ML_INVZ2 = 1.0E-4
+
 #override REMAP_UV_USING_OLD_ALG = True
 #override Z_INIT_REMAP_OLD_ALG = True
 #override FIX_USTAR_GUSTLESS_BUG =False
@@ -2985,7 +2975,8 @@ Flip make_exhange_reproduce to false and extend.
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
-#override DEFAULT_2018_ANSWERS = T
+#override KV_ML_INVZ2 = 1.0E-4
+
 #override REMAP_UV_USING_OLD_ALG = True
 #override Z_INIT_REMAP_OLD_ALG = True
 #override FIX_USTAR_GUSTLESS_BUG =False
@@ -3183,7 +3174,8 @@ Flip make_exchange_reproduce to true and extend.
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
-#override DEFAULT_2018_ANSWERS = T
+#override KV_ML_INVZ2 = 1.0E-4
+
 #override REMAP_UV_USING_OLD_ALG = True
 #override Z_INIT_REMAP_OLD_ALG = True
 #override FIX_USTAR_GUSTLESS_BUG =False
@@ -3392,7 +3384,8 @@ Reset make_exchange_reproduce to true and restart on c3.
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
-#override DEFAULT_2018_ANSWERS = T
+#override KV_ML_INVZ2 = 1.0E-4
+
 #override REMAP_UV_USING_OLD_ALG = True
 #override Z_INIT_REMAP_OLD_ALG = True
 #override FIX_USTAR_GUSTLESS_BUG =False
@@ -3600,7 +3593,8 @@ Ensemble member 6 for Scenario SSP5-85 run (2011-2014 and 2015-2100) for SPEAR_H
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
-#override DEFAULT_2018_ANSWERS = T
+#override KV_ML_INVZ2 = 1.0E-4
+
 #override REMAP_UV_USING_OLD_ALG = True
 #override Z_INIT_REMAP_OLD_ALG = True
 #override FIX_USTAR_GUSTLESS_BUG =False
@@ -3778,7 +3772,8 @@ Ensemble member 7 for Scenario SSP5-85 run (2011-2014 and 2015-2100) for SPEAR_H
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
-#override DEFAULT_2018_ANSWERS = T
+#override KV_ML_INVZ2 = 1.0E-4
+
 #override REMAP_UV_USING_OLD_ALG = True
 #override Z_INIT_REMAP_OLD_ALG = True
 #override FIX_USTAR_GUSTLESS_BUG =False
@@ -3957,7 +3952,8 @@ Ensemble member 8 for Scenario SSP5-85 run (2011-2014 and 2015-2100) for SPEAR_H
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
-#override DEFAULT_2018_ANSWERS = T
+#override KV_ML_INVZ2 = 1.0E-4
+
 #override REMAP_UV_USING_OLD_ALG = True
 #override Z_INIT_REMAP_OLD_ALG = True
 #override FIX_USTAR_GUSTLESS_BUG =False
@@ -4136,7 +4132,8 @@ Ensemble member 9 for Scenario SSP5-85 run (2011-2014 and 2015-2100) for SPEAR_H
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
-#override DEFAULT_2018_ANSWERS = T
+#override KV_ML_INVZ2 = 1.0E-4
+
 #override REMAP_UV_USING_OLD_ALG = True
 #override Z_INIT_REMAP_OLD_ALG = True
 #override FIX_USTAR_GUSTLESS_BUG =False
@@ -4315,7 +4312,8 @@ Ensemble member 10 for Scenario SSP5-85 run (2011-2014 and 2015-2100) for SPEAR_
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
-#override DEFAULT_2018_ANSWERS = T
+#override KV_ML_INVZ2 = 1.0E-4
+
 #override REMAP_UV_USING_OLD_ALG = True
 #override Z_INIT_REMAP_OLD_ALG = True
 #override FIX_USTAR_GUSTLESS_BUG =False

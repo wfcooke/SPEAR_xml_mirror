@@ -54,14 +54,14 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
   <property name="AWG_GIT_TAG"            value="2022.03"/>               <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2022.03"/>
+  <property name="FMS_GIT_TAG"            value="2023.01"/>
   <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>    <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"      value="2022.03"/>         <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2022.02"/>         <!-- git tag for atmos_drivers -->
   <property name="ATMOS_CUBED_SPHERE_TAG" value="2022.03"/>    <!-- git tag for atmos_cubed_sphere source code -->
   <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>         <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20220817" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20231005" />   <!-- Stem use in FRE directories -->
   <property name="FRE_VERSION" value="bronx-20" />              <!-- FRE version for use in this XML -->
 
   <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
@@ -252,18 +252,6 @@ configuration.
       </csh>
     </platform>
 
-    <platform name="gfdl.ncrc3-intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc3-intel16">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc3-intel18">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
     <platform name="gfdl.ncrc4-intel">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
@@ -285,14 +273,6 @@ configuration.
     </platform>
 
     <!-- NCRC Platforms -->
-
-    <platform name="ncrc3.intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
-    </platform>
-
-    <platform name="ncrc3.intel18">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
-    </platform>
 
     <platform name="ncrc4.intel-oneapi-21_3">
       <freVersion>$(FRE_VERSION)</freVersion>
@@ -334,7 +314,7 @@ configuration.
 
     <platform name="ncrc4.intel18">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="18.0.6.288" />
+      <compiler type="intel-classic" version="2022.2.1" /><!--DO NOT COMPILE WITH THIS -->
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
@@ -1533,9 +1513,10 @@ $baseDate
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override KV_ML_INVZ2 = 1.0E-4
 
 #override DEFAULT_ANSWER_DATE=20181231
-#override DEFAULT_2018_ANSWERS = T
+
 #override INTERNAL_WAVE_SPEED_BETTER_EST =False
 
 

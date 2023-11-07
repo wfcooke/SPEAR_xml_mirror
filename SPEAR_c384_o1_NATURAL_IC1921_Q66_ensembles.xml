@@ -48,22 +48,20 @@ SPEAR_c192_omlp25_Control_2010_A01
 -->
 
 <experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2003/XInclude">
-
   <!--User should set the following properties according to the plan for the production run-->	
 
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
-  <property name="MOM6_DATE"    value="2017.10.05"/>              <!-- git tag date for MOM6 source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
   <property name="AWG_GIT_TAG"            value="2022.03"/>               <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2022.03"/> 
+  <property name="FMS_GIT_TAG"            value="2023.01"/> 
   <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>    <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"      value="2022.03"/>         <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2022.02"/>         <!-- git tag for atmos_drivers -->
   <property name="ATMOS_CUBED_SPHERE_TAG" value="2022.03"/>    <!-- git tag for atmos_cubed_sphere source code -->
   <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>         <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20220817" />    <!-- Stem use in FRE directories -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20231005" />    <!-- Stem use in FRE directories -->
 
   <property name="FRE_VERSION" value="bronx-20" />              <!-- FRE version for use in this XML -->
 
@@ -254,18 +252,6 @@ configuration.
       </csh>
     </platform>
 
-    <platform name="gfdl.ncrc3-intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc3-intel18">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc3-intel16">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
     <platform name="gfdl.ncrc4-intel">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
@@ -283,41 +269,6 @@ configuration.
     </platform>
 
     <!-- NCRC Platforms -->
-    <platform name="ncrc3.intel16">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="16.0.3.210" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NCORE_PER_NODE"      value="32"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
-      </directory>
-
-      <!-- Uncomment the <csh> section if needing to run with DDT -->
-      <!--
-      <csh><![CDATA[
-         module load ddt
-         setenv DDTMPIRUN /opt/cray/alps/default/bin/aprun
-         alias runCommand ddt  -n $npes  ./$executable:t 
-        ]]>
-      </csh>
-      -->
-    </platform>
-
-    <platform name="ncrc3.intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc3.intel16']/node())" />
-    </platform>
-
     <platform name="ncrc4.intel16">
       <freVersion>$(FRE_VERSION)</freVersion>
       <compiler type="intel" version="16.0.3.210" />
@@ -357,7 +308,7 @@ configuration.
 
     <platform name="ncrc4.intel18">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="18.0.6.288" />
+      <compiler type="intel-classic" version="2022.2.1" /><!--DO NOT COMPILE WITH THIS -->
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
@@ -385,10 +336,6 @@ configuration.
 
     <platform name="ncrc4.intel">
       <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel16']/node())" />
-    </platform>
-
-    <platform name="ncrc3.intel18">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
     </platform>
 
     <platform name="ncrc5.intel-classic">
@@ -3243,8 +3190,9 @@ $baseDate
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override KV_ML_INVZ2 = 1.0E-4
 #override DEFAULT_ANSWER_DATE=20181231
-#override DEFAULT_2018_ANSWERS = T
+
 #override INTERNAL_WAVE_SPEED_BETTER_EST = False
 
 
@@ -3442,6 +3390,7 @@ Flip make_exchange_reproduce to false and extend.
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override KV_ML_INVZ2 = 1.0E-4
 #override TOPO_EDITS_FILE = "topo_edits_011818.nc"
 #override CHANNEL_LIST_FILE = MOM_channels_SPEAR
 NUM_DIAG_COORDS = 3             ! default = 1
@@ -3605,6 +3554,7 @@ Flip make_exchange_reproduce to .false. and extend
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override KV_ML_INVZ2 = 1.0E-4
 #override TOPO_EDITS_FILE = "topo_edits_011818.nc"
 #override CHANNEL_LIST_FILE = MOM_channels_SPEAR
 NUM_DIAG_COORDS = 3             ! default = 1
@@ -3765,6 +3715,7 @@ Flip make_exchange_reproduce to false and extend.
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override KV_ML_INVZ2 = 1.0E-4
 #override TOPO_EDITS_FILE = "topo_edits_011818.nc"
 #override CHANNEL_LIST_FILE = MOM_channels_SPEAR
 NUM_DIAG_COORDS = 3             ! default = 1
@@ -3937,6 +3888,7 @@ and ocean/ice/atmos of year 181 of SPEAR_c384_o1_Control_1850_Q66
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override KV_ML_INVZ2 = 1.0E-4
 #override TOPO_EDITS_FILE = "topo_edits_011818.nc"
 #override CHANNEL_LIST_FILE = MOM_channels_SPEAR
 NUM_DIAG_COORDS = 3             ! default = 1
@@ -4105,6 +4057,7 @@ and ocean/ice/atmos of year 201 of SPEAR_c384_o1_Control_1850_Q66
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
+#override KV_ML_INVZ2 = 1.0E-4
 #override TOPO_EDITS_FILE = "topo_edits_011818.nc"
 #override CHANNEL_LIST_FILE = MOM_channels_SPEAR
 NUM_DIAG_COORDS = 3             ! default = 1

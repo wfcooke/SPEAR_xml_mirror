@@ -43,15 +43,15 @@ echo ""
 #Generate this year's analysis figures based on the unpacked history files
 #
 #Try setting fre version to the caller version
-if ( ! $?FREVERSION ) set FREVERSION = fre/bronx-19
+if ( ! $?FREVERSION ) set FREVERSION = fre/bronx-20
 set fremodule = $FREVERSION
 set freanalysismodule = $FREVERSION
 
-set src_dir=/home/wfc/SPEAR/SPEAR_include
+set src_dir=/home/wfc/ncrc/SPEAR_xml/xml/SPEAR_include
 # The following variables are set by frepp, but frepp is not called yet at refineDiag stage of FRE workflow,
 #  so we need to explicitly set them here
 set descriptor = $name
-set out_dir = /home/wfc/SPEAR/SPEAR_include                  #Niki: How can we set this to frepp analysisdir /nbhome
+set out_dir = /home/wfc/ncrc/SPEAR_xml/xml/SPEAR_include                  #Niki: How can we set this to frepp analysisdir /nbhome
 set yr1 = $oname
 set yr2 = $oname
 set databegyr = $oname
@@ -66,8 +66,7 @@ if (`gfdl_platform` == "hpcs-csc") then
    module load $fremodule
    module load $freanalysismodule
    module load gcc
-   module load netcdf/4.2
-#   module load python/3.7.7
+#   module load netcdf/4.2
    module load python/3.9
 else
    echo "ERROR: invalid platform"

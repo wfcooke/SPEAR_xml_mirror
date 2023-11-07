@@ -43,7 +43,7 @@ echo ""
 #Generate this year's analysis figures based on the unpacked history files
 #
 #Try setting fre version to the caller version
-if ( ! $?FREVERSION ) set FREVERSION = fre/bronx-19
+if ( ! $?FREVERSION ) set FREVERSION = fre/bronx-20
 set fremodule = $FREVERSION
 set freanalysismodule = $FREVERSION
 
@@ -66,10 +66,7 @@ if (`gfdl_platform` == "hpcs-csc") then
    module load $fremodule
    module load $freanalysismodule
    module load gcc
-   module load netcdf/4.2
-#   module load python/2.7.3
-#   module load python/2.7.12
-#   module load python/3.7.7
+#   module load netcdf/4.2
    module load python/3.9
 else
    echo "ERROR: invalid platform"

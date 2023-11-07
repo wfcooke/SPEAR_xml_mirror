@@ -230,10 +230,10 @@ while ( $mo <= $maxmon )
   if ($Nmons < 1 ) goto err
 
   # add _FillValue to ocean files
-  foreach ocnf ( `ls -1 ${v:s/ens_01/ens_??}` )
-    echo "ncatted -O -a _FillValue,,o,f,-1.e+20f $ocnf"
-    ncatted -O -a _FillValue,,o,f,-1.e+20f $ocnf
-  end
+  #foreach ocnf ( `ls -1 ${v:s/ens_01/ens_??}` )
+  #  echo "ncatted -O -a _FillValue,,o,f,-1.e+20f $ocnf"
+  #  ncatted -O -a _FillValue,,o,f,-1.e+20f $ocnf
+  #end
 
   if ($Nmons == 1 ) then
      ${stddev} "$ocean_statvarsStr" "${var}.ens_??.nc" $var.nc || goto err
@@ -256,8 +256,8 @@ while ( $mo <= $maxmon )
   endif
 
   # delete -FillValue because frepp/timavg does not accept it
-  echo "ncatted -O -a _FillValue,,d,, ${var}.nc"
-  ncatted -O -a _FillValue,,d,, ${var}.nc
+  #echo "ncatted -O -a _FillValue,,d,, ${var}.nc"
+  #ncatted -O -a _FillValue,,d,, ${var}.nc
 
 
   ### Replicate for ocean_z_month
@@ -268,10 +268,10 @@ while ( $mo <= $maxmon )
   if ($Nmons < 1 ) goto err
 
   # add _FillValue to ocean files
-  foreach ocnf ( `ls -1 ${v:s/ens_01/ens_??}` )
-    echo "ncatted -O -a _FillValue,,o,f,-1.e+20f $ocnf"
-    ncatted -O -a _FillValue,,o,f,-1.e+20f $ocnf
-  end
+  #foreach ocnf ( `ls -1 ${v:s/ens_01/ens_??}` )
+  #  echo "ncatted -O -a _FillValue,,o,f,-1.e+20f $ocnf"
+  #  ncatted -O -a _FillValue,,o,f,-1.e+20f $ocnf
+  #end
 
   if ($Nmons == 1 ) then
      ${stddev} "$oceanz_statvarsStr" "${var}.ens_??.nc" $var.nc || goto err
@@ -294,8 +294,8 @@ while ( $mo <= $maxmon )
   endif
 
   # delete -FillValue because frepp/timavg does not accept it
-  echo "ncatted -O -a _FillValue,,d,, ${var}.nc"
-  ncatted -O -a _FillValue,,d,, ${var}.nc
+  #echo "ncatted -O -a _FillValue,,d,, ${var}.nc"
+  #ncatted -O -a _FillValue,,d,, ${var}.nc
 
 
   ### other than atmos_month and ocean_month components
@@ -372,10 +372,10 @@ EOF
           foreach vvv ( `ls ${begindate}.*.${eee}*.nc` )
             eval set var = \${vvv:s/.${eee}//}
             # delete attribute all _FillValue in ocean_month file
-            if ($var =~ "$begindate.ocean_month*") then
-              echo "ncatted -O -a _FillValue,,d,, ${vvv}"
-              ncatted -O -a _FillValue,,d,, ${vvv}
-            endif
+            #if ($var =~ "$begindate.ocean_month*") then
+            #  echo "ncatted -O -a _FillValue,,d,, ${vvv}"
+            #  ncatted -O -a _FillValue,,d,, ${vvv}
+            #endif
             mv $vvv $workdir/$eee/$hsmdate/$var
           end
 

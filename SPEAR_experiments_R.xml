@@ -48,7 +48,6 @@ SPEAR_c192_omlp25_Control_2010_A01
 -->
 
 <experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2003/XInclude">
-
   <!--User should set the following properties according to the plan for the production run-->	
 
   <!-- Properties for the source code versions -->
@@ -56,7 +55,7 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/>            <!-- git tag for MOM6 source code -->
 <!-- SPEAR_experiments_R_20220817 code -->
   <property name="AWG_GIT_TAG"            value="2022.03"/>                 <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2022.03"/>                 <!-- git tag for FMS source code -->
+  <property name="FMS_GIT_TAG"            value="2023.01"/>                 <!-- git tag for FMS source code -->
   <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>   <!-- git tag for Land source code -->
   <property name="ATMOS_DRIVERS_TAG"      value="2022.02"/>                 <!-- git tag for atmos_drivers -->
   <property name="ATMOS_CUBED_SPHERE_TAG" value="2022.03"/>                 <!-- git tag for atmos_cubed_sphere source code -->
@@ -65,7 +64,8 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20220817"/>     <!-- Stem use in FRE directories -->
+<!--  <property name="FRE_STEM" value="SPEAR_experiments_R_20220817"/>  -->   <!-- Stem use in FRE directories -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20231005"/>     <!-- Stem use in FRE directories -->
   <property name="FRE_VERSION" value="bronx-20" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
@@ -253,14 +253,6 @@ configuration.
       </csh>
     </platform>
 
-    <platform name="gfdl.ncrc3-intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc3-intel18">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
     <platform name="gfdl.ncrc4-intel">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
@@ -277,25 +269,93 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
-<!--
-    <platform name="gfdl.ncrc4-gnu">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
--->
 
     <platform name="gfdl.ncrc5-intel-classic">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
     <!-- NCRC Platforms -->
+    <platform name="ncrc4.intel-classic-2023_1_0">
+      <freVersion>$(FRE_VERSION)</freVersion>
+      <compiler type="intel-classic" version="2023.1.0" />
 
-    <platform name="ncrc3.intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
+      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
+      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+ 
+      <project>gfdl_sd</project>
+
+      <directory stem="$(FRE_STEM)">
+        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
+      </directory>
+
     </platform>
 
-    <platform name="ncrc3.intel18">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
+    <platform name="ncrc4.intel-classic-2022_0_2">
+      <freVersion>$(FRE_VERSION)</freVersion>
+      <compiler type="intel-classic" version="2022.0.2" />
+
+      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
+      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+ 
+      <project>gfdl_sd</project>
+
+      <directory stem="$(FRE_STEM)">
+        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
+      </directory>
+
     </platform>
+
+    <platform name="ncrc4.intel-classic-2022_2_1">
+      <freVersion>$(FRE_VERSION)</freVersion>
+      <compiler type="intel-classic" version="2022.2.1" />
+
+      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
+      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+ 
+      <project>gfdl_sd</project>
+
+      <directory stem="$(FRE_STEM)">
+        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
+      </directory>
+
+    </platform>
+
+
+    <platform name="ncrc4.intel-2022_2_1">
+      <freVersion>$(FRE_VERSION)</freVersion>
+      <compiler type="intel" version="2022.2.1" />
+
+      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
+      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+ 
+      <project>gfdl_sd</project>
+
+      <directory stem="$(FRE_STEM)">
+        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
+      </directory>
+
+    </platform>
+
 
     <platform name="ncrc4.intel-oneapi-21_3">
       <freVersion>$(FRE_VERSION)</freVersion>
@@ -305,7 +365,6 @@ configuration.
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
       <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
       <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
       <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
  
@@ -314,9 +373,6 @@ configuration.
       <directory stem="$(FRE_STEM)">
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
         <include>$(xmlDir)/SPEAR_include</include>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
       </directory>
 
     </platform>
@@ -353,7 +409,7 @@ configuration.
 
     <platform name="ncrc4.intel18">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="18.0.6.288" />
+      <compiler type="intel-classic" version="2022.2.1" /><!--DO NOT COMPILE WITH THIS -->
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
@@ -374,33 +430,6 @@ configuration.
       </directory>
 
     </platform>
-
-<!--
-    <platform name="ncrc4.gnu">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="gnu" version="8.3.0" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
--->
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
-<!--
-      </directory>
-    </platform>
--->
-
 
     <platform name="ncrc5.intel-classic">
       <freVersion>$(FRE_VERSION)</freVersion>
@@ -419,6 +448,8 @@ configuration.
       <directory stem="$(FRE_STEM)">
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
         <include>$(xmlDir)/SPEAR_include</include>
+        <src>/lustre/f2/dev/William.Cooke/$(FRE_STEM)/$(name)/src/</src>
+        <exec>/lustre/f2/dev/William.Cooke/$(FRE_STEM)/$(name)/$(platform)-$(target)/exec/</exec>
         <!--
         <include>$HOME/SPEAR/SPEAR_include</include>
         -->
@@ -430,6 +461,55 @@ configuration.
 
     </platform>
 
+    <platform name="ncrc5.intel-classic22_2_1">
+      <freVersion>$(FRE_VERSION)</freVersion>
+      <compiler type="intel-classic" version="2022.2.1" />
+
+      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
+      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+ 
+      <project>gfdl_sd</project>
+
+      <directory stem="$(FRE_STEM)">
+        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
+ <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
+        <!--
+        <include>$HOME/SPEAR/SPEAR_include</include>
+        -->
+      </directory>
+
+    </platform>
+
+    <platform name="ncrc5.intel-classic23_1_0">
+      <freVersion>$(FRE_VERSION)</freVersion>
+      <compiler type="intel-classic" version="2023.1.0" />
+
+      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
+      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
+      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
+      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
+      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
+      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
+      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
+ 
+      <project>gfdl_sd</project>
+
+      <directory stem="$(FRE_STEM)">
+        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
+        <include>$(xmlDir)/SPEAR_include</include>
+ <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
+        <!--
+        <include>$HOME/SPEAR/SPEAR_include</include>
+        -->
+      </directory>
+
+    </platform>
   </setup>
 
 <!--===========-->
@@ -778,6 +858,7 @@ configuration.
       </source>
       <compile>
         <cppDefs><![CDATA[
+          -DUSE_FMS2_IO
           ]]>
         </cppDefs>
       </compile>
@@ -1043,6 +1124,7 @@ configuration.
       </source>
       <compile>
         <cppDefs><![CDATA[
+          -DUSE_FMS2_IO
           ]]>
         </cppDefs>
       </compile>
@@ -1437,6 +1519,7 @@ configuration.
       </source>
       <compile>
         <cppDefs><![CDATA[
+          -DUSE_FMS2_IO
           ]]>
         </cppDefs>
       </compile>
@@ -1717,6 +1800,7 @@ configuration.
       </source>
       <compile>
         <cppDefs><![CDATA[
+          -DUSE_FMS2_IO
           ]]>
         </cppDefs>
       </compile>
@@ -1959,16 +2043,16 @@ configuration.
                paths="MOM6_DA_hooks/src/core">
       <description domainName="ODA"/>
       <source versionControl="git"
-              root="http://github.com/feiyulu">
-        <codeBase version="dev/GFDL">
+              root="https://github.com/feiyulu">
+        <codeBase version="master">
           MOM6_DA_hooks.git
         </codeBase>
-<!--
+
         <csh><![CDATA[
-          (cd MOM6_DA_hooks && git checkout 8a3dbe7969e80a079949775589dcb90e89796cfd)
+          (cd MOM6_DA_hooks && git checkout dev/GFDL)
           ]]>
         </csh>
--->
+
       </source>
       <compile doF90Cpp="yes">
         <cppDefs><![CDATA[
