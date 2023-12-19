@@ -183,7 +183,7 @@ from integrations with these models.
           MOM6.git
         </codeBase>
           <csh><![CDATA[
-            ( cd MOM6  && git checkout 878fd1ef671456a804c598df606e4cf7c803c203)
+            ( cd MOM6  && git checkout 8395404dd48213d8f60c42a6701113d742a6556e)
                        ]]>
           </csh>
       </source>
@@ -230,7 +230,7 @@ from integrations with these models.
           SIS2.git
         </codeBase>
          <csh><![CDATA[
-            ( cd SIS2  && git checkout fac2ec430b867bcffe7c7702cd207188cddb9991)
+            ( cd SIS2  && git checkout 022bd89d1bfe03dc259afc24a6e19c334e47eb4b)
                        ]]>
           </csh>
       </source>

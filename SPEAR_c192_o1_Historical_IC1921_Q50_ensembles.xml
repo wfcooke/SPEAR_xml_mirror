@@ -8560,8 +8560,7 @@ $baseDate
 touch $work/INPUT/MOM_override
 
 cat > $work/INPUT/MOM_override << EOF
-#override DEFAULT_2018_ANSWERS = T
-
+#override DEFAULT_ANSWER_DATE = 20180101
 
 #override REMAP_UV_USING_OLD_ALG = True
 #override Z_INIT_REMAP_OLD_ALG = True
