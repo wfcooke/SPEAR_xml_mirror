@@ -85,7 +85,7 @@ from integrations with these models.
                    communityGrid=""/>
       <source versionControl="git"
               root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="2023.03">
+        <codeBase version="2023.04">
           atmos_phys.git
         </codeBase>
       </source>
@@ -104,7 +104,7 @@ from integrations with these models.
                          fv3">
       <source versionControl="git"
               root="https://github.com/NOAA-GFDL">
-        <codeBase version="2023.02">
+        <codeBase version="2023.04">
           atmos_drivers.git
         </codeBase>
       </source>
