@@ -89,7 +89,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
    <property name="CHUNK_LENGTH_DAILY" value="1yr"/>
    <property name="CHUNK_LENGTH_A" value="10yr"/>
-   <property name="CHUNK_LENGTH_C" value="100yr"/>
+   <property name="CHUNK_LENGTH_C" value="100000yr"/>
    <property name="ANA_START" value="1"/>
    <property name="ANA_END"   value="40"/> <!-- Same as CHUNK_LENGTH_B -->
 
@@ -1952,6 +1952,12 @@ SIS Day   44970.000 Sea Ice Truncations 372
 FATAL from PE     0: write_ice_statistics: Sea ice velocity has been truncated too many times.
 
 Flip make_exchange_reproduce to true and extend
+
+5/19/2023
+Time =  166  5 11  0  0  0    ch4 = 1711.515500ppb  n2o =  308.257000ppb
+FATAL from PE  1755: compute_qs: saturation vapor pressure table overflow, nbad=     33
+
+Flip make_exchange_reproduce to false and extend
   </description>
 
 
@@ -1962,7 +1968,7 @@ Flip make_exchange_reproduce to true and extend
       <namelist file="$(includeDir)/nml/am4p0_c384L33.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_1850climo_v20170518.nml"/>
       <namelist name="xgrid_nml">
-        make_exchange_reproduce = .true.
+        make_exchange_reproduce = .false.
         interp_method = 'second_order'
       </namelist> 
       <namelist name="radiative_gases_nml">
@@ -2992,7 +2998,7 @@ set nyblocks = $dummy
   </input>
   <runtime>
 
-    <production simTime="200" units="years" >
+    <production simTime="300" units="years" >
       <segment simTime="1" units="years"/>
 <!--
       <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A2304x4_O1970_production']/node())"/>

@@ -66,8 +66,7 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG"            value="dev/gfdl"/>              <!-- git tag for MOM6 source code -->
   <property name="AWG_GIT_TAG"            value="2021.02"/>                   <!-- git tag for AWG source code -->
-<!--  <property name="FMS_GIT_TAG"            value="2021.03"/> -->                    
-  <property name="FMS_GIT_TAG"            value="2022.01"/>                    
+  <property name="FMS_GIT_TAG"            value="2021.03"/>                    
   <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>    <!-- git tag for Land source code -->
   <property name="ATMOS_DRIVERS_TAG"      value="2021.02"/>             <!-- git tag for atmos_drivers -->
   <property name="ATMOS_CUBED_SPHERE_TAG" value="2021.03"/>        <!-- git tag for atmos_cubed_sphere source code -->
@@ -78,8 +77,7 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="FRE_STEM" value="SPEAR_experiments_R_20211014" />  -->
    <!-- Stem use in FRE directories -->
 <!--  <property name="FRE_STEM" value="SPEAR_experiments_R_check_urielfv3" /> -->  <!-- Stem use in FRE directories -->
-<!--  <property name="FRE_STEM" value="SPEAR_experiments_R_20220309" /> -->  <!-- Stem use in FRE directories -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20220414" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20220309" />   <!-- Stem use in FRE directories -->
 
   <property name="FRE_VERSION" value="bronx-19" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
@@ -3950,210 +3948,6 @@ set nyblocks = $dummy
 </experiment>
 
 
-<experiment name="SPEAR_c384_OM4p25_Control_1850_nofilter_orography" inherit="SPEAR_c384_OM4p25_Control_1850_filter_orography">
-  <description>
-  Experiment to relax filtering of orography.
-  Update of experiment below with newer initial conditions. But are they used as warm_start=.false. 
-  It appears they are as answers change if I change the initCond file. Implies the land/ice/ocean are read at least.
-  </description>
-  <input>
-      <namelist name="surf_map_nml">
-       surf_file = "/lustre/f2/pdata/gfdl/gfdl_W/fvGFS_INPUT_DATA/topo1min.nc" 
-       nlon = 21600           
-       nlat = 10800           
-       cd4 = 0.15             
-       cd2 = -1 !rez-dependent
-       n_del2_strong = 0
-       n_del2_weak = 0
-       n_del4 = 0
-       max_slope = 0.15       
-       peak_fac = 1.05         
-      </namelist>
-  
-     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR_c384_OM4p25/initCond/Control_1850_c384_OM4p25/C384_LM3_MOM6_025.1850.v20220414.tar</dataSource>
-       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/SPEAR_c384_OM4p25/initCond/Control_1850_c384_OM4p25/C384_LM3_MOM6_025.1850.v20220414.tar</dataSource>
-     </dataFile> 
-     
-  </input>
-</experiment>
-
-<experiment name="SPEAR_c384_OM4p25_Control_1850_nofilter_orography_v2" inherit="SPEAR_c384_OM4p25_Control_1850_filter_orography">
-  <description>
-  Experiment to relax filtering of orography.
-  Update of experiment below with newer initial conditions. But are they used as warm_start=.false. 
-  It appears they are as answers change if I change the initCond file. Implies the land/ice/ocean are read at least.
-  
-  zs_filter should turn off filtering completely.
-  </description>
-  <input>
-      <namelist name="surf_map_nml">
-       surf_file = "/lustre/f2/pdata/gfdl/gfdl_W/fvGFS_INPUT_DATA/topo1min.nc" 
-       nlon = 21600           
-       nlat = 10800           
-       cd4 = 0.15             
-       cd2 = -1 !rez-dependent
-       n_del2_strong = 0
-       n_del2_weak = 0
-       n_del4 = 0
-       max_slope = 0.15       
-       peak_fac = 1.05  
-       zs_filter = .false.       
-      </namelist>
-      <namelist name="fv_core_nml">
-warm_start=.false.
-fv_diag_ic=.false.
-        external_ic = .true.
-        ncep_ic = .true.
-        res_latlon_dynamics="/lustre/f2/pdata/gfdl/gfdl_W/fvGFS_INPUT_DATA/NCEP_nudge/2016/20160801_00Z_T1534.nc"
-        adjust_dry_mass = .true.
-        dry_mass = 98300.
-fv_land=.true.
-n_zs_filter=0
-        layout   = $atm_layout
-        io_layout = $atm_io_layout
-         npx      = 385,
-         npy      = 385,
-         ntiles   = 6,
-         npz      = 33,
-         k_split  = 3,
-         n_split  = 7,
-         a2b_ord  = 4,
-         adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
-         print_freq = 0,
-         grid_type = 0,
-         tau = 0.
-         do_uni_zfull = .true.
-        n_sponge = 0
-        d2_bg_k1 = 0.16
-        d2_bg_k2 = 0.02
-        hydrostatic = .T.
-        d_ext = 0.
-        d2_bg = 0.
-        nord =  2       
-        dddmp = 0.2     
-        d4_bg = 0.16    
-        vtdm4 = 0.02    
-        do_vort_damp = .T.   
-        d_con = 1.
-        hord_mt = 5
-        hord_vt = 5
-        hord_tm = 5
-        hord_dp = -5
-        hord_tr = -5
-        kord_tm = -9
-        kord_mt = 9
-        kord_wz = 9
-        kord_tr = 9
-        consv_te = 0.7
-        consv_am = .T.
-        fill = .T.
-        z_tracer = .T.
-      </namelist> 
-  
-     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR_c384_OM4p25/initCond/Control_1850_c384_OM4p25/C384_LM3_MOM6_025.1850.v20220414.tar</dataSource>
-       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/SPEAR_c384_OM4p25/initCond/Control_1850_c384_OM4p25/C384_LM3_MOM6_025.1850.v20220414.tar</dataSource>
-     </dataFile> 
-     
-  </input>
-</experiment>
-
-
-<experiment name="SPEAR_c384_OM4p25_Control_1850_nofilter_30sec_orography" inherit="SPEAR_c384_OM4p25_Control_1850_filter_orography">
-  <description>
-  Experiment to relax filtering of orography.
-  Update of experiment below with newer initial conditions. But are they used as warm_start=.false. 
-  It appears they are as answers change if I change the initCond file. Implies the land/ice/ocean are read at least.
-  
-  zs_filter should turn off filtering completely.
-  
-  Using 30 second topography dataset
-  </description>
-  <input>
-      <!--
-      <namelist name="surf_map_nml">
-       surf_file = "/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/topo1min/SRTM30.nc" 
-      -->
-      <namelist name="surf_map_nml">
-       surf_file = "/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/topo1min/gmted_thirty_second_ap_fix_flip_shift.nc" 
-       nlon = 43200           
-       nlat = 21600           
-       cd4 = 0.15             
-       cd2 = -1 !rez-dependent
-       n_del2_strong = 0
-       n_del2_weak = 0
-       n_del4 = 0
-       max_slope = 0.15       
-       peak_fac = 1.05  
-       zs_filter = .true.
-      </namelist>
-<!--
-       zs_filter = .false.       
-      </namelist>
--->
-      <namelist name="fv_core_nml">
-warm_start=.false.
-fv_diag_ic=.false.
-        external_ic = .true.
-        ncep_ic = .true.
-        res_latlon_dynamics="/lustre/f2/pdata/gfdl/gfdl_W/fvGFS_INPUT_DATA/NCEP_nudge/2016/20160801_00Z_T1534.nc"
-        adjust_dry_mass = .true.
-        dry_mass = 98300.
-fv_land=.true.
-n_zs_filter=0
-        layout   = $atm_layout
-        io_layout = $atm_io_layout
-         npx      = 385,
-         npy      = 385,
-         ntiles   = 6,
-         npz      = 33,
-         k_split  = 3,
-         n_split  = 7,
-         a2b_ord  = 4,
-         adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
-         print_freq = 0,
-         grid_type = 0,
-         tau = 0.
-         do_uni_zfull = .true.
-        n_sponge = 0
-        d2_bg_k1 = 0.16
-        d2_bg_k2 = 0.02
-        hydrostatic = .T.
-        d_ext = 0.
-        d2_bg = 0.
-        nord =  2       
-        dddmp = 0.2     
-        d4_bg = 0.16    
-        vtdm4 = 0.02    
-        do_vort_damp = .T.   
-        d_con = 1.
-        hord_mt = 5
-        hord_vt = 5
-        hord_tm = 5
-        hord_dp = -5
-        hord_tr = -5
-        kord_tm = -9
-        kord_mt = 9
-        kord_wz = 9
-        kord_tr = 9
-        consv_te = 0.7
-        consv_am = .T.
-        fill = .T.
-        z_tracer = .T.
-      </namelist> 
-  
-     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR_c384_OM4p25/initCond/Control_1850_c384_OM4p25/C384_LM3_MOM6_025.1850.v20220414.tar</dataSource>
-       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/SPEAR_c384_OM4p25/initCond/Control_1850_c384_OM4p25/C384_LM3_MOM6_025.1850.v20220414.tar</dataSource>
-     </dataFile> 
-     
-  </input>
-</experiment>
-
-
 <experiment name="SPEAR_c384_OM4p25_Control_1850_filter_orography" inherit="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec">
   <description>
 Run SPEAR_HI with 1/4 degree ocean
@@ -4264,49 +4058,17 @@ regression test vary_filters below tests the following for 1 day run
         make_exchange_reproduce = .true.
         interp_method = 'second_order'
       </namelist> 
-<!--
       <namelist name="surf_map_nml">
        surf_file = "INPUT/topo1min.nc"
        nlon = 21600
        nlat = 10800
       </namelist>
--->
-      <namelist name="surf_map_nml">
-       surf_file = "/lustre/f2/pdata/gfdl/gfdl_W/fvGFS_INPUT_DATA/topo1min.nc" 
-       nlon = 21600           
-       nlat = 10800           
-       cd4 = 0.15             
-       cd2 = -1 !rez-dependent
-       n_del2_strong = 1      
-       n_del2_weak = 12       
-       n_del4 = 1             
-       max_slope = 0.15       
-       peak_fac = 1.05         
-</namelist>
 
-
-
-      <namelist name="external_ic_nml">
-        filtered_terrain=.false.
-      </namelist>
 <!--
       <namelist name="fv_core_nml">
         external_ic = .false.
         mountain=true
-
-      <namelist name="fv_core_nml">
-warm_start=.false.
-fv_diag_ic=.false.
-        external_ic = .true.
-        nggps_ic = .true.
-        external_eta=.false.
-        adjust_dry_mass = .true.
-        dry_mass = 98300.
-fv_land=.false.
-n_zs_filter=1
-full_zs_filter = true
 -->
-
       <namelist name="fv_core_nml">
 warm_start=.false.
 fv_diag_ic=.false.
@@ -4316,7 +4078,6 @@ fv_diag_ic=.false.
         adjust_dry_mass = .true.
         dry_mass = 98300.
 fv_land=.true.
-n_zs_filter=1
         layout   = $atm_layout
         io_layout = $atm_io_layout
          npx      = 385,
@@ -4359,329 +4120,11 @@ n_zs_filter=1
         z_tracer = .T.
       </namelist> 
 <namelist name="aerosolrad_package_nml">
-    force_to_repro_quebec = .true.
-    using_im_bcsul = .true.
-    volcanic_dataset_entry = 1,1,1,0,0,
     using_volcanic_lw_files = .false.,
-    lw_ext_filename = "extlw_data.nc"
-    lw_ext_root = "extlw"
-    lw_asy_filename = "             "
-    lw_asy_root = "     "
-    lw_ssa_filename = "             "
-    lw_ssa_root = "     "
     using_volcanic_sw_files = .false.,
-    sw_ext_filename = "extsw_data.nc"
-    sw_ext_root = "extsw"
-    sw_ssa_filename = "omgsw_data.nc"
-    sw_ssa_root = "omgsw"
-    sw_asy_filename = "asmsw_data.nc"
-    sw_asy_root = "asmsw"
     do_lwaerosol = .false.,
     do_swaerosol = .false.,
     aerosol_data_set = " "
-    optical_filename = "AM4_201510",
-    sulfate_indices = 30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,35,35,35,35,35,40,40,40,40,40,45,45,45,45,45,
-                      50,50,50,50,50,55,55,55,55,55,60,60,60,60,60,65,
-                      65,65,65,65,70,70,70,70,70,75,75,75,75,75,80,80,
-                      80,80,82,82,84,84,86,86,88,88,90,91,92,93,94,95,
-                      96,97,97,97,97, 
-    nitrate_indices = 30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,35,35,35,35,35,40,40,40,40,40,45,45,45,45,45,
-                      50,50,50,50,50,55,55,55,55,55,60,60,60,60,60,65,
-                      65,65,65,65,70,70,70,70,70,75,75,75,75,75,80,80,
-                      80,80,82,82,84,84,86,86,88,88,90,91,92,93,94,95,
-                      96,97,97,97,97, 
-    omphilic_indices = 30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,35,35,35,35,35,40,40,40,40,40,45,45,45,45,45,
-                      50,50,50,50,50,55,55,55,55,55,60,60,60,60,60,65,
-                      65,65,65,65,70,70,70,70,70,75,75,75,75,75,80,80,
-                      80,80,82,82,84,84,86,86,88,88,90,91,92,93,94,95,
-                      96,97,97,97,97, 
-    bcphilic_indices = 30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,35,35,35,35,35,40,40,40,40,40,45,45,45,45,45,
-                      50,50,50,50,50,55,55,55,55,55,60,60,60,60,60,65,
-                      65,65,65,65,70,70,70,70,70,75,75,75,75,75,80,80,
-                      80,80,82,82,84,84,86,86,88,88,90,91,92,93,94,95,
-                      96,97,97,97,97, 
-    seasalt1_indices = 30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,35,35,35,35,35,40,40,40,40,40,45,45,45,45,45,
-                      50,50,50,50,50,55,55,55,55,55,60,60,60,60,60,65,
-                      65,65,65,65,70,70,70,70,70,75,75,75,75,75,80,80,
-                      80,80,82,82,84,84,86,86,88,88,90,91,92,93,94,95,
-                      96,97,97,97,97, 
-    seasalt2_indices = 30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,35,35,35,35,35,40,40,40,40,40,45,45,45,45,45,
-                      50,50,50,50,50,55,55,55,55,55,60,60,60,60,60,65,
-                      65,65,65,65,70,70,70,70,70,75,75,75,75,75,80,80,
-                      80,80,82,82,84,84,86,86,88,88,90,91,92,93,94,95,
-                      96,97,97,97,97, 
-    seasalt3_indices = 30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,35,35,35,35,35,40,40,40,40,40,45,45,45,45,45,
-                      50,50,50,50,50,55,55,55,55,55,60,60,60,60,60,65,
-                      65,65,65,65,70,70,70,70,70,75,75,75,75,75,80,80,
-                      80,80,82,82,84,84,86,86,88,88,90,91,92,93,94,95,
-                      96,97,97,97,97, 
-    seasalt4_indices = 30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,35,35,35,35,35,40,40,40,40,40,45,45,45,45,45,
-                      50,50,50,50,50,55,55,55,55,55,60,60,60,60,60,65,
-                      65,65,65,65,70,70,70,70,70,75,75,75,75,75,80,80,
-                      80,80,82,82,84,84,86,86,88,88,90,91,92,93,94,95,
-                      96,97,97,97,97, 
-    seasalt5_indices = 30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,35,35,35,35,35,40,40,40,40,40,45,45,45,45,45,
-                      50,50,50,50,50,55,55,55,55,55,60,60,60,60,60,65,
-                      65,65,65,65,70,70,70,70,70,75,75,75,75,75,80,80,
-                      80,80,82,82,84,84,86,86,88,88,90,91,92,93,94,95,
-                      96,97,97,97,97, 
-    seasalt_aitken_indices = 30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,35,35,35,35,35,40,40,40,40,40,45,45,45,45,45,
-                      50,50,50,50,50,55,55,55,55,55,60,60,60,60,60,65,
-                      65,65,65,65,70,70,70,70,70,75,75,75,75,75,80,80,
-                      80,80,82,82,84,84,86,86,88,88,90,91,92,93,94,95,
-                      96,97,97,97,97,
-    seasalt_fine_indices = 30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,35,35,35,35,35,40,40,40,40,40,45,45,45,45,45,
-                      50,50,50,50,50,55,55,55,55,55,60,60,60,60,60,65,
-                      65,65,65,65,70,70,70,70,70,75,75,75,75,75,80,80,
-                      80,80,82,82,84,84,86,86,88,88,90,91,92,93,94,95,
-                      96,97,97,97,97,
-    seasalt_coarse_indices = 30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
-                      30,35,35,35,35,35,40,40,40,40,40,45,45,45,45,45,
-                      50,50,50,50,50,55,55,55,55,55,60,60,60,60,60,65,
-                      65,65,65,65,70,70,70,70,70,75,75,75,75,75,80,80,
-                      80,80,82,82,84,84,86,86,88,88,90,91,92,93,94,95,
-                      96,97,97,97,97,
-    aerosol_optical_names = "sulfate_30%_100%","sulfate_35%_100%","sulfate_40%_100%","sulfate_45%_100%","sulfate_50%_100%",
-"sulfate_55%_100%","sulfate_60%_100%","sulfate_65%_100%","sulfate_70%_100%","sulfate_75%_100%",
-"sulfate_80%_100%","sulfate_82%_100%","sulfate_84%_100%","sulfate_86%_100%","sulfate_88%_100%",
-"sulfate_90%_100%","sulfate_91%_100%","sulfate_92%_100%","sulfate_93%_100%","sulfate_94%_100%",
-"sulfate_95%_100%","sulfate_96%_100%","sulfate_97%_100%","sulfate_98%_100%","sulfate_99%_100%",
-"sulfate_100%_100%","sulfate_30%_98%","sulfate_35%_98%","sulfate_40%_98%","sulfate_45%_98%",
-"sulfate_50%_98%","sulfate_55%_98%","sulfate_60%_98%","sulfate_65%_98%","sulfate_70%_98%",
-"sulfate_75%_98%","sulfate_80%_98%","sulfate_82%_98%","sulfate_84%_98%","sulfate_86%_98%",
-"sulfate_88%_98%","sulfate_90%_98%","sulfate_91%_98%","sulfate_92%_98%","sulfate_93%_98%",
-"sulfate_94%_98%","sulfate_95%_98%","sulfate_96%_98%","sulfate_97%_98%","sulfate_98%_98%",
-"sulfate_99%_98%","sulfate_100%_98%","sulfate_30%_96%","sulfate_35%_96%","sulfate_40%_96%",
-"sulfate_45%_96%","sulfate_50%_96%","sulfate_55%_96%","sulfate_60%_96%","sulfate_65%_96%",
-"sulfate_70%_96%","sulfate_75%_96%","sulfate_80%_96%","sulfate_82%_96%","sulfate_84%_96%",
-"sulfate_86%_96%","sulfate_88%_96%","sulfate_90%_96%","sulfate_91%_96%","sulfate_92%_96%",
-"sulfate_93%_96%","sulfate_94%_96%","sulfate_95%_96%","sulfate_96%_96%","sulfate_97%_96%",
-"sulfate_98%_96%","sulfate_99%_96%","sulfate_100%_96%","sulfate_30%_94%","sulfate_35%_94%",
-"sulfate_40%_94%","sulfate_45%_94%","sulfate_50%_94%","sulfate_55%_94%","sulfate_60%_94%",
-"sulfate_65%_94%","sulfate_70%_94%","sulfate_75%_94%","sulfate_80%_94%","sulfate_82%_94%",
-"sulfate_84%_94%","sulfate_86%_94%","sulfate_88%_94%","sulfate_90%_94%","sulfate_91%_94%",
-"sulfate_92%_94%","sulfate_93%_94%","sulfate_94%_94%","sulfate_95%_94%","sulfate_96%_94%",
-"sulfate_97%_94%","sulfate_98%_94%","sulfate_99%_94%","sulfate_100%_94%","sulfate_30%_92%",
-"sulfate_35%_92%","sulfate_40%_92%","sulfate_45%_92%","sulfate_50%_92%","sulfate_55%_92%",
-"sulfate_60%_92%","sulfate_65%_92%","sulfate_70%_92%","sulfate_75%_92%","sulfate_80%_92%",
-"sulfate_82%_92%","sulfate_84%_92%","sulfate_86%_92%","sulfate_88%_92%","sulfate_90%_92%",
-"sulfate_91%_92%","sulfate_92%_92%","sulfate_93%_92%","sulfate_94%_92%","sulfate_95%_92%",
-"sulfate_96%_92%","sulfate_97%_92%","sulfate_98%_92%","sulfate_99%_92%","sulfate_100%_92%",
-"sulfate_30%_90%","sulfate_35%_90%","sulfate_40%_90%","sulfate_45%_90%","sulfate_50%_90%",
-"sulfate_55%_90%","sulfate_60%_90%","sulfate_65%_90%","sulfate_70%_90%","sulfate_75%_90%",
-"sulfate_80%_90%","sulfate_82%_90%","sulfate_84%_90%","sulfate_86%_90%","sulfate_88%_90%",
-"sulfate_90%_90%","sulfate_91%_90%","sulfate_92%_90%","sulfate_93%_90%","sulfate_94%_90%",
-"sulfate_95%_90%","sulfate_96%_90%","sulfate_97%_90%","sulfate_98%_90%","sulfate_99%_90%",
-"sulfate_100%_90%","sulfate_30%_88%","sulfate_35%_88%","sulfate_40%_88%","sulfate_45%_88%",
-"sulfate_50%_88%","sulfate_55%_88%","sulfate_60%_88%","sulfate_65%_88%","sulfate_70%_88%",
-"sulfate_75%_88%","sulfate_80%_88%","sulfate_82%_88%","sulfate_84%_88%","sulfate_86%_88%",
-"sulfate_88%_88%","sulfate_90%_88%","sulfate_91%_88%","sulfate_92%_88%","sulfate_93%_88%",
-"sulfate_94%_88%","sulfate_95%_88%","sulfate_96%_88%","sulfate_97%_88%","sulfate_98%_88%",
-"sulfate_99%_88%","sulfate_100%_88%","sulfate_30%_86%","sulfate_35%_86%","sulfate_40%_86%",
-"sulfate_45%_86%","sulfate_50%_86%","sulfate_55%_86%","sulfate_60%_86%","sulfate_65%_86%",
-"sulfate_70%_86%","sulfate_75%_86%","sulfate_80%_86%","sulfate_82%_86%","sulfate_84%_86%",
-"sulfate_86%_86%","sulfate_88%_86%","sulfate_90%_86%","sulfate_91%_86%","sulfate_92%_86%",
-"sulfate_93%_86%","sulfate_94%_86%","sulfate_95%_86%","sulfate_96%_86%","sulfate_97%_86%",
-"sulfate_98%_86%","sulfate_99%_86%","sulfate_100%_86%","sulfate_30%_84%","sulfate_35%_84%",
-"sulfate_40%_84%","sulfate_45%_84%","sulfate_50%_84%","sulfate_55%_84%","sulfate_60%_84%",
-"sulfate_65%_84%","sulfate_70%_84%","sulfate_75%_84%","sulfate_80%_84%","sulfate_82%_84%",
-"sulfate_84%_84%","sulfate_86%_84%","sulfate_88%_84%","sulfate_90%_84%","sulfate_91%_84%",
-"sulfate_92%_84%","sulfate_93%_84%","sulfate_94%_84%","sulfate_95%_84%","sulfate_96%_84%",
-"sulfate_97%_84%","sulfate_98%_84%","sulfate_99%_84%","sulfate_100%_84%","sulfate_30%_82%",
-"sulfate_35%_82%","sulfate_40%_82%","sulfate_45%_82%","sulfate_50%_82%","sulfate_55%_82%",
-"sulfate_60%_82%","sulfate_65%_82%","sulfate_70%_82%","sulfate_75%_82%","sulfate_80%_82%",
-"sulfate_82%_82%","sulfate_84%_82%","sulfate_86%_82%","sulfate_88%_82%","sulfate_90%_82%",
-"sulfate_91%_82%","sulfate_92%_82%","sulfate_93%_82%","sulfate_94%_82%","sulfate_95%_82%",
-"sulfate_96%_82%","sulfate_97%_82%","sulfate_98%_82%","sulfate_99%_82%","sulfate_100%_82%",
-"sulfate_30%_80%","sulfate_35%_80%","sulfate_40%_80%","sulfate_45%_80%","sulfate_50%_80%",
-"sulfate_55%_80%","sulfate_60%_80%","sulfate_65%_80%","sulfate_70%_80%","sulfate_75%_80%",
-"sulfate_80%_80%","sulfate_82%_80%","sulfate_84%_80%","sulfate_86%_80%","sulfate_88%_80%",
-"sulfate_90%_80%","sulfate_91%_80%","sulfate_92%_80%","sulfate_93%_80%","sulfate_94%_80%",
-"sulfate_95%_80%","sulfate_96%_80%","sulfate_97%_80%","sulfate_98%_80%","sulfate_99%_80%",
-"sulfate_100%_80%","sulfate_30%_75%","sulfate_35%_75%","sulfate_40%_75%","sulfate_45%_75%",
-"sulfate_50%_75%","sulfate_55%_75%","sulfate_60%_75%","sulfate_65%_75%","sulfate_70%_75%",
-"sulfate_75%_75%","sulfate_80%_75%","sulfate_82%_75%","sulfate_84%_75%","sulfate_86%_75%",
-"sulfate_88%_75%","sulfate_90%_75%","sulfate_91%_75%","sulfate_92%_75%","sulfate_93%_75%",
-"sulfate_94%_75%","sulfate_95%_75%","sulfate_96%_75%","sulfate_97%_75%","sulfate_98%_75%",
-"sulfate_99%_75%","sulfate_100%_75%","sulfate_30%_70%","sulfate_35%_70%","sulfate_40%_70%",
-"sulfate_45%_70%","sulfate_50%_70%","sulfate_55%_70%","sulfate_60%_70%","sulfate_65%_70%",
-"sulfate_70%_70%","sulfate_75%_70%","sulfate_80%_70%","sulfate_82%_70%","sulfate_84%_70%",
-"sulfate_86%_70%","sulfate_88%_70%","sulfate_90%_70%","sulfate_91%_70%","sulfate_92%_70%",
-"sulfate_93%_70%","sulfate_94%_70%","sulfate_95%_70%","sulfate_96%_70%","sulfate_97%_70%",
-"sulfate_98%_70%","sulfate_99%_70%","sulfate_100%_70%","sulfate_30%_65%","sulfate_35%_65%",
-"sulfate_40%_65%","sulfate_45%_65%","sulfate_50%_65%","sulfate_55%_65%","sulfate_60%_65%",
-"sulfate_65%_65%","sulfate_70%_65%","sulfate_75%_65%","sulfate_80%_65%","sulfate_82%_65%",
-"sulfate_84%_65%","sulfate_86%_65%","sulfate_88%_65%","sulfate_90%_65%","sulfate_91%_65%",
-"sulfate_92%_65%","sulfate_93%_65%","sulfate_94%_65%","sulfate_95%_65%","sulfate_96%_65%",
-"sulfate_97%_65%","sulfate_98%_65%","sulfate_99%_65%","sulfate_100%_65%","sulfate_30%_60%",
-"sulfate_35%_60%","sulfate_40%_60%","sulfate_45%_60%","sulfate_50%_60%","sulfate_55%_60%",
-"sulfate_60%_60%","sulfate_65%_60%","sulfate_70%_60%","sulfate_75%_60%","sulfate_80%_60%",
-"sulfate_82%_60%","sulfate_84%_60%","sulfate_86%_60%","sulfate_88%_60%","sulfate_90%_60%",
-"sulfate_91%_60%","sulfate_92%_60%","sulfate_93%_60%","sulfate_94%_60%","sulfate_95%_60%",
-"sulfate_96%_60%","sulfate_97%_60%","sulfate_98%_60%","sulfate_99%_60%","sulfate_100%_60%",
-"sulfate_30%_55%","sulfate_35%_55%","sulfate_40%_55%","sulfate_45%_55%","sulfate_50%_55%",
-"sulfate_55%_55%","sulfate_60%_55%","sulfate_65%_55%","sulfate_70%_55%","sulfate_75%_55%",
-"sulfate_80%_55%","sulfate_82%_55%","sulfate_84%_55%","sulfate_86%_55%","sulfate_88%_55%",
-"sulfate_90%_55%","sulfate_91%_55%","sulfate_92%_55%","sulfate_93%_55%","sulfate_94%_55%",
-"sulfate_95%_55%","sulfate_96%_55%","sulfate_97%_55%","sulfate_98%_55%","sulfate_99%_55%",
-"sulfate_100%_55%","sulfate_30%_50%","sulfate_35%_50%","sulfate_40%_50%","sulfate_45%_50%",
-"sulfate_50%_50%","sulfate_55%_50%","sulfate_60%_50%","sulfate_65%_50%","sulfate_70%_50%",
-"sulfate_75%_50%","sulfate_80%_50%","sulfate_82%_50%","sulfate_84%_50%","sulfate_86%_50%",
-"sulfate_88%_50%","sulfate_90%_50%","sulfate_91%_50%","sulfate_92%_50%","sulfate_93%_50%",
-"sulfate_94%_50%","sulfate_95%_50%","sulfate_96%_50%","sulfate_97%_50%","sulfate_98%_50%",
-"sulfate_99%_50%","sulfate_100%_50%","sulfate_30%_45%","sulfate_35%_45%","sulfate_40%_45%",
-"sulfate_45%_45%","sulfate_50%_45%","sulfate_55%_45%","sulfate_60%_45%","sulfate_65%_45%",
-"sulfate_70%_45%","sulfate_75%_45%","sulfate_80%_45%","sulfate_82%_45%","sulfate_84%_45%",
-"sulfate_86%_45%","sulfate_88%_45%","sulfate_90%_45%","sulfate_91%_45%","sulfate_92%_45%",
-"sulfate_93%_45%","sulfate_94%_45%","sulfate_95%_45%","sulfate_96%_45%","sulfate_97%_45%",
-"sulfate_98%_45%","sulfate_99%_45%","sulfate_100%_45%","sulfate_30%_40%","sulfate_35%_40%",
-"sulfate_40%_40%","sulfate_45%_40%","sulfate_50%_40%","sulfate_55%_40%","sulfate_60%_40%",
-"sulfate_65%_40%","sulfate_70%_40%","sulfate_75%_40%","sulfate_80%_40%","sulfate_82%_40%",
-"sulfate_84%_40%","sulfate_86%_40%","sulfate_88%_40%","sulfate_90%_40%","sulfate_91%_40%",
-"sulfate_92%_40%","sulfate_93%_40%","sulfate_94%_40%","sulfate_95%_40%","sulfate_96%_40%",
-"sulfate_97%_40%","sulfate_98%_40%","sulfate_99%_40%","sulfate_100%_40%","sulfate_30%_35%",
-"sulfate_35%_35%","sulfate_40%_35%","sulfate_45%_35%","sulfate_50%_35%","sulfate_55%_35%",
-"sulfate_60%_35%","sulfate_65%_35%","sulfate_70%_35%","sulfate_75%_35%","sulfate_80%_35%",
-"sulfate_82%_35%","sulfate_84%_35%","sulfate_86%_35%","sulfate_88%_35%","sulfate_90%_35%",
-"sulfate_91%_35%","sulfate_92%_35%","sulfate_93%_35%","sulfate_94%_35%","sulfate_95%_35%",
-"sulfate_96%_35%","sulfate_97%_35%","sulfate_98%_35%","sulfate_99%_35%","sulfate_100%_35%",
-"sulfate_30%_30%","sulfate_35%_30%","sulfate_40%_30%","sulfate_45%_30%","sulfate_50%_30%",
-"sulfate_55%_30%","sulfate_60%_30%","sulfate_65%_30%","sulfate_70%_30%","sulfate_75%_30%",
-"sulfate_80%_30%","sulfate_82%_30%","sulfate_84%_30%","sulfate_86%_30%","sulfate_88%_30%",
-"sulfate_90%_30%","sulfate_91%_30%","sulfate_92%_30%","sulfate_93%_30%","sulfate_94%_30%",
-"sulfate_95%_30%","sulfate_96%_30%","sulfate_97%_30%","sulfate_98%_30%","sulfate_99%_30%",
-"sulfate_100%_30%","sulfate_30%_25%","sulfate_35%_25%","sulfate_40%_25%","sulfate_45%_25%",
-"sulfate_50%_25%","sulfate_55%_25%","sulfate_60%_25%","sulfate_65%_25%","sulfate_70%_25%",
-"sulfate_75%_25%","sulfate_80%_25%","sulfate_82%_25%","sulfate_84%_25%","sulfate_86%_25%",
-"sulfate_88%_25%","sulfate_90%_25%","sulfate_91%_25%","sulfate_92%_25%","sulfate_93%_25%",
-"sulfate_94%_25%","sulfate_95%_25%","sulfate_96%_25%","sulfate_97%_25%","sulfate_98%_25%",
-"sulfate_99%_25%","sulfate_100%_25%","sulfate_30%_20%","sulfate_35%_20%","sulfate_40%_20%",
-"sulfate_45%_20%","sulfate_50%_20%","sulfate_55%_20%","sulfate_60%_20%","sulfate_65%_20%",
-"sulfate_70%_20%","sulfate_75%_20%","sulfate_80%_20%","sulfate_82%_20%","sulfate_84%_20%",
-"sulfate_86%_20%","sulfate_88%_20%","sulfate_90%_20%","sulfate_91%_20%","sulfate_92%_20%",
-"sulfate_93%_20%","sulfate_94%_20%","sulfate_95%_20%","sulfate_96%_20%","sulfate_97%_20%",
-"sulfate_98%_20%","sulfate_99%_20%","sulfate_100%_20%","sulfate_30%_15%","sulfate_35%_15%",
-"sulfate_40%_15%","sulfate_45%_15%","sulfate_50%_15%","sulfate_55%_15%","sulfate_60%_15%",
-"sulfate_65%_15%","sulfate_70%_15%","sulfate_75%_15%","sulfate_80%_15%","sulfate_82%_15%",
-"sulfate_84%_15%","sulfate_86%_15%","sulfate_88%_15%","sulfate_90%_15%","sulfate_91%_15%",
-"sulfate_92%_15%","sulfate_93%_15%","sulfate_94%_15%","sulfate_95%_15%","sulfate_96%_15%",
-"sulfate_97%_15%","sulfate_98%_15%","sulfate_99%_15%","sulfate_100%_15%","sulfate_30%_10%",
-"sulfate_35%_10%","sulfate_40%_10%","sulfate_45%_10%","sulfate_50%_10%","sulfate_55%_10%",
-"sulfate_60%_10%","sulfate_65%_10%","sulfate_70%_10%","sulfate_75%_10%","sulfate_80%_10%",
-"sulfate_82%_10%","sulfate_84%_10%","sulfate_86%_10%","sulfate_88%_10%","sulfate_90%_10%",
-"sulfate_91%_10%","sulfate_92%_10%","sulfate_93%_10%","sulfate_94%_10%","sulfate_95%_10%",
-"sulfate_96%_10%","sulfate_97%_10%","sulfate_98%_10%","sulfate_99%_10%","sulfate_100%_10%",
-"sulfate_30%_5%","sulfate_35%_5%","sulfate_40%_5%","sulfate_45%_5%","sulfate_50%_5%",
-"sulfate_55%_5%","sulfate_60%_5%","sulfate_65%_5%","sulfate_70%_5%","sulfate_75%_5%",
-"sulfate_80%_5%","sulfate_82%_5%","sulfate_84%_5%","sulfate_86%_5%","sulfate_88%_5%",
-"sulfate_90%_5%","sulfate_91%_5%","sulfate_92%_5%","sulfate_93%_5%","sulfate_94%_5%",
-"sulfate_95%_5%","sulfate_96%_5%","sulfate_97%_5%","sulfate_98%_5%","sulfate_99%_5%",
-"sulfate_100%_5%","sulfate_30%_0%","sulfate_35%_0%","sulfate_40%_0%","sulfate_45%_0%",
-"sulfate_50%_0%","sulfate_55%_0%","sulfate_60%_0%","sulfate_65%_0%","sulfate_70%_0%",
-"sulfate_75%_0%","sulfate_80%_0%","sulfate_82%_0%","sulfate_84%_0%","sulfate_86%_0%",
-"sulfate_88%_0%","sulfate_90%_0%","sulfate_91%_0%","sulfate_92%_0%","sulfate_93%_0%",
-"sulfate_94%_0%","sulfate_95%_0%","sulfate_96%_0%","sulfate_97%_0%","sulfate_98%_0%",
-"sulfate_99%_0%","sulfate_100%_0%",
-                            "organic_carbon","soot",
-                            "sea_salt",    "dust_0.1",    "dust_0.2",    "dust_0.4",
-                            "dust_0.8",    "dust_1.0",    "dust_2.0",    "dust_4.0",
-                            "dust_8.0",
-                            "dust1",       "dust2",         "dust3",        "dust4",
-                            "dust5",       "bcphobic",      "omphobic",     "bcdry"
-                            "omphilic_30%", "omphilic_35%", "omphilic_40%", "omphilic_45%",
-                            "omphilic_50%", "omphilic_55%", "omphilic_60%", "omphilic_65%",
-                            "omphilic_70%", "omphilic_75%", "omphilic_80%", "omphilic_82%",
-                            "omphilic_84%", "omphilic_86%", "omphilic_88%", "omphilic_90%",
-                            "omphilic_91%", "omphilic_92%", "omphilic_93%", "omphilic_94%",
-                            "omphilic_95%", "omphilic_96%", "omphilic_97%", "omphilic_98%",
-                            "omphilic_99%",
-                            "seasalt1_30%", "seasalt1_35%", "seasalt1_40%", "seasalt1_45%",
-                            "seasalt1_50%", "seasalt1_55%", "seasalt1_60%", "seasalt1_65%",
-                            "seasalt1_70%", "seasalt1_75%", "seasalt1_80%", "seasalt1_82%",
-                            "seasalt1_84%", "seasalt1_86%", "seasalt1_88%", "seasalt1_90%",
-                            "seasalt1_91%", "seasalt1_92%", "seasalt1_93%", "seasalt1_94%",
-                            "seasalt1_95%", "seasalt1_96%", "seasalt1_97%", "seasalt1_98%",
-                            "seasalt1_99%",
-                            "seasalt2_30%", "seasalt2_35%", "seasalt2_40%", "seasalt2_45%",
-                            "seasalt2_50%", "seasalt2_55%", "seasalt2_60%", "seasalt2_65%",
-                            "seasalt2_70%", "seasalt2_75%", "seasalt2_80%", "seasalt2_82%",
-                            "seasalt2_84%", "seasalt2_86%", "seasalt2_88%", "seasalt2_90%",
-                            "seasalt2_91%", "seasalt2_92%", "seasalt2_93%", "seasalt2_94%",
-                            "seasalt2_95%", "seasalt2_96%", "seasalt2_97%", "seasalt2_98%",
-                            "seasalt2_99%",
-                            "seasalt3_30%", "seasalt3_35%", "seasalt3_40%", "seasalt3_45%",
-                            "seasalt3_50%", "seasalt3_55%", "seasalt3_60%", "seasalt3_65%",
-                            "seasalt3_70%", "seasalt3_75%", "seasalt3_80%", "seasalt3_82%",
-                            "seasalt3_84%", "seasalt3_86%", "seasalt3_88%", "seasalt3_90%",
-                            "seasalt3_91%", "seasalt3_92%", "seasalt3_93%", "seasalt3_94%",
-                            "seasalt3_95%", "seasalt3_96%", "seasalt3_97%", "seasalt3_98%",
-                            "seasalt3_99%",
-                            "seasalt4_30%", "seasalt4_35%", "seasalt4_40%", "seasalt4_45%",
-                            "seasalt4_50%", "seasalt4_55%", "seasalt4_60%", "seasalt4_65%",
-                            "seasalt4_70%", "seasalt4_75%", "seasalt4_80%", "seasalt4_82%",
-                            "seasalt4_84%", "seasalt4_86%", "seasalt4_88%", "seasalt4_90%",
-                            "seasalt4_91%", "seasalt4_92%", "seasalt4_93%", "seasalt4_94%",
-                            "seasalt4_95%", "seasalt4_96%", "seasalt4_97%", "seasalt4_98%",
-                            "seasalt4_99%",
-                            "seasalt5_30%", "seasalt5_35%", "seasalt5_40%", "seasalt5_45%",
-                            "seasalt5_50%", "seasalt5_55%", "seasalt5_60%", "seasalt5_65%",
-                            "seasalt5_70%", "seasalt5_75%", "seasalt5_80%", "seasalt5_82%",
-                            "seasalt5_84%", "seasalt5_86%", "seasalt5_88%", "seasalt5_90%",
-                            "seasalt5_91%", "seasalt5_92%", "seasalt5_93%", "seasalt5_94%",
-                            "seasalt5_95%", "seasalt5_96%", "seasalt5_97%", "seasalt5_98%",
-                            "seasalt5_99%",
-                            "dust_mode1_of_1","dust_mode1_of_2","dust_mode2_of_2","dust_mode1_of_3","dust_mode2_of_3","dust_mode3_of_3",
-   "seasalt_aitken_30%", "seasalt_aitken_35%", "seasalt_aitken_40%", "seasalt_aitken_45%",
-   "seasalt_aitken_50%", "seasalt_aitken_55%", "seasalt_aitken_60%", "seasalt_aitken_65%",
-   "seasalt_aitken_70%", "seasalt_aitken_75%", "seasalt_aitken_80%", "seasalt_aitken_82%",
-   "seasalt_aitken_84%", "seasalt_aitken_86%", "seasalt_aitken_88%", "seasalt_aitken_90%",
-   "seasalt_aitken_91%", "seasalt_aitken_92%", "seasalt_aitken_93%", "seasalt_aitken_94%",
-   "seasalt_aitken_95%", "seasalt_aitken_96%", "seasalt_aitken_97%", "seasalt_aitken_98%",
-   "seasalt_aitken_99%",
-   "seasalt_fine_30%", "seasalt_fine_35%", "seasalt_fine_40%", "seasalt_fine_45%",
-   "seasalt_fine_50%", "seasalt_fine_55%", "seasalt_fine_60%", "seasalt_fine_65%",
-   "seasalt_fine_70%", "seasalt_fine_75%", "seasalt_fine_80%", "seasalt_fine_82%",
-   "seasalt_fine_84%", "seasalt_fine_86%", "seasalt_fine_88%", "seasalt_fine_90%",
-   "seasalt_fine_91%", "seasalt_fine_92%", "seasalt_fine_93%", "seasalt_fine_94%",
-   "seasalt_fine_95%", "seasalt_fine_96%", "seasalt_fine_97%", "seasalt_fine_98%",
-   "seasalt_fine_99%",
-   "seasalt_coarse_30%", "seasalt_coarse_35%", "seasalt_coarse_40%", "seasalt_coarse_45%",
-   "seasalt_coarse_50%", "seasalt_coarse_55%", "seasalt_coarse_60%", "seasalt_coarse_65%",
-   "seasalt_coarse_70%", "seasalt_coarse_75%", "seasalt_coarse_80%", "seasalt_coarse_82%",
-   "seasalt_coarse_84%", "seasalt_coarse_86%", "seasalt_coarse_88%", "seasalt_coarse_90%",
-   "seasalt_coarse_91%", "seasalt_coarse_92%", "seasalt_coarse_93%", "seasalt_coarse_94%",
-   "seasalt_coarse_95%", "seasalt_coarse_96%", "seasalt_coarse_97%", "seasalt_coarse_98%",
-   "seasalt_coarse_99%"
-   "nitrate_30%", "nitrate_35%", "nitrate_40%", "nitrate_45%",
-   "nitrate_50%", "nitrate_55%", "nitrate_60%", "nitrate_65%",
-   "nitrate_70%", "nitrate_75%", "nitrate_80%", "nitrate_82%",
-   "nitrate_84%", "nitrate_86%", "nitrate_88%", "nitrate_90%",
-   "nitrate_91%", "nitrate_92%", "nitrate_93%", "nitrate_94%",
-   "nitrate_95%", "nitrate_96%", "nitrate_97%", "nitrate_98%",
-   "nitrate_99%"
 </namelist>
 
 <!-- Replace wetdep_nml with atmos_tracer_utilities_nml -->
@@ -5033,66 +4476,6 @@ $baseDate
         <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/MOM6_datasets/C384_OM4_025_20201010/mosaic.tar</dataSource>
         <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C384_OM4_025_20201010/mosaic.tar</dataSource> 
       </dataFile>
-
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/gfdl/Kai-yuan.Cheng/SHiELD_IC/GLOBAL_C384/20200120.00Z_IC/gfs_ctrl.nc</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/gfdl/Kai-yuan.Cheng/SHiELD_IC/GLOBAL_C384/20200120.00Z_IC/gfs_data.tile1.nc</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/gfdl/Kai-yuan.Cheng/SHiELD_IC/GLOBAL_C384/20200120.00Z_IC/gfs_data.tile2.nc</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/gfdl/Kai-yuan.Cheng/SHiELD_IC/GLOBAL_C384/20200120.00Z_IC/gfs_data.tile3.nc</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/gfdl/Kai-yuan.Cheng/SHiELD_IC/GLOBAL_C384/20200120.00Z_IC/gfs_data.tile4.nc</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/gfdl/Kai-yuan.Cheng/SHiELD_IC/GLOBAL_C384/20200120.00Z_IC/gfs_data.tile5.nc</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/gfdl/Kai-yuan.Cheng/SHiELD_IC/GLOBAL_C384/20200120.00Z_IC/gfs_data.tile6.nc</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/gfdl/Kai-yuan.Cheng/SHiELD_IC/GLOBAL_C384/20200120.00Z_IC/sfc_data.tile1.nc</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/gfdl/Kai-yuan.Cheng/SHiELD_IC/GLOBAL_C384/20200120.00Z_IC/sfc_data.tile2.nc</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/gfdl/Kai-yuan.Cheng/SHiELD_IC/GLOBAL_C384/20200120.00Z_IC/sfc_data.tile3.nc</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/gfdl/Kai-yuan.Cheng/SHiELD_IC/GLOBAL_C384/20200120.00Z_IC/sfc_data.tile4.nc</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/gfdl/Kai-yuan.Cheng/SHiELD_IC/GLOBAL_C384/20200120.00Z_IC/sfc_data.tile5.nc</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/gfdl/Kai-yuan.Cheng/SHiELD_IC/GLOBAL_C384/20200120.00Z_IC/sfc_data.tile6.nc</dataSource> 
-      </dataFile>
-
-      <dataFile label="input" target="INPUT/oro_data.tile1.nc" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/scratch/gfdl/William.Cooke/my_grids_SPEAR_OM4p25_R02/C384/C384_oro_data.tile1.nc</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/oro_data.tile2.nc" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/scratch/gfdl/William.Cooke/my_grids_SPEAR_OM4p25_R02/C384/C384_oro_data.tile2.nc</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/oro_data.tile3.nc" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/scratch/gfdl/William.Cooke/my_grids_SPEAR_OM4p25_R02/C384/C384_oro_data.tile3.nc</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/oro_data.tile4.nc" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/scratch/gfdl/William.Cooke/my_grids_SPEAR_OM4p25_R02/C384/C384_oro_data.tile4.nc</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/oro_data.tile5.nc" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/scratch/gfdl/William.Cooke/my_grids_SPEAR_OM4p25_R02/C384/C384_oro_data.tile5.nc</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/oro_data.tile6.nc" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/scratch/gfdl/William.Cooke/my_grids_SPEAR_OM4p25_R02/C384/C384_oro_data.tile6.nc</dataSource> 
-      </dataFile>
-
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='c384_OM4p25_LM4_SPEAR']/input/node())"/>
       <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
@@ -5269,15 +4652,15 @@ set nyblocks = $dummy
           <!--
           <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O1125_production']/node())"/>
           <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x1_O108_production_c192']/node())"/>
-          
-          <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A1152x2_O1125_production']/node())"/>
           -->
+          <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A1152x2_O1125_production']/node())"/>
+          <!--
           <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A864x1_O144_SPEAR_25_debug']/node())"/>
-          
+          -->
           </run>
       </regression>
       <regression name="basic_prodsettings">
-        <run days="1" >
+        <run days="8" >
       <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A1152x2_O1125_production']/node())"/>
         </run>
       </regression>
@@ -5344,45 +4727,6 @@ set nyblocks = $dummy
                              atmos_model_nml:nyblocks=2;
                              fms_nml:clock_grain='ROUTINE';
                              surf_map_nml:n_del2_weak=4;
-                             surf_map_nml:n_del2_strong=0;
-                             surf_map_nml:n_del4=0;
-                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
-                             icebergs_nml:make_calving_reproduce=.TRUE.;
-                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A1152x2_O1125_production']/node())"/>
-        </run>
-        <run days="1" months="0"
-             overrideParams="atmos_model_nml:nxblocks=2;
-                             atmos_model_nml:nyblocks=2;
-                             fms_nml:clock_grain='ROUTINE';
-                             surf_map_nml:n_del2_weak=0;
-                             surf_map_nml:n_del2_strong=0;
-                             surf_map_nml:n_del4=0;
-                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
-                             icebergs_nml:make_calving_reproduce=.TRUE.;
-                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A1152x2_O1125_production']/node())"/>
-        </run>
-        <run days="1" months="0"
-             overrideParams="atmos_model_nml:nxblocks=2;
-                             atmos_model_nml:nyblocks=2;
-                             fms_nml:clock_grain='ROUTINE';
-                             surf_map_nml:peak_fac=2.00;
-                             surf_map_nml:n_del2_weak=0;
-                             surf_map_nml:n_del2_strong=0;
-                             surf_map_nml:n_del4=0;
-                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
-                             icebergs_nml:make_calving_reproduce=.TRUE.;
-                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
-            <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A1152x2_O1125_production']/node())"/>
-        </run>
-        <run days="1" months="0"
-             overrideParams="atmos_model_nml:nxblocks=2;
-                             atmos_model_nml:nyblocks=2;
-                             fms_nml:clock_grain='ROUTINE';
-                             surf_map_nml:max_slope=0.10;
-                             surf_map_nml:peak_fac=2.00;
-                             surf_map_nml:n_del2_weak=0;
                              surf_map_nml:n_del2_strong=0;
                              surf_map_nml:n_del4=0;
                              random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;

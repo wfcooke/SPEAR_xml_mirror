@@ -81,9 +81,9 @@ SPEAR_c192_omlp25_Control_2010_A01
 
    <property name="CHUNK_LENGTH_DAILY" value="1yr"/>
    <property name="CHUNK_LENGTH_A" value="10yr"/>
-   <property name="CHUNK_LENGTH_C" value="1000yr"/>
-   <property name="ANA_START" value="1"/>
-   <property name="ANA_END"   value="40"/> <!-- Same as CHUNK_LENGTH_B -->
+   <property name="CHUNK_LENGTH_C" value="10yr"/>
+   <property name="ANA_START" value="31"/>
+   <property name="ANA_END"   value="50"/> <!-- Same as CHUNK_LENGTH_B -->
 
   <property name="PROD_RUNTIME"     value="16:00:00"/><!--Maximum wall clock per simulation-->
   <property name="PROD_SEGTIME"     value="01:30:00"/><!--Wall clock per segment (usually 1 year)-->
@@ -102,6 +102,51 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="DEBUGLEVEL" value="_0"/>
   <property name="PLATINFO"   value=""/>  <!--This is necessary only if you want to run exact same experiment on multiple platforms-->
                                           <!--In that case you will need to put an identifier string for the value to distinguish the /nbhome-->
+
+<property name="pregrid_opt" value="-g g1x1,fill,nolabel,x=0:360:1,y=-90:90:1"/>
+
+<property name="atw_stub_path" value="/home/atw/fms/fre-analysis/test/atw/stub"/>
+
+<!--
+Analysis time-range cropping options:
+   -c: crops obs time range to match model, iff obs fully enclose model
+   -B: crops both obs & model to their common overlap, iff overlap is nonzero
+   -b: crops model time range to match obs, iff model fully encloses obs
+-->
+<property name="shared_opt" value="-V2 -P ps.gz -s -c"/>
+
+<property name="x_global" value="-d x,25,385,60,2"/>
+<property name="x_pacific" value="-d x,120,290,30,2"/>
+
+<property name="y_tropics" value="-d y,-20,20,10,4"/>
+<property name="y_subpolar" value="-d y,-60,60,20,1"/>
+<property name="y_global" value="-d y,-90,90,20,1"/>
+
+<property name="z_upper_ocean" value="-d z,0,300,50,4"/>
+
+<property name="x_hovmuller" value="-N tropac -d x,130,280,30,2"/>
+<property name="y_hovmuller" value="-N tropac $(y_tropics)"/>
+<property name="tropics_region" value="-N tropics $(x_global) $(y_tropics)"/>
+<property name="default_region" value="$(tropics_region)"/>
+
+<property name="sfc" value="$(atw_stub_path)/frepp.atw_atmos_ts_monthly_sfc.csh $(shared_opt) $(pregrid_opt) -n"/>
+<property name="sfc_ocean" value="$(atw_stub_path)/frepp.atw_atmos_ts_monthly_sfc_ocean.csh $(shared_opt) $(pregrid_opt) -n"/>
+<property name="koppen" value="$(atw_stub_path)/frepp.atw_atmos_ts_monthly_koppen.csh $(shared_opt) -n"/>
+<property name="index" value="$(atw_stub_path)/frepp.atw_atmos_ts_monthly_index.csh $(shared_opt) -n"/>
+<property name="column" value="$(atw_stub_path)/frepp.atw_atmos_av_annual_column.csh $(shared_opt)"/>
+<property name="subsfc_ocean" value="$(atw_stub_path)/frepp.atw_ocean_av_annual_subsfc_ocean.csh $(shared_opt) $(pregrid_opt) -n -D ocean_z.%04d-%04d."/>
+<property name="subsfc_ocean_ts" value="$(atw_stub_path)/frepp.atw_ocean_ts_monthly_subsfc_ocean.csh $(shared_opt) $(pregrid_opt) -n -D ocean_z.%04d01-%04d12."/>
+
+<property name="ohb_top50m_vars" value="tadv_x_top50m,tadv_y_top50m,tadv_z_top50m,tadv_3d_top50m,netflx_o_top50m,resid_top50m"/>
+<property name="ohb_zav_vars" value="tadv_x_zav,tadv_y_zav,tadv_z_zav,tadv_3d_zav,netflx_o_zav,resid_zav"/>
+<property name="sigma_vars" value="sigma0_diff0_eq,dsigma0dz_eq,dsigma0dz_zmaxloc"/>
+<property name="temp_yslice_vars" value="temp_165e,temp_170w,temp_140w,temp_110w"/>
+<property name="salt_yslice_vars" value="salt_165e,salt_170w,salt_140w,salt_110w"/>
+<property name="u_yslice_vars" value="u_165e,u_170w,u_140w,u_110w"/>
+<property name="v_yslice_vars" value="v_165e,v_170w,v_140w,v_110w"/>
+<property name="w_yslice_vars" value="w_165e,w_170w,w_140w,w_110w"/>
+<property name="dtdz_vars" value="dtdz_165e,dtdz_170w,dtdz_140w,dtdz_110w,dtdz_zmaxloc"/>
+<property name="eq_vars" value="temp_eq,dtdz_eq,salt_eq,sigma0_eq,u_eq"/>
 
   <!--========================================-->
   <!--Do not change the rest of the properties-->
@@ -1333,44 +1378,43 @@ cd ..
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="atmos_month"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="atmos_month_refined"/>
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)">
+<!--
           <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="$FRE_ANALYSIS_HOME/cjg/stub/cjg_atmos_ts_mon.csh"/>
-          <!-- Analysis scripts from Andrew Wittenberg
-          annual and seasonal climatology -->
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a clim -t all,mam,son,djf,jja -v tau_x,tau_y,tau_curl,wind_div,ps,t_surf,t_diff,rh_ref,olr,tot_cld,hi_cld,mid_cld,lo_cld,wvp,cwp,u_ref,v_ref,tau_div vs_era40"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a clim -t all,mam,son,djf,jja vs_oaflux"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a clim -t all,mam,son,djf,jja vs_cmap_v2"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a clim -t all,mam,son,djf,jja vs_gpcp_v2"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a clim -t all,mam,son,djf,jja vs_qscat"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a clim -t all,mam,son,djf,jja vs_ersst_v3"/>
-          <!-- clim and anomaly stddevs, regressions -->
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a anom_regr_nino3 -t all -v tau_x,tau_y,tau_curl,wind_div,ps,t_surf,t_diff,rh_ref,olr,tot_cld,hi_cld,mid_cld,lo_cld,wvp,cwp,u_ref,v_ref,tau_div vs_era40"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a anom_regr_nino3,std -C clim -t all vs_oaflux"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a anom_regr_nino3,std,anom_std -C clim -t all vs_cmap_v2"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a anom_regr_nino3,std,anom_std -C clim -t all vs_gpcp_v2"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a std,anom_std -C clim -t all -v tau_x,tau_y,t_surf vs_era40"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a std,anom_std -C clim -t all -v tau_x,tau_y,wind vs_qscat"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a anom_regr_nino3,std,anom_std -C clim -t all vs_ersst_v3"/>
-          <!-- total correlations with local SST -->
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -C tot -f 0 -F 0 -t all -v tau_x,tau_y,tau_curl,wind_div,ps,t_diff,rh_ref,olr,tot_cld,hi_cld,mid_cld,lo_cld,wvp,cwp,u_ref,v_ref,tau_div vs_era40"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -C tot -f 0 -F 0 -t all vs_oaflux"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -C tot -f 0 -F 0 -t all vs_cmap_v2"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -C tot -f 0 -F 0 -t all vs_gpcp_v2"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -C tot -f 0 -F 0 -t all -v tau_x,tau_y,wind vs_qscat"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -C tot -f 0 -F 0 -t all vs_ersst_v3"/>
-          <!-- anomaly correlations with local SST -->
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -t all -v tau_x,tau_y,tau_curl,wind_div,ps,t_diff,rh_ref,olr,tot_cld,hi_cld,mid_cld,lo_cld,wvp,cwp,u_ref,v_ref,tau_div vs_era40"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -t all vs_oaflux"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -t all vs_cmap_v2"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -t all vs_gpcp_v2"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -t all -v tau_x,tau_y,wind vs_qscat"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -n -s -a corr_local_sst -t all vs_ersst_v3"/>
-          <!-- wavelet plots of climate indices -->
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/index/frepp.atw_atmos_ts_monthly_index.csh -n -s -a tave_spectrum vs_obs"/>
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/index/frepp.atw_atmos_ts_monthly_index.csh -n -s -a wavelet_density solo"/>
-          <!-- global analysis -->
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/sfc_ocean/frepp.atw_atmos_ts_monthly_sfc_ocean.csh -a clim -t all -v t_surf -y -90,90,20,1 -N globe -p globe vs_era40"/>
-          <!-- Koppen climate types -->
-          <analysis switch="$(ANALYSIS_SWITCH)" startYear="$(ANA_START)" endYear="$(ANA_END)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_ts_monthly/koppen/frepp.atw_atmos_ts_monthly_koppen.csh -n -s vs_uea"/>
+-->
+            <!--ATMOS TIMESERIES DIAGNOSTICS-->
+            <!--TIER 1-->
+            <analysis switch="on" script="$(sfc_ocean) -r oisst_v2 -A globe -N subpolar $(y_subpolar) plot_clim"/>
+
+            <analysis switch="on" script="$(sfc_ocean) -r oisst_v2 -T all,mam,son,jja,djf $(default_region) plot_clim"/>
+            <analysis switch="on" script="$(sfc_ocean) -r oisst_v2 -W y=0 $(x_hovmuller) plot_hov_clim plot_hov_clim_dev"/>
+            <analysis switch="on" script="$(sfc_ocean) -r oisst_v2 -W x=110w -W x=165e $(y_hovmuller) plot_hov_clim plot_hov_clim_dev"/>
+            <analysis switch="on" script="$(sfc_ocean) -r oisst_v2 -C clim -f12 -F0 $(default_region) plot_std plot_anom_std plot_anom_regr_nino3"/>
+            <analysis switch="on" script="$(sfc_ocean) -r oisst_v2 -W y=0 $(x_hovmuller) plot_hov_anom_regr_nino3"/>
+
+            <analysis switch="on" script="$(sfc) -r gpcp_v2p3 -T all,mam,son,jja,djf -A globe -N subpolar $(y_subpolar) plot_clim"/>
+            <analysis switch="on" script="$(sfc_ocean) -r gpcp_v2p3 -T all,mam,son,jja,djf $(default_region) plot_clim"/>
+            <analysis switch="on" script="$(sfc_ocean) -r gpcp_v2p3 -W y=0 $(x_hovmuller) plot_hov_clim plot_hov_clim_dev"/>
+            <analysis switch="on" script="$(sfc_ocean) -r gpcp_v2p3 -W x=110w -W x=165e $(y_hovmuller) plot_hov_clim plot_hov_clim_dev"/>
+            <analysis switch="on" script="$(sfc_ocean) -r gpcp_v2p3 -C clim -f 12,0 -F 0,12 $(default_region) plot_anom_regr_nino3 plot_std plot_anom_std"/>
+
+            <analysis switch="on" script="$(sfc_ocean) -r oaflux_v3_ceres_ebaf_ed2p8 -T all,mam,son,jja,djf $(default_region) plot_clim"/>
+            <analysis switch="on" script="$(sfc_ocean) -r oaflux_v3_ceres_ebaf_ed2p8 $(default_region) plot_anom_regr_nino3"/>
+
+            <analysis switch="on" script="$(sfc) -r era_interim -T all,mam,son,jja,djf -v t_surf -N globe $(y_subpolar) plot_clim"/>
+            <analysis switch="on" script="$(sfc_ocean) -r era_interim -v t_surf,ps -N globe $(y_global) plot_clim"/>
+            <analysis switch="on" script="$(sfc_ocean) -r era_interim -T all,mam,son,jja,djf $(default_region) plot_clim"/>
+            <analysis switch="on" script="$(sfc_ocean) -r era_interim -W y=0 $(x_hovmuller) plot_hov_clim plot_hov_clim_dev"/>
+            <analysis switch="on" script="$(sfc_ocean) -r era_interim -W x=110w -W x=165e $(y_hovmuller) plot_hov_clim plot_hov_clim_dev"/>
+            <analysis switch="on" script="$(sfc_ocean) -r era_interim -v tau_x,tau_y,t_surf -C clim -f 12,0 -F 0,12 $(default_region) plot_std plot_anom_std"/>
+            <analysis switch="on" script="$(sfc_ocean) -r era_interim $(default_region) plot_anom_regr_nino3"/>
+            <analysis switch="on" script="$(sfc_ocean) -r era_interim -W y=0 $(x_hovmuller) plot_hov_anom_regr_nino3"/>
+            <analysis switch="on" script="$(sfc_ocean) -r era_interim -W x=120e:80w@ave -A tropac_xav $(y_hovmuller) plot_hov_anom_regr_nino3"/>
+
+            <analysis switch="on" script="$(index) -r obs -v t_surf_nino3,t_surf_nino34,t_surf_nino4,t_surf_nino12 plot_tave_spectrum"/>
+            <analysis switch="on" script="$(index) -r gpcp_v2p3 -v precip_nino3,precip_nino34,precip_nino4,precip_nino12,precip_weqpac plot_tave_spectrum"/>
+            <analysis switch="on" script="$(index) -v t_surf_nino3,t_surf_nino34,t_surf_nino4,t_surf_nino12,precip_nino3,precip_nino34,precip_nino4,precip_nino12,precip_weqpac plot_wavelet_density"/>
+
+            <analysis switch="on" script="$(koppen) -r uea plot_koppen"/>
         </timeSeries>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" from="$(CHUNK_LENGTH_A)"/>
         <timeAverage source="monthly" interval="$(CHUNK_LENGTH_C)">
@@ -1394,7 +1438,9 @@ cd ..
         </timeAverage>
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)"/>
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)">
-          <analysis switch="$(ANALYSIS_SWITCH)" cumulative="yes" script="/home/atw/fms/diags/atw_atmos_av_annual/column/frepp.atw_atmos_av_annual_column.csh -s solo"/>
+            <!--ATMOS TIME AVERAGE DIAGNOSTICS-->
+            <!--TIER 1-->
+            <analysis switch="on" cumulative="yes" script="$(column) plot_column"/>
         </timeAverage>
       </component>
       <component type="atmos_month_aer"  start="$(PP_START_YEAR)" source="atmos_month_aer" sourceGrid="atmos-cubedsphere" xyInterp="720,1152">
@@ -1516,7 +1562,32 @@ cd ..
           <variables> rhoinsitu rhopot0 rhopot2 so thetao uo uh umo vh vmo vo </variables>
           -->
         </timeSeries>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_z_month"/>
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_z_month">
+            <!--OCEAN TIME SERIES DIAGNOSTICS-->
+            <!--TIER 1-->
+            <analysis switch="on" script="$(subsfc_ocean_ts) -r oisst_v2 -A globe -N subpolar $(y_subpolar) plot_clim"/>
+            <analysis switch="on" script="$(subsfc_ocean_ts) -r oisst_v2 $(default_region) plot_clim"/>
+            <analysis switch="on" script="$(subsfc_ocean_ts) -r oisst_v2 -C clim -f12 -F0 $(default_region) plot_std plot_anom_std plot_anom_regr_nino3"/>
+            <analysis switch="on" script="$(subsfc_ocean_ts) -r oisst_v2 -W y=0 $(x_hovmuller) plot_hov_clim plot_hov_clim_dev"/>
+            <analysis switch="on" script="$(subsfc_ocean_ts) -r oisst_v2 -W y=0 $(x_hovmuller) plot_hov_anom_regr_nino3"/>
+
+            <analysis switch="on" script="$(subsfc_ocean_ts) -r tao_v2017 -v u_eq -W x=165e -W x=170w -W x=140w -W x=110w $(default_region) plot_hov_clim plot_hov_clim_dev"/>
+
+            <analysis switch="on" script="$(subsfc_ocean_ts) -r oscar_v2009 -v u_top30m -T all,mam,son,jja,djf $(default_region) plot_clim"/>
+            <analysis switch="on" script="$(subsfc_ocean_ts) -r oscar_v2009 -v u_top30m -W y=0 $(x_hovmuller) plot_hov_clim plot_hov_clim_dev"/>
+            <analysis switch="on" script="$(subsfc_ocean_ts) -r oscar_v2009 -v u_top30m $(default_region) plot_anom_regr_nino3"/>
+            <analysis switch="on" script="$(subsfc_ocean_ts) -r oscar_v2009 -v u_top30m -W y=0 -W x=165e -W x=170w -W x=140w -W x=110w $(x_hovmuller) $(y_hovmuller) plot_hov_anom_regr_nino3"/>
+
+            <analysis switch="on" script="$(subsfc_ocean_ts) -r oras4_orca1_era_interim -v sst,sst_m_t50,d20,d15,ild_0p5,ild_1,mld_0p125,temp_eq,temp_diff0_eq,temp_top50m,temp_xav,temp_zav,$(temp_yslice_vars),dtdx_surf,dtdx_eq,dtdx_xav,dtdy_surf,dtdz_eq,dtdz_xav,$(dtdz_vars),dtdz_zmax,dtdz_zmaxloc,sss,sss_m_s50,salt_eq,$(salt_yslice_vars),sigma0_eq,$(sigma_vars),dsigma0dz_zmax,u_surf,u_top30m,u_eq,u_xav,u_zav,$(u_yslice_vars),v_surf,v_top30m,v_eq,v_xav,v_zav,$(v_yslice_vars),w50,w_eq,w_xav,$(w_yslice_vars),tadv_x_eq,tadv_x_xav,tadv_x_top50m,tadv_x_zav,tadv_y_eq,tadv_y_xav,tadv_y_top50m,tadv_y_zav $(default_region) plot_clim"/>
+            <analysis switch="on" script="$(subsfc_ocean_ts) -r oras4_orca1_era_interim -v sst,sst_m_t50,d20,ild_0p5,ild_1,mld_0p125,temp_top50m,temp_xav,$(temp_yslice_vars),dtdx_surf,dtdy_surf,dtdz_xav,$(dtdz_vars),dtdz_zmax,sss,sss_m_s50,$(salt_yslice_vars),dsigma0dz_zmaxloc,dsigma0dz_zmax,u_surf,u_top30m,u_xav,u_zav,$(u_yslice_vars),v_surf,v_top30m,v_xav,v_zav,$(v_yslice_vars),tadv_x_xav,tadv_x_top50m,tadv_x_zav,tadv_y_xav,tadv_y_top50m,tadv_y_zav $(default_region) -W y=0 $(x_hovmuller) plot_hov_clim plot_hov_clim_dev"/>
+            <analysis switch="on" script="$(subsfc_ocean_ts) -r oras4_orca1_era_interim -v sst,sst_m_t50,d20,ild_0p5,ild_1,mld_0p125,temp_eq,temp_diff0_eq,temp_top50m,dtdx_surf,dtdy_surf,dtdz_eq,dtdz_zmax,dtdz_zmaxloc,sss,sss_m_s50,sigma0_eq,$(sigma_vars),dsigma0dz_zmax,u_surf,u_top30m,u_eq,v_eq,w_eq,dtdt_surf,dtdt_eq,dtdt_top50m -W x=110w -W x=165e $(y_hovmuller) plot_hov_clim plot_hov_clim_dev"/>
+
+            <analysis switch="on" script="$(subsfc_ocean_ts) -r oras4_orca1_era_interim -v sst,sst_m_t50,d20,ild_1,ild_0p5,mld_0p125,temp_top50m,temp_xav,temp_zav,temp_eq,sigma0_eq,dtdz_eq,salt_eq,u_eq,u_surf,u_top30m,u_xav,u_zav,v_surf,v_top30m,v_xav,v_zav,w_eq,w50,w_xav,sss,sss_m_s50,dtdt_surf $(default_region) plot_anom_regr_nino3"/>
+            <analysis switch="on" script="$(subsfc_ocean_ts) -r oras4_orca1_era_interim -v sst,sst_m_t50,ild_1,temp_top50m,temp_zav,u_top30m,w50 -W y=0 $(x_hovmuller) plot_hov_anom_regr_nino3"/>
+            <analysis switch="on" script="$(subsfc_ocean_ts) -r oras4_orca1_era_interim -v sst,temp_top50m,temp_zav,v_top30m,v_zav -W x=120e:80w@ave -A tropac_xav $(y_hovmuller) plot_hov_anom_regr_nino3"/>
+
+            <analysis switch="on" script="$(subsfc_ocean_ts) -r oras4_orca1_era_interim -v dtdt_top50m,$(ohb_top50m_vars),dtdt_zav,$(ohb_zav_vars) -W y=0 $(x_hovmuller) plot_hov_anom_regr_nino3"/>
+        </timeSeries>
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month_refined">
           <!--
           <variables> wmo wo </variables>
@@ -1532,7 +1603,15 @@ cd ..
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_z_month"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_z_month_refined"/>
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
-        <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
+        <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)"  >
+            <!--OCEAN TIME AVERAGE DIAGNOSTICS-->
+            <!--TIER 1-->
+            <analysis switch="on" cumulative="yes" script="$(subsfc_ocean) -r oisst_v2 -A globe -N subpolar $(y_subpolar) plot_clim"/>
+            <analysis switch="on" cumulative="yes" script="$(subsfc_ocean) -r oisst_v2 $(default_region) plot_clim"/>
+            <analysis switch="on" cumulative="yes" script="$(subsfc_ocean) -r oscar_v2009 -v u_top30m $(default_region) plot_clim"/>
+            <analysis switch="on" cumulative="yes" script="$(subsfc_ocean) -r woa13 -v sst,sst_m_t50,d20,d15,ild_0p5,ild_1,mld_0p125,temp_diff0_eq,temp_top50m,temp_xav,temp_zav,temp_eq,$(temp_yslice_vars),dtdx_surf,dtdx_eq,dtdy_surf,dtdz_eq,$(dtdz_vars),dtdz_xav,dtdz_zmax,sss,sss_m_s50,salt_eq,$(salt_yslice_vars),sigma0_eq,$(sigma_vars),dsigma0dz_zmax $(default_region) plot_clim"/>
+            <analysis switch="on" cumulative="yes" script="$(subsfc_ocean) -r oras4_orca1_era_interim -v sst,sst_m_t50,d20,d15,ild_0p5,ild_1,mld_0p125,temp_eq,temp_diff0_eq,temp_top50m,temp_xav,temp_zav,$(temp_yslice_vars),dtdx_surf,dtdx_eq,dtdx_xav,dtdy_surf,dtdz_eq,dtdz_xav,$(dtdz_vars),dtdz_zmax,sss,sss_m_s50,salt_eq,$(salt_yslice_vars),sigma0_eq,$(sigma_vars),dsigma0dz_zmax,u_surf,u_top30m,u_eq,u_xav,u_zav,$(u_yslice_vars),v_surf,v_top30m,v_eq,v_xav,v_zav,$(v_yslice_vars),tadv_x_eq,tadv_x_xav,tadv_x_top50m,tadv_x_zav,tadv_y_eq,tadv_y_xav,tadv_y_top50m,tadv_y_zav $(default_region) plot_clim"/>
+        </timeAverage>
       </component>
       <component type="ocean_z_ann"   start="$(PP_START_YEAR)" source="ocean_z_annual" sourceGrid="ocean-tripolar">
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_annual" ></timeSeries> 

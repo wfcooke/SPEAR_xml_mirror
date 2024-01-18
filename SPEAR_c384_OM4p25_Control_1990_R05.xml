@@ -81,7 +81,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
    <property name="CHUNK_LENGTH_DAILY" value="1yr"/>
    <property name="CHUNK_LENGTH_A" value="10yr"/>
-   <property name="CHUNK_LENGTH_C" value="1000yr"/>
+   <property name="CHUNK_LENGTH_C" value="100yr"/>
    <property name="ANA_START" value="1"/>
    <property name="ANA_END"   value="40"/> <!-- Same as CHUNK_LENGTH_B -->
 
@@ -2027,11 +2027,6 @@ MOM Date    128/08/22 00:00:00  11232: En 3.004862E-01, MaxCFL  0.11771, Mass 1.
 FATAL from PE  1333: compute_qs: saturation vapor pressure table overflow, nbad=     66
 Flip make_exchange_reproduce to false and extend.
 
-8/18/2022
-SIS Date    139/03/28 00:00:00   4128: Area 1.490844450593E+13 3.560554117344E+12, Mass  2.51023422994E+16 8.54387582648E+14
-FATAL from PE     0: write_ice_statistics: Sea ice velocity has been truncated too many times.
-Flip make_exchange_reproduce to true and extend run.
-
   </description>
 
 
@@ -2042,7 +2037,7 @@ Flip make_exchange_reproduce to true and extend run.
       <namelist file="$(includeDir)/nml/am4p0_c384L33.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_1850climo_v20170518.nml"/>
       <namelist name="xgrid_nml">
-        make_exchange_reproduce = .true.
+        make_exchange_reproduce = .false.
         interp_method = 'second_order'
       </namelist> 
       <namelist name="radiative_gases_nml">

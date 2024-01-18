@@ -2532,6 +2532,16 @@ v   <freInclude name="resourceparams_A72x6_O36_c192">
 	     </resources>
    </freInclude>
 
+   <freInclude name="resourceparams_A2304x4_O1970_production_io11">
+	     <resources jobWallclock="16:00:00"
+                   segRuntime="5:00:00">
+               <atm ranks="2304" threads="4"  layout = "16,24"  io_layout = "1,1" />
+	       <lnd                           layout = "16,24"  io_layout = "1,1" />
+	       <ice                           layout = "72,32"  io_layout = "1,1" />
+               <ocn ranks="1970" threads="1"  layout = "36,72"  io_layout = "1,4" mask_table="mask_table.622.36x72"/>
+	     </resources>
+   </freInclude>
+
    <freInclude name="resourceparams_A2304x4_O2432_production">
 	     <resources jobWallclock="8:00:00"
                    segRuntime="5:00:00">
@@ -2818,6 +2828,16 @@ v   <freInclude name="resourceparams_A72x6_O36_c192">
 	     </resources>
    </freInclude>
 
+   <freInclude name="resourceparams_A1728x2_O384_production_c192_c5">
+	     <resources jobWallclock="16:00:00"
+                   segRuntime="03:00:00">
+               <atm ranks="1728" threads="2"  layout = "12,24"   io_layout = "1,4" />
+	       <lnd                           layout = "12,24"   io_layout = "1,4" />
+	       <ice                           layout = "72,24"  io_layout = "1,1" />
+	       <ocn ranks="384"  threads="1"  layout = "24,16"   io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
    <freInclude name="resourceparams_A2304x8_O384_c384_production_c5">
 	     <resources jobWallclock="16:00:00"
                    segRuntime="3:00:00" >
@@ -2834,6 +2854,17 @@ v   <freInclude name="resourceparams_A72x6_O36_c192">
                    segRuntime="3:00:00" >
                <atm ranks="2304" threads="8"  layout = "16,24"  io_layout = "1,4" />
 	       <lnd                           layout = "16,24"  io_layout = "1,4" />
+	       <ice                           layout = "72,32"  io_layout = "1,1" />
+               <ocn ranks="4671" threads="1"   layout = "90,72"  io_layout = "3,4" mask_table="mask_table.1809.90x72"/>
+	     </resources>
+   </freInclude>
+
+
+   <freInclude name="resourceparams_A2304x8_O4671_c384_iolayout11_c5">
+	     <resources jobWallclock="16:00:00"
+                   segRuntime="3:00:00" >
+               <atm ranks="2304" threads="8"  layout = "16,24"  io_layout = "1,1" />
+	       <lnd                           layout = "16,24"  io_layout = "1,1" />
 	       <ice                           layout = "72,32"  io_layout = "1,1" />
                <ocn ranks="4671" threads="1"   layout = "90,72"  io_layout = "3,4" mask_table="mask_table.1809.90x72"/>
 	     </resources>
@@ -3308,6 +3339,23 @@ LAYOUT_EOF
         </run>
         <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A432x2_O72_c192']/node())"/>
+        </run>
+      </regression>
+      <regression label="timing_c192_c5">
+        <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A576x4_O256_c5']/node())"/>
+        </run>
+        <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x2_O256_c5']/node())"/>
+        </run>
+        <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x4_O384_c5']/node())"/>
+        </run>
+        <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1728x2_O384_c5']/node())"/>
+        </run>
+        <run days="0" months="6" overrideParams="fms_nml:clock_grain='ROUTINE';">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1728x4_O512_c5']/node())"/>
         </run>
       </regression>
       <regression label="timing_omp">

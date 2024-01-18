@@ -1408,9 +1408,13 @@ cd ..
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" />
       </component>
       <component type="ocean_z"   start="$(PP_START_YEAR)" sourceGrid="ocean-tripolar">
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month"/>
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month">
+          <variables> rhoinsitu rhopot0 rhopot2 so thetao uo uh umo vh vmo vo </variables>
+        </timeSeries>
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_z_month"/>
-        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month_refined"/>
+        <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month_refined">
+          <variables> wmo wo </variables>
+        </timeSeries>
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_z_month_refined"/>
         <timeAverage source="monthly" interval="$(CHUNK_LENGTH_A)" />
         <timeAverage source="annual"  interval="$(CHUNK_LENGTH_A)"/>
@@ -2385,7 +2389,6 @@ cat > $work/INPUT/MOM_override << EOF
 #override VERTEX_SHEAR = True
 #override USE_RESTRICTIVE_TOLERANCE_CHECK = True
 
-#override MSTAR_MODE = 3
 #override TKE_DECAY = 0.001
 #override EPBL_MSTAR_SCHEME = "REICHL_H18"
 #override MSTAR_CONV_ADJ = 0.66

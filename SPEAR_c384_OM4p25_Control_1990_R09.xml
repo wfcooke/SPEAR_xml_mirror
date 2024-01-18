@@ -327,11 +327,11 @@ configuration.
       <project>gfdl_sd</project>
 
       <directory stem="$(FRE_STEM)">
+        <!--
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
         <include>$(xmlDir)/SPEAR_include</include>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
         -->
+        <include>$HOME/SPEAR/SPEAR_include</include>
       </directory>
 
     </platform>
@@ -1558,13 +1558,17 @@ cd ..
           <variables> wmo wo </variables>
           -->
         </timeSeries>
+        <!-- Apparently sourcing the refined directory for different chunk lengths causes a double process and gcp
         <timeSeries freq="monthly" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_z_month_refined"/>
+        -->
         <timeAverage source="monthly" interval="$(CHUNK_LENGTH_A)" />
         <timeAverage source="monthly" interval="$(CHUNK_LENGTH_C)" />
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_A)" source="ocean_z_month_refined"/>
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_z_month"/>
+        <!--
         <timeSeries freq="annual" chunkLength="$(CHUNK_LENGTH_C)" source="ocean_z_month_refined"/>
+        -->
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_A)" />
         <timeAverage source="annual" interval="$(CHUNK_LENGTH_C)" >
             <!--OCEAN TIME AVERAGE DIAGNOSTICS-->

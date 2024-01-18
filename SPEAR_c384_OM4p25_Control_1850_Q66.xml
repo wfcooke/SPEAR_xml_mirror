@@ -758,7 +758,7 @@ set domains_stack_size = "5097152"
 <!-- LAYOUTS FOR C384 -->
 
    <freInclude name="resourceparams_A864x2_O596_c384">
-	     <resources jobWallclock="8:00:00">
+	     <resources jobWallclock="4:00:00">
                <atm ranks="864" threads="2"  layout = "12,12"  io_layout = "1,4" />
 	       <lnd                           layout = "12,12"  io_layout = "1,4" />
 	       <ice                           layout = "72,12"  io_layout = "1,1" />
@@ -767,7 +767,7 @@ set domains_stack_size = "5097152"
    </freInclude>
 
    <freInclude name="resourceparams_A864x2_O910_c384">
-	     <resources jobWallclock="8:00:00">
+	     <resources jobWallclock="4:00:00">
                <atm ranks="864" threads="2"  layout = "12,12"  io_layout = "1,4" />
 	       <lnd                           layout = "12,12"  io_layout = "1,4" />
 	       <ice                           layout = "72,12"  io_layout = "1,1" />
@@ -874,33 +874,6 @@ set domains_stack_size = "5097152"
 	     </resources>
    </freInclude>
 
-   <freInclude name="resourceparams_A1152x6_O1247_c384">
-	     <resources jobWallclock="4:00:00">
-               <atm ranks="1152" threads="6"  layout = "12,16"  io_layout = "1,4" />
-	       <lnd                           layout = "12,16"  io_layout = "1,4" />
-	       <ice                           layout = "72,16"  io_layout = "1,1" />
-               <ocn ranks="1247" threads="1"   layout = "40,40"  io_layout = "4,5" mask_table="mask_table.353.40x40"/>
-	     </resources>
-   </freInclude>
-
-   <freInclude name="resourceparams_A1152x6_O1481_c384">
-	     <resources jobWallclock="4:00:00">
-               <atm ranks="1152" threads="6"  layout = "12,16"  io_layout = "1,4" />
-	       <lnd                           layout = "12,16"  io_layout = "1,4" />
-	       <ice                           layout = "72,16"  io_layout = "1,1" />
-               <ocn ranks="1481" threads="1"   layout = "48,40"  io_layout = "4,5" mask_table="mask_table.439.48x40"/>
-	     </resources>
-   </freInclude>
-
-   <freInclude name="resourceparams_A1152x6_O1714_c384">
-	     <resources jobWallclock="4:00:00">
-               <atm ranks="1152" threads="6"  layout = "12,16"  io_layout = "1,4" />
-	       <lnd                           layout = "12,16"  io_layout = "1,4" />
-	       <ice                           layout = "72,16"  io_layout = "1,1" />
-               <ocn ranks="1714" threads="1"   layout = "40,56"  io_layout = "4,4" mask_table="mask_table.526.40x56"/>
-	     </resources>
-   </freInclude>
-
    <freInclude name="resourceparams_A1152x6_O1756_c384">
 	     <resources jobWallclock="4:00:00">
                <atm ranks="1152" threads="6"  layout = "12,16"  io_layout = "1,4" />
@@ -977,7 +950,7 @@ set domains_stack_size = "5097152"
 	     <resources jobWallclock="4:00:00">
                <atm ranks="2304" threads="4"  layout = "16,24"  io_layout = "1,4" />
 	       <lnd                           layout = "16,24"  io_layout = "1,4" />
-	       <ice                           layout = "72,32"  io_layout = "1,1" />
+	       <ice                           layout = "144,16"  io_layout = "1,1" />
                <ocn ranks="1756" threads="1"  layout = "32,72"  io_layout = "4,6" mask_table="mask_table.548.32x72"/>
 	     </resources>
    </freInclude>
@@ -1165,6 +1138,14 @@ LAYOUT_EOF
       </regression>
       <regression label="timing">
 <!--
+        <run days="0" months="1">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x2_O596_c384']/node())"/>
+        </run>
+
+        <run days="0" months="1">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x4_O910']/node())"/>
+        </run>
+
         
         <run days="0" months="1">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x4_O910_c384']/node())"/>
@@ -1172,6 +1153,10 @@ LAYOUT_EOF
 
         <run days="0" months="1">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A2304x2_O910_c384']/node())"/>
+        </run>
+        
+        <run days="0" months="1">
+            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A2304x2_O1125_c384']/node())"/>
         </run>
         
         <run days="0" months="1">
@@ -1193,38 +1178,9 @@ LAYOUT_EOF
         <run days="0" months="1">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_1216_O1022_c384']/node())"/>
         </run>
-        
+-->
         <run days="0" months="1">
             <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O1756_c384']/node())"/>
-        </run>
-
-        <run days="0" months="1">
-            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O1247_c384']/node())"/>
-        </run>
-        
-        <run days="0" months="1">
-            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O1714_c384']/node())"/>
-        </run>
-        
- -->       
-        <run days="0" months="6">
-            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x2_O596_c384']/node())"/>
-        </run>
-
-        <run days="0" months="6">
-            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x4_O910']/node())"/>
-        </run>
-
-        <run days="0" months="6">
-            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A2304x2_O1125_c384']/node())"/>
-        </run>
-        
-        <run days="0" months="6">
-            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O1481_c384']/node())"/>
-        </run>
-
-        <run days="0" months="6">
-            <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A2304x4_O1756_c384']/node())"/>
         </run>
 
       </regression>
@@ -1487,10 +1443,6 @@ endif
        $(MOM6_EXAMPLES)/ice_ocean_SIS2/OM4_025/INPUT/mask_table.2428.90x95
        $(MOM6_EXAMPLES)/ice_ocean_SIS2/OM4_025/INPUT/mask_table.3785.90x144
        $(MOM6_EXAMPLES)/ice_ocean_SIS2/OM4_025/INPUT/mask_table.2309.90x90
-
-       $(MOM6_EXAMPLES)/ice_ocean_SIS2/OM4_025/INPUT/mask_table.353.40x40
-       $(MOM6_EXAMPLES)/ice_ocean_SIS2/OM4_025/INPUT/mask_table.439.48x40
-       $(MOM6_EXAMPLES)/ice_ocean_SIS2/OM4_025/INPUT/mask_table.526.40x56
      </dataFile>
 <!--
        $(MOM6_EXAMPLES)/ice_ocean_SIS2/OM4_025/INPUT/mask_table.1007.54x72       
@@ -1956,132 +1908,6 @@ cd ..
      </postProcess>
   </freInclude>
 
-
-<experiment name="SPEAR_c384_OM4p25_Control_1850_Q66_v20170622" inherit="SPEAR_c384_OM4p25_Control_1850_Q66">
-<input>
-      <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/MOM6_datasets/C384_OM4_025_20210408/mosaic.tar</dataSource>
-        <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/SPEAR_c384/gridSpec/C384_OM4_025_20210408/mosaic.tar</dataSource> 
-      </dataFile>
-      <csh type="always"><![CDATA[
-######BEGIN MOM6 and SIS2 layout setup################
-##THIS HAS TO BE PART OF csh type=always###
-
-#touch $work/INPUT/dummy_Channel_file
-#cat > $work/INPUT/dummy_Channel_file << EOF
-#! This file specifies restricted channel widths in MOM.  The order is:
-#!  [U|V]_width, min_longitude, max_longitude, min_latitude, max_latitude, width
-#EOF
-
-touch $work/INPUT/MOM_override
-
-# blank out the CHANNEL_LIST_FILE for now.
-cat > $work/INPUT/MOM_override << EOF
-#override CHANNEL_LIST_FILE = "MOM_channels_global_025"
-! BLING parameters
-! Note defaults DT = 900.0 , DT_THERM = 3600.0
-#override DT_THERM = 7200.0
-#override USE_generic_tracer = False
-#override USE_RIVER_HEAT_CONTENT = False
-#override USE_CALVING_HEAT_CONTENT = False
-#override ENERGYSAVEDAYS = 30
-#override TOPO_FILE = "ocean_topog.nc"
-#override H2_FILE = "ocean_topog.nc"
-#override NUM_DIAG_COORDS = 3             ! default = 1
-                                ! The number of diagnostic vertical coordinates to use.
-                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
-#override DIAG_COORDS = "z Z ZSTAR, rho2 RHO2 RHO, ztop ZTOP300 ZSTAR"
-#override DIAG_COORD_DEF_Z = "FILE:vgrid_75_2m.nc,dz" 
-#override DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
-                                ! Determines how to specify the coordinate
-                                ! resolution. Valid options are:
-                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
-                                !  UNIFORM[:N] - uniformly distributed
-                                !  FILE:string - read from a file. The string specifies
-                                !                the filename and variable name, separated
-                                !                by a comma or space, e.g. FILE:lev.nc,dz
-                                !                or FILE:lev.nc,interfaces=zw
-                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
-                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
-                                !  HYBRID:string - read from a file. The string specifies
-                                !                the filename and two variable names, separated
-                                !                by a comma or space, for sigma-2 and dz. e.g.
-                                !                HYBRID:vgrid.nc,sigma2,dz
-
-DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
-EOF
-
-touch $work/INPUT/SIS_override
-
-cat > $work/INPUT/SIS_override << EOF
-#override CP_SEAWATER = 3992.
-#override CP_BRINE = 3992.
-#override ICE_BULK_SALINITY = 0.0
-#override ICE_RELATIVE_SALINITY = 0.17
-#override SIS2_FILLING_FRAZIL = T
-#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
-#override SIS_CONTINUITY_SCHEME = "PCM"
-#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
-#override ICE_STATS_INTERVAL = 30
-#override TOPO_FILE = "ocean_topog.nc"
-EOF
-
-cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
-#override IO_LAYOUT = $ocn_io_layout
-#override LAYOUT    = $ocn_layout
-#override MASKTABLE = $ocn_mask_table
-MOM_LAYOUT_EOF
-
-
-cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
-#override IO_LAYOUT = $ice_io_layout
-#override LAYOUT    = $ice_layout
-SIS_LAYOUT_EOF
-
-######END MOM6 and SIS2 layout setup################
-
-cd $work/INPUT
-
-if ( $currentSeg == 1 ) then
-     rm -f coupler.res
-     rm -f river.res*.nc
-endif
-cd $work
-
-#------------------------------------------
-## Find out whether to restart.
-# MOM6 restart switch
-if ( $currentSeg == 1 ) then
-   set restart_flag = 'n'
-else
-   set restart_flag = 'r'
-endif
-   set sis_restart_flag = 'r'
-cd $work
-
-## Run the model
-#------------------------------------------
-###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
-set OCN_MASK_TABLE  =  $ocn_mask_table
-set OCN_LAYOUT    = $ocn_layout
-set OCN_IO_LAYOUT = $ocn_io_layout
-set ICE_LAYOUT    = $ice_layout
-set ICE_IO_LAYOUT = $ice_io_layout
-set atmos_npes = $atm_ranks
-set ocean_npes = $ocn_ranks
-set fv_layout = $atm_layout
-set fv_io_layout  = $atm_io_layout
-set land_layout   = $lnd_layout
-set land_io_layout = $lnd_io_layout
-set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nxblocks = $dummy
-set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nyblocks = $dummy
-]]>
-    </csh>
-
-</input>
-</experiment>
 
 <experiment name="SPEAR_c384_OM4p25_Control_1850_Q66">
   <description>

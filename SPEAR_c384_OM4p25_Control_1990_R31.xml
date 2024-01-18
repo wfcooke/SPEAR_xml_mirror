@@ -6,7 +6,7 @@ Quick start guide
 =================
 
 ```
-module load fre/bronx-19
+module load fre/bronx-20
 fremake -x SPEAR_experiments_R.xml -p ncrc4.intel18 -t repro,openmp SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec
 fremake -x SPEAR_experiments_Q.xml -p ncrc4.intel18 -t repro,openmp SPEAR_Q_AMIP_exec
 frerun  -x SPEAR_experiments_Q.xml -p ncrc4.intel18 -t repro,openmp SPEAR_c96_o1_Control_1850_Q50 -r basic_prodsettings
@@ -2070,6 +2070,48 @@ do_vort_damp = F
 d4_bg = 0.15
 
 
+7/25/2023
+Time =  362 10  8  0  0  0    ch4 = 1711.515500ppb  n2o =  308.257000ppb
+
+FATAL from PE  2052: compute_qs: saturation vapor pressure table overflow, nbad=    132
+
+Flip make_exchange_reproduce to false and extend
+
+8/6/2023
+Time =  457  2 10  0  0  0    ch4 = 1711.515500ppb  n2o =  308.257000ppb
+FATAL from PE  2126: compute_qs: saturation vapor pressure table overflow, nbad=     33
+
+Flip make_exchange_reproduce to true and extend
+
+
+8/27/2023
+Time =  561  4  1  0  0  0    ch4 = 1711.515500ppb  n2o =  308.257000ppb
+FATAL from PE  1531: compute_qs: saturation vapor pressure table overflow, nbad=      1
+Flip make_exchange_reproduce to false and extend
+
+8/28/2023
+Time =  561  9 28  0  0  0    ch4 = 1711.515500ppb  n2o =  308.257000ppb
+
+FATAL from PE   703: compute_qs: saturation vapor pressure table overflow, nbad=      1
+
+Need to back up a year and remain with make_exchange_reproduce = false
+
+
+9/7/2023
+Time =  644  9  7  0  0  0    ch4 = 1711.515500ppb  n2o =  308.257000ppb
+
+FATAL from PE  1796: compute_qs: saturation vapor pressure table overflow, nbad=     33
+Flip make_exchange_reproduce to true and extend.
+
+
+9/10/2023
+Time =  670  6 30  0  0  0    ch4 = 1711.515500ppb  n2o =  308.257000ppb
+
+FATAL from PE   910: compute_qs: saturation vapor pressure table overflow, nbad=     33
+Flip make_exchange_reproduce to false and extend.
+
+
+
   </description>
 
 
@@ -2080,7 +2122,7 @@ d4_bg = 0.15
       <namelist file="$(includeDir)/nml/am4p0_c384L33.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_1850climo_v20170518.nml"/>
       <namelist name="xgrid_nml">
-        make_exchange_reproduce = .true.
+        make_exchange_reproduce = .false.
         interp_method = 'second_order'
       </namelist> 
       <namelist name="radiative_gases_nml">
@@ -2974,6 +3016,7 @@ touch $work/INPUT/MOM_override
 
 # blank out the CHANNEL_LIST_FILE for now.
 cat > $work/INPUT/MOM_override << EOF
+#override BAD_VAL_SSS_MAX =100
 #override RESTART_CHECKSUMS_REQUIRED =False
 #override VERTEX_SHEAR = True
 #override USE_RESTRICTIVE_TOLERANCE_CHECK = True
@@ -3106,9 +3149,12 @@ set nyblocks = $dummy
     </csh>
   </input>
   <runtime>
-    <production simTime="100" units="years" >
+    <production simTime="800" units="years" >
       <segment simTime="1" units="years"/>
+<!--
       <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A2304x4_O1970_production']/node())"/>
+-->
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A2304x8_O4671_c384_production_c5']/node())"/>
     </production> 
       <regression name="debug">
         <run days="1" >

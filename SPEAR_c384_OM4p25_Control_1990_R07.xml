@@ -1943,6 +1943,184 @@ cd ..
      </postProcess>
   </freInclude>
 
+<experiment name="SPEAR_c384_OM4p25_Control_1990_R07_c5_tiebreak" inherit="SPEAR_c384_OM4p25_Control_1990_R07">
+  <description>
+  Tie-breaker for dual run divergence.
+  Original run failed with sea-ice truncations.
+MOM Date    119/01/01 00:00:00      0: En 2.971160E-01, MaxCFL  0.49609, Mass 1.381815894960E+21, Salt  34.72080415455, Temp   3.67067589710
+MOM Date    119/01/12 00:00:00    528: En 2.971356E-01, MaxCFL  0.48595, Mass 1.381816209697E+21, Salt  34.72079862369, Temp   3.67113814622
+  Dual run went through ok.
+MOM Date    119/01/01 00:00:00      0: En 2.971160E-01, MaxCFL  0.49609, Mass 1.381815894960E+21, Salt  34.72080415455, Temp   3.67067589710
+MOM Date    119/01/12 00:00:00    528: En 2.971471E-01, MaxCFL  0.49214, Mass 1.381816255331E+21, Salt  34.72079753945, Temp   3.67116306763
+
+Energy diagnostics (above) show divergence in first 10 days.  
+Reset make_exchange_reproduce to true.
+Point to 0119-01-01 restart file.
+Set mom_restart_flag = 'r'
+Do not remove coupler.res
+  </description>
+<input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .false.
+        interp_method = 'second_order'
+      </namelist> 
+<initCond file="/lustre/f2/scratch/William.Cooke/SPEAR_experiments_R_20220817/SPEAR_c384_OM4p25_Control_1990_R07_c5/ncrc5.intel-classic-repro-openmp/restart/01190101.tar"/>
+      <csh type="always"><![CDATA[
+######BEGIN MOM6 and SIS2 layout setup################
+##THIS HAS TO BE PART OF csh type=always###
+
+touch $work/INPUT/MOM_override
+
+# blank out the CHANNEL_LIST_FILE for now.
+cat > $work/INPUT/MOM_override << EOF
+#override RESTART_CHECKSUMS_REQUIRED =False
+#override VERTEX_SHEAR = True
+#override USE_RESTRICTIVE_TOLERANCE_CHECK = True
+#override INTERNAL_WAVE_SPEED_BETTER_EST = False
+#override EPBL_MLD_BISECTION =True
+
+#override MSTAR_MODE = -1
+#override TKE_DECAY = 0.001
+#override EPBL_MSTAR_SCHEME = "REICHL_H18"
+#override MSTAR_CONV_ADJ = 0.66
+#override EPBL_VEL_SCALE_SCHEME = "REICHL_H18"
+#override EPBL_VEL_SCALE_FACTOR = 0.5477
+#override VSTAR_SURF_FAC = 1.8258
+#override LT_MOD_LAC4 = 0.8
+#override LT_MOD_LAC5 = 0.8
+#override RH18_MSTAR_CN3 = -6.0
+#override WSTAR_USTAR_COEF = 15.
+#override MSTAR = 0.0
+#override LT_ENHANCE_COEF = 0.1056
+#override LT_ENHANCE_EXP = -1.
+#override LA_DEPTH_RATIO = 0.2
+
+#override BBL_EFFIC=0.01 
+
+#override CHANNEL_LIST_FILE = "MOM_channels_global_025"
+! BLING parameters
+! Note defaults DT = 900.0 , DT_THERM = 3600.0
+#override DT_THERM = 7200.0
+#override USE_generic_tracer = False
+#override USE_RIVER_HEAT_CONTENT = False
+#override USE_CALVING_HEAT_CONTENT = False
+#override ENERGYSAVEDAYS = 30
+#override TOPO_FILE = "topog.nc"
+#override H2_FILE = "topog.nc"
+#override NUM_DIAG_COORDS = 3             ! default = 1
+                                ! The number of diagnostic vertical coordinates to use.
+                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
+#override DIAG_COORDS = "z Z ZSTAR, rho2 RHO2 RHO, ztop ZTOP300 ZSTAR"
+#override DIAG_COORD_DEF_Z = "FILE:vgrid_75_2m.nc,dz" 
+#override DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
+                                ! Determines how to specify the coordinate
+                                ! resolution. Valid options are:
+                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
+                                !  UNIFORM[:N] - uniformly distributed
+                                !  FILE:string - read from a file. The string specifies
+                                !                the filename and variable name, separated
+                                !                by a comma or space, e.g. FILE:lev.nc,dz
+                                !                or FILE:lev.nc,interfaces=zw
+                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
+                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
+                                !  HYBRID:string - read from a file. The string specifies
+                                !                the filename and two variable names, separated
+                                !                by a comma or space, for sigma-2 and dz. e.g.
+                                !                HYBRID:vgrid.nc,sigma2,dz
+
+DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
+EOF
+
+touch $work/INPUT/SIS_override
+
+cat > $work/INPUT/SIS_override << EOF
+#override CP_SEAWATER = 3992.
+#override CP_BRINE = 3992.
+#override ICE_BULK_SALINITY = 0.0
+#override ICE_RELATIVE_SALINITY = 0.17
+#override SIS2_FILLING_FRAZIL = T
+#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
+#override SIS_CONTINUITY_SCHEME = "PCM"
+#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
+#override ICE_STATS_INTERVAL = 30
+EOF
+
+cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
+#override IO_LAYOUT = $ocn_io_layout
+#override LAYOUT    = $ocn_layout
+#override MASKTABLE = $ocn_mask_table
+MOM_LAYOUT_EOF
+
+
+cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
+#override IO_LAYOUT = $ice_io_layout
+#override LAYOUT    = $ice_layout
+SIS_LAYOUT_EOF
+
+######END MOM6 and SIS2 layout setup################
+
+cd $work/INPUT
+
+#if ( $currentSeg == 1 ) then
+#     rm -f coupler.res
+#endif
+
+cd $work
+
+# Remove the previous years MOM restart files/default to decomposed if present.
+if(-e $work/INPUT/MOM.res.nc.0000 ) \rm -rf $work/INPUT/MOM.res*.nc
+
+#------------------------------------------
+## Find out whether to restart.
+# MOM6 restart switch
+#if ( $currentSeg == 1 ) then
+#   set restart_flag = 'n'
+#else
+   set restart_flag = 'r'
+#endif
+   set sis_restart_flag = 'r'
+cd $work
+
+## Run the model
+#------------------------------------------
+###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
+set OCN_MASK_TABLE  =  $ocn_mask_table
+set OCN_LAYOUT    = $ocn_layout
+set OCN_IO_LAYOUT = $ocn_io_layout
+set ICE_LAYOUT    = $ice_layout
+set ICE_IO_LAYOUT = $ice_io_layout
+set atmos_npes = $atm_ranks
+set ocean_npes = $ocn_ranks
+set fv_layout = $atm_layout
+set fv_io_layout  = $atm_io_layout
+set land_layout   = $lnd_layout
+set land_io_layout = $lnd_io_layout
+set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nxblocks = $dummy
+set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nyblocks = $dummy
+]]>
+    </csh>
+
+</input>
+  <runtime>
+    <production simTime="200" units="years" >
+      <segment simTime="1" units="years"/>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A2304x4_O1970_production']/node())"/>
+    </production> 
+      <regression name="threemonth">
+        <run months="3" >
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A2304x4_O1970_production']/node())"/>
+        </run>
+      </regression>
+      <regression name="onemonth">
+        <run months="1" >
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A2304x4_O1970_production']/node())"/>
+        </run>
+      </regression>
+  </runtime>
+</experiment>
+
 <experiment name="SPEAR_c384_OM4p25_Control_1990_R07_c5" inherit="SPEAR_c384_OM4p25_Control_1990_R07">
   <description>
 Run SPEAR_HI with 1/4 degree ocean

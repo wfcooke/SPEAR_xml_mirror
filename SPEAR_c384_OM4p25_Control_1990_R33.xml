@@ -1970,17 +1970,6 @@ FATAL from PE  1348: compute_qs: saturation vapor pressure table overflow, nbad=
 Changing DT in MOM_override to 600
 Restart from year 1 with make_exchange_reproduce = true
 
-5/4/2023
-MOM Date      2/07/25 00:00:00   9840: En 3.115990E-01, MaxCFL  0.07167, Mass 1.381823836083E+21, Salt  34.72065586403, Temp   3.60434092118
-
-FATAL from PE  1300: compute_qs: saturation vapor pressure table overflow, nbad=    132
-
-Reset to DT=900, make_exchange_reproduce=true. See if it is a system issue.
-
-Time =    1  7 30  0  0  0    ch4 = 1711.515500ppb  n2o =  308.257000ppb
-FATAL from PE  2454: compute_qs: saturation vapor pressure table overflow, nbad=     33
-FATAL from PE  2455: compute_qs: saturation vapor pressure table overflow, nbad=    132
-
   </description>
 
 
@@ -2912,6 +2901,7 @@ cat > $work/INPUT/MOM_override << EOF
 #override CHANNEL_LIST_FILE = "MOM_channels_global_025"
 ! BLING parameters
 ! Note defaults DT = 900.0 , DT_THERM = 3600.0
+#override DT = 600.0
 #override DT_THERM = 7200.0
 #override USE_generic_tracer = False
 #override USE_RIVER_HEAT_CONTENT = False
@@ -3019,10 +3009,7 @@ set nyblocks = $dummy
   <runtime>
     <production simTime="10" units="years" >
       <segment simTime="1" units="years"/>
-<!--
       <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A2304x4_O1970_production']/node())"/>
--->
-      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A3456x4_O4671_production_c384']/node())"/>
     </production> 
       <regression name="debug">
         <run days="1" >

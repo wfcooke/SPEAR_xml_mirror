@@ -43,7 +43,7 @@ SPEAR_c192_omlp25_Control_2010_A01
   * c192 atmosphere coupled to ocean mixed layer model, 0.25 degree resolution, with constant 2010 radiative forcing
 -->
 
-<experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2001/XInclude">
+<experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2003/XInclude">
 
   <!--User should set the following properties according to the plan for the production run-->	
 
@@ -57,7 +57,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
   <!-- FRE specific properties -->
   <property name="FRE_STEM" value="SPEAR_experiments_K" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-18" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_VERSION" value="bronx-20" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
@@ -259,10 +259,11 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
+    <!--
     <platform name="gfdl.ncrc4-gnu">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
-
+    -->
     <platform name="gfdl.ncrc4-cray">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
@@ -275,7 +276,7 @@ configuration.
 
     <platform name="ncrc4.intel18">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="18.0.6.288" />
+      <compiler type="intel-classic" version="2022.2.1" /><!--DO NOT COMPILE WITH THIS --><!--intel" version="18.0.6.288" />-->
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
@@ -332,13 +333,13 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
     </platform>
 
-    <platform name="ncrc4.gnu">
+    <!--
+      <platform name="ncrc4.gnu">
       <freVersion>$(FRE_VERSION)</freVersion>
       <compiler type="gnu" version="7.2.0" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
       <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR"/>
       <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
       <property name="NCORE_PER_NODE"      value="36"/>
@@ -350,14 +351,12 @@ configuration.
       <directory stem="$(FRE_STEM)">
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
         <include>$(xmlDir)/SPEAR_include</include>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
-      </directory>
+        directory>
     <csh><![CDATA[
 setenv MAIN_PROGRAM coupler/coupler_main.o
  ]]></csh>
     </platform>
+    -->
 
     <platform name="ncrc4.cray">
       <freVersion>$(FRE_VERSION)</freVersion>
@@ -2506,10 +2505,14 @@ cd ..
 
 <experiment name="SPEAR_c192_o1_Scen_SSP534OS_10ye_IC2031_K50_ens_10_12" inherit="SPEAR_c192_o1_Scen_SSP534OS_10ye_IC2031_K50_ens_01_03">
 <description>
+Time = 2085  5 21  0  0  0    ch4 =  929.270037ppb  n2o =  376.877558ppb
+FATAL from PE   289: compute_qs: saturation vapor pressure table overflow, nbad=     33
+
+Flip make_exchange_reproduce to false and extend
 </description>
   <input>
       <namelist name="xgrid_nml">
-        make_exchange_reproduce = .true.
+        make_exchange_reproduce = .false.
         interp_method = 'second_order'
       </namelist> 
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
@@ -2551,11 +2554,15 @@ cd ..
 
 <experiment name="SPEAR_c192_o1_Scen_SSP534OS_10ye_IC2031_K50_ens_19_21" inherit="SPEAR_c192_o1_Scen_SSP534OS_10ye_IC2031_K50_ens_01_03">
 <description>
+9/10/2023
+Time = 2062  3 22  0  0  0    ch4 = 1154.006387ppb  n2o =  362.269062ppb
+FATAL from PE  1725: compute_qs: saturation vapor pressure table overflow, nbad=     33
+Flip make_exchange_reproduce to false and extend job.
 
 </description>
   <input>
       <namelist name="xgrid_nml">
-        make_exchange_reproduce = .true.
+        make_exchange_reproduce = .false.
         interp_method = 'second_order'
       </namelist> 
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">

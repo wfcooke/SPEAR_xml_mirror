@@ -1843,11 +1843,6 @@ set nyblocks = $dummy
       <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A576x2']/node())"/>
         </run>
       </regression>
-      <regression name="threemonths">
-        <run months="3" >
-      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A576x2_production']/node())"/>
-        </run>
-      </regression>
       <regression name="basic_4thread">
         <run days="8" >
       <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A288x4']/node())"/>

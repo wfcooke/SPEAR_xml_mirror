@@ -89,7 +89,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
    <property name="CHUNK_LENGTH_DAILY" value="1yr"/>
    <property name="CHUNK_LENGTH_A" value="10yr"/>
-   <property name="CHUNK_LENGTH_C" value="100yr"/>
+   <property name="CHUNK_LENGTH_C" value="100000yr"/>
    <property name="ANA_START" value="1"/>
    <property name="ANA_END"   value="40"/> <!-- Same as CHUNK_LENGTH_B -->
 
@@ -2990,7 +2990,7 @@ set nyblocks = $dummy
     </csh>
   </input>
   <runtime>
-    <production simTime="20" units="years" >
+    <production simTime="100" units="years" >
       <segment simTime="1" units="years"/>
 <!--
       <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A2304x4_O1970_production']/node())"/>

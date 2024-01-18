@@ -2086,18 +2086,12 @@ NOTE from PE     0: update_vegn_slow: Current date is 0003-02-01
 FATAL from PE   246: compute_qs: saturation vapor pressure table overflow, nbad=     33
 Flip make_exchange_reproduce to true  and extend
 
-4/9/2023
-Time =    4  2 20  0  0  0    ch4 = 1711.515500ppb  n2o =  308.257000ppb
-FATAL from PE   259: compute_qs: saturation vapor pressure table overflow, nbad=     99
-Flip make_exchange_reproduce to false  and extend
-
-
   </description>
 
 
   <input>
       <namelist name="xgrid_nml">
-        make_exchange_reproduce = .false.
+        make_exchange_reproduce = .true.
         interp_method = 'second_order'
       </namelist> 
   </input>

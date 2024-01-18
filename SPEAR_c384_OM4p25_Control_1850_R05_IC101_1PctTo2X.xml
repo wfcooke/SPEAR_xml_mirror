@@ -81,9 +81,9 @@ SPEAR_c192_omlp25_Control_2010_A01
 
    <property name="CHUNK_LENGTH_DAILY" value="1yr"/>
    <property name="CHUNK_LENGTH_A" value="10yr"/>
-   <property name="CHUNK_LENGTH_C" value="1000yr"/>
-   <property name="ANA_START" value="1"/>
-   <property name="ANA_END"   value="40"/> <!-- Same as CHUNK_LENGTH_B -->
+   <property name="CHUNK_LENGTH_C" value="10yr"/>
+   <property name="ANA_START" value="81"/>
+   <property name="ANA_END"   value="100"/> <!-- Same as CHUNK_LENGTH_B -->
 
   <property name="PROD_RUNTIME"     value="16:00:00"/><!--Maximum wall clock per simulation-->
   <property name="PROD_SEGTIME"     value="01:30:00"/><!--Wall clock per segment (usually 1 year)-->

@@ -47,7 +47,7 @@ SPEAR_c192_omlp25_Control_2010_A01
   * c192 atmosphere coupled to ocean mixed layer model, 0.25 degree resolution, with constant 2010 radiative forcing
 -->
 
-<experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2001/XInclude">
+<experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2003/XInclude">
 
   <!--User should set the following properties according to the plan for the production run-->	
 
@@ -61,7 +61,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
   <!-- FRE specific properties -->
   <property name="FRE_STEM" value="SPEAR_experiments_Q" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-19" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_VERSION" value="bronx-20" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
@@ -264,10 +264,11 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
 
-    <platform name="gfdl.ncrc4-gnu">
+<!--
+      <platform name="gfdl.ncrc4-gnu">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
-
+-->
     <!-- NCRC Platforms -->
     <platform name="ncrc3.intel16">
       <freVersion>$(FRE_VERSION)</freVersion>
@@ -342,7 +343,7 @@ configuration.
 
     <platform name="ncrc4.intel18">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="18.0.6.288" />
+      <compiler type="intel" version="2022.2.1" /><!--DO NOT COMPILE WITH THIS --><!--18.0.6.288" />-->
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
@@ -375,7 +376,8 @@ configuration.
       <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
     </platform>
 
-    <platform name="ncrc4.gnu">
+<!--
+      <platform name="ncrc4.gnu">
       <freVersion>$(FRE_VERSION)</freVersion>
       <compiler type="gnu" version="7.2.0" />
 
@@ -383,7 +385,6 @@ configuration.
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
       <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
       <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
       <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
       <property name="NCORE_PER_NODE"      value="36"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
@@ -393,11 +394,9 @@ configuration.
       <directory stem="$(FRE_STEM)">
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
         <include>$(xmlDir)/SPEAR_include</include>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
       </directory>
     </platform>
+-->
 
   </setup>
 
@@ -4202,6 +4201,178 @@ Starting experiment.
       <reference restart="/lustre/f2/dev/William.Cooke/reference/SPEAR_c384_o1_Control_1850_Q66/ncrc4.intel16-repro-openmp/1x0m8d_432x4a_72x1o/restart/00010109.tar"/>
   </runtime>
   </experiment>
+
+
+
+<experiment name="SPEAR_c384_o1_Scen_SSP245_IC2011_Q66_ens_07" inherit="SPEAR_c384_o1_Scen_SSP245_IC2011_Q66_ens_01">
+  <description>
+09/26/2023
+Extending number of ensemble members.
+
+
+10/15/2023
+Time = 2076  1 21  0  0  0    ch4 = 1811.599818ppb  n2o =  371.705479ppb
+FATAL from PE   207: compute_qs: saturation vapor pressure table overflow, nbad=     33
+
+Flip make_exchange_reproduce to false and extend run.
+  </description>
+<!--
+<executable file="/lustre/f2/dev/gfdl/William.Cooke/SPEAR_experiments_K_20200819/SPEAR_K_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_K_nonsymMOM6_exec.x"/>
+-->
+<executable file="/lustre/f2/dev/gfdl/William.Cooke/SPEAR_experiments_K/SPEAR_K_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_K_nonsymMOM6_exec.x"/>
+  <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .false.
+        interp_method = 'second_order'
+      </namelist> 
+     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR_c384/initCond/SPEAR_c384_o1_Scen_SSP585_IC2011/SPEAR_c384_o1_Hist_AllForc_IC1921_Q66_ens_07_2011.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/SPEAR_c384/initCond/SPEAR_c384_o1_Scen_SSP585_IC2011/SPEAR_c384_o1_Hist_AllForc_IC1921_Q66_ens_07_2011.tar</dataSource>
+     </dataFile> 
+  </input>
+  <runtime>
+    <production simTime="90" units="years" >
+      <segment simTime="1" units="years"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O72_production_c384']/node())"/>
+    </production> 
+      <regression name="basic_prodsettings">
+        <run days="8" 
+             overrideParams="fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O72_c384']/node())"/>
+        </run>
+
+      </regression>
+      <xi:include xpointer="xpointer(//freInclude[@name='regression_OMP_c384']/runtime/node())"/>
+      <reference restart="/lustre/f2/dev/William.Cooke/reference/SPEAR_c384_o1_Control_1850_Q66/ncrc4.intel16-repro-openmp/1x0m8d_432x4a_72x1o/restart/00010109.tar"/>
+  </runtime>
+  </experiment>
+
+
+<experiment name="SPEAR_c384_o1_Scen_SSP245_IC2011_Q66_ens_08" inherit="SPEAR_c384_o1_Scen_SSP245_IC2011_Q66_ens_01">
+  <description>
+09/26/2023
+Extending number of ensemble members.
+
+  </description>
+<!--
+<executable file="/lustre/f2/dev/gfdl/William.Cooke/SPEAR_experiments_K_20200819/SPEAR_K_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_K_nonsymMOM6_exec.x"/>
+-->
+<executable file="/lustre/f2/dev/gfdl/William.Cooke/SPEAR_experiments_K/SPEAR_K_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_K_nonsymMOM6_exec.x"/>
+  <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
+     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR_c384/initCond/SPEAR_c384_o1_Scen_SSP585_IC2011/SPEAR_c384_o1_Hist_AllForc_IC1921_Q66_ens_08_2011.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/SPEAR_c384/initCond/SPEAR_c384_o1_Scen_SSP585_IC2011/SPEAR_c384_o1_Hist_AllForc_IC1921_Q66_ens_08_2011.tar</dataSource>
+     </dataFile> 
+  </input>
+  <runtime>
+    <production simTime="90" units="years" >
+      <segment simTime="1" units="years"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O72_production_c384']/node())"/>
+    </production> 
+      <regression name="basic_prodsettings">
+        <run days="8" 
+             overrideParams="fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O72_c384']/node())"/>
+        </run>
+
+      </regression>
+      <xi:include xpointer="xpointer(//freInclude[@name='regression_OMP_c384']/runtime/node())"/>
+      <reference restart="/lustre/f2/dev/William.Cooke/reference/SPEAR_c384_o1_Control_1850_Q66/ncrc4.intel16-repro-openmp/1x0m8d_432x4a_72x1o/restart/00010109.tar"/>
+  </runtime>
+  </experiment>
+
+
+<experiment name="SPEAR_c384_o1_Scen_SSP245_IC2011_Q66_ens_09" inherit="SPEAR_c384_o1_Scen_SSP245_IC2011_Q66_ens_01">
+  <description>
+09/26/2023
+Extending number of ensemble members.
+
+  </description>
+<!--
+<executable file="/lustre/f2/dev/gfdl/William.Cooke/SPEAR_experiments_K_20200819/SPEAR_K_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_K_nonsymMOM6_exec.x"/>
+-->
+<executable file="/lustre/f2/dev/gfdl/William.Cooke/SPEAR_experiments_K/SPEAR_K_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_K_nonsymMOM6_exec.x"/>
+  <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
+     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR_c384/initCond/SPEAR_c384_o1_Scen_SSP585_IC2011/SPEAR_c384_o1_Hist_AllForc_IC1921_Q66_ens_09_2011.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/SPEAR_c384/initCond/SPEAR_c384_o1_Scen_SSP585_IC2011/SPEAR_c384_o1_Hist_AllForc_IC1921_Q66_ens_09_2011.tar</dataSource>
+     </dataFile> 
+  </input>
+  <runtime>
+    <production simTime="90" units="years" >
+      <segment simTime="1" units="years"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O72_production_c384']/node())"/>
+    </production> 
+      <regression name="basic_prodsettings">
+        <run days="8" 
+             overrideParams="fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O72_c384']/node())"/>
+        </run>
+
+      </regression>
+      <xi:include xpointer="xpointer(//freInclude[@name='regression_OMP_c384']/runtime/node())"/>
+      <reference restart="/lustre/f2/dev/William.Cooke/reference/SPEAR_c384_o1_Control_1850_Q66/ncrc4.intel16-repro-openmp/1x0m8d_432x4a_72x1o/restart/00010109.tar"/>
+  </runtime>
+  </experiment>
+
+
+<experiment name="SPEAR_c384_o1_Scen_SSP245_IC2011_Q66_ens_10" inherit="SPEAR_c384_o1_Scen_SSP245_IC2011_Q66_ens_01">
+  <description>
+09/26/2023
+Extending number of ensemble members.
+
+  </description>
+<!--
+<executable file="/lustre/f2/dev/gfdl/William.Cooke/SPEAR_experiments_K_20200819/SPEAR_K_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_K_nonsymMOM6_exec.x"/>
+-->
+<executable file="/lustre/f2/dev/gfdl/William.Cooke/SPEAR_experiments_K/SPEAR_K_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_K_nonsymMOM6_exec.x"/>
+  <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
+     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR_c384/initCond/SPEAR_c384_o1_Scen_SSP585_IC2011/SPEAR_c384_o1_Hist_AllForc_IC1921_Q66_ens_10_2011.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/SPEAR_c384/initCond/SPEAR_c384_o1_Scen_SSP585_IC2011/SPEAR_c384_o1_Hist_AllForc_IC1921_Q66_ens_10_2011.tar</dataSource>
+     </dataFile> 
+  </input>
+  <runtime>
+    <production simTime="90" units="years" >
+      <segment simTime="1" units="years"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O72_production_c384']/node())"/>
+    </production> 
+      <regression name="basic_prodsettings">
+        <run days="8" 
+             overrideParams="fms_nml:clock_grain='ROUTINE';
+                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                             icebergs_nml:make_calving_reproduce=.TRUE.;
+                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
+      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O72_c384']/node())"/>
+        </run>
+
+      </regression>
+      <xi:include xpointer="xpointer(//freInclude[@name='regression_OMP_c384']/runtime/node())"/>
+      <reference restart="/lustre/f2/dev/William.Cooke/reference/SPEAR_c384_o1_Control_1850_Q66/ncrc4.intel16-repro-openmp/1x0m8d_432x4a_72x1o/restart/00010109.tar"/>
+  </runtime>
+  </experiment>
+
 
 
 </experimentSuite>

@@ -84,7 +84,7 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="ANA_AMIP_LEN"   value="30yr"/>
 
    <property name="CHUNK_LENGTH_DAILY" value="1yr"/>
-   <property name="CHUNK_LENGTH_A" value="10yr"/>
+   <property name="CHUNK_LENGTH_A" value="4yr"/>
    <property name="CHUNK_LENGTH_C" value="100yr"/>
    <property name="CHUNK_LENGTH_D" value="200yr"/>
    <property name="ANA_START" value="1"/>

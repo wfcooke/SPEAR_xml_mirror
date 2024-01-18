@@ -1541,14 +1541,7 @@ This is expected to allow the AMOC to strengthen relative to the SSP534OS scenar
      </dataTable>
 
       <dataFile label="input" target="INPUT/prcme_adj.nc" chksum="" size="" timestamp="">
-        <!--
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/datasets/PRCmE/ocean.201101-210101.PRCmE_EXTRA_remove_p2SV.nc</dataSource>
-        -->
         <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/datasets/PRCmE/ocean.201101-210101.PRCmE_EXTRA_remove_p2SV_float.nc</dataSource>
-       
-        <!--
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/datasets/PRCmE/ocean.climo.PRCmE_EXTRA_remove_p2SV_v3.nc</dataSource>
-        -->
         <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/datasets/PRCmE/ocean.201101-210101.PRCmE_EXTRA_remove_p2SV.nc</dataSource>
       </dataFile>
 
@@ -1764,10 +1757,9 @@ if ( $currentSeg == 1 ) then
 
 endif
 
-#chmod 644 prcme_adj.nc
-#ncatted -a _FillValue,prcme_adj,m,f,0.0 prcme_adj.nc
-#ncatted -a missing_value,prcme_adj,m,f,0.0 prcme_adj.nc
-
+chmod 644 prcme_adj.nc
+ncatted -a _FillValue,prcme_adj,m,f,0.0 prcme_adj.nc
+ncatted -a missing_value,prcme_adj,m,f,0.0 prcme_adj.nc
 cd $work
 
 #------------------------------------------
@@ -1811,23 +1803,12 @@ set nyblocks = $dummy
           <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A144x1_O72_debug']/node())"/>
           </run>
       </regression>
-      <regression name="twoyear">
-        <run months="12 12" >
-      <!--
-      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A864x4_O252_production_c192']/node())"/>
-      -->
-      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108_production_c192']/node())"/>
-        </run>
-      </regression>
       <regression name="oneyear">
         <run months="12" >
       <!--
       <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180_long']/node())"/>
       -->
-      <!--
       <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108']/node())"/>
-      -->
-      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A864x4_O252_production_c192']/node())"/>
         </run>
       </regression>
       <regression name="onemonth_test">

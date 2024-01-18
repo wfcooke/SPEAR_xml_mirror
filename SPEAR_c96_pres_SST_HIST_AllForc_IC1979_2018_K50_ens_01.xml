@@ -2037,24 +2037,6 @@ set domains_stack_size = "5097152"
 	     </resources>
    </freInclude>
 
-   <freInclude name="AMIP_A24x1">
-	     <resources jobWallclock="01:00:00">
-               <atm ranks="24" threads="1"    layout = "1,4"   io_layout = "1,1" />
-	       <lnd                           layout = "1,4"   io_layout = "1,1" />
-	       <ice                           layout = "12,2"  io_layout = "1,1" />
-	       <ocn ranks="0" threads="0"     layout = "12,2"  io_layout = "1,1" mask_table="MOM_mask_table" />
-	     </resources>
-   </freInclude>
-
-   <freInclude name="AMIP_A36x1">
-	     <resources jobWallclock="01:00:00">
-               <atm ranks="36" threads="1"    layout = "1,6"   io_layout = "1,1" />
-	       <lnd                           layout = "1,6"   io_layout = "1,1" />
-	       <ice                           layout = "12,3"  io_layout = "1,1" />
-	       <ocn ranks="0" threads="0"     layout = "12,3"  io_layout = "1,1" mask_table="MOM_mask_table" />
-	     </resources>
-   </freInclude>
-
    <freInclude name="AMIP_A36x4">
 	     <resources jobWallclock="00:30:00">
                <atm ranks="36" threads="4"    layout = "1,6"   io_layout = "1,1" />
@@ -2511,26 +2493,6 @@ LAYOUT_EOF
                              icebergs_nml:make_calving_reproduce=.TRUE.;
                              xgrid_nml:make_exchange_reproduce=.TRUE.;">
             <xi:include xpointer="xpointer(//freInclude[@name='AMIP_A864x2']/node())"/>
-        </run>
-      </regression>
-
-      <regression label="onenode_c4">
-        <run days="8" months="0"
-             overrideParams="fms_nml:clock_grain='ROUTINE';
-                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
-                             icebergs_nml:make_calving_reproduce=.TRUE.;
-                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
-            <xi:include xpointer="xpointer(//freInclude[@name='AMIP_A36x1']/node())"/>
-        </run>
-      </regression>
-
-      <regression label="onenode_c3">
-        <run days="8" months="0"
-             overrideParams="fms_nml:clock_grain='ROUTINE';
-                             random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
-                             icebergs_nml:make_calving_reproduce=.TRUE.;
-                             xgrid_nml:make_exchange_reproduce=.TRUE.;">
-            <xi:include xpointer="xpointer(//freInclude[@name='AMIP_A24x1']/node())"/>
         </run>
       </regression>
 
@@ -7203,6 +7165,22 @@ cd ..
      </postProcess>
   </freInclude>
 
+  <freInclude name="SPEAR_c96_PostP_AMIP_daily">
+
+      <postProcess> 
+      <component type="atmos_daily" zInterp="ncep"  start="$(PP_AMIP_START_YEAR)"  source="atmos_daily" sourceGrid="atmos-cubedsphere" xyInterp="180,288" >
+	<timeSeries freq="daily" source="atmos_daily" chunkLength="$(CHUNK_LENGTH_A)"/>
+      </component>
+      <component type="atmos_4xdaily" zInterp="ncep"   start="$(PP_AMIP_START_YEAR)" source="atmos_4xdaily" sourceGrid="atmos-cubedsphere" xyInterp="180,288" >
+        <timeSeries freq="6hr" source="atmos_4xdaily" chunkLength="$(CHUNK_LENGTH_A)"/>
+      </component>
+      <component type="atmos_4xdaily_avg" zInterp="ncep"   start="$(PP_AMIP_START_YEAR)" source="atmos_4xdaily_avg" sourceGrid="atmos-cubedsphere" xyInterp="180,288" >
+        <timeSeries freq="6hr" source="atmos_4xdaily_avg" chunkLength="$(CHUNK_LENGTH_A)"/>
+      </component>
+     </postProcess>
+  </freInclude>
+
+
   <freInclude name="SPEAR_c96_PostP_AMIP_nodaily">
 
       <postProcess> 
@@ -8631,6 +8609,7 @@ set nyblocks = $dummy
   </runtime>
   <postProcess>
       <xi:include xpointer="xpointer(//freInclude[@name='SPEAR_c96_PostP_AMIP_nodaily']/postProcess/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='SPEAR_c96_PostP_AMIP_daily']/postProcess/node())"/>
   </postProcess>
 </experiment>
 

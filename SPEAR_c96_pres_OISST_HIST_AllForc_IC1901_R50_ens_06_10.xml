@@ -359,11 +359,11 @@ configuration.
       <project>gfdl_sd</project>
 
       <directory stem="$(FRE_STEM)">
+        <!--
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
         <include>$(xmlDir)/SPEAR_include</include>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
         -->
+        <include>$HOME/SPEAR/SPEAR_include</include>
       </directory>
 
       <!-- Uncomment the <csh> section if needing to run with DDT -->

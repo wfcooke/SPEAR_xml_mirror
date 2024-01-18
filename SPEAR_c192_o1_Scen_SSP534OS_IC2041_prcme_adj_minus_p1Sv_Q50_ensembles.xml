@@ -1757,10 +1757,9 @@ if ( $currentSeg == 1 ) then
 
 endif
 
-#chmod 644 prcme_adj.nc
-#ncatted -a _FillValue,prcme_adj,m,f,0.0 prcme_adj.nc
-#ncatted -a missing_value,prcme_adj,m,f,0.0 prcme_adj.nc
-
+chmod 644 prcme_adj.nc
+ncatted -a _FillValue,prcme_adj,m,f,0.0 prcme_adj.nc
+ncatted -a missing_value,prcme_adj,m,f,0.0 prcme_adj.nc
 cd $work
 
 #------------------------------------------
