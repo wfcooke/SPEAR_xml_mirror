@@ -71,7 +71,6 @@ from integrations with these models.
           -Duse_libMPI
           -Duse_netCDF
           -DMAXFIELDMETHODS_=500
-          -Duse_yaml
         </cppDefs>
       </compile>
     </component>
