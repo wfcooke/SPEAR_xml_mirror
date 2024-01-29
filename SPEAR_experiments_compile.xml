@@ -118,8 +118,6 @@ from integrations with these models.
     <component name="fv3"
                paths="GFDL_atmos_cubed_sphere/driver/GFDL
                       GFDL_atmos_cubed_sphere/model
-                      GFDL_atmos_cubed_sphere/driver/SHiELD/cloud_diagnosis.F90
-                      GFDL_atmos_cubed_sphere/driver/SHiELD/gfdl_cloud_microphys.F90
                       GFDL_atmos_cubed_sphere/tools
                       GFDL_atmos_cubed_sphere/GFDL_tools"
                requires="FMS
