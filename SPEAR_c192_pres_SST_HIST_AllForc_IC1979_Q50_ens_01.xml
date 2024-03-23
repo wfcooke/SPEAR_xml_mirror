@@ -6,7 +6,7 @@ Quick start guide
 =================
 
 ```
-module load fre/bronx-20
+module load fre/bronx-21
 fremake -x SPEAR_experiments_R.xml -p ncrc5.intel-classic -t repro,openmp SPEAR_R2022.03_nonsymMOM6_exec
 frerun  -x SPEAR_c96_o1_Control_1850_Q50.xml -p ncrc5.intel-classic -t repro,openmp SPEAR_c96_o1_Control_1850_Q50 -r basic_prodsettings
 ```
@@ -62,7 +62,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
   <!-- FRE specific properties -->
   <property name="FRE_STEM" value="SPEAR_experiments_R_20231005" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-20" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_VERSION" value="bronx-21" />              <!-- FRE version for use in this XML -->
 
   <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
 
@@ -83,7 +83,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
    <property name="CHUNK_LENGTH_A" value="10yr"/>
    <property name="CHUNK_LENGTH_B" value="100yr"/>
-   <property name="CHUNK_LENGTH_C" value="163yr"/>
+   <property name="CHUNK_LENGTH_C" value="38yr"/>
    <property name="CHUNK_LENGTH_A_c384" value="10yr"/>
    <property name="CHUNK_LENGTH_B_c384" value="100yr"/>
    <property name="CHUNK_LENGTH_C_c384" value="1000yr"/>
@@ -225,141 +225,27 @@ run time values may need to be adjusted for your specific
 configuration.
 -->
 
-    <!-- GFDL Analysis/PP Platforms -->
+    <!-- GFDL Platforms -->
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.postprocess'])"/>
 
-    <platform name="gfdl.postprocess">
-      <freVersion>$(FRE_VERSION)</freVersion>
-
-      <property name="NB_ROOT"            value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
-      <property name="F2003_FLAGS"        value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/archive"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/archive"/>
-      <property name="CMIP6_ARCHIVE_ROOT" value="/archive/oar.gfdl.cmip6/datasets"/>
-      <property name="SD_ARCHIVE_ROOT"   value="/archive"/>
-
-      <directory stem="$(FRE_STEM)" >
-        <root>/home/$USER/SPEAR</root>
-        <archive>/archive/$USER/SPEAR/$(name)</archive>
-        <include>$(rootDir)/SPEAR_include</include> 
-        <analysis>/nbhome/$USER/$(stem)/$(name)</analysis>
-      </directory>
-
-      <csh><![CDATA[
-        module load git
-        setenv NBROOT $(NB_ROOT)
-        setenv FREVERSION fre/$(FRE_VERSION)
-        ]]>
-      </csh>
-    </platform>
-
-    <platform name="gfdl.ncrc4-intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc4-intel16">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc4-intel18">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc4-intel-oneapi-21_3">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc5-intel-classic">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel18'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel21'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel-oneapi-21_3'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc5-intel-classic'])"/>
 
     <!-- NCRC Platforms -->
+    <!-- ncrc4.intel18 is the platform typically used for c4 -->
 
-    <platform name="ncrc4.intel-oneapi-21_3">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="intel-oneapi-2021.3.0" />
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel-oneapi-21_3'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel21'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel18'])"/>
 
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
 
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
- <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
-      </directory>
+    <!-- ncrc5.intel23-classic is the recommended platform for c5, fully coupled experiment-->
 
-      <!-- Uncomment the <csh> section if needing to run with DDT -->
-      <!--
-      <csh><![CDATA[
-         module load ddt
-         setenv DDTMPIRUN /opt/cray/alps/default/bin/aprun
-         alias runCommand ddt  -n $npes  ./$executable:t 
-        ]]>
-      </csh>
-      -->
-    </platform>
-
-    <platform name="ncrc4.intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
-    </platform>
-
-    <platform name="ncrc4.intel18">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel-classic" version="2022.2.1" /><!--DO NOT COMPILE WITH THIS -->
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
- <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
-      </directory>
-
-    </platform>
-
-    <platform name="ncrc5.intel-classic">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel-classic" version="2022.0.2" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
- <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
-      </directory>
-    </platform>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc5.intel-classic'])"/>
 
   </setup>
 
@@ -407,15 +293,6 @@ configuration.
     </input>
   </freInclude>
 
- <freInclude name="c96_LM4_SPEAR">
-    <input>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/c96_LM4/c96_topo_rough_land.nc.tar</dataSource>
-      </dataFile>
-    </input>
-  </freInclude>
-
-
  <freInclude name="c192_LM4_SPEAR">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
@@ -424,27 +301,7 @@ configuration.
       </dataFile>
 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <!--
-       <dataSource platform="$(platform)">$CPERM/Huan.Guo/INPUT/drag/c192_topo_rough_land.nc.tar</dataSource>
-       -->
-       <dataSource platform="$(platform)">/lustre/f2/pdata//gfdl/gfdl_M/Huan.Guo/INPUT/drag/c192_topo_rough_land.nc.tar</dataSource>
-     </dataFile> 
-    </input>
-  </freInclude>
-
- <freInclude name="c384_LM4_SPEAR">
-    <input>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C384_OM360x320.20180503/SPEAR_c384_hydrography.v20180510.tar</dataSource>
-        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C384_OM360x320.20180503/SPEAR_c384_hydrography.v20180510.tar</dataSource> 
-      </dataFile>
-
-     <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <!--
-       <dataSource platform="$(platform)">/lustre/f1/unswept/Baoqiang.Xiang/archive/cm4_develop/C384/drag/c384_topo_rough_land.nc.tar</dataSource>
-       -->
-       <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/SPEAR_HI_data/cm4_develop/C384/drag/c384_topo_rough_land.nc.tar</dataSource>
-       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/datasets/SPEAR_HI_data/cm4_develop/C384/drag/c384_topo_rough_land.nc.tar</dataSource>
+       <dataSource platform="$(platform)">$(SD_ARCHIVE_ROOT)/SPEAR_c192/drag/c192_topo_rough_land.nc.tar</dataSource>
      </dataFile> 
     </input>
   </freInclude>
@@ -461,7 +318,7 @@ configuration.
          <!--
          <dataSource site="ncrc">/lustre/f1/pdata/gfdl_M/cm3/ipcc_ar5/input/common/hadisst.186912-201301.tar</dataSource>
          -->
-         <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_M/Larry.Horowitz/archive/cm3/ipcc_ar5/input/common/hadisst.186912-201301.tar</dataSource>
+         <dataSource site="ncrc">$(LWH_ARCHIVE_ROOT)/archive/cm3/ipcc_ar5/input/common/hadisst.186912-201301.tar</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -475,7 +332,7 @@ configuration.
 "LND", "phot_co2","co2", "INPUT/co2_data.nc",         "bilinear", 1.e-6
       </dataTable>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/hadisst/hadisst.186912-201812.tar</dataSource>
+         <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR/datasets/hadisst/hadisst.186912-201812.tar</dataSource>
          <dataSource site="gfdl">/archive/wfc/data/hadisst/20190412/fms/hadisst.186912-201812.tar</dataSource>
       </dataFile>
     </input>
@@ -490,7 +347,7 @@ configuration.
 "LND", "phot_co2","co2", "INPUT/co2_data.nc",         "bilinear", 1.e-6
       </dataTable>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/HadOISST/hadoisst.186912-202109.tar</dataSource>
+         <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR/datasets/HadOISST/hadoisst.186912-202109.tar</dataSource>
          <dataSource site="gfdl">/archive/wfc/data/hadoisst/20220131/fms/hadoisst.186912-202109.tar</dataSource>
       </dataFile>
     </input>
@@ -510,7 +367,7 @@ configuration.
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp585/cmip6_Scenario_ssp585_GHG_ODS_conc_2500.tar</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/o3.climatology.nc" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/1849_2101/ozone/mmro3_CMIP6_SSP585_184901-210112.nc</dataSource>
+        <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR/datasets/1849_2101/ozone/mmro3_CMIP6_SSP585_184901-210112.nc</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -538,11 +395,11 @@ configuration.
   <freInclude name="emissions_cmip6_ssp585_combined">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/1849_2101/emissions/emissions.fastchem.0.5x0.5.1849-2101.tar</dataSource>
+        <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR/datasets/1849_2101/emissions/emissions.fastchem.0.5x0.5.1849-2101.tar</dataSource>
         <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/datasets/1849_2101_SSP585/emissions/emissions.fastchem.0.5x0.5.1849-2101.tar</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/anthro_so2.1849_2101.nc" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/1849_2101/emissions/emissions.simple.so2.0.5x0.5.1849-2101.nc</dataSource>
+        <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR/datasets/1849_2101/emissions/emissions.simple.so2.0.5x0.5.1849-2101.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/co2_data.nc" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp585/co2_ssp585_3D_0to2499.nc</dataSource>
@@ -684,13 +541,13 @@ configuration.
         <!--
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/extsw_data.nc</dataSource>
         -->
-        <dataSource platform="$(platform)">$PDATA/gfdl/cmip6/datasets/CM4/forcings/Volcano_Solar_1850_cmip6_v2/extsw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/extsw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
         <!--
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/omgsw_data.nc</dataSource>
         -->
-        <dataSource platform="$(platform)">$PDATA/gfdl/cmip6/datasets//CM4/forcings/Volcano_Solar_1850_cmip6_v2/omgsw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/omgsw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/asmsw_data.nc</dataSource>
@@ -699,7 +556,7 @@ configuration.
         <!--
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/extlw_data.nc</dataSource>
         -->
-        <dataSource platform="$(platform)">$PDATA/gfdl/cmip6/datasets//CM4/forcings/Volcano_Solar_1850_cmip6_v2/extlw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/extlw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/lean_solar_spectral_data.dat</dataSource>
@@ -725,10 +582,10 @@ configuration.
   <freInclude name="emissions_cmip6_v20161213">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_M/Vaishali.Naik/input/cmip6_forcing_dataset/emissions/v2016-12-13/1849_2016/emissions.0.5x0.5.1849-2016.tar</dataSource>
+        <dataSource site="ncrc">$(VAN_ARCHIVE_ROOT)/input/cmip6_forcing_dataset/emissions/v2016-12-13/1849_2016/emissions.0.5x0.5.1849-2016.tar</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/anthro_so2.1849_2016.nc" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_M/Vaishali.Naik/input/cmip6_forcing_dataset/emissions/v2016-12-13/fast_chemistry/emissions.simple.so2.0.5x0.5.1849-2016.nc</dataSource>
+        <dataSource site="ncrc">$(VAN_ARCHIVE_ROOT)/input/cmip6_forcing_dataset/emissions/v2016-12-13/fast_chemistry/emissions.simple.so2.0.5x0.5.1849-2016.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/co2_data.nc" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/CO2/co2_historical_3D_0to2016.nc</dataSource>
@@ -1539,7 +1396,7 @@ SIS_LAYOUT_EOF
 cd $work/INPUT
 
 if ( $currentSeg == 1 ) then
-     rm -f coupler.res ice_model.res.nc
+     rm -f coupler.res ice_model.res.ncSPEAR_c384_pres_SST_HIST_AllForc_IC1979_K50_ens_01_2018/
 endif
 cd $work
 
@@ -1635,6 +1492,226 @@ set nyblocks = $dummy
       <xi:include xpointer="xpointer(//freInclude[@name='SPEAR_c192_PostP_Control_withdaily']/postProcess/node())"/>
       -->
   </postProcess>
+</experiment>
+
+
+<experiment name="SPEAR_c192_pres_SST_HIST_AllForc_IC1979_Q50_ens_02_c5" inherit="SPEAR_c192_pres_SST_HIST_AllForc_IC1979_Q50_ens_02">
+  <description>
+1/25/2024
+AMIP version of SPEAR_c192_o1_Control_1850_K50.
+Run on c5 to compare for resolution and physics changes. Eliminate c4 vs c5 differences.
+  </description>
+<input>
+     <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
+     </dataFile>
+     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/initCond_SPEAR/REMAP/C192_LM3_MOM6_01_CanadianArchipelago.1850.remapped.v20180218.tar</dataSource>
+       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c192/initCond/C192_LM3_MOM6_01_CanadianArchipelago.1850.remapped.v20180218.tar</dataSource>
+     </dataFile> 
+      <diagTable>
+$name
+$baseDate
+      </diagTable>
+      <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_20240125_no_ocean_ice</dataSource>
+      </dataFile>
+      <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_20240125_ice_SIS</dataSource>
+      </dataFile>
+      <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C192_OM360x320.20171213/mosaic.tar</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C192.OM360x320.20171213/mosaic.tar</dataSource> 
+      </dataFile>
+      <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='c192_LM4_SPEAR']/input/node())"/>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C192_OM360x320.20171213/SPEAR_c192_hydrography.v20171218.tar</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C192.OM360x320.20171213/SPEAR_c192_hydrography.v20171218.tar</dataSource> 
+      </dataFile>
+      <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6_ssp585_combined']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='Volcano_Solar_TimeSeries_cmip6_v3']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_ssp585_combined']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='L32_gas_conc']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='c192_stack_size']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='csh_adjust_dry_mass']/input/node())"/>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='SPEAR_domain_decomp']/input/node())"/>
+      <!--MOM6 Input datasets-->
+<!--
+      <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
+-->
+      <!-- overwrite  Channels file -->
+<!--
+      <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
+      </dataFile>
+-->
+      <!--MOM6 Input datasets-->
+<!--
+      <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(includeDir)/ice_ocean_SIS2/OM4_025/INPUT/hycom1_75_800m.nc</dataSource>
+      </dataFile>
+-->
+      <!-- Override the MOM_input in the MOM6_data xi include above --> 
+      <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
+         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/SPEAR/MOM_input_P39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_P39_init</dataSource>
+      </dataFile>
+      <!--SIS Input datasets-->
+      <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
+      <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
+         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
+      </dataFile>
+<!--
+      <dataFile label="input" target="INPUT/KH_background_2d.nc">
+         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
+      </dataFile>
+-->
+      <!--AMIP Input datasets-->
+      <xi:include xpointer="xpointer(//freInclude[@name='common_amip_HadOISST_v20220131']/input/node())"/>
+<!--
+      <dataFile label="input" target="INPUT/">
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
+      </dataFile>
+-->
+      <csh type="always"><![CDATA[
+######BEGIN MOM6 and SIS2 layout setup################
+##THIS HAS TO BE PART OF csh type=always###
+
+touch $work/INPUT/MOM_override
+
+cat > $work/INPUT/MOM_override << EOF
+#override KV_ML_INVZ2 = 1.0E-4
+
+#override DEFAULT_ANSWER_DATE=20181231
+#override DO_ICEBERGS = False
+#override SPECIFIED_ICE = True
+#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
+#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
+NUM_DIAG_COORDS = 3             ! default = 1
+                                ! The number of diagnostic vertical coordinates to use.
+                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
+DIAG_COORDS = "z Z ZSTAR, rho2 RHO2 RHO, ztop ZTOP300 ZSTAR"
+
+DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
+                                ! Determines how to specify the coordinate
+                                ! resolution. Valid options are:
+                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
+                                !  UNIFORM[:N] - uniformly distributed
+                                !  FILE:string - read from a file. The string specifies
+                                !                the filename and variable name, separated
+                                !                by a comma or space, e.g. FILE:lev.nc,dz
+                                !                or FILE:lev.nc,interfaces=zw
+                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
+                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
+                                !  HYBRID:string - read from a file. The string specifies
+                                !                the filename and two variable names, separated
+                                !                by a comma or space, for sigma-2 and dz. e.g.
+                                !                HYBRID:vgrid.nc,sigma2,dz
+
+DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
+EOF
+
+touch $work/INPUT/SIS_override
+
+cat > $work/INPUT/SIS_override << EOF
+#override CP_SEAWATER = 3992.
+#override CP_BRINE = 3992.
+#override ICE_BULK_SALINITY = 0.0
+#override ICE_RELATIVE_SALINITY = 0.17
+#override SIS2_FILLING_FRAZIL = T
+#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
+#override SIS_CONTINUITY_SCHEME = "PCM"
+#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
+EOF
+
+#scan auxiliary_nml
+#set OCN_MASK_TABLE = 
+#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+
+cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
+#override IO_LAYOUT = $ocn_io_layout
+#override LAYOUT    = $ocn_layout
+#override MASKTABLE = $ocn_mask_table
+MOM_LAYOUT_EOF
+
+#scan auxiliary_nml
+#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+
+cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
+#override IO_LAYOUT = $ice_io_layout
+#override LAYOUT    = $ice_layout
+#override MASKTABLE = $ocn_mask_table
+SIS_LAYOUT_EOF
+
+######END MOM6 and SIS2 layout setup################
+
+cd $work/INPUT
+
+if ( $currentSeg == 1 ) then
+     rm -f coupler.res ice_model.res.nc
+endif
+cd $work
+
+#------------------------------------------
+## Find out whether to restart.
+# MOM6 restart switch
+if ( $currentSeg == 1 ) then
+   set restart_flag = 'n'
+else
+   set restart_flag = 'r'
+endif
+   set sis_restart_flag = 'n'
+cd $work
+
+## Run the model
+#------------------------------------------
+###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
+set OCN_MASK_TABLE  =  $ocn_mask_table
+set OCN_LAYOUT    = $ocn_layout
+set OCN_IO_LAYOUT = $ocn_io_layout
+set ICE_LAYOUT    = $ice_layout
+set ICE_IO_LAYOUT = $ice_io_layout
+set atmos_npes = $atm_ranks
+set ocean_npes = $ocn_ranks
+set fv_layout = $atm_layout
+set fv_io_layout  = $atm_io_layout
+set land_layout   = $lnd_layout
+set land_io_layout = $lnd_io_layout
+set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nxblocks = $dummy
+set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nyblocks = $dummy
+]]>
+    </csh>
+</input>
+
+  <runtime>
+    <production simTime="50" units="years" >
+      <segment simTime="1" units="years"/>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A1152x2_production']/node())"/>
+    </production> 
+      <regression name="basic_prodsettings">
+        <run days="8" >
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='AMIP_A576x2']/node())"/>
+        </run>
+      </regression>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='regression_AMIP_OMP_c192']/runtime/node())"/>
+  </runtime>
+  <postProcess>
+      <xi:include xpointer="xpointer(//freInclude[@name='SPEAR_c192_PostP_AMIP_withdaily']/postProcess/node())"/>
+  </postProcess>
+
 </experiment>
 
 

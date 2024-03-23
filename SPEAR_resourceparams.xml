@@ -319,6 +319,26 @@
 	     </resources>
    </freInclude>
 
+   <freInclude name="AMIP_A1728x4_c384_production">
+	     <resources jobWallclock="14:00:00"
+                   segRuntime="10:30:00">
+               <atm ranks="1728" threads="4"  layout = "12,24"   io_layout = "1,1" />
+	       <lnd                           layout = "12,24"   io_layout = "1,1" />
+	       <ice                           layout = "72,24"  io_layout = "1,1" />
+	       <ocn ranks="0"  threads="0"    layout = "24,48" io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
+   <freInclude name="AMIP_A1728x6_c384_production">
+	     <resources jobWallclock="16:00:00"
+                   segRuntime="5:00:00">
+               <atm ranks="1728" threads="6"  layout = "12,24"   io_layout = "1,1" />
+	       <lnd                           layout = "12,24"   io_layout = "1,1" />
+	       <ice                           layout = "72,24"  io_layout = "1,1" />
+	       <ocn ranks="0"  threads="0"    layout = "24,48" io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
 
 <!--================================-->
 <!--= LAYOUTS FOR C384 EXPERIMENTS =-->
@@ -994,6 +1014,24 @@ v   <freInclude name="resourceparams_A72x6_O36_c192">
 	     </resources>
    </freInclude>
 
+   <freInclude name="resourceparams_A144x1_O128_debug">
+	     <resources jobWallclock="1:00:00" >
+               <atm ranks="144" threads="1"   layout = "4,6"   io_layout = "1,1" />
+	       <lnd                           layout = "4,6"   io_layout = "1,1" />
+	       <ice                           layout = "72,2" io_layout = "1,1" />
+	       <ocn ranks="128" threads="1"    layout = "8,16"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A144x1_O512_debug">
+	     <resources jobWallclock="1:00:00" >
+               <atm ranks="144" threads="1"   layout = "4,6"   io_layout = "1,1" />
+	       <lnd                           layout = "4,6"   io_layout = "1,1" />
+	       <ice                           layout = "72,2" io_layout = "1,1" />
+	       <ocn ranks="512" threads="1"   layout = "16,32"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
    <freInclude name="resourceparams_A144x2_O36">
 	     <resources jobWallclock="1:00:00" >
                <atm ranks="144" threads="2"   layout = "4,6"   io_layout = "1,1" />
@@ -1522,6 +1560,15 @@ v   <freInclude name="resourceparams_A72x6_O36_c192">
                <atm ranks="288" threads="2"   layout = "6,8"   io_layout = "1,4" />
 	       <lnd                           layout = "6,8"   io_layout = "1,4" />
 	       <ice                           layout = "72,4" io_layout = "1,1" />
+	       <ocn ranks="180" threads="1"   layout = "9,20"  io_layout = "1,1" mask_table="MOM_mask_table" />
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A288x2_O180_ice144x2">
+	     <resources jobWallclock="01:00:00">
+               <atm ranks="288" threads="2"   layout = "6,8"   io_layout = "1,4" />
+	       <lnd                           layout = "6,8"   io_layout = "1,4" />
+	       <ice                           layout = "144,2" io_layout = "1,1" />
 	       <ocn ranks="180" threads="1"   layout = "9,20"  io_layout = "1,1" mask_table="MOM_mask_table" />
 	     </resources>
    </freInclude>
@@ -2443,6 +2490,60 @@ v   <freInclude name="resourceparams_A72x6_O36_c192">
 	     </resources>
    </freInclude>
 
+   <freInclude name="resourceparams_A2304x4_O2997_production">
+	     <resources jobWallclock="16:00:00" segRuntime="4:00:00">
+               <atm ranks="2304" threads="4"  layout = "16,24"  io_layout = "1,4" />
+	       <lnd                           layout = "16,24"  io_layout = "1,4" />
+	       <ice                           layout = "72,32"  io_layout = "1,1" />
+               <ocn ranks="2997" threads="1"   layout = "90,45"  io_layout = "9,5" mask_table="mask_table.1053.90x45"/>
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A2304x4_O3551_production">
+	     <resources jobWallclock="16:00:00" segRuntime="4:00:00">
+               <atm ranks="2304" threads="4"  layout = "16,24"  io_layout = "1,4" />
+	       <lnd                           layout = "16,24"  io_layout = "1,4" />
+	       <ice                           layout = "72,32"  io_layout = "1,1" />
+               <ocn ranks="3551" threads="1"  layout = "90,54"  io_layout = "9,3" mask_table="mask_table.1309.90x54"/>
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A2304x4_O3782_production">
+	     <resources jobWallclock="16:00:00" segRuntime="4:00:00">
+               <atm ranks="2304" threads="4"  layout = "16,24"  io_layout = "1,4" />
+	       <lnd                           layout = "16,24"  io_layout = "1,4" />
+	       <ice                           layout = "72,32"  io_layout = "1,1" />
+               <ocn ranks="3782" threads="1"  layout = "72,72"  io_layout = "8,4" mask_table="mask_table.1402.72x72"/>
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A2304x8_O2997_production">
+	     <resources jobWallclock="16:00:00" segRuntime="4:00:00">
+               <atm ranks="2304" threads="8"  layout = "16,24"  io_layout = "1,4" />
+	       <lnd                           layout = "16,24"  io_layout = "1,4" />
+	       <ice                           layout = "72,32"  io_layout = "1,1" />
+               <ocn ranks="2997" threads="1"   layout = "90,45"  io_layout = "9,5" mask_table="mask_table.1053.90x45"/>
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A2304x8_O3551_production">
+	     <resources jobWallclock="16:00:00" segRuntime="4:00:00">
+               <atm ranks="2304" threads="8"  layout = "16,24"  io_layout = "1,4" />
+	       <lnd                           layout = "16,24"  io_layout = "1,4" />
+	       <ice                           layout = "72,32"  io_layout = "1,1" />
+               <ocn ranks="3551" threads="1"  layout = "90,54"  io_layout = "9,3" mask_table="mask_table.1309.90x54"/>
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A2304x8_O3782_production">
+	     <resources jobWallclock="16:00:00" segRuntime="4:00:00">
+               <atm ranks="2304" threads="8"  layout = "16,24"  io_layout = "1,4" />
+	       <lnd                           layout = "16,24"  io_layout = "1,4" />
+	       <ice                           layout = "72,32"  io_layout = "1,1" />
+               <ocn ranks="3782" threads="1"  layout = "72,72"  io_layout = "8,4" mask_table="mask_table.1402.72x72"/>
+	     </resources>
+   </freInclude>
+
    <freInclude name="resourceparams_A1152x2_O2997_production">
 	     <resources jobWallclock="16:00:00" segRuntime="4:00:00">
                <atm ranks="1152" threads="2"  layout = "8,24"  io_layout = "1,4" />
@@ -2859,6 +2960,86 @@ v   <freInclude name="resourceparams_A72x6_O36_c192">
 	     </resources>
    </freInclude>
 
+   <freInclude name="resourceparams_A2304x8_O5791_c384_production_c5">
+	     <resources jobWallclock="16:00:00"
+                   segRuntime="04:00:00">
+               <atm ranks="2304" threads="8"  layout = "16,24"   io_layout = "1,4" />
+	       <lnd                           layout = "16,24"   io_layout = "1,4" />
+	       <ice                           layout = "72,32"   io_layout = "1,1" />
+               <ocn ranks="5791" threads="1"   layout = "90,90"  io_layout = "3,3" mask_table="mask_table.2309.90x90"/>
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A2304x8_O5791_c384_ice144x16_c5">
+	     <resources jobWallclock="16:00:00"
+                   segRuntime="04:00:00">
+               <atm ranks="2304" threads="8"  layout = "16,24"   io_layout = "1,4" />
+	       <lnd                           layout = "16,24"   io_layout = "1,4" />
+	       <ice                           layout = "144,16"   io_layout = "1,1" />
+               <ocn ranks="5791" threads="1"   layout = "90,90"  io_layout = "3,3" mask_table="mask_table.2309.90x90"/>
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A2304x8_O5791_c384_ice288x8_c5">
+	     <resources jobWallclock="16:00:00"
+                   segRuntime="04:00:00">
+               <atm ranks="2304" threads="8"  layout = "16,24"   io_layout = "1,4" />
+	       <lnd                           layout = "16,24"   io_layout = "1,4" />
+	       <ice                           layout = "288,8"   io_layout = "1,1" />
+               <ocn ranks="5791" threads="1"   layout = "90,90"  io_layout = "3,3" mask_table="mask_table.2309.90x90"/>
+	     </resources>
+   </freInclude>
+
+
+   <freInclude name="resourceparams_A2304x8_O5791_c384_ice36x64_c5">
+	     <resources jobWallclock="16:00:00"
+                   segRuntime="04:00:00">
+               <atm ranks="2304" threads="8"  layout = "16,24"   io_layout = "1,4" />
+	       <lnd                           layout = "16,24"   io_layout = "1,4" />
+	       <ice                           layout = "36,64"   io_layout = "1,1" />
+               <ocn ranks="5791" threads="1"   layout = "90,90"  io_layout = "3,3" mask_table="mask_table.2309.90x90"/>
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A2304x8_O5791_c384_ice64x36_c5">
+	     <resources jobWallclock="16:00:00"
+                   segRuntime="04:00:00">
+               <atm ranks="2304" threads="8"  layout = "16,24"   io_layout = "1,4" />
+	       <lnd                           layout = "16,24"   io_layout = "1,4" />
+	       <ice                           layout = "64,36"   io_layout = "1,1" />
+               <ocn ranks="5791" threads="1"   layout = "90,90"  io_layout = "3,3" mask_table="mask_table.2309.90x90"/>
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A2304x8_O5791_c384_ice48x48_c5">
+	     <resources jobWallclock="16:00:00"
+                   segRuntime="04:00:00">
+               <atm ranks="2304" threads="8"  layout = "16,24"   io_layout = "1,4" />
+	       <lnd                           layout = "16,24"   io_layout = "1,4" />
+	       <ice                           layout = "48,48"   io_layout = "1,1" />
+               <ocn ranks="5791" threads="1"   layout = "90,90"  io_layout = "3,3" mask_table="mask_table.2309.90x90"/>
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A2304x8_O5791_c384_ice18x128_c5">
+	     <resources jobWallclock="16:00:00"
+                   segRuntime="04:00:00">
+               <atm ranks="2304" threads="8"  layout = "16,24"   io_layout = "1,4" />
+	       <lnd                           layout = "16,24"   io_layout = "1,4" />
+	       <ice                           layout = "18,128"   io_layout = "1,1" />
+               <ocn ranks="5791" threads="1"   layout = "90,90"  io_layout = "3,3" mask_table="mask_table.2309.90x90"/>
+	     </resources>
+   </freInclude>
+
+   <freInclude name="resourceparams_A2304x8_O5791_c384_ice24x96_c5">
+	     <resources jobWallclock="16:00:00"
+                   segRuntime="04:00:00">
+               <atm ranks="2304" threads="8"  layout = "16,24"   io_layout = "1,4" />
+	       <lnd                           layout = "16,24"   io_layout = "1,4" />
+	       <ice                           layout = "24,96"   io_layout = "1,1" />
+               <ocn ranks="5791" threads="1"   layout = "90,90"  io_layout = "3,3" mask_table="mask_table.2309.90x90"/>
+	     </resources>
+   </freInclude>
 
    <freInclude name="resourceparams_A2304x8_O4671_c384_iolayout11_c5">
 	     <resources jobWallclock="16:00:00"

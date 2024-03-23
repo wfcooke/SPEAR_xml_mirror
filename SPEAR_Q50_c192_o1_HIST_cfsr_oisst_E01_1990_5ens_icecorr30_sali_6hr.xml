@@ -6,7 +6,7 @@ Quick start guide
 =================
 
 ```
-module load fre/bronx-20
+module load fre/bronx-21
 fremake -x SPEAR_experiments_R.xml -p ncrc5.intel-classic -t repro,openmp SPEAR_R2022.03_nonsymMOM6_exec
 fremake -x SPEAR_experiments_R.xml -p ncrc5.intel-classic -t repro,openmp SPEAR_R_2022.03_AMIP_exec
 frerun  -x SPEAR_c96_o1_Control_1850_Q50.xml -p ncrc5.intel-classic -t repro,openmp SPEAR_c96_o1_Control_1850_Q50 -r basic_prodsettings
@@ -62,7 +62,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
   <!-- FRE specific properties -->
   <property name="FRE_STEM" value="SPEAR_experiments_R_20231005" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-20" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_VERSION" value="bronx-21" />              <!-- FRE version for use in this XML -->
 
   <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
 
@@ -164,6 +164,14 @@ properties below.
    <!-- The following properties are for testing/debugging purposes and should normally be empty-->
    <property name="MODIFIER"     value=""/>  
 
+   <!--
+   <property name="X1Y_ARCHIVE_ROOT"    value="/lustre/f2/dev/gfdl/Xiaosong.Yang"/>
+   <property name="L1J_ARCHIVE_ROOT"    value="/lustre/f2/dev/gfdl/Liwei.Jia"/>
+   -->
+   <property name="X1Y_ARCHIVE_ROOT"    value="/gpfs/f5/gfdl_sd/world-shared/Xiaosong.Yang"/>
+   <property name="L1J_ARCHIVE_ROOT"    value="/gpfs/f5/gfdl_sd/world-shared/Liwei.Jia"/>
+
+
   <setup>
     <fmsRelease>riga</fmsRelease>
 
@@ -225,141 +233,27 @@ run time values may need to be adjusted for your specific
 configuration.
 -->
 
-    <!-- GFDL Analysis/PP Platforms -->
+    <!-- GFDL Platforms -->
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.postprocess'])"/>
 
-    <platform name="gfdl.postprocess">
-      <freVersion>$(FRE_VERSION)</freVersion>
-
-      <property name="NB_ROOT"            value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
-      <property name="F2003_FLAGS"        value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/archive"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/archive"/>
-      <property name="CMIP6_ARCHIVE_ROOT" value="/archive/oar.gfdl.cmip6/datasets"/>
-      <property name="SD_ARCHIVE_ROOT"   value="/archive"/>
-
-      <directory stem="$(FRE_STEM)" >
-        <root>/home/$USER/SPEAR</root>
-        <archive>/archive/$USER/SPEAR/$(name)</archive>
-        <include>$(rootDir)/SPEAR_include</include> 
-        <analysis>/nbhome/$USER/$(stem)/$(name)</analysis>
-      </directory>
-
-      <csh><![CDATA[
-        module load git
-        setenv NBROOT $(NB_ROOT)
-        setenv FREVERSION fre/$(FRE_VERSION)
-        ]]>
-      </csh>
-    </platform>
-
-    <platform name="gfdl.ncrc4-intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc4-intel16">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc4-intel18">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc4-intel-oneapi-21_3">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc5-intel-classic">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel18'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel21'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel-oneapi-21_3'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc5-intel-classic'])"/>
 
     <!-- NCRC Platforms -->
+    <!-- ncrc4.intel18 is the platform typically used for c4 -->
 
-    <platform name="ncrc4.intel-oneapi-21_3">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="intel-oneapi-2021.3.0" />
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel-oneapi-21_3'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel21'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel18'])"/>
 
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/gfdl_sd"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
 
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
- <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
-      </directory>
+    <!-- ncrc5.intel23-classic is the recommended platform for c5, fully coupled experiment-->
 
-      <!-- Uncomment the <csh> section if needing to run with DDT -->
-      <!--
-      <csh><![CDATA[
-         module load ddt
-         setenv DDTMPIRUN /opt/cray/alps/default/bin/aprun
-         alias runCommand ddt  -n $npes  ./$executable:t 
-        ]]>
-      </csh>
-      -->
-    </platform>
-
-    <platform name="ncrc4.intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
-    </platform>
-
-    <platform name="ncrc4.intel18">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel-classic" version="2022.2.1" /><!--DO NOT COMPILE WITH THIS -->
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/gfdl_sd"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
- <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
-      </directory>
-
-    </platform>
-
-    <platform name="ncrc5.intel-classic">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel-classic" version="2022.0.2" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/pdata/gfdl/gfdl_sd"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
- <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
-      </directory>
-    </platform>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc5.intel-classic'])"/>
 
   </setup>
 
@@ -405,15 +299,6 @@ configuration.
     </input>
   </freInclude>
 
- <freInclude name="c96_LM4_SPEAR">
-    <input>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/c96_LM4/c96_topo_rough_land.nc.tar</dataSource>
-      </dataFile>
-    </input>
-  </freInclude>
-
-
  <freInclude name="c192_LM4_SPEAR">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
@@ -422,60 +307,8 @@ configuration.
       </dataFile>
 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <!--
-       <dataSource platform="$(platform)">$CPERM/Huan.Guo/INPUT/drag/c192_topo_rough_land.nc.tar</dataSource>
-       -->
-       <dataSource platform="$(platform)">/lustre/f2/pdata//gfdl/gfdl_M/Huan.Guo/INPUT/drag/c192_topo_rough_land.nc.tar</dataSource>
+       <dataSource platform="$(platform)">$(SD_ARCHIVE_ROOT)/SPEAR_c192/drag/c192_topo_rough_land.nc.tar</dataSource>
      </dataFile> 
-    </input>
-  </freInclude>
-
- <freInclude name="c384_LM4_SPEAR">
-    <input>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C384_OM360x320.20180503/SPEAR_c384_hydrography.v20180510.tar</dataSource>
-        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C384_OM360x320.20180503/SPEAR_c384_hydrography.v20180510.tar</dataSource> 
-      </dataFile>
-
-     <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <!--
-       <dataSource platform="$(platform)">/lustre/f1/unswept/Baoqiang.Xiang/archive/cm4_develop/C384/drag/c384_topo_rough_land.nc.tar</dataSource>
-       -->
-       <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/SPEAR_HI_data/cm4_develop/C384/drag/c384_topo_rough_land.nc.tar</dataSource>
-       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_sd/datasets/SPEAR_HI_data/cm4_develop/C384/drag/c384_topo_rough_land.nc.tar</dataSource>
-     </dataFile> 
-    </input>
-  </freInclude>
-
-  <freInclude name="common_amip">
-    <input>
-      <dataTable>
-"ICE", "sic_obs", "ice", "INPUT/hadisst_ice.data.nc", "bilinear", 0.01
-"ICE", "sit_obs", "",    "INPUT/hadisst_ice.data.nc", "none",     2.0
-"ICE", "sst_obs", "sst", "INPUT/hadisst_sst.data.nc", "bilinear", 1.0
-"LND", "phot_co2","co2", "INPUT/co2_data.nc",         "bilinear", 1.e-6
-      </dataTable>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-         <!--
-         <dataSource site="ncrc">/lustre/f1/pdata/gfdl_M/cm3/ipcc_ar5/input/common/hadisst.186912-201301.tar</dataSource>
-         -->
-         <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_M/Larry.Horowitz/archive/cm3/ipcc_ar5/input/common/hadisst.186912-201301.tar</dataSource>
-      </dataFile>
-    </input>
-  </freInclude>
-
-  <freInclude name="common_amip_v20190412">
-    <input>
-      <dataTable>
-"ICE", "sic_obs", "ice", "INPUT/hadisst_ice.data.nc", "bilinear", 0.01
-"ICE", "sit_obs", "",    "INPUT/hadisst_ice.data.nc", "none",     2.0
-"ICE", "sst_obs", "sst", "INPUT/hadisst_sst.data.nc", "bilinear", 1.0
-"LND", "phot_co2","co2", "INPUT/co2_data.nc",         "bilinear", 1.e-6
-      </dataTable>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/hadisst/hadisst.186912-201812.tar</dataSource>
-         <dataSource site="gfdl">/archive/wfc/data/hadisst/20190412/fms/hadisst.186912-201812.tar</dataSource>
-      </dataFile>
     </input>
   </freInclude>
 
@@ -483,14 +316,14 @@ configuration.
   <freInclude name="common_cmip6">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-	<dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/extend_CMIP6_forcings/cmip6_GHG_ODS_conc_2020.tar</dataSource>
+	<dataSource platform="$(platform)">$(WFC_ARCHIVE_ROOT)/extend_CMIP6_forcings/cmip6_GHG_ODS_conc_2020.tar</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/chemlbf" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/chemlbf_CMIP6_merge_RCP45</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/o3.climatology.nc" chksum="" size="" timestamp="">
-	<dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/extend_CMIP6_forcings/mmro3_CMIP6_184901-202012.nc</dataSource>
+	<dataSource platform="$(platform)">$(WFC_ARCHIVE_ROOT)/extend_CMIP6_forcings/mmro3_CMIP6_184901-202012.nc</dataSource>
       </dataFile>
 
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
@@ -657,13 +490,13 @@ configuration.
         <!--
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/extsw_data.nc</dataSource>
         -->
-        <dataSource platform="$(platform)">$PDATA/gfdl/cmip6/datasets/CM4/forcings/Volcano_Solar_1850_cmip6_v2/extsw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/extsw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
         <!--
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/omgsw_data.nc</dataSource>
         -->
-        <dataSource platform="$(platform)">$PDATA/gfdl/cmip6/datasets//CM4/forcings/Volcano_Solar_1850_cmip6_v2/omgsw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/omgsw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/asmsw_data.nc</dataSource>
@@ -672,7 +505,7 @@ configuration.
         <!--
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/extlw_data.nc</dataSource>
         -->
-        <dataSource platform="$(platform)">$PDATA/gfdl/cmip6/datasets//CM4/forcings/Volcano_Solar_1850_cmip6_v2/extlw_data.nc</dataSource>
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/extlw_data.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_1850_cmip6_v2/lean_solar_spectral_data.dat</dataSource>
@@ -683,15 +516,15 @@ configuration.
   <freInclude name="emissions_cmip6_v20170518">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-	<dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/extend_CMIP6_forcings/emissions.fastchem.0.5x0.5.1849-2021.tar</dataSource>
+	<dataSource platform="$(platform)">$(WFC_ARCHIVE_ROOT)/extend_CMIP6_forcings/emissions.fastchem.0.5x0.5.1849-2021.tar</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/anthro_so2.1849_2021.nc" chksum="" size="" timestamp="">
-	<dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/extend_CMIP6_forcings/emissions.simple.so2.0.5x0.5.1849-2021.nc</dataSource>
+	<dataSource platform="$(platform)">$(WFC_ARCHIVE_ROOT)/extend_CMIP6_forcings/emissions.simple.so2.0.5x0.5.1849-2021.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/co2_data.nc" chksum="" size="" timestamp="">
         <!--<dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/CO2/co2_historical_3D_0to2016.nc</dataSource>-->
         <!--
-        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/extend_CMIP6_forcings/co2_data_2020.nc</dataSource>
+        <dataSource platform="$(platform)">$(WFC_ARCHIVE_ROOT)/extend_CMIP6_forcings/co2_data_2020.nc</dataSource>
         -->
         <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp585/co2_ssp585_3D_0to2499.nc</dataSource>
       </dataFile>
@@ -708,7 +541,7 @@ configuration.
       </dataFile>
       <dataFile label="input" target="INPUT/co2_data.nc" chksum="" size="" timestamp="">
         <!--<dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/CO2/co2_historical_3D_0to2016.nc</dataSource>-->
-        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/extend_CMIP6_forcings/co2_data_2020.nc</dataSource>
+        <dataSource platform="$(platform)">$(WFC_ARCHIVE_ROOT)/extend_CMIP6_forcings/co2_data_2020.nc</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -717,13 +550,13 @@ configuration.
   <freInclude name="emissions_cmip6_v20161213">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_M/Vaishali.Naik/input/cmip6_forcing_dataset/emissions/v2016-12-13/1849_2016/emissions.0.5x0.5.1849-2016.tar</dataSource>
+        <dataSource site="ncrc">$(VAN_ARCHIVE_ROOT)/input/cmip6_forcing_dataset/emissions/v2016-12-13/1849_2016/emissions.0.5x0.5.1849-2016.tar</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/anthro_so2.1849_2016.nc" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_M/Vaishali.Naik/input/cmip6_forcing_dataset/emissions/v2016-12-13/fast_chemistry/emissions.simple.so2.0.5x0.5.1849-2016.nc</dataSource>
+        <dataSource site="ncrc">$(VAN_ARCHIVE_ROOT)/input/cmip6_forcing_dataset/emissions/v2016-12-13/fast_chemistry/emissions.simple.so2.0.5x0.5.1849-2016.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/co2_data.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">/lustre/f2/dev/gfdl/William.Cooke/extend_CMIP6_forcings/co2_data_2020.nc</dataSource>
+        <dataSource platform="$(platform)">$(WFC_ARCHIVE_ROOT)/extend_CMIP6_forcings/co2_data_2020.nc</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -1424,10 +1257,10 @@ to MOM_override
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <!--<dataSource site="ncrc">/lustre/f2/dev/gfdl/Xiaosong.Yang/archive/restarts/spear_med/SPEAR_c192_o1_Hist_AllForc_IC1921_K50_ens_01_03/19900101.tar</dataSource>-->
-       <dataSource site="ncrc">/lustre/f2/dev/gfdl/Liwei.Jia/restoring_SST_SPEAR/restart-c192L33/SPEAR_c192_L33_Hist_ens01_06_restart.19900101.tar</dataSource>
+       <dataSource site="ncrc">$(L1J_ARCHIVE_ROOT)/restoring_SST_SPEAR/restart-c192L33/SPEAR_c192_L33_Hist_ens01_06_restart.19900101.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_o1_Hist_AllForc_IC1921_K50_ens_01_03/SPEAR_c192_o1_Control_1850_K50_IC101_ens01_03.tar</dataSource>
        <!--
-       <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/debug_initConds/Q50_onemember.tar</dataSource>
+       <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/debug_initConds/Q50_onemember.tar</dataSource>
        -->
        <!--
        <dataSource site="ncrc">/lustre/f2/scratch/William.Cooke/test_cfsr_oisst/19900101.tar</dataSource>
@@ -1447,13 +1280,13 @@ $baseDate
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/cmip6/datasets/CM4/forcings/landuse/LUH2/v2.0h/transitions.nc</dataSource>
+        <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/landuse/LUH2/v2.0h/transitions.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/cmip6/datasets/CM4/forcings/landuse/LUH2/v2.0h/states.nc</dataSource>
+        <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/landuse/LUH2/v2.0h/states.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/cmip6/datasets/CM4/forcings/landuse/LUH2/v2.0h/landfrac.nc</dataSource>
+        <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/landuse/LUH2/v2.0h/landfrac.nc</dataSource>
       </dataFile>
       <xi:include xpointer="xpointer(//freInclude[@name='c192_LM4_SPEAR']/input/node())"/>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
@@ -1505,10 +1338,10 @@ $baseDate
          <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/ncep_file_names" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/gfdl/Xiaosong.Yang/archive/ada_data/CFSR/cfsr_filelist/cfsr_file_names_${fyear}</dataSource>
+        <dataSource site="ncrc">$(X1Y_ARCHIVE_ROOT)/archive/ada_data/CFSR/cfsr_filelist/cfsr_file_names_${fyear}</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/temp_restore.nc">
-        /lustre/f2/dev/gfdl/Liwei.Jia/restoring_SST_SPEAR/OISST_v2_highres/ice_corrected/SPEAR_lo_grid/sst_oidaily_icecorr_icec30_fill_${fyear}.nc
+        $(L1J_ARCHIVE_ROOT)/restoring_SST_SPEAR/OISST_v2_highres/ice_corrected/SPEAR_lo_grid/sst_oidaily_icecorr_icec30_fill_${fyear}.nc
       </dataFile>
    <csh type="always"><![CDATA[
 ######BEGIN MOM6 and SIS2 layout setup################

@@ -6,7 +6,7 @@ Quick start guide
 =================
 
 ```
-module load fre/bronx-20
+module load fre/bronx-21
 fremake -x SPEAR_experiments_R.xml -p ncrc5.intel-classic -t repro,openmp SPEAR_R_2022.03_nonsymMOM6_exec
 fremake -x SPEAR_experiments_R.xml -p ncrc5.intel-classic -t repro,openmp SPEAR_R_2022.03_AMIP_exec
 frerun  -x SPEAR_experiments_R.xml -p ncrc5.intel-classic -t repro,openmp SPEAR_c96_o1_Control_1850_Q50 -r basic_prodsettings
@@ -54,28 +54,29 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="RELEASE" value="dev/awg" />                 <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/>            <!-- git tag for MOM6 source code -->
 <!-- SPEAR_experiments_R_20220817 code -->
-  <property name="AWG_GIT_TAG"            value="2022.03"/>                 <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2023.01"/>                 <!-- git tag for FMS source code -->
-  <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>   <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"      value="2022.02"/>                 <!-- git tag for atmos_drivers -->
-  <property name="ATMOS_CUBED_SPHERE_TAG" value="2022.03"/>                 <!-- git tag for atmos_cubed_sphere source code -->
-  <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>                 <!-- git tag for ice_param source code -->
-
-
-<!--  <property name="AWG_GIT_TAG"            value="2023.01"/>                --> <!-- git tag for AWG source code -->
-<!--  <property name="FMS_GIT_TAG"            value="2023.01"/>                --> <!-- git tag for FMS source code -->
+<!--  <property name="AWG_GIT_TAG"            value="2022.03"/>                --> <!-- git tag for AWG source code -->
+<!--  <property name="FMS_GIT_TAG"            value="2022.03"/>                --> <!-- git tag for FMS source code -->
 <!--  <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>  --> <!-- git tag for Land source code -->
-<!--  <property name="ATMOS_DRIVERS_TAG"      value="2023.01"/>                --> <!-- git tag for atmos_drivers -->
-<!--  <property name="ATMOS_CUBED_SPHERE_TAG" value="2023.01"/>                --> <!-- git tag for atmos_cubed_sphere source code -->
+<!--  <property name="ATMOS_DRIVERS_TAG"      value="2022.02"/>                --> <!-- git tag for atmos_drivers -->
+<!--  <property name="ATMOS_CUBED_SPHERE_TAG" value="2022.03"/>                --> <!-- git tag for atmos_cubed_sphere source code -->
 <!--  <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>                --> <!-- git tag for ice_param source code -->
+
+
+<!-- SPEAR_experiments_R_20240321 code -->
+  <property name="AWG_GIT_TAG"            value="2023.04"/>                 <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"            value="2023.04"/>                 <!-- git tag for FMS source code -->
+  <property name="LAND_GIT_TAG"           value="2023.02"/>   <!-- git tag for Land source code -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2023.04"/>                 <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG" value="origin/dev/gfdl"/>                 <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>                 <!-- git tag for ice_param source code -->
 
   <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
 
   <!-- FRE specific properties -->
 <!--  <property name="FRE_STEM" value="SPEAR_experiments_R_20220817"/>  -->   <!-- Stem use in FRE directories -->
 <!--  <property name="FRE_STEM" value="SPEAR_experiments_R_20231005"/>  -->   <!-- Stem use in FRE directories -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20240110"/>     <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-20" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20240321"/>     <!-- Stem use in FRE directories -->
+  <property name="FRE_VERSION" value="bronx-21" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
   <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
@@ -234,291 +235,26 @@ Available options for c96L33:
 run time values may need to be adjusted for your specific
 configuration.
 -->
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.postprocess'])"/>
 
-    <!-- GFDL Analysis/PP Platforms -->
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel18'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel21'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel-oneapi-21_3'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc5-intel-classic'])"/>
 
-    <platform name="gfdl.postprocess">
-      <freVersion>$(FRE_VERSION)</freVersion>
+    <!-- ncrc4.intel18 was the recommended platform for c4 -->
 
-      <property name="NB_ROOT"            value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
-      <property name="F2003_FLAGS"        value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/archive"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/archive"/>
-      <property name="CMIP6_ARCHIVE_ROOT" value="/archive/oar.gfdl.cmip6/datasets"/>
-      <property name="SD_ARCHIVE_ROOT"   value="/archive"/>
-
-      <directory stem="$(FRE_STEM)" >
-        <root>/home/$USER/SPEAR</root>
-        <archive>/archive/$USER/SPEAR/$(name)</archive>
-        <include>$(rootDir)/SPEAR_include</include> 
-        <analysis>/nbhome/$USER/$(stem)/$(name)</analysis>
-      </directory>
-
-      <csh><![CDATA[
-        module load git
-        setenv NBROOT $(NB_ROOT)
-        setenv FREVERSION fre/$(FRE_VERSION)
-        ]]>
-      </csh>
-    </platform>
-
-    <platform name="gfdl.ncrc4-intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc4-intel18">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc4-intel21">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc4-intel-oneapi-21_3">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel-oneapi-21_3'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel21'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel18'])"/>
 
 
-    <platform name="gfdl.ncrc5-intel-classic">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
+    <!-- ncrc5.intel-classic is the recommended platform for c5, fully coupled experiment-->
 
-    <!-- NCRC Platforms -->
-    <platform name="ncrc4.intel-classic-2023_1_0">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel-classic" version="2023.1.0" />
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc5.intel-classic'])"/>
 
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
-      </directory>
-
-    </platform>
-
-    <platform name="ncrc4.intel-classic-2022_0_2">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel-classic" version="2022.0.2" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
-      </directory>
-
-    </platform>
-
-    <platform name="ncrc4.intel-classic-2022_2_1">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel-classic" version="2022.2.1" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
-      </directory>
-
-    </platform>
-
-
-    <platform name="ncrc4.intel-2022_2_1">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="2022.2.1" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
-      </directory>
-
-    </platform>
-
-
-    <platform name="ncrc4.intel-oneapi-21_3">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="intel-oneapi-2021.3.0" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
-      </directory>
-
-    </platform>
-
-    <platform name="ncrc4.intel21">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="intel-classic-2021.3.0" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
-      </directory>
-
-      <csh><![CDATA[
-       module swap craype craype/2.7.7
-       module swap PrgEnv-intel PrgEnv-intel/6.0.10
-       module swap intel intel/intel-classic-2021.3.0
-      ]]></csh>
-    </platform>
-
-
-    <platform name="ncrc4.intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
-    </platform>
-
-    <platform name="ncrc4.intel18">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel-classic" version="2022.2.1" /><!--DO NOT COMPILE WITH THIS -->
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
-      </directory>
-
-    </platform>
-
-    <platform name="ncrc5.intel-classic">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel-classic" version="2022.0.2" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
-        <src>/lustre/f2/dev/William.Cooke/$(FRE_STEM)/$(name)/src/</src>
-        <exec>/lustre/f2/dev/William.Cooke/$(FRE_STEM)/$(name)/$(platform)-$(target)/exec/</exec>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
-      </directory>
-      
-      <csh><![CDATA[
-       module load cray-libsci/22.10.1.2 
-      ]]></csh>
-
-    </platform>
-
-    <platform name="ncrc5.intel-classic22_2_1">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel-classic" version="2022.2.1" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
- <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
-      </directory>
-
-    </platform>
-
-    <platform name="ncrc5.intel-classic23_1_0">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel-classic" version="2023.1.0" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
- <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
-      </directory>
-
-    </platform>
   </setup>
 
 <!--===========-->
@@ -532,6 +268,292 @@ configuration.
  
 
   <experiment name="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec">
+    <description>
+      Experiment to build executable. See git log for source code provenance.
+      FMS, FMScoupler = $(FMS_GIT_TAG)
+      GFDL_atmos_cubed_sphere = $(ATMOS_CUBED_SPHERE_TAG)
+      atmos_drivers =  $(ATMOS_DRIVERS_TAG)
+      MOM6 = $(MOM6_GIT_TAG)
+    </description>
+
+    <component name="FMS"
+               paths="FMS">
+      <description domainName="infrastructure"
+                   communityName="FMS"
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(FMS_GIT_TAG)">
+          FMS.git
+        </codeBase>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -Duse_libMPI
+          -Duse_netCDF
+          -DMAXFIELDMETHODS_=500
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="atmos_phys"
+               requires="FMS"
+               paths="atmos_phys/atmos_param
+                      atmos_phys/atmos_shared">
+      <description domainName=""
+                   communityName=""
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+<!--
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+-->
+      <source versionControl="git"
+              root="https://gitlab.gfdl.noaa.gov/fms">
+        <codeBase version="$(AWG_GIT_TAG)">
+          atmos_phys.git
+        </codeBase>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+        </cppDefs>
+<!--
+2023/05/05 and onwards : CLUBB cannot be compiled on c5 as necessary (BLAS?) libraries are not installed.
+          -DCLUBB
+          -DAM3_CHEM
+        </cppDefs>
+-->
+      </compile>
+    </component>
+
+    <component name="atmos_drivers"
+               paths="atmos_drivers/coupled"
+               requires="FMS
+                         atmos_phys
+                         fv3">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="main">
+          atmos_drivers.git
+        </codeBase>
+        <csh><![CDATA[
+          ( cd atmos_drivers && git checkout $(ATMOS_DRIVERS_TAG) )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DSPMD
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="fv3"
+               paths="GFDL_atmos_cubed_sphere/driver/GFDL
+                      GFDL_atmos_cubed_sphere/model
+                      GFDL_atmos_cubed_sphere/driver/SHiELD/cloud_diagnosis.F90
+                      GFDL_atmos_cubed_sphere/driver/SHiELD/gfdl_cloud_microphys.F90
+                      GFDL_atmos_cubed_sphere/tools
+                      GFDL_atmos_cubed_sphere/GFDL_tools"
+               requires="FMS
+                         atmos_phys
+                         ">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+<!--        <codeBase version="master"> -->
+        <codeBase version="main">
+          GFDL_atmos_cubed_sphere.git
+        </codeBase>
+        <csh><![CDATA[
+          ( cd GFDL_atmos_cubed_sphere && git checkout $(ATMOS_CUBED_SPHERE_TAG) )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DSPMD
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="land_lad2"
+               requires="FMS"
+               paths="land_lad2">
+      <description domainName="LM3"
+                   communityName="land_lad2"
+                   communityVersion="lad2_20170209_slm"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://gitlab.gfdl.noaa.gov/fms">
+        <codeBase version="$(LAND_GIT_TAG)">
+          land_lad2.git
+        </codeBase>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs>
+          $(F2003_FLAGS)
+          -nostdinc
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="mom6"
+               requires="FMS "
+               paths="MOM6/config_src/memory/dynamic_nonsymmetric
+                      MOM6/config_src/drivers/FMS_cap
+                      MOM6/config_src/infra/FMS2
+                      MOM6/config_src/external/ODA_hooks
+                      MOM6/config_src/external/GFDL_ocean_BGC
+                      MOM6/config_src/external/drifters
+                      MOM6/config_src/external/stochastic_physics
+                      MOM6/config_src/external/database_comms
+                      MOM6/src/*/
+                      MOM6/src/*/*/
+                      MOM6/pkg/GSW-Fortran/ ">
+      <description domainName="Ocean"
+                   communityName="GFDL-MOM6"
+                   communityVersion="$(MOM6_GIT_TAG)"
+                   communityGrid="Tripolar"/>
+
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(MOM6_GIT_TAG)">
+          MOM6.git
+        </codeBase>
+<!--
+        <csh><![CDATA[
+          # Specify hash commit 
+            ( cd MOM6  && git checkout d7d126a7fc9111c4035441f6402553efc0c64596 )
+          ]]>
+        </csh>
+-->
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          -DMAX_FIELDS_=100
+          ]]>
+        </cppDefs>
+        <makeOverrides>OPENMP=""</makeOverrides> <!-- openmp switch for MOM6 may cause crash -->
+      </compile>
+    </component>
+
+    <component name="ice_param"
+               requires="FMS"
+               paths="ice_param"
+               includeDir="$(srcDir)/FMS/include">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="master">
+          ice_param.git
+        </codeBase>
+        <csh><![CDATA[
+          # Equivalent to checking out the following
+          ( cd ice_param && git checkout  $(ICE_PARAM_GIT_TAG) )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="sis2"
+               requires="FMS
+                         mom6
+                         ice_param
+                         icebergs"
+               paths="SIS2/config_src/dynamic_symmetric
+                      SIS2/config_src/external
+                      SIS2/src"
+               includeDir="$(srcDir)/MOM6/src/framework" >
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="dev/gfdl">
+          SIS2.git
+        </codeBase>
+<!--
+          <csh><![CDATA[
+            ( cd SIS2  && git checkout 022bd89d1bfe03dc259afc24a6e19c334e47eb4b )
+                       ]]>
+          </csh>
+-->
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          -DSYMMETRIC_MEMORY_
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="icebergs"
+               requires="FMS"
+               paths="icebergs/src">
+      <description domainName="N/A"
+                   communityName="N/A"
+                   communityVersion="$(RELEASE)"
+                   communityGrid="N/A"/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="dev/gfdl">
+          icebergs.git
+        </codeBase>
+<!--
+          <csh><![CDATA[
+            ( cd icebergs  && git checkout fd6478fecd8891aebcba904fe4b34a415fe30e73 )
+                       ]]>
+          </csh>        
+-->
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          -DUSE_FMS2_IO
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="coupler"
+               paths="FMScoupler/full
+                      FMScoupler/shared"
+               requires="FMS
+                         fv3
+                         atmos_phys
+                         atmos_drivers
+                         land_lad2
+                         sis2
+                         mom6
+                         icebergs">
+      <description domainName="FMS Coupler"
+                   communityName="coupler"
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(COUPLER_GIT_TAG)"> FMScoupler.git </codeBase>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+  </experiment>
+
+
+
+  <experiment name="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_ODA_exec">
     <description>
       Experiment to build executable. See git log for source code provenance.
       FMS, FMScoupler = $(FMS_GIT_TAG)
@@ -779,13 +801,13 @@ configuration.
         <codeBase version="$(MOM6_GIT_TAG)">
           MOM6.git
         </codeBase>
-<!--
+
         <csh><![CDATA[
-          # Commit 
-            ( cd MOM6  && git checkout  835b1661c0204b0f91e51e8593555eed1f6577e2 )
+          # Specify hash commit 
+            ( cd MOM6  && git checkout d7d126a7fc9111c4035441f6402553efc0c64596 )
           ]]>
         </csh>
--->
+
       </source>
       <compile>
         <cppDefs><![CDATA[
@@ -809,7 +831,6 @@ configuration.
         </codeBase>
         <csh><![CDATA[
           # Equivalent to checking out the following
-          #( cd ice_param && git checkout 0b6a807971d612deca1b234ed9438d33b02cf614)
           ( cd ice_param && git checkout  $(ICE_PARAM_GIT_TAG) )
           ]]>
         </csh>
@@ -836,12 +857,10 @@ configuration.
         <codeBase version="dev/gfdl">
           SIS2.git
         </codeBase>
-<!--
           <csh><![CDATA[
-            ( cd SIS2  && git checkout 6e0eda1d4bd085bc30da38574d53047a5c2ec5f7 )
+            ( cd SIS2  && git checkout 022bd89d1bfe03dc259afc24a6e19c334e47eb4b )
                        ]]>
           </csh>        
--->
       </source>
       <compile>
         <cppDefs><![CDATA[
@@ -854,7 +873,7 @@ configuration.
 
     <component name="icebergs"
                requires="FMS"
-               paths="icebergs">
+               paths="icebergs/src">
       <description domainName="N/A"
                    communityName="N/A"
                    communityVersion="$(RELEASE)"
@@ -864,6 +883,10 @@ configuration.
         <codeBase version="dev/gfdl">
           icebergs.git
         </codeBase>
+          <csh><![CDATA[
+            ( cd icebergs  && git checkout fd6478fecd8891aebcba904fe4b34a415fe30e73 )
+                       ]]>
+          </csh>        
       </source>
       <compile>
         <cppDefs><![CDATA[
@@ -1233,7 +1256,7 @@ configuration.
 
     <component name="icebergs"
                requires="FMS"
-               paths="icebergs">
+               paths="icebergs/src">
       <description domainName="N/A"
                    communityName="N/A"
                    communityVersion="$(RELEASE)"
@@ -1485,7 +1508,7 @@ configuration.
         <codeBase version="dev/master"> ice_sis.git</codeBase>
         
         <csh><![CDATA[
-          ( cd ice_sis    && git checkout $(ICE_PARAM_GIT_TAG) )
+          ( cd ice_sis    && git checkout 2023.02 )
          ]]>
         </csh>
         
@@ -1498,7 +1521,7 @@ configuration.
 
     <component name="icebergs"
                requires="FMS"
-               paths="icebergs">
+               paths="icebergs/src">
       <description domainName="N/A"
                    communityName="N/A"
                    communityVersion="$(RELEASE)"
@@ -1893,7 +1916,7 @@ configuration.
 
     <component name="icebergs"
                requires="FMS"
-               paths="icebergs">
+               paths="icebergs/src">
       <description domainName="N/A"
                    communityName="N/A"
                    communityVersion="$(RELEASE)"
@@ -1909,6 +1932,10 @@ configuration.
           -DUSE_FMS2_IO
           ]]>
         </cppDefs>
+          <csh><![CDATA[
+            ( cd icebergs  && git checkout 6a8944fc7544608942de9a42bd3b96f6e56684e0)
+                       ]]>
+          </csh>
       </compile>
     </component>
 
@@ -2174,7 +2201,7 @@ configuration.
 
     <component name="icebergs"
                requires="FMS"
-               paths="icebergs">
+               paths="icebergs/src">
       <description domainName="N/A"
                    communityName="N/A"
                    communityVersion="$(RELEASE)"
@@ -2548,7 +2575,7 @@ configuration.
 
     <component name="icebergs"
                requires="FMS"
-               paths="icebergs">
+               paths="icebergs/src">
       <description domainName="N/A"
                    communityName="N/A"
                    communityVersion="$(RELEASE)"

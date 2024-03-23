@@ -5,7 +5,7 @@
 <!--
 Quick start guide
 
-module load fre/bronx-20
+module load fre/bronx-21
 fremake -x SPEAR_reforecast.xml -p ncrc4.intel16 -t repro,openmp SPEAR_R_nonsymMOM6_exec
 frerun  -x SPEAR_reforecast.xml -p ncrc4.intel16 -t repro,openmp SPEAR_c96_o1_ECDA_test -r basic_prodsettings
 
@@ -57,7 +57,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
   <!-- FRE specific properties -->
   <property name="FRE_STEM" value="SPEAR_experiments_R_20231005" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-20" />
+  <property name="FRE_VERSION" value="bronx-21" />
 
   <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
 
@@ -122,6 +122,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
    <property name="MIZ_ARCHIVE_ROOT_GAEA" value="$CPERM/Ming.Zhao/archive/mdt"/>
    <property name="MIZ_ARCHIVE_ROOT_GFDL" value="/archive/miz/mdt/"/>
+   <property name="L1J_ARCHIVE_ROOT"    value="/gpfs/f5/gfdl_sd/world-shared/Liwei.Jia"/>
 
 <!--
 GFDL FAIR USE POLICY
@@ -247,153 +248,27 @@ configuration.
 
 -->
 
-    <!-- GFDL Analysis/PP Platforms -->
+    <!-- GFDL Platforms -->
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.postprocess'])"/>
 
-    <platform name="gfdl.postprocess">
-      <freVersion>$(FRE_VERSION)</freVersion>
-
-      <property name="NB_ROOT"            value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
-      <property name="F2003_FLAGS"        value="-DINTERNAL_FILE_NML"/>
-      <property name="AWG_ARCHIVE_ROOT"   value="/archive/cjg/mdt"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/archive"/>
-      <property name="FNL_ARCHIVE_ROOT"  value="/archive"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/archive"/>
-      <property name="CMIP6_ARCHIVE_ROOT" value="/archive/oar.gfdl.cmip6/datasets"/>
-      <property name="platform_gs"        value="$(PLATFORM_GS_GFDL)"/>
-
-      <directory stem="$(FRE_STEM)" >
-        <root>/home/$USER/SPEAR</root>
-        <archive>/archive/$USER/spear_med/rf_hist/fcst/s_J11_OTA_IceAtmRes/$(name)</archive>
-        <include>$(rootDir)/SPEAR_include</include> 
-        <analysis>/nbhome/$USER/$(stem)/$(name)</analysis>
-      </directory>
-
-      <csh><![CDATA[
-        module load git
-        setenv NBROOT $(NB_ROOT)
-        setenv FREVERSION fre/$(FRE_VERSION)
-        ]]>
-      </csh>
-    </platform>
-
-    <platform name="gfdl.ncrc4-intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc4-intel16">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc4-intel18">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc4-intel-oneapi-21_3">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
-    <platform name="gfdl.ncrc5-intel-classic">
-      <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
-    </platform>
-
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel18'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel21'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel-oneapi-21_3'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc5-intel-classic'])"/>
 
     <!-- NCRC Platforms -->
+    <!-- ncrc4.intel18 is the platform typically used for c4 -->
 
-    <platform name="ncrc4.intel-oneapi-21_3">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel" version="intel-oneapi-2021.3.0" />
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel-oneapi-21_3'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel21'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel18'])"/>
 
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
-      <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
-      <property name="FNL_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/Feiyu.Lu"/>
 
-      <project>gfdl_sd</project>
-      
-      <directory stem="$(FRE_STEM)">
-	<scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
- <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
-        <!--        
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
-      </directory>
-      
-      <!-- Uncomment the <csh> section if needing to run with DDT -->
-      <!--
-      <csh><![CDATA[
-         module load ddt
-         setenv DDTMPIRUN /opt/cray/alps/default/bin/aprun
-         alias runCommand ddt  -n $npes  ./$executable:t
-        ]]>
-      </csh>
-      -->
-    </platform>
+    <!-- ncrc5.intel23-classic is the recommended platform for c5, fully coupled experiment-->
 
-    <platform name="ncrc4.intel">
-      <xi:include xpointer="xpointer(//setup/platform[@name='ncrc4.intel18']/node())" />
-    </platform>
-
-    <platform name="ncrc4.intel18">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel-classic" version="2022.2.1" /><!--DO NOT COMPILE WITH THIS -->
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
-      <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
-      <property name="FNL_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/Feiyu.Lu"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
- <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
-      </directory>
-
-    </platform>
-
-    <platform name="ncrc5.intel-classic">
-      <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel-classic" version="2022.0.2" />
-
-      <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
-      <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
-      <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
-      <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
-      
-      <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
-      <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
-      <property name="platform_gs"      value="$(PLATFORM_GS_GAEA)"/>
-      <property name="FNL_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/Feiyu.Lu"/>
- 
-      <project>gfdl_sd</project>
-
-      <directory stem="$(FRE_STEM)">
-        <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
-        <include>$(xmlDir)/SPEAR_include</include>
- <ptmp>/lustre/f2/scratch/$USER/ptmp/$(stem)/$(name)</ptmp>
-        <!--
-        <include>$HOME/SPEAR/SPEAR_include</include>
-        -->
-      </directory>
-
-    </platform>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc5.intel-classic'])"/>
 
   </setup>
 
@@ -439,14 +314,6 @@ configuration.
     </input>
   </freInclude>
 
- <freInclude name="c96_LM4_SPEAR">
-    <input>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/common/c96_LM4/c96_topo_rough_land.nc.tar</dataSource>
-      </dataFile>
-    </input>
-  </freInclude>
-
  <freInclude name="c192_LM4_SPEAR">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
@@ -455,7 +322,7 @@ configuration.
       </dataFile>
 
      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-	 <dataSource platform="$(platform)">/lustre/f2/pdata//gfdl/gfdl_M/Huan.Guo/INPUT/drag/c192_topo_rough_land.nc.tar</dataSource>
+	 <dataSource platform="$(platform)">$(SD_ARCHIVE_ROOT)/SPEAR_c192/drag/c192_topo_rough_land.nc.tar</dataSource>
      </dataFile>
     </input>
   </freInclude>
@@ -545,6 +412,7 @@ configuration.
     </input>
   </freInclude>
 
+<!--
   <freInclude name="c96_grid">
     <input>
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
@@ -560,7 +428,7 @@ set domains_stack_size = "2097152"
       ]]></csh>
     </input>
   </freInclude>
-
+-->
   <freInclude name="c192_stack_size">
     <input>
       <csh><![CDATA[
@@ -608,7 +476,7 @@ set domains_stack_size = "3097152"
        <dataSource platform="$(platform)">$(includeDir)/ice_ocean_SIS2/OM4_025/INPUT/vgrid_75_2m.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-	  <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD/MOM6_datasets/FLOR2/diag_vgrid.nc</dataSource>
+	  <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/MOM6_datasets/FLOR2/diag_vgrid.nc</dataSource>
           <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/FLOR2/diag_vgrid.nc</dataSource>
       </dataFile>
 
@@ -616,10 +484,10 @@ set domains_stack_size = "3097152"
        <dataSource platform="$(platform)">$(includeDir)/ice_ocean_SIS2/OM4_025/INPUT/WOA05_pottemp_salt.nc </dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-	      <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD/MOM6_datasets/FLOR2/edits_012016.nc</dataSource>
+	      <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/MOM6_datasets/FLOR2/edits_012016.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-	      <dataSource site="ncrc">/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD/MOM6_datasets/FLOR2/edits_013016a.nc</dataSource>
+	      <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/MOM6_datasets/FLOR2/edits_013016a.nc</dataSource>
       </dataFile>
     </input>
   </freInclude>
@@ -1498,7 +1366,7 @@ set nyblocks = $dummy
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
         
-        <dataSource site="ncrc">/lustre/f2/dev/gfdl/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19950101.tar</dataSource>
+        <dataSource site="ncrc">$(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19950101.tar</dataSource>
         <!--
         <dataSource site="ncrc">/lustre/f2/scratch/William.Cooke/tmp_20210402/spear_med_Jan_Reforecast_1mem.tar</dataSource>
         -->
@@ -1534,13 +1402,13 @@ $baseDate
 	<!--
         <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/landuse/LUH2/v2.0h/transitions.nc</dataSource>
         -->
-	<dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/1949_2040/landuse_transitions/transitions.Hist_SSP585_1940_2040.nc</dataSource>
+	<dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR/datasets/1949_2040/landuse_transitions/transitions.Hist_SSP585_1940_2040.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/states.nc" chksum="" size="" timestamp="">
         <!--
         <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/landuse/LUH2/v2.0h/states.nc</dataSource>
         -->
-        <dataSource site="ncrc">/lustre/f2/pdata/gfdl/gfdl_sd/SPEAR/datasets/1949_2040/landuse_transitions/states.Hist_SSP585_1940_2040.nc</dataSource>
+        <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR/datasets/1949_2040/landuse_transitions/states.Hist_SSP585_1940_2040.nc</dataSource>
       </dataFile>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/landuse/LUH2/v2.0h/landfrac.nc</dataSource>
@@ -1609,7 +1477,7 @@ $baseDate
       </dataFile>
 
       <dataFile label="input" target="INPUT/inc.nc">
-	/lustre/f2/dev/gfdl/Feiyu.Lu/ECDA_data/increments/inc.K02.2007-2018.nc
+	$(FNL_ARCHIVE_ROOT)/ECDA_data/increments/inc.K02.2007-2018.nc
       </dataFile>
 
          <csh type="always"><![CDATA[
@@ -1895,7 +1763,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19920101.tar</dataSource>
+        <dataSource site="ncrc">$(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19920101.tar</dataSource>
      </dataFile>
   </input>
 </experiment>
@@ -1926,7 +1794,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19930101.tar</dataSource>
+        <dataSource site="ncrc">$(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19930101.tar</dataSource>
      </dataFile>
   </input>
 </experiment>
@@ -1957,7 +1825,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19940101.tar</dataSource>
+        <dataSource site="ncrc">$(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19940101.tar</dataSource>
      </dataFile>
   </input>
 </experiment>
@@ -1989,7 +1857,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19960101.tar</dataSource>
+        <dataSource site="ncrc">$(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19960101.tar</dataSource>
      </dataFile>
   </input>
 </experiment>
@@ -2020,7 +1888,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19970101.tar</dataSource>
+        <dataSource site="ncrc">$(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19970101.tar</dataSource>
      </dataFile>
  </input>
 </experiment>
@@ -2051,7 +1919,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19980101.tar</dataSource>
+        <dataSource site="ncrc">$(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19980101.tar</dataSource>
      </dataFile>
  </input>
 </experiment>
@@ -2082,7 +1950,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-	<dataSource site="ncrc">/lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19990101.tar</dataSource>
+	<dataSource site="ncrc">$(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/19990101.tar</dataSource>
      </dataFile>
   </input>
 </experiment>
@@ -2113,7 +1981,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20000101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20000101.tar</dataSource>
      </dataFile>
  </input>
  <runtime>
@@ -2147,7 +2015,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20010101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20010101.tar</dataSource>
      </dataFile>
 </input>
 </experiment>
@@ -2178,7 +2046,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20020101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20020101.tar</dataSource>
      </dataFile>
     </input>
 </experiment>
@@ -2209,7 +2077,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20030101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20030101.tar</dataSource>
      </dataFile>
  </input>
 </experiment>
@@ -2240,7 +2108,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20040101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20040101.tar</dataSource>
      </dataFile>
   </input>
 </experiment>
@@ -2271,7 +2139,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20050101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20050101.tar</dataSource>
      </dataFile>
   </input>
   <runtime>
@@ -2305,7 +2173,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20060101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20060101.tar</dataSource>
      </dataFile>
   </input>
 </experiment>
@@ -2336,7 +2204,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20070101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20070101.tar</dataSource>
      </dataFile>
   </input>
 </experiment>
@@ -2367,7 +2235,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20080101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20080101.tar</dataSource>
      </dataFile>
   </input>
 </experiment>
@@ -2398,7 +2266,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20090101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20090101.tar</dataSource>
      </dataFile>
   </input>
 </experiment>
@@ -2429,7 +2297,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20100101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20100101.tar</dataSource>
      </dataFile>
   </input>
   <runtime>
@@ -2463,7 +2331,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20110101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20110101.tar</dataSource>
      </dataFile>
   </input>
 </experiment>
@@ -2494,7 +2362,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20120101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20120101.tar</dataSource>
      </dataFile>
   </input>
 </experiment>
@@ -2525,7 +2393,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20130101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20130101.tar</dataSource>
      </dataFile>
   </input>
 </experiment>
@@ -2556,7 +2424,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20140101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20140101.tar</dataSource>
      </dataFile>
   </input>
 </experiment>
@@ -2587,7 +2455,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20150101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20150101.tar</dataSource>
      </dataFile>
   </input>
   <runtime>
@@ -2621,7 +2489,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20160101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20160101.tar</dataSource>
      </dataFile>
   </input>
 </experiment>
@@ -2652,7 +2520,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20170101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20170101.tar</dataSource>
      </dataFile>
   </input>
 </experiment>
@@ -2683,7 +2551,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20180101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20180101.tar</dataSource>
      </dataFile>
   </input>
 </experiment>
@@ -2714,7 +2582,7 @@ set nyblocks = $dummy
         check_stocks=0
       </namelist>
     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc"> /lustre/f2/dev/Liwei.Jia/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20190101.tar</dataSource>
+        <dataSource site="ncrc"> $(L1J_ARCHIVE_ROOT)/refcst_IC_SPEAR/SPEAR_c192L33_o1_ECDA_J11_IceAtmRes/20190101.tar</dataSource>
      </dataFile>
   </input>
 </experiment>
