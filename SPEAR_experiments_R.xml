@@ -1,0 +1,2699 @@
+<?xml version="1.0"?>
+<!-- FRE Usage documentation: http://www.gfdl.noaa.gov/fms/fre -->
+
+<!--
+Quick start guide
+=================
+
+```
+module load fre/bronx-21
+fremake -x SPEAR_experiments_R.xml -p ncrc5.intel-classic -t repro,openmp SPEAR_R_2022.03_nonsymMOM6_exec
+fremake -x SPEAR_experiments_R.xml -p ncrc5.intel-classic -t repro,openmp SPEAR_R_2022.03_AMIP_exec
+frerun  -x SPEAR_experiments_R.xml -p ncrc5.intel-classic -t repro,openmp SPEAR_c96_o1_Control_1850_Q50 -r basic_prodsettings
+```
+The Q-series takes Xanadu code for atmos/land/coupler and dev/gfdl (as of 5/21/2019) for MOM6/SIS2 (with revertions for answer 
+changing code updates in MOM6).
+Answers should be reproducible from earlier (E,F,K) experiment runs.
+
+SPEAR (Seamless system for Predictions and EArth system Research)
+
+The experiment name `SPEAR_c96_o1_Control_1850_A01` has the following meanings:
+  * `c96` means atmosphere has c96 resolution
+  * `o1` means 1 degree ocean model
+  * `Control_1850`  means constant 1850 radiative forcing
+  * `A` is a letter for whatever code version you have
+  * `01` indicates the parameter settings ("01" will indicate that we are using the
+    same settings as "C39", but this gives the flexibility for future physics changes)
+
+SPEAR_c96_o1_Hist_AllForc_IC1851_A01_ens_01
+  * `c96`, `o1`, `A01` same meanings as before
+  * `Hist_AllForc_IC1851` indicate it is a historical run using All Forcings, and starts from 1851
+  * `ens_01` indicates it is a single ensemble member; we could also have ens_02, ens_03, etc, as
+    individual ensemble members
+
+SPEAR_c96_o1_Hist_AllForc_IC1851_A01_ens_01_05
+  * `ens_01_05` single job run as 5 member ensemble, historical run using All Forcings, starting from 1851
+
+SPEAR_c96_o1_Control_1850_A01_IC101_1PctTo2X
+  * single job running idealized 1% per year CO2 increase to doubling, starting from year 101 of an 1850 control
+
+SPEAR_c96_pres_SST_HIST_AllForc_IC1979_A01_ens_01
+  * AMIP style run with prescribed SSTs, historical radiative forcing
+
+SPEAR_c96_oml1_Control_2010_A01
+  * atmosphere coupled to ocean mixed layer model, 1 degree resolution (oml1), with constant 2010 radiative forcing
+
+SPEAR_c192_omlp25_Control_2010_A01
+  * c192 atmosphere coupled to ocean mixed layer model, 0.25 degree resolution, with constant 2010 radiative forcing
+-->
+
+<experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2003/XInclude">
+  <!--User should set the following properties according to the plan for the production run-->	
+
+  <!-- Properties for the source code versions -->
+  <property name="RELEASE" value="dev/awg" />                 <!-- Default git branch/tag for source code -->
+  <property name="MOM6_GIT_TAG" value="dev/gfdl"/>            <!-- git tag for MOM6 source code -->
+
+<!-- SPEAR_experiments_R_20240321 code -->
+  <property name="AWG_GIT_TAG"            value="2023.04"/>                 <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"            value="2023.04"/>                 <!-- git tag for FMS source code -->
+  <property name="LAND_GIT_TAG"           value="2023.02"/>   <!-- git tag for Land source code -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2023.04"/>                 <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG" value="origin/dev/gfdl"/>                 <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>                 <!-- git tag for ice_param source code -->
+
+  <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
+
+  <!-- FRE specific properties -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20240410"/>     <!-- Stem use in FRE directories -->
+  <property name="FRE_VERSION" value="bronx-21" />              <!-- FRE version for use in this XML -->
+  <property name="ANALYSIS_SWITCH" value="on"/>
+  <property name="ANALYSIS_ESM_SWITCH" value="off"/>
+  <property name="MDBIswitch" value="off"/>                       <!-- on/off switch for MDBI database -->
+
+  <property name="PROD_SIMTIME"     value="40"/>   <!--simulation length in years-->
+
+  <property name="PP_START_YEAR"   value="0001"/>
+  <property name="PP_START_YEAR_HIST"   value="1981"/>
+
+  <property name="PP_AMIP_CHUNK" value="5yr"/>
+  <property name="PP_AMIP_START_YEAR"  value="1981"/>
+  <property name="ANA_AMIP_START" value="1981"/>
+  <property name="ANA_AMIP_END"   value="2010"/>
+  <property name="ANA_AMIP_LEN"   value="30yr"/>
+
+   <property name="CHUNK_LENGTH_A" value="1yr"/>
+   <property name="CHUNK_LENGTH_B" value="100yr"/>
+   <property name="CHUNK_LENGTH_C" value="163yr"/>
+   <property name="CHUNK_LENGTH_A_c384" value="10yr"/>
+   <property name="CHUNK_LENGTH_B_c384" value="100yr"/>
+   <property name="CHUNK_LENGTH_C_c384" value="1000yr"/>
+   <property name="ANA_START" value="1"/>
+   <property name="ANA_END"   value="40"/> <!-- Same as CHUNK_LENGTH_B -->
+
+  <property name="PROD_RUNTIME"     value="16:00:00"/><!--Maximum wall clock per simulation-->
+  <property name="PROD_SEGTIME"     value="01:30:00"/><!--Wall clock per segment (usually 1 year)-->
+
+  <!--The following properties need to be set only if the user wants to monitor the run progress at MDBI
+      and are not needed for the run or post-processing -->   
+  <property name="EXP_CPLD_START"   value="0001"/> <!--simulation start year--> 
+  <property name="EXP_CPLD_END"     value="0100"/> <!--simulation end   year--> 
+
+  <!--The rest of the properties need not to be changed by the user unless to customize the run-->
+
+ 
+  <!-- Reference release tag for existing files in the archives for answer comparison. Used in "REFERENCE" property. -->
+  <property name="reference_tag"   value="verona_answers"/>
+                          
+  <property name="DEBUGLEVEL" value="_0"/>
+  <property name="PLATINFO"   value=""/>  <!--This is necessary only if you want to run exact same experiment on multiple platforms-->
+                                          <!--In that case you will need to put an identifier string for the value to distinguish the /nbhome-->
+
+  <!--========================================-->
+  <!--Do not change the rest of the properties-->
+  <!--========================================-->
+
+<!--
+GFDL FAIR USE POLICY
+
+GFDL recognizes the essential nature of collaboration in the scientific
+enterprise, including the importance of novel application and analysis of our
+models. In order to maximize mutual benefit from collaboration, the use of
+experimental GFDL models** should be done in a manner that ensures that
+individuals involved in model development receive proper credit for their
+work; in order to minimize the potential for misapplication of experimental
+models, collaborations should actively engage model developers. Publication of
+results using experimental GFDL models should be done in consultation with
+scientists that participated in the model development. Consultation with GFDL
+model developers should occur before submission of publications based on
+experimental GFDL models, and should include agreement on the appropriate level
+of acknowledgment, co-authorship and participation by the model developers.
+Since experimental models have not been thoroughly vetted, experimental GFDL
+models and their output should be distributed only after consultation with the
+developers of the model. After a GFDL model has been described in a
+peer-reviewed publication it is no longer experimental, and results based on
+the model should cite the publication(s) describing the model.
+
+** "Experimental GFDL models" refers to models (e.g., a coupled climate model),
+model components (e.g., parameterization schemes), model configurations (e.g.,
+the specific arrangement and parameter settings of model components) arising
+from model development efforts at GFDL, but whose formulation and configuration
+have not yet been documented in the peer-reviewed literature, as well as outputs
+from integrations with these models.
+-->
+
+<!--====================-->
+<!--= AMIP EXPERIMENTS =-->
+<!--====================-->
+
+<!--
+AMIP simulations are configured to start in 1980 with the first year being a
+spin-up year. Postprocessing and analysis are performed starting in 1981. The
+length of the simulation and analysis period can be controlled by changing
+properties below.
+-->
+
+
+
+   <!--Users need not change the following properties -->
+   <property name="LIBS_ROOT"   value="libs_compile_non_symmetricMOM6"/>
+   <property name="FMS_LIB_DIR" value="./$(LIBS_ROOT)/$(platform)-$(target)/exec"/>
+   <property name="LIBS_ROOT_NONSYM"   value="libs_compile_non_symmetricMOM6"/>
+   <property name="FMS_LIB_DIR_NONSYM" value="./$(LIBS_ROOT_NONSYM)/$(platform)-$(target)/exec"/>
+   
+
+   <!-- The following properties are for testing/debugging purposes and should normally be empty-->
+   <property name="MODIFIER"     value=""/>  
+
+  <setup>
+    <fmsRelease>riga</fmsRelease>
+
+<!--=================-->
+<!--= CHANGING NPES =-->
+<!--=================-->
+
+<!--
+This xml includes a number of predefined options for the number of PEs.
+Changing the number of PEs can be accomplished by simply
+modifying 'npes' and segment 'runTime' in the xml <production> block:
+
+    <production simTime="$(EXP_AMIP_LEN)" units="years" npes="864" runTime="16:00:00">
+      <segment simTime="12" units="months" runTime="1:30:00"/>
+    </production>
+
+Choosing a particular PE number is a balancing act. The higher npes,
+the faster the model throughput, but also the lower the model efficiency
+(i.e. the overall simulation will cost more in terms of core hours).
+
+
+Available options for c96L33:
+"""""""""""""""""""""""""""""
+
+  +========+======================+====================+
+  |        |  Suggested run time for 12 month segment  |
+  |        |  layout      |     c3       |     c4      |
+  +========+==============+==============+=============+
+  |   108  |  A36x2_O36   |              |  13:30:00   |
+  |   128  |  A60x1_O64   |  14:50:00    |             |
+  |   144  |  A36x2_O72   |              |  12:50:00   |
+  |   144  |  A54x2_O36   |              |  10:45:00   |
+  |   160  |  A48x2_O64   |  10:45:00    |             |
+  |   216  |  A60x2_O96   |  08:40:00    |             |
+  |   216  |  A72x2_O72   |              |  06:50:00   |
+  |   252  |  A72x2_O108  |              |  06:20:00   |
+  |   288  |  A96x2_O96   |  06:10:00    |             |
+  |   288  |  A108x2_O72  |              |  05:40:00   |
+  |   324  |  A108x2_O108 |              |  05:00:00   |
+  |   368  |  A120x2_O128 |  05:00:00    |             |
+  |   416  |  A144x2_O128 |  04:20:00    |             |
+  |   432  |  A144x2_O144 |              |  03:50:00   |
+  |   828  |  A288x2_O252 |  03:10:00    |             |
+  |   832  |  A288x2_O256 |              |  02:45:00   |
+  |   864  |  A288x2_O288 |              |  02:30:00   |
+  |  1296  |  A432x2_O432 |              |  02:00:00   |
+  |  1312  |  A432x2_O448 |  03:00:00    |             |
+  |  1344  |  A432x2_O480 |  02:30:00    |             |
+  |  1656  |  A576x2_O504 |              |  01:45:00   |
+  |  1664  |  A576x2_O512 |  02:30:00    |             |
+  |  1688  |  A576x2_O540 |              |  01:45:00   |
+  |  1696  |  A576x2_O544 |  02:30:00    |             |
+  |  2496  |  A864x2_O756 |  02:15:00    |  01:40:00   |
+  |  2592  |  A864x2_O864 |  02:15:00    |  01:35:00   |
+  +========+==============+==============+=============+
+
+**Note:** default settings are highlighted in **bold**. Suggested
+run time values may need to be adjusted for your specific
+configuration.
+-->
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.postprocess'])"/>
+
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel18'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel21'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel-oneapi-21_3'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc5-intel-classic'])"/>
+
+    <!-- ncrc4.intel18 was the recommended platform for c4 -->
+
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel-oneapi-21_3'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel21'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel18'])"/>
+
+
+    <!-- ncrc5.intel-classic is the recommended platform for c5, fully coupled experiment-->
+
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc5.intel-classic'])"/>
+
+  </setup>
+
+<!--===========-->
+<!--= COMPILE =-->
+<!--===========-->
+
+  <!--The property MOM6_EXAMPLES should point to the mom6 directory that is checked out. It is needed by MOM6 to access its inpu data files-->
+   <property name="MOM6_EXAMPLES"  value="$root/$(LIBS_ROOT)/src/mom6"/>
+
+ 
+ 
+
+  <experiment name="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec">
+    <description>
+      Experiment to build executable. See git log for source code provenance.
+      FMS, FMScoupler = $(FMS_GIT_TAG)
+      GFDL_atmos_cubed_sphere = $(ATMOS_CUBED_SPHERE_TAG)
+      atmos_drivers =  $(ATMOS_DRIVERS_TAG)
+      MOM6 = $(MOM6_GIT_TAG)
+    </description>
+
+    <component name="FMS"
+               paths="FMS">
+      <description domainName="infrastructure"
+                   communityName="FMS"
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(FMS_GIT_TAG)">
+          FMS.git
+        </codeBase>
+        <!--
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd FMS && git checkout 7f585284f1487c0629f8075be350385e6e75dd2f )
+          ]]>
+        </csh>
+        -->
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -Duse_libMPI
+          -Duse_netCDF
+          -DMAXFIELDMETHODS_=500
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="atmos_phys"
+               requires="FMS"
+               paths="atmos_phys/atmos_param
+                      atmos_phys/atmos_shared">
+      <description domainName=""
+                   communityName=""
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+<!--
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+-->
+      <source versionControl="git"
+              root="https://gitlab.gfdl.noaa.gov/fms">
+        <codeBase version="$(AWG_GIT_TAG)">
+          atmos_phys.git
+        </codeBase>
+        <!--
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd atmos_phys && git checkout 86f46861f31331b7f6e4fdfabca58c78958ed47b )
+          ]]>
+        </csh>
+        -->
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+        </cppDefs>
+<!--
+2023/05/05 and onwards : CLUBB cannot be compiled on c5 as necessary (BLAS?) libraries are not installed.
+          -DCLUBB
+          -DAM3_CHEM
+        </cppDefs>
+-->
+      </compile>
+    </component>
+
+    <component name="atmos_drivers"
+               paths="atmos_drivers/coupled"
+               requires="FMS
+                         atmos_phys
+                         fv3">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="main">
+          atmos_drivers.git
+        </codeBase>
+        <csh><![CDATA[
+          ( cd atmos_drivers && git checkout $(ATMOS_DRIVERS_TAG) )
+          # Equivalent to the following checkout hash
+          ( cd  atmos_drivers && git checkout 62279bb627cffcb0e86d28b605048a706872568f )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DSPMD
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="fv3"
+               paths="GFDL_atmos_cubed_sphere/driver/GFDL
+                      GFDL_atmos_cubed_sphere/model
+                      GFDL_atmos_cubed_sphere/driver/SHiELD/cloud_diagnosis.F90
+                      GFDL_atmos_cubed_sphere/driver/SHiELD/gfdl_cloud_microphys.F90
+                      GFDL_atmos_cubed_sphere/tools
+                      GFDL_atmos_cubed_sphere/GFDL_tools"
+               requires="FMS
+                         atmos_phys
+                         ">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+<!--        <codeBase version="master"> -->
+        <codeBase version="main">
+          GFDL_atmos_cubed_sphere.git
+        </codeBase>
+        <csh><![CDATA[
+          #( cd GFDL_atmos_cubed_sphere && git checkout $(ATMOS_CUBED_SPHERE_TAG) )
+          # Equivalent to the following checkout hash
+          ( cd GFDL_atmos_cubed_sphere && git checkout  577abc706e5caaff52b597e7bfaf4e0043ee9960 )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DSPMD
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="land_lad2"
+               requires="FMS"
+               paths="land_lad2">
+      <description domainName="LM3"
+                   communityName="land_lad2"
+                   communityVersion="lad2_20170209_slm"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://gitlab.gfdl.noaa.gov/fms">
+        <codeBase version="$(LAND_GIT_TAG)">
+          land_lad2.git
+        </codeBase>
+        <!--
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd land_lad2 && git checkout 9c978eadc7a9fef0e92c1c7c03cf568be82e8ea2 )
+          ]]>
+        </csh>
+        -->
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs>
+          $(F2003_FLAGS)
+          -nostdinc
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="mom6"
+               requires="FMS "
+               paths="MOM6/config_src/memory/dynamic_nonsymmetric
+                      MOM6/config_src/drivers/FMS_cap
+                      MOM6/config_src/infra/FMS2
+                      MOM6/config_src/external/ODA_hooks
+                      MOM6/config_src/external/GFDL_ocean_BGC
+                      MOM6/config_src/external/drifters
+                      MOM6/config_src/external/stochastic_physics
+                      MOM6/config_src/external/database_comms
+                      MOM6/src/*/
+                      MOM6/src/*/*/
+                      MOM6/pkg/GSW-Fortran/ ">
+      <description domainName="Ocean"
+                   communityName="GFDL-MOM6"
+                   communityVersion="$(MOM6_GIT_TAG)"
+                   communityGrid="Tripolar"/>
+
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(MOM6_GIT_TAG)">
+          MOM6.git
+        </codeBase>
+
+        <csh><![CDATA[
+          # Specify hash commit 
+            ( cd MOM6  && git checkout 2d121dcc4275bb579ea275815fa79f92cbc6141e )
+          ]]>
+        </csh>
+
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          -DMAX_FIELDS_=100
+          ]]>
+        </cppDefs>
+        <makeOverrides>OPENMP=""</makeOverrides> <!-- openmp switch for MOM6 may cause crash -->
+      </compile>
+    </component>
+
+    <component name="ice_param"
+               requires="FMS"
+               paths="ice_param"
+               includeDir="$(srcDir)/FMS/include">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="master">
+          ice_param.git
+        </codeBase>
+        <csh><![CDATA[
+          # Equivalent to checking out the following
+          #( cd ice_param && git checkout  $(ICE_PARAM_GIT_TAG) )
+          ( cd ice_param && git checkout  ddedca7d724fad9ad4fc6ec68bd4b22733551ed7 )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="sis2"
+               requires="FMS
+                         mom6
+                         ice_param
+                         icebergs"
+               paths="SIS2/config_src/dynamic_symmetric
+                      SIS2/config_src/external
+                      SIS2/src"
+               includeDir="$(srcDir)/MOM6/src/framework" >
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="dev/gfdl">
+          SIS2.git
+        </codeBase>
+
+          <csh><![CDATA[
+            ( cd SIS2  && git checkout 022bd89d1bfe03dc259afc24a6e19c334e47eb4b )
+                       ]]>
+          </csh>
+
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          -DSYMMETRIC_MEMORY_
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="icebergs"
+               requires="FMS"
+               paths="icebergs/src">
+      <description domainName="N/A"
+                   communityName="N/A"
+                   communityVersion="$(RELEASE)"
+                   communityGrid="N/A"/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="dev/gfdl">
+          icebergs.git
+        </codeBase>
+
+          <csh><![CDATA[
+            ( cd icebergs  && git checkout e8f794b04a962065ff21a8dfd37de9677c0d4533 )
+                       ]]>
+          </csh>        
+
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          -DUSE_FMS2_IO
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="coupler"
+               paths="FMScoupler/full
+                      FMScoupler/shared"
+               requires="FMS
+                         fv3
+                         atmos_phys
+                         atmos_drivers
+                         land_lad2
+                         sis2
+                         mom6
+                         icebergs">
+      <description domainName="FMS Coupler"
+                   communityName="coupler"
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(COUPLER_GIT_TAG)"> FMScoupler.git </codeBase>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+        <!--
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd FMScoupler && git checkout 6442d387153064644325c96a5e9e2935139d5e3c )
+          ]]>
+        </csh>
+        -->
+      </compile>
+    </component>
+  </experiment>
+
+
+
+  <experiment name="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_ODA_exec">
+    <description>
+      Experiment to build executable. See git log for source code provenance.
+      FMS, FMScoupler = $(FMS_GIT_TAG)
+      GFDL_atmos_cubed_sphere = $(ATMOS_CUBED_SPHERE_TAG)
+      atmos_drivers =  $(ATMOS_DRIVERS_TAG)
+      MOM6 = $(MOM6_GIT_TAG)
+    </description>
+
+    <component name="FMS"
+               paths="FMS">
+      <description domainName="infrastructure"
+                   communityName="FMS"
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(FMS_GIT_TAG)">
+          FMS.git
+        </codeBase>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -Duse_libMPI
+          -Duse_netCDF
+          -DMAXFIELDMETHODS_=500
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="atmos_phys"
+               requires="FMS"
+               paths="atmos_phys/atmos_param
+                      atmos_phys/atmos_shared">
+      <description domainName=""
+                   communityName=""
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+<!--
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+-->
+      <source versionControl="git"
+              root="https://gitlab.gfdl.noaa.gov/fms">
+        <codeBase version="$(AWG_GIT_TAG)">
+          atmos_phys.git
+        </codeBase>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+        </cppDefs>
+<!--
+2023/05/05 and onwards : CLUBB cannot be compiled on c5 as necessary (BLAS?) libraries are not installed.
+          -DCLUBB
+          -DAM3_CHEM
+        </cppDefs>
+-->
+      </compile>
+    </component>
+
+    <component name="atmos_drivers"
+               paths="atmos_drivers/coupled"
+               requires="FMS
+                         atmos_phys
+                         fv3">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="main">
+          atmos_drivers.git
+        </codeBase>
+        <csh><![CDATA[
+          ( cd atmos_drivers && git checkout $(ATMOS_DRIVERS_TAG) )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DSPMD
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="fv3"
+               paths="GFDL_atmos_cubed_sphere/driver/GFDL
+                      GFDL_atmos_cubed_sphere/model
+                      GFDL_atmos_cubed_sphere/driver/SHiELD/cloud_diagnosis.F90
+                      GFDL_atmos_cubed_sphere/driver/SHiELD/gfdl_cloud_microphys.F90
+                      GFDL_atmos_cubed_sphere/tools
+                      GFDL_atmos_cubed_sphere/GFDL_tools"
+               requires="FMS
+                         atmos_phys
+                         ">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+<!--        <codeBase version="master"> -->
+        <codeBase version="main">
+          GFDL_atmos_cubed_sphere.git
+        </codeBase>
+        <csh><![CDATA[
+          ( cd GFDL_atmos_cubed_sphere && git checkout $(ATMOS_CUBED_SPHERE_TAG) )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DSPMD
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="land_lad2"
+               requires="FMS"
+               paths="land_lad2">
+      <description domainName="LM3"
+                   communityName="land_lad2"
+                   communityVersion="lad2_20170209_slm"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://gitlab.gfdl.noaa.gov/fms">
+        <codeBase version="$(LAND_GIT_TAG)">
+          land_lad2.git
+        </codeBase>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs>
+          $(F2003_FLAGS)
+          -nostdinc
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="geoKdTree"
+               requires="FMS"
+               paths="geoKdTree">
+      <description domainName="geoKdTree"/>
+      <source versionControl="git"
+              root="https://github.com/travissluka/">
+        <codeBase version="master">
+          geoKdTree.git
+        </codeBase>
+        <csh><![CDATA[
+          (cd geoKdTree && git checkout a4670b9)
+          ]]>
+        </csh>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="GSW-Fortran"
+               requires=""
+               paths="GSW-Fortran/modules">
+      <description domainName="ODA"/>
+      <source versionControl="git"
+              root="https://github.com/TEOS-10/">
+        <codeBase version="master">
+          GSW-Fortran.git
+        </codeBase>
+        <csh><![CDATA[
+          (cd GSW-Fortran && git checkout 29e64d652786e1d076a05128c920f394202bfe10)
+          ]]>
+        </csh>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="ECDA"
+               requires="FMS geoKdTree ODA GSW-Fortran"
+               paths="ECDA/src/ecda/shared
+                      ECDA/src/ecda/shared/bgrid
+                      ECDA/src/oda">
+      <description domainName="ECDA"/>
+      <source versionControl="git"
+              root="https://gitlab.gfdl.noaa.gov/Feiyu.Lu/">
+        <codeBase version="master">
+          ECDA.git
+        </codeBase>
+        <csh><![CDATA[
+          (cd ECDA && git checkout dd1cc5da4dc49890c87440d846a2fbc70e418c3f)
+          ]]>
+        </csh>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="ODA"
+               requires="FMS geoKdTree"
+               paths="MOM6_DA_hooks/src/core">
+      <description domainName="ODA"/>
+      <source versionControl="git"
+              root="https://github.com/feiyulu">
+        <codeBase version="master">
+          MOM6_DA_hooks.git
+        </codeBase>
+
+        <csh><![CDATA[
+          (cd MOM6_DA_hooks && git checkout dev/GFDL)
+          ]]>
+        </csh>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="mom6"
+               requires="FMS ECDA ODA geoKdTree"
+               paths="MOM6/config_src/memory/dynamic_nonsymmetric
+                      MOM6/config_src/drivers/FMS_cap
+                      MOM6/config_src/infra/FMS2
+                      MOM6/config_src/external/GFDL_ocean_BGC
+                      MOM6/config_src/external/drifters
+                      MOM6/config_src/external/stochastic_physics
+                      MOM6/config_src/external/database_comms
+                      MOM6/src/*/
+                      MOM6/src/*/*/
+                      MOM6/pkg/GSW-Fortran/ ">
+      <description domainName="Ocean"
+                   communityName="GFDL-MOM6"
+                   communityVersion="$(MOM6_GIT_TAG)"
+                   communityGrid="Tripolar"/>
+
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(MOM6_GIT_TAG)">
+          MOM6.git
+        </codeBase>
+
+        <csh><![CDATA[
+          # Specify hash commit 
+            ( cd MOM6  && git checkout d7d126a7fc9111c4035441f6402553efc0c64596 )
+          ]]>
+        </csh>
+
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          -DMAX_FIELDS_=100
+          -DENABLE_ECDA
+          ]]>
+        </cppDefs>
+        <makeOverrides>OPENMP=""</makeOverrides> <!-- openmp switch for MOM6 may cause crash -->
+      </compile>
+    </component>
+
+    <component name="ice_param"
+               requires="FMS"
+               paths="ice_param"
+               includeDir="$(srcDir)/FMS/include">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="master">
+          ice_param.git
+        </codeBase>
+        <csh><![CDATA[
+          # Equivalent to checking out the following
+          ( cd ice_param && git checkout  $(ICE_PARAM_GIT_TAG) )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="sis2"
+               requires="FMS
+                         mom6
+                         ice_param
+                         icebergs"
+               paths="SIS2/config_src/dynamic_symmetric
+                      SIS2/config_src/external/Icepack_interfaces
+                      SIS2/src"
+               includeDir="$(srcDir)/MOM6/src/framework" >
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="dev/gfdl">
+          SIS2.git
+        </codeBase>
+          <csh><![CDATA[
+            ( cd SIS2  && git checkout 022bd89d1bfe03dc259afc24a6e19c334e47eb4b )
+                       ]]>
+          </csh>        
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          -DSYMMETRIC_MEMORY_
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="icebergs"
+               requires="FMS"
+               paths="icebergs/src">
+      <description domainName="N/A"
+                   communityName="N/A"
+                   communityVersion="$(RELEASE)"
+                   communityGrid="N/A"/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="dev/gfdl">
+          icebergs.git
+        </codeBase>
+          <csh><![CDATA[
+            ( cd icebergs  && git checkout fd6478fecd8891aebcba904fe4b34a415fe30e73 )
+                       ]]>
+          </csh>        
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          -DUSE_FMS2_IO
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="coupler"
+               paths="FMScoupler/full
+                      FMScoupler/shared"
+               requires="FMS
+                         fv3
+                         atmos_phys
+                         atmos_drivers
+                         land_lad2
+                         sis2
+                         mom6
+                         geoKdTree
+                         ECDA
+                         ODA
+                         icebergs">
+      <description domainName="FMS Coupler"
+                   communityName="coupler"
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(COUPLER_GIT_TAG)"> FMScoupler.git </codeBase>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+  </experiment>
+
+
+
+
+  <experiment name="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_for_ECDA_exec">
+    <description>
+      Experiment to build executable. See git log for source code provenance.
+      FMS, FMScoupler = $(FMS_GIT_TAG)
+      GFDL_atmos_cubed_sphere = $(ATMOS_CUBED_SPHERE_TAG)
+      atmos_drivers =  $(ATMOS_DRIVERS_TAG)
+      MOM6 = $(MOM6_GIT_TAG)
+      
+      Identical to SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec with -DCONSV_HGHT for the fv3 core to allow nudging.
+    </description>
+
+    <component name="FMS"
+               paths="FMS">
+      <description domainName="infrastructure"
+                   communityName="FMS"
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(FMS_GIT_TAG)">
+          FMS.git
+        </codeBase>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -Duse_libMPI
+          -Duse_netCDF
+          -DMAXFIELDMETHODS_=500
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="atmos_phys"
+               requires="FMS"
+               paths="atmos_phys/atmos_param
+                      atmos_phys/atmos_shared">
+      <description domainName=""
+                   communityName=""
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+<!--
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+-->
+      <source versionControl="git"
+              root="https://gitlab.gfdl.noaa.gov/fms">
+        <codeBase version="$(AWG_GIT_TAG)">
+          atmos_phys.git
+        </codeBase>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+        </cppDefs>
+<!--
+2023/05/05 and onwards : CLUBB cannot be compiled on c5 as necessary (BLAS?) libraries are not installed.
+          -DCLUBB
+          -DAM3_CHEM
+        </cppDefs>
+-->
+      </compile>
+    </component>
+
+    <component name="atmos_drivers"
+               paths="atmos_drivers/coupled"
+               requires="FMS
+                         atmos_phys
+                         fv3">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="main">
+          atmos_drivers.git
+        </codeBase>
+        <csh><![CDATA[
+          ( cd atmos_drivers && git checkout $(ATMOS_DRIVERS_TAG) )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DSPMD
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="fv3"
+               paths="GFDL_atmos_cubed_sphere/driver/GFDL
+                      GFDL_atmos_cubed_sphere/model
+                      GFDL_atmos_cubed_sphere/driver/SHiELD/cloud_diagnosis.F90
+                      GFDL_atmos_cubed_sphere/driver/SHiELD/gfdl_cloud_microphys.F90
+                      GFDL_atmos_cubed_sphere/tools
+                      GFDL_atmos_cubed_sphere/GFDL_tools"
+               requires="FMS
+                         atmos_phys
+                         ">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+<!--        <codeBase version="master"> -->
+        <codeBase version="main">
+          GFDL_atmos_cubed_sphere.git
+        </codeBase>
+        <csh><![CDATA[
+          ( cd GFDL_atmos_cubed_sphere && git checkout $(ATMOS_CUBED_SPHERE_TAG) )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DSPMD
+          -DCONSV_HGHT
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="land_lad2"
+               requires="FMS"
+               paths="land_lad2">
+      <description domainName="LM3"
+                   communityName="land_lad2"
+                   communityVersion="lad2_20170209_slm"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://gitlab.gfdl.noaa.gov/fms">
+        <codeBase version="$(LAND_GIT_TAG)">
+          land_lad2.git
+        </codeBase>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs>
+          $(F2003_FLAGS)
+          -nostdinc
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="geoKdTree"
+               requires="FMS"
+               paths="geoKdTree">
+      <description domainName="geoKdTree"/>
+      <source versionControl="git"
+              root="https://github.com/travissluka/">
+        <codeBase version="master">
+          geoKdTree.git
+        </codeBase>
+        <csh><![CDATA[
+          (cd geoKdTree && git checkout a4670b9)
+          ]]>
+        </csh>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="GSW-Fortran"
+               requires=""
+               paths="GSW-Fortran/modules">
+      <description domainName="ODA"/>
+      <source versionControl="git"
+              root="https://github.com/TEOS-10/">
+        <codeBase version="master">
+          GSW-Fortran.git
+        </codeBase>
+        <csh><![CDATA[
+          (cd GSW-Fortran && git checkout 29e64d652786e1d076a05128c920f394202bfe10)
+          ]]>
+        </csh>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="ECDA"
+               requires="FMS geoKdTree ODA GSW-Fortran"
+               paths="ECDA/src/ecda/shared
+                      ECDA/src/ecda/shared/bgrid
+                      ECDA/src/oda">
+      <description domainName="ECDA"/>
+      <source versionControl="git"
+              root="https://gitlab.gfdl.noaa.gov/Feiyu.Lu/">
+        <codeBase version="master">
+          ECDA.git
+        </codeBase>
+        <csh><![CDATA[
+          (cd ECDA && git checkout dd1cc5da4dc49890c87440d846a2fbc70e418c3f)
+          ]]>
+        </csh>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="ODA"
+               requires="FMS geoKdTree"
+               paths="MOM6_DA_hooks/src/core">
+      <description domainName="ODA"/>
+      <source versionControl="git"
+              root="https://github.com/feiyulu">
+        <codeBase version="master">
+          MOM6_DA_hooks.git
+        </codeBase>
+
+        <csh><![CDATA[
+          (cd MOM6_DA_hooks && git checkout dev/GFDL)
+          ]]>
+        </csh>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="mom6"
+               requires="FMS ECDA ODA geoKdTree"
+               paths="MOM6/config_src/memory/dynamic_nonsymmetric
+                      MOM6/config_src/drivers/FMS_cap
+                      MOM6/config_src/infra/FMS2
+                      MOM6/config_src/external/GFDL_ocean_BGC
+                      MOM6/config_src/external/drifters
+                      MOM6/config_src/external/stochastic_physics
+                      MOM6/config_src/external/database_comms
+                      MOM6/src/*/
+                      MOM6/src/*/*/
+                      MOM6/pkg/GSW-Fortran/ ">
+      <description domainName="Ocean"
+                   communityName="GFDL-MOM6"
+                   communityVersion="$(MOM6_GIT_TAG)"
+                   communityGrid="Tripolar"/>
+
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(MOM6_GIT_TAG)">
+          MOM6.git
+        </codeBase>
+<!--
+        <csh><![CDATA[
+          # Commit 
+            ( cd MOM6  && git checkout  835b1661c0204b0f91e51e8593555eed1f6577e2 )
+          ]]>
+        </csh>
+-->
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          -DMAX_FIELDS_=100
+          -DENABLE_ECDA
+          ]]>
+        </cppDefs>
+        <makeOverrides>OPENMP=""</makeOverrides> <!-- openmp switch for MOM6 may cause crash -->
+      </compile>
+    </component>
+
+    <component name="ice_param"
+               requires="FMS"
+               paths="ice_param"
+               includeDir="$(srcDir)/FMS/include">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="master">
+          ice_param.git
+        </codeBase>
+        <csh><![CDATA[
+          # Equivalent to checking out the following
+          #( cd ice_param && git checkout 0b6a807971d612deca1b234ed9438d33b02cf614)
+          ( cd ice_param && git checkout  $(ICE_PARAM_GIT_TAG) )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="sis2"
+               requires="FMS
+                         mom6
+                         ice_param
+                         icebergs"
+               paths="SIS2/config_src/dynamic_symmetric
+                      SIS2/config_src/external/Icepack_interfaces
+                      SIS2/src"
+               includeDir="$(srcDir)/MOM6/src/framework" >
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="dev/gfdl">
+          SIS2.git
+        </codeBase>
+<!--
+          <csh><![CDATA[
+            ( cd SIS2  && git checkout 6e0eda1d4bd085bc30da38574d53047a5c2ec5f7 )
+                       ]]>
+          </csh>        
+-->
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          -DSYMMETRIC_MEMORY_
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="icebergs"
+               requires="FMS"
+               paths="icebergs/src">
+      <description domainName="N/A"
+                   communityName="N/A"
+                   communityVersion="$(RELEASE)"
+                   communityGrid="N/A"/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="dev/gfdl">
+          icebergs.git
+        </codeBase>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          -DUSE_FMS2_IO
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="coupler"
+               paths="FMScoupler/full
+                      FMScoupler/shared"
+               requires="FMS
+                         fv3
+                         atmos_phys
+                         atmos_drivers
+                         land_lad2
+                         sis2
+                         mom6
+                         geoKdTree
+                         ECDA
+                         ODA
+                         icebergs">
+      <description domainName="FMS Coupler"
+                   communityName="coupler"
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(COUPLER_GIT_TAG)"> FMScoupler.git </codeBase>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+  </experiment>
+
+
+
+
+  <experiment name="SPEAR_R$(FMS_GIT_TAG)_AMIP_exec">
+    <description>
+      Experiment to build AMIP (atmosphere/land/ice only) executable. See git log for source code provenance.
+      Requires SIS rather than SIS2 for reproducibility across restarts.
+    </description>
+
+    <component name="FMS"
+               paths="FMS">
+      <description domainName="infrastructure"
+                   communityName="FMS"
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(FMS_GIT_TAG)">
+          FMS.git
+        </codeBase>
+        <!--
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd FMS && git checkout 7f585284f1487c0629f8075be350385e6e75dd2f )
+          ]]>
+        </csh>
+        -->
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -Duse_libMPI
+          -Duse_netCDF
+          -DMAXFIELDMETHODS_=500
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="atmos_phys"
+               requires="FMS"
+               paths="atmos_phys/atmos_param
+                      atmos_phys/atmos_shared">
+      <description domainName=""
+                   communityName=""
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+<!--
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+-->
+      <source versionControl="git"
+              root="https://gitlab.gfdl.noaa.gov/fms">
+        <codeBase version="$(AWG_GIT_TAG)">
+          atmos_phys.git
+        </codeBase>
+        <!--
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd atmos_phys && git checkout 86f46861f31331b7f6e4fdfabca58c78958ed47b )
+          ]]>
+        </csh>
+        -->
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+        </cppDefs>
+<!--
+2023/05/05 and onwards : CLUBB cannot be compiled on c5 as necessary (BLAS?) libraries are not installed.
+          -DCLUBB
+          -DAM3_CHEM
+        </cppDefs>
+-->
+      </compile>
+    </component>
+
+    <component name="atmos_drivers"
+               paths="atmos_drivers/coupled"
+               requires="FMS
+                         atmos_phys
+                         fv3">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="main">
+          atmos_drivers.git
+        </codeBase>
+        <csh><![CDATA[
+          ( cd atmos_drivers && git checkout $(ATMOS_DRIVERS_TAG) )
+          ]]>
+        </csh>
+        <!--
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd atmos_drivers && git checkout 62279bb627cffcb0e86d28b605048a706872568f )
+          ]]>
+        </csh>
+        -->
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DSPMD
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="fv3"
+               paths="GFDL_atmos_cubed_sphere/driver/GFDL
+                      GFDL_atmos_cubed_sphere/model
+                      GFDL_atmos_cubed_sphere/driver/SHiELD/cloud_diagnosis.F90
+                      GFDL_atmos_cubed_sphere/driver/SHiELD/gfdl_cloud_microphys.F90
+                      GFDL_atmos_cubed_sphere/tools
+                      GFDL_atmos_cubed_sphere/GFDL_tools"
+               requires="FMS
+                         atmos_phys">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="main">
+          GFDL_atmos_cubed_sphere.git
+        </codeBase>
+        <csh><![CDATA[
+          ( cd GFDL_atmos_cubed_sphere && git checkout $(ATMOS_CUBED_SPHERE_TAG) )
+          # Equivalent to the following checkout hash
+          ( cd GFDL_atmos_cubed_sphere && git checkout 577abc706e5caaff52b597e7bfaf4e0043ee9960 )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DSPMD
+          -D__PGI
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="land_lad2"
+               requires="FMS"
+               paths="land_lad2">
+      <description domainName="LM3"
+                   communityName="land_lad2"
+                   communityVersion="lad2_20170209_slm"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://gitlab.gfdl.noaa.gov/fms">
+        <codeBase version="$(LAND_GIT_TAG)">
+          land_lad2.git
+        </codeBase>
+        <!--
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd land_lad2 && git checkout 9c978eadc7a9fef0e92c1c7c03cf568be82e8ea2 )
+          ]]>
+        </csh>
+        -->
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs>
+          $(F2003_FLAGS)
+          -nostdinc
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="mom6"
+               requires="FMS"
+               paths="MOM6/config_src/memory/dynamic_nonsymmetric
+                      MOM6/config_src/drivers/FMS_cap
+                      MOM6/config_src/infra/FMS2
+                      MOM6/config_src/external/ODA_hooks
+                      MOM6/config_src/external/GFDL_ocean_BGC
+		      MOM6/config_src/external/drifters
+                      MOM6/config_src/external/stochastic_physics
+                      MOM6/config_src/external/database_comms
+		      MOM6/src/*/
+                      MOM6/src/*/*/
+                      MOM6/pkg/GSW-Fortran/ ">
+      <description domainName="Ocean"
+                   communityName="GFDL-MOM6"
+                   communityVersion="$(MOM6_GIT_TAG)"
+                   communityGrid="Tripolar"/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(MOM6_GIT_TAG)">
+          MOM6.git
+        </codeBase>
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd MOM6 && git checkout 2d121dcc4275bb579ea275815fa79f92cbc6141e )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          -DMAX_FIELDS_=100
+          ]]>
+        </cppDefs>
+        <makeOverrides>OPENMP=""</makeOverrides> <!-- openmp switch for MOM6 may cause crash -->
+      </compile>
+    </component>
+
+    <component name="ice_param"
+               requires="FMS"
+               paths="ice_param"
+               includeDir="$(srcDir)/FMS/include">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="master">
+          ice_param.git
+        </codeBase>
+        <csh><![CDATA[
+          ( cd ice_param && git checkout $(ICE_PARAM_GIT_TAG))
+          # Equivalent to the following checkout hash
+          ( cd ice_param && git checkout ddedca7d724fad9ad4fc6ec68bd4b22733551ed7 )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+
+    <component name="ice_sis" 
+               requires="FMS mom6 ice_param" 
+               paths="ice_sis">
+      <source  versionControl="git" 
+               root="http://gitlab.gfdl.noaa.gov/fms">
+        <codeBase version="dev/master"> ice_sis.git</codeBase>
+        
+        <csh><![CDATA[
+          ( cd ice_sis    && git checkout 2023.02 )
+          # Equivalent to the following checkout hash
+          ( cd ice_sis && git checkout bd14ed5ed6b8f99e35ca44a219e524ba5d0612d4 )
+         ]]>
+        </csh>
+        
+      </source>
+      <compile>
+        <cppDefs>$(F2003_FLAGS) -Duse_netCDF</cppDefs>
+      </compile>
+    </component>
+
+
+    <component name="icebergs"
+               requires="FMS"
+               paths="icebergs/src">
+      <description domainName="N/A"
+                   communityName="N/A"
+                   communityVersion="$(RELEASE)"
+                   communityGrid="N/A"/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="dev/gfdl">
+          icebergs.git
+        </codeBase>
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd icebergs && git checkout e8f794b04a962065ff21a8dfd37de9677c0d4533 )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          -DUSE_FMS2_IO
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="coupler"
+               paths="FMScoupler/full
+                      FMScoupler/shared"
+               requires="FMS
+                         fv3
+                         atmos_phys
+                         atmos_drivers
+                         land_lad2
+                         ice_sis
+                         mom6
+                         icebergs">
+      <description domainName="FMS Coupler"
+                   communityName="coupler"
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(FMS_GIT_TAG)"> FMScoupler.git </codeBase>
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd FMScoupler && git checkout 6442d387153064644325c96a5e9e2935139d5e3c )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+  </experiment>
+
+
+
+
+
+  <experiment name="SPEAR_R$(FMS_GIT_TAG)_LM4p2_nonsymMOM6_exec">
+    <description>
+      Experiment to build executable. See git log for source code provenance.
+      FMS, FMScoupler = $(FMS_GIT_TAG)
+      GFDL_atmos_cubed_sphere = $(ATMOS_CUBED_SPHERE_TAG)
+      atmos_drivers =  $(ATMOS_DRIVERS_TAG)
+      MOM6 = $(MOM6_GIT_TAG)
+    </description>
+
+    <component name="FMS"
+               paths="FMS">
+      <description domainName="infrastructure"
+                   communityName="FMS"
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(FMS_GIT_TAG)">
+          FMS.git
+        </codeBase>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -Duse_libMPI
+          -Duse_netCDF
+          -DMAXFIELDMETHODS_=500
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="atmos_phys"
+               requires="FMS"
+               paths="atmos_phys/atmos_param
+                      atmos_phys/atmos_shared">
+      <description domainName=""
+                   communityName=""
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+<!--
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+-->
+      <source versionControl="git"
+              root="https://gitlab.gfdl.noaa.gov/fms">
+        <codeBase version="$(AWG_GIT_TAG)">
+          atmos_phys.git
+        </codeBase>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DCLUBB
+          -DAM3_CHEM
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="atmos_drivers"
+               paths="atmos_drivers/coupled"
+               requires="FMS
+                         atmos_phys
+                         fv3">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="main">
+          atmos_drivers.git
+        </codeBase>
+        <csh><![CDATA[
+          ( cd atmos_drivers && git checkout $(ATMOS_DRIVERS_TAG) )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DSPMD
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="fv3"
+               paths="GFDL_atmos_cubed_sphere/driver/GFDL
+                      GFDL_atmos_cubed_sphere/model
+                      GFDL_atmos_cubed_sphere/driver/SHiELD/cloud_diagnosis.F90
+                      GFDL_atmos_cubed_sphere/driver/SHiELD/gfdl_cloud_microphys.F90
+                      GFDL_atmos_cubed_sphere/tools
+                      GFDL_atmos_cubed_sphere/GFDL_tools"
+               requires="FMS
+                         atmos_phys
+                         ">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+<!--        <codeBase version="master"> -->
+        <codeBase version="main">
+          GFDL_atmos_cubed_sphere.git
+        </codeBase>
+        <csh><![CDATA[
+          ( cd GFDL_atmos_cubed_sphere && git checkout $(ATMOS_CUBED_SPHERE_TAG) )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DSPMD
+        </cppDefs>
+      </compile>
+    </component>
+
+<!--
+    <component name="land_lad2"
+               requires="FMS"
+               paths="land_lad2">
+      <description domainName="LM3"
+                   communityName="land_lad2"
+                   communityVersion="lad2_20170209_slm"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://gitlab.gfdl.noaa.gov/fms">
+        <codeBase version="$(LAND_GIT_TAG)">
+          land_lad2.git
+        </codeBase>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs>
+          $(F2003_FLAGS)
+          -nostdinc
+        </cppDefs>
+      </compile>
+    </component>
+-->
+  <component name="land_lm4p" 
+             requires="FMS" 
+             paths="lm4p">
+    <source versionControl="git" 
+    root="http://gitlab.gfdl.noaa.gov/fms">
+      <codeBase version="$(FMS_GIT_TAG)">
+      lm4p.git
+      </codeBase>
+    </source>
+    <compile doF90Cpp="yes">
+       <cppDefs>
+         <![CDATA[
+         $(F2003_FLAGS) 
+         -D_FILE_VERSION="'"`git-version-string $<`"'" 
+         -DDEBUG_LAND_TILE_DIAG
+         ]]>
+       </cppDefs>
+    </compile>
+  </component>
+
+
+    <component name="geoKdTree"
+               requires="FMS"
+               paths="geoKdTree">
+      <description domainName="geoKdTree"/>
+      <source versionControl="git"
+              root="https://github.com/travissluka/">
+        <codeBase version="master">
+          geoKdTree.git
+        </codeBase>
+        <csh><![CDATA[
+          (cd geoKdTree && git checkout a4670b9)
+          ]]>
+        </csh>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="GSW-Fortran"
+               requires=""
+               paths="GSW-Fortran/modules">
+      <description domainName="ODA"/>
+      <source versionControl="git"
+              root="https://github.com/TEOS-10/">
+        <codeBase version="master">
+          GSW-Fortran.git
+        </codeBase>
+        <csh><![CDATA[
+          (cd GSW-Fortran && git checkout 29e64d652786e1d076a05128c920f394202bfe10)
+          ]]>
+        </csh>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="ECDA"
+               requires="FMS geoKdTree ODA GSW-Fortran"
+               paths="ECDA/src/ecda/shared
+                      ECDA/src/ecda/shared/bgrid
+                      ECDA/src/oda">
+      <description domainName="ECDA"/>
+      <source versionControl="git"
+              root="https://gitlab.gfdl.noaa.gov/Feiyu.Lu/">
+        <codeBase version="master">
+          ECDA.git
+        </codeBase>
+        <csh><![CDATA[
+          (cd ECDA && git checkout dd1cc5da4dc49890c87440d846a2fbc70e418c3f)
+          ]]>
+        </csh>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="ODA"
+               requires="FMS geoKdTree"
+               paths="MOM6_DA_hooks/src/core">
+      <description domainName="ODA"/>
+      <source versionControl="git"
+              root="http://github.com/feiyulu">
+        <codeBase version="dev/GFDL">
+          MOM6_DA_hooks.git
+        </codeBase>
+<!--
+        <csh><![CDATA[
+          (cd MOM6_DA_hooks && git checkout 8a3dbe7969e80a079949775589dcb90e89796cfd)
+          ]]>
+        </csh>
+-->
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+<!--
+-->
+    <component name="mom6"
+               requires="FMS ECDA ODA geoKdTree"
+               paths="MOM6/config_src/memory/dynamic_nonsymmetric
+                      MOM6/config_src/drivers/FMS_cap
+                      MOM6/config_src/infra/FMS2
+                      MOM6/config_src/external/GFDL_ocean_BGC
+                      MOM6/config_src/external/drifters
+                      MOM6/config_src/external/stochastic_physics
+                      MOM6/config_src/external/database_comms
+                      MOM6/src/*/
+                      MOM6/src/*/*/
+                      MOM6/pkg/GSW-Fortran/ ">
+      <description domainName="Ocean"
+                   communityName="GFDL-MOM6"
+                   communityVersion="$(MOM6_GIT_TAG)"
+                   communityGrid="Tripolar"/>
+
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(MOM6_GIT_TAG)">
+          MOM6.git
+        </codeBase>
+<!--
+        <csh><![CDATA[
+          # Commit 
+            ( cd MOM6  && git checkout  835b1661c0204b0f91e51e8593555eed1f6577e2 )
+          ]]>
+        </csh>
+-->
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          -DMAX_FIELDS_=100
+          -DENABLE_ECDA
+          ]]>
+        </cppDefs>
+        <makeOverrides>OPENMP=""</makeOverrides> <!-- openmp switch for MOM6 may cause crash -->
+      </compile>
+    </component>
+
+    <component name="ice_param"
+               requires="FMS"
+               paths="ice_param"
+               includeDir="$(srcDir)/FMS/include">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="master">
+          ice_param.git
+        </codeBase>
+        <csh><![CDATA[
+          # Equivalent to checking out the following
+          #( cd ice_param && git checkout 0b6a807971d612deca1b234ed9438d33b02cf614)
+          ( cd ice_param && git checkout  $(ICE_PARAM_GIT_TAG) )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="sis2"
+               requires="FMS
+                         mom6
+                         ice_param
+                         icebergs"
+               paths="SIS2/config_src/dynamic_symmetric
+                      SIS2/config_src/external/Icepack_interfaces
+                      SIS2/src"
+               includeDir="$(srcDir)/MOM6/src/framework" >
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="dev/gfdl">
+          SIS2.git
+        </codeBase>
+<!--
+          <csh><![CDATA[
+            ( cd SIS2  && git checkout 6e0eda1d4bd085bc30da38574d53047a5c2ec5f7 )
+                       ]]>
+          </csh>        
+-->
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          -DSYMMETRIC_MEMORY_
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="icebergs"
+               requires="FMS"
+               paths="icebergs/src">
+      <description domainName="N/A"
+                   communityName="N/A"
+                   communityVersion="$(RELEASE)"
+                   communityGrid="N/A"/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="dev/gfdl">
+          icebergs.git
+        </codeBase>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          -DUSE_FMS2_IO
+          ]]>
+        </cppDefs>
+          <csh><![CDATA[
+            ( cd icebergs  && git checkout 6a8944fc7544608942de9a42bd3b96f6e56684e0)
+                       ]]>
+          </csh>
+      </compile>
+    </component>
+
+    <component name="coupler"
+               paths="FMScoupler/full
+                      FMScoupler/shared"
+               requires="FMS
+                         fv3
+                         atmos_phys
+                         atmos_drivers
+                         land_lm4p
+                         sis2
+                         mom6
+                         geoKdTree
+                         ECDA
+                         ODA
+                         icebergs">
+      <description domainName="FMS Coupler"
+                   communityName="coupler"
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(FMS_GIT_TAG)"> FMScoupler.git </codeBase>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+  </experiment>
+
+
+  <experiment name="SPEAR_R$(FMS_GIT_TAG)_LM4p2_AMIP_exec">
+    <description>
+      Experiment to build AMIP (atmosphere/land/ice only) executable. See git log for source code provenance.
+      Requires SIS rather than SIS2 for reproducibility across restarts.
+    </description>
+
+    <component name="FMS"
+               paths="FMS">
+      <description domainName="infrastructure"
+                   communityName="FMS"
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(FMS_GIT_TAG)">
+          FMS.git
+        </codeBase>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -Duse_libMPI
+          -Duse_netCDF
+          -DMAXFIELDMETHODS_=500
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="atmos_phys"
+               requires="FMS"
+               paths="atmos_phys/atmos_param
+                      atmos_phys/atmos_shared">
+      <description domainName=""
+                   communityName=""
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+<!--
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+-->
+      <source versionControl="git"
+              root="https://gitlab.gfdl.noaa.gov/fms">
+        <codeBase version="$(AWG_GIT_TAG)">
+          atmos_phys.git
+        </codeBase>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DCLUBB
+          -DAM3_CHEM
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="atmos_drivers"
+               paths="atmos_drivers/coupled"
+               requires="FMS
+                         atmos_phys
+                         fv3">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="main">
+          atmos_drivers.git
+        </codeBase>
+        <csh><![CDATA[
+          ( cd atmos_drivers && git checkout $(ATMOS_DRIVERS_TAG) )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DSPMD
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="fv3"
+               paths="GFDL_atmos_cubed_sphere/driver/GFDL
+                      GFDL_atmos_cubed_sphere/model
+                      GFDL_atmos_cubed_sphere/driver/SHiELD/cloud_diagnosis.F90
+                      GFDL_atmos_cubed_sphere/driver/SHiELD/gfdl_cloud_microphys.F90
+                      GFDL_atmos_cubed_sphere/tools
+                      GFDL_atmos_cubed_sphere/GFDL_tools"
+               requires="FMS
+                         atmos_phys">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="main">
+          GFDL_atmos_cubed_sphere.git
+        </codeBase>
+        <csh><![CDATA[
+          ( cd GFDL_atmos_cubed_sphere && git checkout $(ATMOS_CUBED_SPHERE_TAG) )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DSPMD
+          -D__PGI
+        </cppDefs>
+      </compile>
+    </component>
+
+<!--
+    <component name="land_lad2"
+               requires="FMS"
+               paths="land_lad2">
+      <description domainName="LM3"
+                   communityName="land_lad2"
+                   communityVersion="lad2_20170209_slm"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://gitlab.gfdl.noaa.gov/fms">
+        <codeBase version="$(LAND_GIT_TAG)">
+          land_lad2.git
+        </codeBase>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs>
+          $(F2003_FLAGS)
+          -nostdinc
+        </cppDefs>
+      </compile>
+    </component>
+-->
+  <component name="land_lm4p" 
+             requires="FMS" 
+             paths="lm4p">
+    <source versionControl="git" 
+    root="http://gitlab.gfdl.noaa.gov/fms">
+      <codeBase version="land_w_grid2">
+      lm4p.git
+      </codeBase>
+    </source>
+    <compile doF90Cpp="yes">
+       <cppDefs>
+         <![CDATA[
+         $(F2003_FLAGS) 
+         -D_FILE_VERSION="'"`git-version-string $<`"'" 
+         -DDEBUG_LAND_TILE_DIAG
+         ]]>
+       </cppDefs>
+    </compile>
+  </component>
+
+
+    <component name="mom6"
+               requires="FMS"
+               paths="MOM6/config_src/memory/dynamic_nonsymmetric
+                      MOM6/config_src/drivers/FMS_cap
+                      MOM6/config_src/infra/FMS2
+                      MOM6/config_src/external/ODA_hooks
+                      MOM6/config_src/external/GFDL_ocean_BGC
+		      MOM6/config_src/external/drifters
+                      MOM6/config_src/external/stochastic_physics
+                      MOM6/config_src/external/database_comms
+		      MOM6/src/*/
+                      MOM6/src/*/*/
+                      MOM6/pkg/GSW-Fortran/ ">
+      <description domainName="Ocean"
+                   communityName="GFDL-MOM6"
+                   communityVersion="$(MOM6_GIT_TAG)"
+                   communityGrid="Tripolar"/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(MOM6_GIT_TAG)">
+          MOM6.git
+        </codeBase>
+        <csh><![CDATA[
+          # Commit
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          -DMAX_FIELDS_=100
+          ]]>
+        </cppDefs>
+        <makeOverrides>OPENMP=""</makeOverrides> <!-- openmp switch for MOM6 may cause crash -->
+      </compile>
+    </component>
+
+    <component name="ice_param"
+               requires="FMS"
+               paths="ice_param"
+               includeDir="$(srcDir)/FMS/include">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="master">
+          ice_param.git
+        </codeBase>
+        <csh><![CDATA[
+          ( cd ice_param && git checkout $(ICE_PARAM_GIT_TAG))
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+
+    <component name="ice_sis" 
+               requires="FMS mom6 ice_param" 
+               paths="ice_sis">
+      <source  versionControl="git" 
+               root="http://gitlab.gfdl.noaa.gov/fms">
+        <codeBase version="dev/master"> ice_sis.git</codeBase>
+        
+        <csh><![CDATA[
+          ( cd ice_sis    && git checkout $(ICE_PARAM_GIT_TAG) )
+         ]]>
+        </csh>
+        
+      </source>
+      <compile>
+        <cppDefs>$(F2003_FLAGS) -Duse_netCDF</cppDefs>
+      </compile>
+    </component>
+
+
+    <component name="icebergs"
+               requires="FMS"
+               paths="icebergs/src">
+      <description domainName="N/A"
+                   communityName="N/A"
+                   communityVersion="$(RELEASE)"
+                   communityGrid="N/A"/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="dev/gfdl">
+          icebergs.git
+        </codeBase>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          -DUSE_FMS2_IO
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="coupler"
+               paths="FMScoupler/full
+                      FMScoupler/shared"
+               requires="FMS
+                         fv3
+                         atmos_phys
+                         atmos_drivers
+                         land_lm4p
+                         ice_sis
+                         mom6
+                         icebergs">
+      <description domainName="FMS Coupler"
+                   communityName="coupler"
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(FMS_GIT_TAG)"> FMScoupler.git </codeBase>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+  </experiment>
+
+
+
+  <experiment name="SPEAR_R$(FMS_GIT_TAG)_MOM6FMS1_nonsymMOM6_exec">
+    <description>
+      Experiment to build executable. See git log for source code provenance.
+      FMS, FMScoupler = $(FMS_GIT_TAG)
+      GFDL_atmos_cubed_sphere = $(ATMOS_CUBED_SPHERE_TAG)
+      atmos_drivers =  $(ATMOS_DRIVERS_TAG)
+      MOM6 = $(MOM6_GIT_TAG)
+      
+      Exact same as R20XX.X_nonsymMOM6_exec but with MOM6/config_src/infra/FMS1 instead of FMS2 for MOM6.
+      This may affect the icebergs code.
+    </description>
+
+    <component name="FMS"
+               paths="FMS">
+      <description domainName="infrastructure"
+                   communityName="FMS"
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(FMS_GIT_TAG)">
+          FMS.git
+        </codeBase>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -Duse_libMPI
+          -Duse_netCDF
+          -DMAXFIELDMETHODS_=500
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="atmos_phys"
+               requires="FMS"
+               paths="atmos_phys/atmos_param
+                      atmos_phys/atmos_shared">
+      <description domainName=""
+                   communityName=""
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+<!--
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+-->
+      <source versionControl="git"
+              root="https://gitlab.gfdl.noaa.gov/fms">
+        <codeBase version="$(AWG_GIT_TAG)">
+          atmos_phys.git
+        </codeBase>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DCLUBB
+          -DAM3_CHEM
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="atmos_drivers"
+               paths="atmos_drivers/coupled"
+               requires="FMS
+                         atmos_phys
+                         fv3">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="main">
+          atmos_drivers.git
+        </codeBase>
+        <csh><![CDATA[
+          ( cd atmos_drivers && git checkout $(ATMOS_DRIVERS_TAG) )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DSPMD
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="fv3"
+               paths="GFDL_atmos_cubed_sphere/driver/GFDL
+                      GFDL_atmos_cubed_sphere/model
+                      GFDL_atmos_cubed_sphere/driver/SHiELD/cloud_diagnosis.F90
+                      GFDL_atmos_cubed_sphere/driver/SHiELD/gfdl_cloud_microphys.F90
+                      GFDL_atmos_cubed_sphere/tools
+                      GFDL_atmos_cubed_sphere/GFDL_tools"
+               requires="FMS
+                         atmos_phys
+                         ">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+<!--        <codeBase version="master"> -->
+        <codeBase version="main">
+          GFDL_atmos_cubed_sphere.git
+        </codeBase>
+        <csh><![CDATA[
+          ( cd GFDL_atmos_cubed_sphere && git checkout $(ATMOS_CUBED_SPHERE_TAG) )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs>
+          $(F2003_FLAGS)
+          -DSPMD
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="land_lad2"
+               requires="FMS"
+               paths="land_lad2">
+      <description domainName="LM3"
+                   communityName="land_lad2"
+                   communityVersion="lad2_20170209_slm"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://gitlab.gfdl.noaa.gov/fms">
+        <codeBase version="$(LAND_GIT_TAG)">
+          land_lad2.git
+        </codeBase>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs>
+          $(F2003_FLAGS)
+          -nostdinc
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="geoKdTree"
+               requires="FMS"
+               paths="geoKdTree">
+      <description domainName="geoKdTree"/>
+      <source versionControl="git"
+              root="https://github.com/travissluka/">
+        <codeBase version="master">
+          geoKdTree.git
+        </codeBase>
+        <csh><![CDATA[
+          (cd geoKdTree && git checkout a4670b9)
+          ]]>
+        </csh>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="GSW-Fortran"
+               requires=""
+               paths="GSW-Fortran/modules">
+      <description domainName="ODA"/>
+      <source versionControl="git"
+              root="https://github.com/TEOS-10/">
+        <codeBase version="master">
+          GSW-Fortran.git
+        </codeBase>
+        <csh><![CDATA[
+          (cd GSW-Fortran && git checkout 29e64d652786e1d076a05128c920f394202bfe10)
+          ]]>
+        </csh>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="ECDA"
+               requires="FMS geoKdTree ODA GSW-Fortran"
+               paths="ECDA/src/ecda/shared
+                      ECDA/src/ecda/shared/bgrid
+                      ECDA/src/oda">
+      <description domainName="ECDA"/>
+      <source versionControl="git"
+              root="https://gitlab.gfdl.noaa.gov/Feiyu.Lu/">
+        <codeBase version="master">
+          ECDA.git
+        </codeBase>
+        <csh><![CDATA[
+          (cd ECDA && git checkout dd1cc5da4dc49890c87440d846a2fbc70e418c3f)
+          ]]>
+        </csh>
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="ODA"
+               requires="FMS geoKdTree"
+               paths="MOM6_DA_hooks/src/core">
+      <description domainName="ODA"/>
+      <source versionControl="git"
+              root="https://github.com/feiyulu">
+        <codeBase version="master">
+          MOM6_DA_hooks.git
+        </codeBase>
+
+        <csh><![CDATA[
+          (cd MOM6_DA_hooks && git checkout dev/GFDL)
+          ]]>
+        </csh>
+
+      </source>
+      <compile doF90Cpp="yes">
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+<!--
+-->
+    <component name="mom6"
+               requires="FMS ECDA ODA geoKdTree"
+               paths="MOM6/config_src/memory/dynamic_nonsymmetric
+                      MOM6/config_src/drivers/FMS_cap
+                      MOM6/config_src/infra/FMS1
+                      MOM6/config_src/external/GFDL_ocean_BGC
+                      MOM6/config_src/external/drifters
+                      MOM6/config_src/external/stochastic_physics
+                      MOM6/config_src/external/database_comms
+                      MOM6/src/*/
+                      MOM6/src/*/*/
+                      MOM6/pkg/GSW-Fortran/ ">
+      <description domainName="Ocean"
+                   communityName="GFDL-MOM6"
+                   communityVersion="$(MOM6_GIT_TAG)"
+                   communityGrid="Tripolar"/>
+
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(MOM6_GIT_TAG)">
+          MOM6.git
+        </codeBase>
+<!--
+        <csh><![CDATA[
+          # Commit 
+            ( cd MOM6  && git checkout  835b1661c0204b0f91e51e8593555eed1f6577e2 )
+          ]]>
+        </csh>
+-->
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          -DMAX_FIELDS_=100
+          -DENABLE_ECDA
+          ]]>
+        </cppDefs>
+        <makeOverrides>OPENMP=""</makeOverrides> <!-- openmp switch for MOM6 may cause crash -->
+      </compile>
+    </component>
+
+    <component name="ice_param"
+               requires="FMS"
+               paths="ice_param"
+               includeDir="$(srcDir)/FMS/include">
+      <source versionControl="git"
+              root="https://github.com/NOAA-GFDL">
+        <codeBase version="master">
+          ice_param.git
+        </codeBase>
+        <csh><![CDATA[
+          # Equivalent to checking out the following
+          #( cd ice_param && git checkout 0b6a807971d612deca1b234ed9438d33b02cf614)
+          ( cd ice_param && git checkout  $(ICE_PARAM_GIT_TAG) )
+          ]]>
+        </csh>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="sis2"
+               requires="FMS
+                         mom6
+                         ice_param
+                         icebergs"
+               paths="SIS2/config_src/dynamic_symmetric
+                      SIS2/config_src/external/Icepack_interfaces
+                      SIS2/src"
+               includeDir="$(srcDir)/MOM6/src/framework" >
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="dev/gfdl">
+          SIS2.git
+        </codeBase>
+<!--
+          <csh><![CDATA[
+            ( cd SIS2  && git checkout 6e0eda1d4bd085bc30da38574d53047a5c2ec5f7 )
+                       ]]>
+          </csh>        
+-->
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          -DSYMMETRIC_MEMORY_
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="icebergs"
+               requires="FMS"
+               paths="icebergs/src">
+      <description domainName="N/A"
+                   communityName="N/A"
+                   communityVersion="$(RELEASE)"
+                   communityGrid="N/A"/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="dev/gfdl">
+          icebergs.git
+        </codeBase>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+
+    <component name="coupler"
+               paths="FMScoupler/full
+                      FMScoupler/shared"
+               requires="FMS
+                         fv3
+                         atmos_phys
+                         atmos_drivers
+                         land_lad2
+                         sis2
+                         mom6
+                         geoKdTree
+                         ECDA
+                         ODA
+                         icebergs">
+      <description domainName="FMS Coupler"
+                   communityName="coupler"
+                   communityVersion="$(RELEASE)"
+                   communityGrid=""/>
+      <source versionControl="git"
+              root="http://github.com/NOAA-GFDL">
+        <codeBase version="$(COUPLER_GIT_TAG)"> FMScoupler.git </codeBase>
+      </source>
+      <compile>
+        <cppDefs><![CDATA[
+          $(F2003_FLAGS)
+          ]]>
+        </cppDefs>
+      </compile>
+    </component>
+  </experiment>
+
+
+
+
+
+</experimentSuite>

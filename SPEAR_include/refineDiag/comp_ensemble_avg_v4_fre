@@ -3,7 +3,7 @@
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 08/17/10 version. added statistics (just rms) 
 # 04/01/11 version v3. running on gaea output, analysis nodes
-
+# VERSION ON GAEA
 set argv = (`getopt y:b:c:d:o:p:x:w:P:s:vh $*`)
 
 while ("$argv[1]" != "--")
@@ -166,7 +166,7 @@ set ocean_statvars = ( )
 if ( $compstat == .true. ) then
    set atmos_statvars = (t_ref precip)
 #   set ocean_statvars = (temp salt tau_x tau_y) wfc
-   set ocean_statvars = (taux tauy)
+   set ocean_statvars = (tauuo tauvo)
    set oceanz_statvars = (thetao so )
 
    echo " This version will compute compute stddev for these fields:"
@@ -230,10 +230,10 @@ while ( $mo <= $maxmon )
   if ($Nmons < 1 ) goto err
 
   # add _FillValue to ocean files
-  foreach ocnf ( `ls -1 ${v:s/ens_01/ens_??}` )
-    echo "ncatted -O -a _FillValue,,o,f,-1.e+20f $ocnf"
-    ncatted -O -a _FillValue,,o,f,-1.e+20f $ocnf
-  end
+  #foreach ocnf ( `ls -1 ${v:s/ens_01/ens_??}` )
+  #  echo "ncatted -O -a _FillValue,,o,f,-1.e+20f $ocnf"
+  #  ncatted -O -a _FillValue,,o,f,-1.e+20f $ocnf
+  #end
 
   if ($Nmons == 1 ) then
      ${stddev} "$ocean_statvarsStr" "${var}.ens_??.nc" $var.nc || goto err
@@ -256,8 +256,8 @@ while ( $mo <= $maxmon )
   endif
 
   # delete -FillValue because frepp/timavg does not accept it
-  echo "ncatted -O -a _FillValue,,d,, ${var}.nc"
-  ncatted -O -a _FillValue,,d,, ${var}.nc
+  #echo "ncatted -O -a _FillValue,,d,, ${var}.nc"
+  #ncatted -O -a _FillValue,,d,, ${var}.nc
 
 
   ### Replicate for ocean_z_month
@@ -268,10 +268,10 @@ while ( $mo <= $maxmon )
   if ($Nmons < 1 ) goto err
 
   # add _FillValue to ocean files
-  foreach ocnf ( `ls -1 ${v:s/ens_01/ens_??}` )
-    echo "ncatted -O -a _FillValue,,o,f,-1.e+20f $ocnf"
-    ncatted -O -a _FillValue,,o,f,-1.e+20f $ocnf
-  end
+  #foreach ocnf ( `ls -1 ${v:s/ens_01/ens_??}` )
+  #  echo "ncatted -O -a _FillValue,,o,f,-1.e+20f $ocnf"
+  #  ncatted -O -a _FillValue,,o,f,-1.e+20f $ocnf
+  #end
 
   if ($Nmons == 1 ) then
      ${stddev} "$oceanz_statvarsStr" "${var}.ens_??.nc" $var.nc || goto err
@@ -294,8 +294,8 @@ while ( $mo <= $maxmon )
   endif
 
   # delete -FillValue because frepp/timavg does not accept it
-  echo "ncatted -O -a _FillValue,,d,, ${var}.nc"
-  ncatted -O -a _FillValue,,d,, ${var}.nc
+  #echo "ncatted -O -a _FillValue,,d,, ${var}.nc"
+  #ncatted -O -a _FillValue,,d,, ${var}.nc
 
 
   ### other than atmos_month and ocean_month components
@@ -328,7 +328,7 @@ while ( $mo <= $maxmon )
   mv ${varlist:gs/.ens_01//} $workdir/tmp/$hsmdate
   $hsmput -s tar \
           -a $outdir \
-          -p $ptmpDir/ensemble \
+          -p $ptmpDir/ensemble/history \
           -w $workdir/tmp \
           $hsmdate
   
@@ -342,8 +342,15 @@ while ( $mo <= $maxmon )
   if ( ( $pp == ".true." &&  $Nmons == 1 && $mmdd == 1201 ) || ( $pp == ".true." &&  $Nmons == 12 ) ) then 
     echo " frepp -P ${FRE_PLATFORM} -T ${FRE_TARGET} -c split -s  -x $xmlfile  -u ensemble -d $outdir -t $begindate $name"
     frepp -P ${FRE_PLATFORM} -T ${FRE_TARGET} -c split -s  -x $xmlfile  -u ensemble -d $outdir -t $begindate $name
+    if ( $status != 0) then
+      Mail -s"'Problem with frepp for ensemble average for timeslice '$begindate' of '$name'" $USER  << EOF
+Command issued was 
+frepp -P ${FRE_PLATFORM} -T ${FRE_TARGET} -c split -s  -x $xmlfile  -u ensemble -d $outdir -t $begindate $name
+Check your stdout for more details.
+EOF
+      goto err
+    endif
   endif
-
   ####### each member
   if ( $pp_ens_member == .false. ) then
     echo "Not processing ensemble members"
@@ -351,35 +358,48 @@ while ( $mo <= $maxmon )
     foreach ensNum ( `seq 1 $numEns` )
 
        set eee = `printf "ens_%2.2d" $ensNum`
-       echo "Processing ensemble member: $eee"
-       cd $workdir/$hsmdate
-       if ( -e $workdir/$eee/$hsmdate ) then
-         rm -fr $workdir/$eee/$hsmdate
+  
+       #if ( -e ${archive}/${ens}/${hsmdate}.tar.ok ) then
+       if ( -e ${hisdir}/../${eee}/history/${hsmdate}.tar.ok ) then
+           echo "NOTE: Ensemble member file for ${hsmdate:r} already exists.  Skipping"
+       else
+          echo "Processing ensemble member: $eee"
+          cd $workdir/$hsmdate
+         if ( -e $workdir/$eee/$hsmdate ) then
+            rm -fr $workdir/$eee/$hsmdate
+          endif
+          mkdir -p $workdir/$eee/$hsmdate
+          foreach vvv ( `ls ${begindate}.*.${eee}*.nc` )
+            eval set var = \${vvv:s/.${eee}//}
+            # delete attribute all _FillValue in ocean_month file
+            #if ($var =~ "$begindate.ocean_month*") then
+            #  echo "ncatted -O -a _FillValue,,d,, ${vvv}"
+            #  ncatted -O -a _FillValue,,d,, ${vvv}
+            #endif
+            mv $vvv $workdir/$eee/$hsmdate/$var
+          end
+
+          # save to output dir
+          set odir =  "$outdir:h/$eee/"
+          $hsmput -s tar \
+                  -a $odir \
+                  -p $ptmpDir/$eee/history \
+                  -w $workdir/$eee \
+                  $hsmdate
+
        endif
-       mkdir -p $workdir/$eee/$hsmdate
-       foreach vvv ( `ls ${begindate}.*.${eee}*.nc` )
-         eval set var = \${vvv:s/.${eee}//}
-         # delete attribute all _FillValue in ocean_month file
-         if ($var =~ "$begindate.ocean_month*") then
-           echo "ncatted -O -a _FillValue,,d,, ${vvv}"
-           ncatted -O -a _FillValue,,d,, ${vvv}
-         endif
-         mv $vvv $workdir/$eee/$hsmdate/$var
-       end
-
-       # save to output dir
-       set odir =  "$outdir:h/$eee/"
-       $hsmput -s tar \
-               -a $odir \
-               -p $ptmpDir/$eee \
-               -w $workdir/$eee \
-               $hsmdate
-
        if ( ( $pp == ".true." &&  $Nmons == 1 && $mmdd == 1201 ) || ( $pp == ".true." &&  $Nmons == 12 ) ) then
          echo "frepp -P ${FRE_PLATFORM} -T ${FRE_TARGET} -c split -s -x "$xmlfile"  -u $eee  -d "$outdir:h/$eee" -t $begindate $name "
          frepp -P ${FRE_PLATFORM} -T ${FRE_TARGET} -c split -s -x "$xmlfile"  -u $eee  -d "$outdir:h/$eee" -t $begindate $name
+         if ( $status != 0) then
+           Mail -s"'Problem with frepp for ensemble member '$eee' for timeslice '$begindate' of '$name" $USER  << EOF
+Command issued was 
+frepp -P ${FRE_PLATFORM} -T ${FRE_TARGET} -c split -s -x "$xmlfile"  -u $eee  -d "$outdir:h/$eee" -t $begindate $name
+Check your stdout for more details.
+EOF
+           goto err
+         endif
        endif
-
     end # foreach ensNum
 
   endif #if ( $pp_ens_member

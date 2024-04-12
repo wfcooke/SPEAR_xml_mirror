@@ -1,0 +1,145 @@
+#===================================
+# MIXED LAYER OCEAN DIAGNOSTICS        ADDED FOR SM2 MODEL
+#===================================
+#
+ "ocean_month",           1, "months", 1, "days", "Time"
+#
+ "ocean_model", "FRAZIL",           "FRAZIL",           "ocean_month", "all", .true., "none", 2
+ "ocean_model", "HFLX",             "HFLX",             "ocean_month", "all", .true., "none", 2
+ "ocean_model", "LHFLX",            "LHFLX",            "ocean_month", "all", .true., "none", 2
+ "ocean_model", "LWFLX",            "LWFLX",            "ocean_month", "all", .true., "none", 2
+ "ocean_model", "NET_HFLX",         "NET_HFLX",         "ocean_month", "all", .true., "none", 2
+ "ocean_model", "PME",              "PME",              "ocean_month", "all", .true., "none", 2
+ "ocean_model", "QFLUX_ADJ",        "QFLUX_ADJ",        "ocean_month", "all", .true., "none", 2
+ "ocean_model", "QFLX_RESTORE_SST", "QFLX_RESTORE_SST", "ocean_month", "all", .true., "none", 2
+ "ocean_model", "RIVER",            "RIVER",            "ocean_month", "all", .true., "none", 2
+ "ocean_model", "SHFLX",            "SHFLX",            "ocean_month", "all", .true., "none", 2
+ "ocean_model", "SNWFLX",           "SNWFLX",           "ocean_month", "all", .true., "none", 2
+ "ocean_model", "SST_HISTOBS",      "SST_HISTOBS",      "ocean_month", "all", .true., "none", 2
+ "ocean_model", "SST_OBS",          "SST_OBS",          "ocean_month", "all", .true., "none", 2
+ "ocean_model", "SST",              "SST",              "ocean_month", "all", .true., "none", 2
+ "ocean_model", "SWFLX_nir_dif",    "SWFLX_nir_dif",    "ocean_month", "all", .true., "none", 2
+ "ocean_model", "SWFLX_nir_dir",    "SWFLX_nir_dir",    "ocean_month", "all", .true., "none", 2
+ "ocean_model", "SWFLX_vis_dif",    "SWFLX_vis_dif",    "ocean_month", "all", .true., "none", 2
+ "ocean_model", "SWFLX_vis_dir",    "SWFLX_vis_dir",    "ocean_month", "all", .true., "none", 2
+
+#======================================
+# ICE AND ICEBERG DIAGNOSTICS (REDUCED)
+#======================================
+#
+#"ice_daily",                  24,  "hours",  1, "days", "time",
+"ice_month",                  1,  "months", 1, "days", "time",
+"iceberg_month",              1,  "months", 1, "days", "time",
+#
+#================
+# ICE DIAGNOSTICS
+#================
+##"ice_model", "AGE",        "AGE",        "ice_daily", "all", .true., "none", 2
+# "ice_model", "CN",         "CN",         "ice_daily", "all", .true., "none", 2
+# "ice_model", "SST",        "SST",        "ice_daily", "all", .true., "none", 2
+# "ice_model", "HI",         "HI",         "ice_daily", "all", .true., "none", 2
+##"ice_model", "HI_PART",    "HI_PART",    "ice_daily", "all", .true., "none", 2
+# "ice_model", "HS",         "HS",         "ice_daily", "all", .true., "none", 2
+# "ice_model", "MI",         "MI",         "ice_daily", "all", .true., "none", 2
+##"ice_model", "RDG_RATE",   "RDG_RATE",   "ice_daily", "all", .true., "none", 2
+##"ice_model", "RDG_FRAC",   "RDG_FRAC",   "ice_daily", "all", .true., "none", 2
+# "ice_model", "STRENGTH",   "STRENGTH",   "ice_daily", "all", .true., "none", 2
+# "ice_model", "UI",         "UI",         "ice_daily", "all", .true., "none", 2
+# "ice_model", "VI",         "VI",         "ice_daily", "all", .true., "none", 2
+#
+# "ice_model", "AGE",              "AGE",              "ice_month", "all", .true., "none", 2
+ "ice_model", "QFLX_RESTORE_ICE", "QFLX_RESTORE_ICE", "ice_month", "all", .true., "none", 2
+ "ice_model", "QFLX_LIMIT_ICE",   "QFLX_LIMIT_ICE",   "ice_month", "all", .true., "none", 2
+ "ice_model", "ALB",              "ALB",              "ice_month", "all", .true., "none", 2
+ "ice_model", "BHEAT",            "BHEAT",            "ice_month", "all", .true., "none", 2
+ "ice_model", "BMELT",            "BMELT",            "ice_month", "all", .true., "none", 2
+ "ice_model", "BSNK",             "BSNK",             "ice_month", "all", .true., "none", 2
+ "ice_model", "CALVING",          "CALVING",          "ice_month", "all", .true., "none", 2
+ "ice_model", "CALVING_HFLX",     "CALVING_HFLX",     "ice_month", "all", .true., "none", 2
+ "ice_model", "CELL_AREA",        "CELL_AREA",        "ice_month", "all", .false., "none", 2
+ "ice_model", "CN",               "CN",               "ice_month", "all", .true., "none", 2
+ "ice_model", "COSROT",           "COSROT",           "ice_month", "all", .false., "none", 2
+ "ice_model", "E2MELT",           "E2MELT",           "ice_month", "all", .true., "none", 2
+ "ice_model", "EVAP",             "EVAP",             "ice_month", "all", .true., "none", 2
+ "ice_model", "EXT",              "EXT",              "ice_month", "all", .true., "none", 2
+ "ice_model", "FA_X",             "FA_X",             "ice_month", "all", .true., "none", 2
+ "ice_model", "FA_Y",             "FA_Y",             "ice_month", "all", .true., "none", 2
+ "ice_model", "FC_X",             "FC_X",             "ice_month", "all", .true., "none", 2
+ "ice_model", "FC_Y",             "FC_Y",             "ice_month", "all", .true., "none", 2
+ "ice_model", "FI_X",             "FI_X",             "ice_month", "all", .true., "none", 2
+ "ice_model", "FI_Y",             "FI_Y",             "ice_month", "all", .true., "none", 2
+ "ice_model", "FRAZIL",           "FRAZIL",           "ice_month", "all", .true., "none", 2
+ "ice_model", "FW_X",             "FW_X",             "ice_month", "all", .true., "none", 2
+ "ice_model", "FW_Y",             "FW_Y",             "ice_month", "all", .true., "none", 2
+ "ice_model", "GEOLAT",           "GEOLAT",           "ice_month", "all", .false., "none", 2
+ "ice_model", "GEOLON",           "GEOLON",           "ice_month", "all", .false., "none", 2
+ "ice_model", "HI",               "HI",               "ice_month", "all", .true., "none", 2
+#"ice_model", "HI_PART",          "HI_PART",          "ice_month", "all", .true., "none", 2
+ "ice_model", "HS",               "HS",               "ice_month", "all", .true., "none", 2
+ "ice_model", "IX_TRANS",         "IX_TRANS",         "ice_month", "all", .true., "none", 2
+ "ice_model", "IY_TRANS",         "IY_TRANS",         "ice_month", "all", .true., "none", 2
+ "ice_model", "LH",               "LH",               "ice_month", "all", .true., "none", 2
+ "ice_model", "LSNK",             "LSNK",             "ice_month", "all", .true., "none", 2
+ "ice_model", "LSRC",             "LSRC",             "ice_month", "all", .true., "none", 2
+ "ice_model", "LWDN",             "LWDN",             "ice_month", "all", .true., "none", 2
+ "ice_model", "LW",               "LW",               "ice_month", "all", .true., "none", 2
+ "ice_model", "MI",               "MI",               "ice_month", "all", .true., "none", 2
+ "ice_model", "RAIN",             "RAIN",             "ice_month", "all", .true., "none", 2
+# "ice_model", "RDG_FRAC",         "RDG_FRAC",        "ice_month", "all", .true., "none", 2
+# "ice_model", "RDG_RATE",         "RDG_RATE",        "ice_month", "all", .true., "none", 2
+ "ice_model", "RUNOFF_HFLX",      "RUNOFF_HFLX",      "ice_month", "all", .true., "none", 2
+ "ice_model", "RUNOFF",           "RUNOFF",           "ice_month", "all", .true., "none", 2
+ "ice_model", "SALTF",            "SALTF",            "ice_month", "all", .true., "none", 2
+ "ice_model", "SH",               "SH",               "ice_month", "all", .true., "none", 2
+ "ice_model", "SIGII",            "SIGII",            "ice_month", "all", .true., "none", 2
+ "ice_model", "SIGI",             "SIGI",             "ice_month", "all", .true., "none", 2
+ "ice_model", "SINROT",           "SINROT",           "ice_month", "all", .false., "none", 2
+ "ice_model", "SLP",              "SLP",              "ice_month", "all", .true., "none", 2
+ "ice_model", "SN2IC",            "SN2IC",            "ice_month", "all", .true., "none", 2
+ "ice_model", "SNOWFL",           "SNOWFL",           "ice_month", "all", .true., "none", 2
+ "ice_model", "SSH",              "SSH",              "ice_month", "all", .true., "none", 2
+ "ice_model", "SSS",              "SSS",              "ice_month", "all", .true., "none", 2
+ "ice_model", "SST",              "SST",              "ice_month", "all", .true., "none", 2
+ "ice_model", "STRAIN_ANGLE",     "STRAIN_ANGLE",     "ice_month","all",.true., "none", 2
+ "ice_model", "STRENGTH",         "STRENGTH",         "ice_month", "all", .true., "none", 2
+ "ice_model", "SWDN",             "SWDN",             "ice_month", "all", .true., "none", 2
+ "ice_model", "SW_NIR_DIF",       "SW_NIR_DIF",       "ice_month", "all", .true., "none", 2
+ "ice_model", "SW_NIR_DIR",       "SW_NIR_DIR",       "ice_month", "all", .true., "none", 2
+ "ice_model", "SW",               "SW",               "ice_month", "all", .true., "none", 2
+ "ice_model", "SW_VIS_DIF",       "SW_VIS_DIF",       "ice_month", "all", .true., "none", 2
+ "ice_model", "SW_VIS_DIR",       "SW_VIS_DIR",       "ice_month", "all", .true., "none", 2
+ "ice_model", "SW_VIS",           "SW_VIS",           "ice_month", "all", .true., "none", 2
+ "ice_model", "T1",               "T1",               "ice_month", "all", .true., "none", 2
+ "ice_model", "T2",               "T2",               "ice_month", "all", .true., "none", 2
+ "ice_model", "TMELT",            "TMELT",            "ice_month", "all", .true., "none", 2
+ "ice_model", "TS",               "TS",               "ice_month", "all", .true., "none", 2
+ "ice_model", "UI",               "UI",               "ice_month", "all", .true., "none", 2
+ "ice_model", "UO",               "UO",               "ice_month", "all", .true., "none", 2
+ "ice_model", "VI",               "VI",               "ice_month", "all", .true., "none", 2
+ "ice_model", "VO",               "VO",               "ice_month", "all", .true., "none", 2
+ "ice_model", "XPRT",             "XPRT",             "ice_month", "all", .true., "none", 2
+#====================
+# ICEBERG DIAGNOSTICS
+#====================
+# Iceberg fields from AJA mail 8/10/09:
+# I've commented out those fields that are repetitions of variables in SIS
+# (although ua,va are guessed from taux,tauy). The remaining fields are
+# all useful for doing the mass budget or mapping the bergs. The only
+# quasi-3D fields are "stored_ice" and "real_calving" which are diagnosed
+# by class of berg (10 classes).
+#====================
+"icebergs","lon","lon","iceberg_month","all",.false.,"none",2
+"icebergs","lat","lat","iceberg_month","all",.false.,"none",2
+"icebergs","area","area","iceberg_month","all",.false.,"none",2
+"icebergs","mask","mask","iceberg_month","all",.false.,"none",2
+"icebergs","melt","melt","iceberg_month","all",.true.,"none",2
+"icebergs","melt_buoy","melt_buoy","iceberg_month","all",.true.,"none",2
+"icebergs","melt_eros","melt_eros","iceberg_month","all",.true.,"none",2
+"icebergs","melt_conv","melt_conv","iceberg_month","all",.true.,"none",2
+"icebergs","virtual_area","virtual_area","iceberg_month","all",.true.,"none",2
+"icebergs","mass","mass","iceberg_month","all",.true.,"none",2
+"icebergs","calving_hflx_in","calving_hflx_in","iceberg_month","all",.true.,"none",2
+"icebergs","unused_calving","unused_calving","iceberg_month","all",.true.,"none",2
+"icebergs","accum_calving","accum_calving","iceberg_month","all",.true.,"none",2
+"icebergs","real_calving","real_calving","iceberg_month","all",.true.,"none",2
+"icebergs","stored_ice","stored_ice","iceberg_month","all",.true.,"none",2

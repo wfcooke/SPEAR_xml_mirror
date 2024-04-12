@@ -1,0 +1,167 @@
+&entrain_nml
+        convect_shutoff = .true.,
+        apply_entrain = .true.,
+        parcel_buoy   = 0.25,
+        parcel_option = 2,
+        beta_rad      = 0.23,
+        Ashear        = 25.0, 
+        beta_surf     = 0.23,
+        radperturb    = 0.10, 
+        critjump      = 0.10,
+/
+
+&fv_core_nml
+        layout   = $atm_layout
+        io_layout = $atm_io_layout
+         npx      = 385,
+         npy      = 385,
+         ntiles   = 6,
+         npz      = 33,
+         k_split  = 3,
+         n_split  = 7,
+         a2b_ord  = 4,
+         adjust_dry_mass = $adjust_dry_mass,
+         adj_mass_vmr    = .true.,
+         print_freq = 0,
+         grid_type = 0,
+         tau = 0.
+         do_uni_zfull = .true.
+        n_sponge = 0
+        d2_bg_k1 = 0.16
+        d2_bg_k2 = 0.02
+        kord_tm = -10
+        kord_mt =  10
+        kord_tr =  10
+        hydrostatic = .T.
+        d_ext = 0.
+        d2_bg = 0.
+        nord =  1
+        dddmp = 0.
+        d4_bg = 0.15
+        vtdm4 = 0.0
+        do_vort_damp = .F.
+        d_con = 0.
+        hord_mt = 10
+        hord_vt = 10
+        hord_tm = 10
+        hord_dp = 10
+        hord_tr = 8
+        consv_te = 0.7
+        consv_am = .T.
+        fill = .T.
+        z_tracer = .T.
+/
+
+ &mg_drag_nml
+        gmax  = 1.0,
+        acoef = 1.,
+        do_conserve_energy = .true.,
+        source_of_sgsmtn = 'input/computed'
+/
+
+ &topo_drag_nml
+        frcrit  = 0.7
+        alin    = 0.9
+        anonlin = 3.0
+        use_mg_scaling = .true.
+        do_pbl_average = .false.
+        use_mask_for_pbl = .false.
+        beta = 0.5
+        gamma = 0.4
+        epsi = 0.0
+        h_frac = 0.1
+        zref_fac = 1.0
+        no_drag_frac = 0.1
+        tboost = 1.5
+        pcut = 0.
+        samp = 2.
+        do_conserve_energy = .true.
+        use_pbl_from_lock = .true.
+        use_uref_4stable = .true.
+/
+
+
+ &cg_drag_nml
+        cg_drag_freq = 600,
+        cg_drag_offset = 0,
+        Bt_0 =  0.005,
+        Bt_aug= 0.000,
+        Bt_nh=  0.002,
+        Bt_sh= -0.00025,
+        Bt_eq=  0.000,
+        Bt_eq_width= 4.0,
+        phi0n =  30.,
+        phi0s = -30.,
+        dphin =  5.0,
+        dphis = -5.0,
+        dump_flux= .true.
+        dc= 2.4,
+        cmax= 99.6
+        do_conserve_energy = .true.,
+/
+
+ &damping_driver_nml
+        trayfric = 0.,
+        nlev_rayfric = 1,
+        do_mg_drag = .false.
+        do_cg_drag = .true.
+        do_topo_drag = .true.,
+        do_conserve_energy = .true.,
+        kstart= 0
+/
+
+ &lin_cld_microphys_nml
+       sedi_transport = .true.
+       do_sedi_heat = .false.
+       rad_snow = .true.
+       rad_graupel = .true.
+       rad_rain = .true.
+       const_vi = .false.
+       const_vs = .false.
+       const_vg = .false.
+       const_vr = .false.
+       vi_fac = 1.4 ! from 1.0
+       vs_fac = 1.
+       vg_fac = 1.
+       vr_fac = 1.
+       vi_max = 1.
+       vs_max = 2.
+       vg_max = 12.
+       vr_max = 12.
+       qi_lim = 4.   ! from 1.
+       prog_ccn = .false.
+       do_qa = .false.
+       fast_sat_adj = .true.
+       tau_l2v = 600.
+       tau_v2l = 600.
+       tau_g2v = 900.
+       rthresh = 5.e-6 ! from 10.e-6
+       dw_land  = 0.16
+       dw_ocean = 0.10
+       ql_gen = 1.0e-3
+       ql_mlt = 1.0e-3
+       qi0_crt = 2.0E-5  ! from 8.0e-5
+       qs0_crt = 1.0e-3
+       tau_i2s = 1000.
+       c_psaci = 0.05
+       c_pgacs = 0.01
+       rh_inc = 0.30
+       rh_inr = 0.30
+       rh_ins = 0.30
+       ccn_l = 300.
+       ccn_o = 100.
+       c_paut = 0.5
+       c_cracw = 0.8
+       use_ppm = .false.
+       use_ccn = .true.
+       mono_prof = .true.
+       z_slope_liq  = .true.
+       z_slope_ice  = .true.
+       de_ice = .true.
+       fix_negative = .true.
+       icloud_f = 0
+       mp_time = 150. 
+       evap_tune_fact = 0.8  ! from 1.0
+/
+
+
