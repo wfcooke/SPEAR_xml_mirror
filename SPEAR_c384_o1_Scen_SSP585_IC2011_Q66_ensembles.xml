@@ -53,15 +53,15 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG"           value="dev/gfdl"/>              <!-- git tag for MOM6 source code -->
-  <property name="AWG_GIT_TAG"            value="2022.03"/>               <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2023.01"/>       
-  <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/> <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"      value="2022.02"/>               <!-- git tag for atmos_drivers -->
-  <property name="ATMOS_CUBED_SPHERE_TAG" value="2022.03"/>               <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="AWG_GIT_TAG"            value="2023.04"/>               <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"            value="2023.04"/>       
+  <property name="LAND_GIT_TAG"           value="2023.03"/> <!-- git tag for Land source code -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2023.04"/>               <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG" value="origin/dev/gfdl"/>               <!-- git tag for atmos_cubed_sphere source code -->
   <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>               <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20231005" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20240410" />   <!-- Stem use in FRE directories -->
   <property name="FRE_VERSION" value="bronx-21" />                    <!-- FRE version for use in this XML -->
 
   <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>          <!-- git tag for coupler source -->
@@ -1000,7 +1000,7 @@ Update initCond
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
-      <namelist file="$(includeDir)/nml/am4p0_c384L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c384L33_2023_04.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_amip.nml"/>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .false.
@@ -1031,7 +1031,7 @@ Needed for 2022.03 and after
          n_split  = 7,
          a2b_ord  = 4,
          adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
+         adj_mass_vmr    = 1,
          print_freq = 0,
          grid_type = 0,
          tau = 0.
@@ -1702,9 +1702,6 @@ The 20210427 version of this model had code which did not permit negative values
 This experiment is a rerun of the final 2 decades of the SSP585 run to compare previous run with a run with hord_dp and hord_tr = -5 with updated code. 
 
 </description>
-<!--
-<executable file="$(WFC_ARCHIVE_ROOT)/SPEAR_experiments_R_20211102/SPEAR_R2021.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2021.03_nonsymMOM6_exec.x"/>
--->
   <input>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
@@ -1725,7 +1722,7 @@ This experiment is a rerun of the final 2 decades of the SSP585 run to compare p
          n_split  = 7,
          a2b_ord  = 4,
          adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
+         adj_mass_vmr    = 1,
          print_freq = 0,
          grid_type = 0,
          tau = 0.
@@ -1929,9 +1926,6 @@ FATAL from PE   680: compute_qs: saturation vapor pressure table overflow, nbad=
 Flip make_exchange_reproduce to .true. and extend.
 
 </description>
-<!--
-<executable file="$(WFC_ARCHIVE_ROOT)/SPEAR_experiments_R_20211102/SPEAR_R2021.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2021.03_nonsymMOM6_exec.x"/>
--->
   <input>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
@@ -1952,7 +1946,7 @@ Flip make_exchange_reproduce to .true. and extend.
          n_split  = 7,
          a2b_ord  = 4,
          adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
+         adj_mass_vmr    = 1,
          print_freq = 0,
          grid_type = 0,
          tau = 0.
@@ -2142,224 +2136,6 @@ set nyblocks = $dummy
 </experiment>
 
 
-
-<experiment name="SPEAR_c384_o1_Scen_SSP585_IC2011_Q66_ens_01_new_exec" inherit="SPEAR_c384_o1_Scen_SSP585_IC2011_Q66_ens_01">
-  <description>
-1/9/2023
-Ensemble member 1 for Scenario run (2011-2010) for SPEAR_HI
-Update experiment to most recent executable. 20220817.
-
-  </description>
-<!--
-  <executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20210427/SPEAR_R2020.04_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.04_nonsymMOM6_exec.x"/>
--->
-  <executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20220309/SPEAR_R2021.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2021.03_nonsymMOM6_exec.x"/>
-  <input>
-      <namelist name="xgrid_nml">
-        make_exchange_reproduce = .true.
-        interp_method = 'second_order'
-      </namelist> 
-<namelist name="atmos_tracer_utilities_nml">
- scale_aerosol_wetdep = 1.
- drydep_exp = .true.
-</namelist>
-<!--
-Needed for 2022.03 and after 
--->
-<!--
-      <namelist name="ssalt_nml">
-        coef_emis_fine=1.33, 
-        coef_emis_coarse=1.33,
-        use_sj_sedimentation_solver=.true.
-        min_scale_marthenson = -999999999
-      </namelist>
--->
-      <namelist name="fv_core_nml">
-        layout   = $atm_layout
-        io_layout = $atm_io_layout
-         npx      = 385,
-         npy      = 385,
-         ntiles   = 6,
-         npz      = 33,
-         k_split  = 3,
-         n_split  = 7,
-         a2b_ord  = 4,
-         adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
-         print_freq = 0,
-         grid_type = 0,
-         tau = 0.
-         do_uni_zfull = .true.
-        n_sponge = 0
-        d2_bg_k1 = 0.16
-        d2_bg_k2 = 0.02
-        hydrostatic = .T.
-        d_ext = 0.
-        d2_bg = 0.
-        nord =  2       
-        dddmp = 0.2     
-        d4_bg = 0.16    
-        vtdm4 = 0.02    
-        do_vort_damp = .T.   
-        d_con = 1.           
-        hord_mt = 5      
-        hord_vt = 5      
-        hord_tm = 5      
-        hord_dp = 6
-        hord_tr = 6
-        kord_tm = -9    
-        kord_mt = 9     
-        kord_wz = 9     
-        kord_tr = 9     
-        consv_te = 0.7
-        consv_am = .T.
-        fill = .T.
-        z_tracer = .T.
-      </namelist> 
-      <csh type="always"><![CDATA[
-######BEGIN MOM6 and SIS2 layout setup################
-##THIS HAS TO BE PART OF csh type=always###
-
-touch $work/INPUT/MOM_override
-
-cat > $work/INPUT/MOM_override << EOF
-#override KV_ML_INVZ2 = 1.0E-4
-#override DEFAULT_ANSWER_DATE=20181231
-
-#override INTERNAL_WAVE_SPEED_BETTER_EST = False
-
-
-#override REMAP_UV_USING_OLD_ALG = True
-#override Z_INIT_REMAP_OLD_ALG = True
-#override FIX_USTAR_GUSTLESS_BUG =False
-#override GRID_ROTATION_ANGLE_BUGS = True
-#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
-#override KAPPA_SHEAR_ITER_BUG = True
-#override USE_GM_WORK_BUG = True
-#override USE_MLD_ITERATION = False
-#override USE_TRIPOLAR_GEOLONB_BUG =True 
-#override GUST_CONST = 0.02
-#override MEKE_ALPHA_EADY = 0.05
-#override MEKE_ALPHA_RHINES = 0.05
-#override MIN_SALINITY = 0.01
-
-
-#override KH_BG_2D_BUG=True
-#override USE_DIABATIC_TIME_BUG=True
-#override USE_INACCURATE_PGF_RHO_ANOM=True
-#override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
-
-#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
-#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
-NUM_DIAG_COORDS = 3             ! default = 1
-                                ! The number of diagnostic vertical coordinates to use.
-                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
-DIAG_COORDS = "z Z ZSTAR, rho2 RHO2 RHO, ztop ZTOP300 ZSTAR"
-
-DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
-                                ! Determines how to specify the coordinate
-                                ! resolution. Valid options are:
-                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
-                                !  UNIFORM[:N] - uniformly distributed
-                                !  FILE:string - read from a file. The string specifies
-                                !                the filename and variable name, separated
-                                !                by a comma or space, e.g. FILE:lev.nc,dz
-                                !                or FILE:lev.nc,interfaces=zw
-                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
-                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
-                                !  HYBRID:string - read from a file. The string specifies
-                                !                the filename and two variable names, separated
-                                !                by a comma or space, for sigma-2 and dz. e.g.
-                                !                HYBRID:vgrid.nc,sigma2,dz
-
-DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
-EOF
-
-touch $work/INPUT/SIS_override
-
-cat > $work/INPUT/SIS_override << EOF
-#override CP_SEAWATER = 3992.
-#override CP_BRINE = 3992.
-#override ICE_BULK_SALINITY = 0.0
-#override ICE_RELATIVE_SALINITY = 0.17
-#override SIS2_FILLING_FRAZIL = T
-#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
-#override SIS_CONTINUITY_SCHEME = "PCM"
-#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
-#override GRID_ROTATION_ANGLE_BUGS =True
-#override USE_TRIPOLAR_GEOLONB_BUG = True
-#override INCONSISTENT_COVER_BUG = True
-#override CFL_MASS_NEGLECT_BUG=True
-#override RESTART_CHECKSUMS_REQUIRED =False
-EOF
-
-#scan auxiliary_nml
-#set OCN_MASK_TABLE = 
-#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
-#override IO_LAYOUT = $ocn_io_layout
-#override LAYOUT    = $ocn_layout
-#override MASKTABLE = $ocn_mask_table
-MOM_LAYOUT_EOF
-
-#scan auxiliary_nml
-#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
-#override IO_LAYOUT = $ice_io_layout
-#override LAYOUT    = $ice_layout
-#override MASKTABLE = $ocn_mask_table
-SIS_LAYOUT_EOF
-
-######END MOM6 and SIS2 layout setup################
-
-cd $work/INPUT
-
-if ( $currentSeg == 1 ) then
-     foreach i ( MOM.res*nc)
-       chmod u+w $i
-       ncrename -v Kv_turb,Kv_shear -v Kd_turb,Kd_shear $i
-     end
-endif
-cd $work
-
-#------------------------------------------
-## Find out whether to restart.
-# MOM6 restart switch
-   set restart_flag = 'r'
-   set sis_restart_flag = 'r'
-cd $work
-
-## Run the model
-#------------------------------------------
-###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
-set OCN_MASK_TABLE  =  $ocn_mask_table
-set OCN_LAYOUT    = $ocn_layout
-set OCN_IO_LAYOUT = $ocn_io_layout
-set ICE_LAYOUT    = $ice_layout
-set ICE_IO_LAYOUT = $ice_io_layout
-set atmos_npes = $atm_ranks
-set ocean_npes = $ocn_ranks
-set fv_layout = $atm_layout
-set fv_io_layout  = $atm_io_layout
-set land_layout   = $lnd_layout
-set land_io_layout = $lnd_io_layout
-set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nxblocks = $dummy
-set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nyblocks = $dummy
-]]>
-    </csh>
-  </input>
-</experiment>
-
-
-
 <experiment name="SPEAR_c384_o1_Scen_SSP585_IC2011_Q66_ens_01" inherit="SPEAR_c384_o1_Hist_AllForc_IC1851_Q66_ens_01_updated">
   <description>
 10/242/2020
@@ -2370,9 +2146,6 @@ Initial condition taken from 2011 of experiment SPEAR_c384_o1_Hist_AllForc_IC191
 sat vapor pres error shortly after 1/21/2055
 Flip make_echange_reproduce to false and extend.
   </description>
-<!--
-<executable file="$(WFC_ARCHIVE_ROOT)/SPEAR_experiments_K/SPEAR_K_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_K_nonsymMOM6_exec.x"/>
--->
   <input>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
@@ -3193,9 +2966,6 @@ There had been an issue with the historical run of member 5 so we need to re-run
 Reset make_exchange_reproduce to true and restart on c3.
 
   </description>
-<!--
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20210427/SPEAR_R2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.03_nonsymMOM6_exec.x"/>
--->
   <input>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.

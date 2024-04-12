@@ -53,15 +53,15 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
-  <property name="AWG_GIT_TAG"            value="2022.03"/>                <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2023.01"/>                <!--1.03"/-->
-  <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>  <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"      value="2022.02"/>                <!-- git tag for atmos_drivers -->
-  <property name="ATMOS_CUBED_SPHERE_TAG" value="2022.03"/>                <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="AWG_GIT_TAG"            value="2023.04"/>                <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"            value="2023.04"/>                <!--1.03"/-->
+  <property name="LAND_GIT_TAG"           value="2023.03"/>  <!-- git tag for Land source code -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2023.04"/>                <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG" value="origin/dev/gfdl"/>                <!-- git tag for atmos_cubed_sphere source code -->
   <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>                <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20231005" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20240410" />   <!-- Stem use in FRE directories -->
 
   
   <property name="FRE_VERSION" value="bronx-21" />                    <!-- FRE version for use in this XML -->
@@ -2899,683 +2899,6 @@ cd ..
   </freInclude>
 
 
-<experiment name="SPEAR_c96_o1_Control_1850_Q50_K" inherit="SPEAR_c96_o1_Control_1850_Q50">
-<executable file="/ncrc/home2/William.Cooke/SPEAR_experiments_K/SPEAR_K_nonsymMOM6_exec/ncrc5.intel-classic-repro-openmp/exec/fms_SPEAR_K_nonsymMOM6_exec.x"/>
-  <input>
-
-      <namelist name="ssalt_nml">
-        coef_emis_fine=1.33, 
-        coef_emis_coarse=1.33,
-        use_sj_sedimentation_solver=.true.
-      </namelist>
-
-     <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
-     </dataFile>
-     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
-       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
-     </dataFile> 
-     <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">$(WFC_ARCHIVE_ROOT)/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
-     </dataFile>
-     <dataTable>
-     </dataTable>
-     <diagTable>
-$name
-$baseDate
-      </diagTable>
-      <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <!--
-         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_nodaily</dataSource>
-         -->
-         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_20200318</dataSource>
-      </dataFile>
-      <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
-        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(WFC_ARCHIVE_ROOT)/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
-      </dataFile>
-      <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
-        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
-      </dataFile>
-      <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='Volcano_Solar_1850_cmip6']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_v20161213']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='L32_gas_conc']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='c96_stack_size']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='csh_adjust_dry_mass']/input/node())"/>
-      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='SPEAR_domain_decomp']/input/node())"/>
-      <!--MOM6 Input datasets-->
-      <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
-      <!-- overwrite  Channels file -->
-      <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
-        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
-      </dataFile>
-      <!--MOM6 Input datasets-->
-      <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(includeDir)/ice_ocean_SIS2/OM4_025/INPUT/hycom1_75_800m.nc</dataSource>
-      </dataFile>
-      <!-- Override the MOM_input in the MOM6_data xi include above --> 
-      <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-
-         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/LOAR4/MOM_input_C39_init</dataSource>
-         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_P39_init</dataSource>
-      </dataFile>
-      <!--SIS Input datasets-->
-      <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
-      <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
-         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
-         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/">
-         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
-         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
-      </dataFile>
-      <csh type="always"><![CDATA[
-######BEGIN MOM6 and SIS2 layout setup################
-##THIS HAS TO BE PART OF csh type=always###
-
-touch $work/data_table
-
-touch $work/INPUT/MOM_override
-
-
-cat > $work/INPUT/MOM_override << EOF
-
-#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
-#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
-NUM_DIAG_COORDS = 3             ! default = 1
-                                ! The number of diagnostic vertical coordinates to use.
-                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
-DIAG_COORDS = "z Z ZSTAR, rho2 RHO2 RHO, ztop ZTOP300 ZSTAR"
-
-DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
-                                ! Determines how to specify the coordinate
-                                ! resolution. Valid options are:
-                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
-                                !  UNIFORM[:N] - uniformly distributed
-                                !  FILE:string - read from a file. The string specifies
-                                !                the filename and variable name, separated
-                                !                by a comma or space, e.g. FILE:lev.nc,dz
-                                !                or FILE:lev.nc,interfaces=zw
-                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
-                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
-                                !  HYBRID:string - read from a file. The string specifies
-                                !                the filename and two variable names, separated
-                                !                by a comma or space, for sigma-2 and dz. e.g.
-                                !                HYBRID:vgrid.nc,sigma2,dz
-
-DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
-EOF
-
-touch $work/INPUT/SIS_override
-
-cat > $work/INPUT/SIS_override << EOF
-#override CP_SEAWATER = 3992.
-#override CP_BRINE = 3992.
-#override ICE_BULK_SALINITY = 0.0
-#override ICE_RELATIVE_SALINITY = 0.17
-#override SIS2_FILLING_FRAZIL = T
-#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
-#override SIS_CONTINUITY_SCHEME = "PCM"
-#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
-EOF
-
-#scan auxiliary_nml
-#set OCN_MASK_TABLE = 
-#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
-#override IO_LAYOUT = $ocn_io_layout
-#override LAYOUT    = $ocn_layout
-#override MASKTABLE = $ocn_mask_table
-MOM_LAYOUT_EOF
-
-#scan auxiliary_nml
-#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
-#override IO_LAYOUT = $ice_io_layout
-#override LAYOUT    = $ice_layout
-#override MASKTABLE = $ocn_mask_table
-SIS_LAYOUT_EOF
-
-######END MOM6 and SIS2 layout setup################
-
-cd $work/INPUT
-
-if ( $currentSeg == 1 ) then
-     rm -f coupler.res
-endif
-cd $work
-
-#------------------------------------------
-## Find out whether to restart.
-# MOM6 restart switch
-if ( $currentSeg == 1 ) then
-   set restart_flag = 'n'
-else
-   set restart_flag = 'r'
-endif
-   set sis_restart_flag = 'r'
-cd $work
-
-## Run the model
-#------------------------------------------
-###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
-set OCN_MASK_TABLE  =  $ocn_mask_table
-set OCN_LAYOUT    = $ocn_layout
-set OCN_IO_LAYOUT = $ocn_io_layout
-set ICE_LAYOUT    = $ice_layout
-set ICE_IO_LAYOUT = $ice_io_layout
-set atmos_npes = $atm_ranks
-set ocean_npes = $ocn_ranks
-set fv_layout = $atm_layout
-set fv_io_layout  = $atm_io_layout
-set land_layout   = $lnd_layout
-set land_io_layout = $lnd_io_layout
-set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nxblocks = $dummy
-set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nyblocks = $dummy
-]]>
-    </csh>
-  </input>
-</experiment>
-
-
-<experiment name="SPEAR_c96_o1_Control_1850_Q50_P" inherit="SPEAR_c96_o1_Control_1850_Q50">
-<!--<executable file="/ncrc/home2/William.Cooke/SPEAR_experiments_K/SPEAR_K_nonsymMOM6_exec/ncrc5.intel-classic-repro-openmp/exec/fms_SPEAR_K_nonsymMOM6_exec.x"/> -->
-<executable file="/gpfs/f5/gfdl_sd/proj-shared/William.Cooke/SPEAR_experiments_Q_20191104/SPEAR_Qxanadu_nonsymMOM6_exec/ncrc5.intel-classic-repro-openmp/exec/fms_SPEAR_Qxanadu_nonsymMOM6_exec.x"/>
-  <input>
-
-      <namelist name="ssalt_nml">
-        coef_emis_fine=1.33, 
-        coef_emis_coarse=1.33,
-        use_sj_sedimentation_solver=.true.
-      </namelist>
-
-     <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
-     </dataFile>
-     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/initCond_SPEAR/REMAP/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
-       <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c96/initCond/C96_LM3_OM4_01_CanadianArchipelago.remapped.v20171217.tar</dataSource>
-     </dataFile> 
-     <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">$(WFC_ARCHIVE_ROOT)/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
-     </dataFile>
-     <dataTable>
-     </dataTable>
-     <diagTable>
-$name
-$baseDate
-      </diagTable>
-      <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <!--
-         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_nodaily</dataSource>
-         -->
-         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_20200318</dataSource>
-      </dataFile>
-      <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
-        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
-      </dataFile>
-      <dataFile label="input" target="INPUT/land_domain.nc" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(WFC_ARCHIVE_ROOT)/initCond_LOAR/LOAR4/c96_MOM61deg/LOAR4_C13_land_domain.nc</dataSource>
-      </dataFile>
-      <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
-        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
-      </dataFile>
-      <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='Volcano_Solar_1850_cmip6']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_v20161213']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='L32_gas_conc']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='c96_stack_size']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='csh_adjust_dry_mass']/input/node())"/>
-      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='SPEAR_domain_decomp']/input/node())"/>
-      <!--MOM6 Input datasets-->
-      <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
-      <!-- overwrite  Channels file -->
-      <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
-        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
-      </dataFile>
-      <!--MOM6 Input datasets-->
-      <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(includeDir)/ice_ocean_SIS2/OM4_025/INPUT/hycom1_75_800m.nc</dataSource>
-      </dataFile>
-      <!-- Override the MOM_input in the MOM6_data xi include above --> 
-      <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/SPEAR/MOM_input_P39_init</dataSource>
-         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_P39_init</dataSource>
-      </dataFile>
-      <!--SIS Input datasets-->
-      <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
-      <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
-         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
-         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/">
-         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
-         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
-      </dataFile>
-      <csh type="always"><![CDATA[
-######BEGIN MOM6 and SIS2 layout setup################
-##THIS HAS TO BE PART OF csh type=always###
-
-touch $work/data_table
-
-touch $work/INPUT/MOM_override
-
-
-cat > $work/INPUT/MOM_override << EOF
-
-#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
-#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
-NUM_DIAG_COORDS = 3             ! default = 1
-                                ! The number of diagnostic vertical coordinates to use.
-                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
-DIAG_COORDS = "z Z ZSTAR, rho2 RHO2 RHO, ztop ZTOP300 ZSTAR"
-
-DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
-                                ! Determines how to specify the coordinate
-                                ! resolution. Valid options are:
-                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
-                                !  UNIFORM[:N] - uniformly distributed
-                                !  FILE:string - read from a file. The string specifies
-                                !                the filename and variable name, separated
-                                !                by a comma or space, e.g. FILE:lev.nc,dz
-                                !                or FILE:lev.nc,interfaces=zw
-                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
-                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
-                                !  HYBRID:string - read from a file. The string specifies
-                                !                the filename and two variable names, separated
-                                !                by a comma or space, for sigma-2 and dz. e.g.
-                                !                HYBRID:vgrid.nc,sigma2,dz
-
-DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
-EOF
-
-touch $work/INPUT/SIS_override
-
-cat > $work/INPUT/SIS_override << EOF
-#override CP_SEAWATER = 3992.
-#override CP_BRINE = 3992.
-#override ICE_BULK_SALINITY = 0.0
-#override ICE_RELATIVE_SALINITY = 0.17
-#override SIS2_FILLING_FRAZIL = T
-#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
-#override SIS_CONTINUITY_SCHEME = "PCM"
-#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
-EOF
-
-#scan auxiliary_nml
-#set OCN_MASK_TABLE = 
-#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
-#override IO_LAYOUT = $ocn_io_layout
-#override LAYOUT    = $ocn_layout
-#override MASKTABLE = $ocn_mask_table
-MOM_LAYOUT_EOF
-
-#scan auxiliary_nml
-#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
-#override IO_LAYOUT = $ice_io_layout
-#override LAYOUT    = $ice_layout
-#override MASKTABLE = $ocn_mask_table
-SIS_LAYOUT_EOF
-
-######END MOM6 and SIS2 layout setup################
-
-cd $work/INPUT
-
-if ( $currentSeg == 1 ) then
-     rm -f coupler.res
-endif
-cd $work
-
-#------------------------------------------
-## Find out whether to restart.
-# MOM6 restart switch
-if ( $currentSeg == 1 ) then
-   set restart_flag = 'n'
-else
-   set restart_flag = 'r'
-endif
-   set sis_restart_flag = 'r'
-cd $work
-
-## Run the model
-#------------------------------------------
-###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
-set OCN_MASK_TABLE  =  $ocn_mask_table
-set OCN_LAYOUT    = $ocn_layout
-set OCN_IO_LAYOUT = $ocn_io_layout
-set ICE_LAYOUT    = $ice_layout
-set ICE_IO_LAYOUT = $ice_io_layout
-set atmos_npes = $atm_ranks
-set ocean_npes = $ocn_ranks
-set fv_layout = $atm_layout
-set fv_io_layout  = $atm_io_layout
-set land_layout   = $lnd_layout
-set land_io_layout = $lnd_io_layout
-set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nxblocks = $dummy
-set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nyblocks = $dummy
-]]>
-    </csh>
-  </input>
-</experiment>
-
-
-<experiment name="SPEAR_c96_o1_Control_1850_Q50_new" inherit="SPEAR_c96_o1_Control_1850_Q50">
-  <input>
-      <csh type="always"><![CDATA[
-######BEGIN MOM6 and SIS2 layout setup################
-##THIS HAS TO BE PART OF csh type=always###
-
-# out for 15 through 23, back in for 24
-#override REMAP_UV_USING_OLD_ALG = True
-#override Z_INIT_REMAP_OLD_ALG = True
-
-# out for 20, in for 21,22,23
-#override FIX_USTAR_GUSTLESS_BUG =False
-#override GRID_ROTATION_ANGLE_BUGS = True
-#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
-#override KAPPA_SHEAR_ITER_BUG = True
-
-# in for 20,23 out for 21,22
-#override USE_GM_WORK_BUG = True
-#override USE_MLD_ITERATION = False
-#override USE_TRIPOLAR_GEOLONB_BUG =True 
-
-#out for 22
-#override GUST_CONST = 0.02
-#override MEKE_ALPHA_EADY = 0.05
-#override MEKE_ALPHA_RHINE = 0.05
-#override MIN_SALINITY = 0.01
-
-#out for 23
-#override MEKE_ALPHA_EADY = 0.05
-#override MEKE_ALPHA_RHINE = 0.05
-
-#back in for 25 (THIS IS THE CAUSE OF THE HANG
-#override MEKE_ALPHA_EADY = 0.05
-
-# run 26  revert to K exec and change ENERGYSAVEDAYS/IC_STATS_INTERVAL to 0.125
-
-#back in for 27
-#override MEKE_ALPHA_RHINE = 0.05
-#out for 27
-#override MEKE_ALPHA_EADY = 0.05
-
-
-# NONE of these were used prior to debug run 16
-#override MEKE_ALPHA_RHINE = 0.05               #Added in debug run 16
-#override GUST_CONST = 0.02                     #Added in debug run 16
-#override MIN_SALINITY = 0.01                   #Added in debug run 16
-#override USE_TRIPOLAR_GEOLONB_BUG =True        #Added in debug run 16
-#override FIX_USTAR_GUSTLESS_BUG =False         #Added in debug run 17
-#override GRID_ROTATION_ANGLE_BUGS = True       #Added in debug run 18
-#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True  #Added in debug run 19
-#override KAPPA_SHEAR_ITER_BUG = True           #Added in debug run 20
-#override USE_GM_WORK_BUG = True                #Added in debug run 21
-#override USE_MLD_ITERATION = False             #Added in debug run 22
-#override REMAP_UV_USING_OLD_ALG = True         #Added in debug run 23
-#override Z_INIT_REMAP_OLD_ALG = True           #Added in debug run 24
-
-
-touch $work/INPUT/MOM_override
-
-# DEFAULT_2018_ANSWERS=T for run 16
-#cat > $work/INPUT/MOM_override << EOF
-
-#override DEFAULT_ANSWER_DATE=20181231
-
-
-
-#override MEKE_ALPHA_RHINES = 0.05
-#override GUST_CONST = 0.02
-#override MIN_SALINITY = 0.01
-#override USE_TRIPOLAR_GEOLONB_BUG =True 
-#override FIX_USTAR_GUSTLESS_BUG =False
-#override GRID_ROTATION_ANGLE_BUGS = True
-#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
-#override KAPPA_SHEAR_ITER_BUG = True 
-#override USE_GM_WORK_BUG = True
-#override USE_MLD_ITERATION = False
-#override REMAP_UV_USING_OLD_ALG = True
-#override Z_INIT_REMAP_OLD_ALG = True 
-
-cat > $work/INPUT/MOM_override << EOF
-#override KV_ML_INVZ2 = 1.0E-4
-
-#override DEFAULT_ANSWER_DATE=20181231
-
-#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
-#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
-NUM_DIAG_COORDS = 3             ! default = 1
-                                ! The number of diagnostic vertical coordinates to use.
-                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
-DIAG_COORDS = "z Z ZSTAR, rho2 RHO2 RHO, ztop ZTOP300 ZSTAR"
-
-DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
-                                ! Determines how to specify the coordinate
-                                ! resolution. Valid options are:
-                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
-                                !  UNIFORM[:N] - uniformly distributed
-                                !  FILE:string - read from a file. The string specifies
-                                !                the filename and variable name, separated
-                                !                by a comma or space, e.g. FILE:lev.nc,dz
-                                !                or FILE:lev.nc,interfaces=zw
-                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
-                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
-                                !  HYBRID:string - read from a file. The string specifies
-                                !                the filename and two variable names, separated
-                                !                by a comma or space, for sigma-2 and dz. e.g.
-                                !                HYBRID:vgrid.nc,sigma2,dz
-
-DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
-EOF
-
-touch $work/INPUT/SIS_override
-
-cat > $work/INPUT/SIS_override << EOF
-#override CP_SEAWATER = 3992.
-#override CP_BRINE = 3992.
-#override ICE_BULK_SALINITY = 0.0
-#override ICE_RELATIVE_SALINITY = 0.17
-#override SIS2_FILLING_FRAZIL = T
-#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
-#override SIS_CONTINUITY_SCHEME = "PCM"
-#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
-EOF
-
-#scan auxiliary_nml
-#set OCN_MASK_TABLE = 
-#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
-#override IO_LAYOUT = $ocn_io_layout
-#override LAYOUT    = $ocn_layout
-#override MASKTABLE = $ocn_mask_table
-MOM_LAYOUT_EOF
-
-#scan auxiliary_nml
-#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
-#override IO_LAYOUT = $ice_io_layout
-#override LAYOUT    = $ice_layout
-#override MASKTABLE = $ocn_mask_table
-SIS_LAYOUT_EOF
-
-######END MOM6 and SIS2 layout setup################
-
-cd $work/INPUT
-
-if ( $currentSeg == 1 ) then
-     rm -f coupler.res
-endif
-cd $work
-
-#------------------------------------------
-## Find out whether to restart.
-# MOM6 restart switch
-if ( $currentSeg == 1 ) then
-   set restart_flag = 'n'
-else
-   set restart_flag = 'r'
-endif
-   set sis_restart_flag = 'r'
-cd $work
-
-## Run the model
-#------------------------------------------
-###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
-set OCN_MASK_TABLE  =  $ocn_mask_table
-set OCN_LAYOUT    = $ocn_layout
-set OCN_IO_LAYOUT = $ocn_io_layout
-set ICE_LAYOUT    = $ice_layout
-set ICE_IO_LAYOUT = $ice_io_layout
-set atmos_npes = $atm_ranks
-set ocean_npes = $ocn_ranks
-set fv_layout = $atm_layout
-set fv_io_layout  = $atm_io_layout
-set land_layout   = $lnd_layout
-set land_io_layout = $lnd_io_layout
-set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nxblocks = $dummy
-set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nyblocks = $dummy
-]]>
-    </csh>
-  </input>
-</experiment>
-
-<experiment name="SPEAR_c96_o1_Control_1850_Q50_check_diags" inherit="SPEAR_c96_o1_Control_1850_Q50">
-  <description>
-  Test of land diags.
-  </description>
-  <input>
-     <diagTable>
-$name
-$baseDate
-      </diagTable>
-      <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_20210930</dataSource>
-      </dataFile>
-  </input>
-</experiment>
-
-
-<experiment name="SPEAR_c96_o1_Control_1850_Q50_c5" inherit="SPEAR_c96_o1_Control_1850_Q50">
-  <description>
-11/21/2022
-Same as SPEAR_c96_o1_Control_1850_Q50 to be run on c5 to check climate.
-  </description>
-</experiment>
-
-<experiment name="SPEAR_c96_o1_Control_1850_Q50_202304" inherit="SPEAR_c96_o1_Control_1850_Q50">
-  <description>
-3/8/2024
-Same as SPEAR_c96_o1_Control_1850_Q50 to be run with 2023.04 code.
-  </description>
-<!--
-<executable file="/gpfs/f5/gfdl_sd/proj-shared/William.Cooke/SPEAR_experiments_R_20240307/SPEAR_R2023.04_nonsymMOM6_exec_noyaml/ncrc5.intel-classic-repro-openmp/exec//fms_SPEAR_R2023.04_nonsymMOM6_exec_noyaml.x"/>
--->
-<executable file="/gpfs/f5/gfdl_sd/proj-shared/William.Cooke/SPEAR_experiments_R_20240321/SPEAR_R2023.04_nonsymMOM6_exec/ncrc5.intel-classic-repro-openmp/exec/fms_SPEAR_R2023.04_nonsymMOM6_exec.x"/>
-  <input>
-      <namelist name="xgrid_nml">
-        make_exchange_reproduce = .true.
-        interp_method = 'second_order'
-      </namelist> 
-      <!--Needed for 2023.04 and after 
-      adj_mass_vmr is integer, no longer logical
-      -->
-      <namelist name="fv_core_nml">
-        layout   = $atm_layout
-        io_layout = $atm_io_layout
-        npx      = 97,
-        npy      = 97,
-        ntiles   = 6,
-        npz      = 33,
-        k_split  = 1,
-        n_split  = 12,
-        a2b_ord  = 4,
-        adjust_dry_mass = $adjust_dry_mass,
-        adj_mass_vmr    = 1,
-        print_freq = 0,
-        grid_type = 0,
-        tau = 0.      
-        do_uni_zfull = .true.
-       n_sponge = 0
-       d2_bg_k1 = 0.16
-       d2_bg_k2 = 0.02
-       kord_tm = -10
-       kord_mt =  10
-       kord_tr =  10
-       hydrostatic = .T.
-       d_ext = 0.
-       d2_bg = 0.
-       nord =  2
-       dddmp = 0.
-       d4_bg = 0.15
-       vtdm4 = 0.0
-       do_vort_damp = .F.
-       d_con = 0.
-       hord_mt = 10
-       hord_vt = 10
-       hord_tm = 10
-       hord_dp = 10
-       hord_tr = 8
-       consv_te = 0.7
-       consv_am = .T.
-       fill = .T.
-       z_tracer = .T.
-      </namelist>
-</input>
-</experiment>
-
 <experiment name="SPEAR_c96_o1_Control_1850_Q50" inherit="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec">
   <description>
 2/1/2018
@@ -3642,16 +2965,11 @@ to MOM_override to reproduce older results.
 11/21/2022 Updating to 2022.04 needs?
 tropchem_driver_nml : do_terpene_emis_bug = .true.
   </description>
-<!--
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20210427/SPEAR_R2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.03_nonsymMOM6_exec.x"/>
-
-<executable file="$(WFC_ARCHIVE_ROOT)/SPEAR_experiments_R_20211022/SPEAR_R2021.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2021.03_nonsymMOM6_exec.x"/>
--->
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
-      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33_2023_04.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_1850climo.nml"/>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
@@ -3960,6 +3278,13 @@ Needed for 2022.03 and after
      <diagTable>
 $name
 $baseDate
+"soil",    "soil_liq",     "soil_liq_0to10cm",  "land_daily",  "all", .true., "-1  -1 -1  -1 0 0.3", 2
+"flux",    "tas",          "tas",               "atmos_month", "all", .true.,  "none", 2
+"flux",    "tasf",         "tas_max",           "atmos_month", "all",  max,    "none", 2
+"flux",    "tas",          "tas_min",           "atmos_month", "all",  min,    "none", 2
+"flux",    "ts",           "ts",                "atmos_month", "all", .true.,  "none", 2
+"moist",   "pr",           "pr",                "atmos_month", "all", .true.,  "none", 2
+
       </diagTable>
 <!--
      <diagTable>
@@ -4238,6 +3563,28 @@ set nyblocks = $dummy
         overrideParams="aerosolrad_driver_nml:do_swaerosol_forcing = .false.;
                         aerosolrad_driver_nml:do_lwaerosol_forcing = .false.;
                         fms_nml:clock_grain='ROUTINE';
+                        random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                        icebergs_nml:make_calving_reproduce=.TRUE.;
+                        xgrid_nml:make_exchange_reproduce=.TRUE.;">
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180_long']/node())"/>
+        </run>
+      </regression>
+      <regression name="print_memuse">
+        <run months="13" 
+        overrideParams="aerosolrad_driver_nml:do_swaerosol_forcing = .true.;
+                        aerosolrad_driver_nml:do_lwaerosol_forcing = .true.;
+                        fms_nml:clock_grain='ROUTINE';
+                        fms_nml:print_memory_usage=.true.;
+                        random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
+                        icebergs_nml:make_calving_reproduce=.TRUE.;
+                        xgrid_nml:make_exchange_reproduce=.TRUE.;">
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180_long']/node())"/>
+        </run>
+        <run months="13" 
+        overrideParams="aerosolrad_driver_nml:do_swaerosol_forcing = .false.;
+                        aerosolrad_driver_nml:do_lwaerosol_forcing = .false.;
+                        fms_nml:clock_grain='ROUTINE';
+                        fms_nml:print_memory_usage=.true.;
                         random_number_streams_nml:force_use_of_temp_for_seed=.TRUE.;
                         icebergs_nml:make_calving_reproduce=.TRUE.;
                         xgrid_nml:make_exchange_reproduce=.TRUE.;">

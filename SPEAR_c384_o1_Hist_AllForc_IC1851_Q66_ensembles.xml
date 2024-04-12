@@ -53,15 +53,15 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
-  <property name="AWG_GIT_TAG"            value="2022.03"/>               <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2023.01"/>
-  <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>    <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"      value="2022.02"/>         <!-- git tag for atmos_drivers -->
-  <property name="ATMOS_CUBED_SPHERE_TAG" value="2022.03"/>    <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="AWG_GIT_TAG"            value="2023.04"/>               <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"            value="2023.04"/>
+  <property name="LAND_GIT_TAG"           value="2023.03"/>    <!-- git tag for Land source code -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2023.04"/>         <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG" value="origin/dev/gfdl"/>    <!-- git tag for atmos_cubed_sphere source code -->
   <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>         <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20231005" />    <!-- Stem use in FRE directories -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20240410" />    <!-- Stem use in FRE directories -->
 
   <property name="FRE_VERSION" value="bronx-21" />              <!-- FRE version for use in this XML -->
 
@@ -2364,7 +2364,7 @@ natural vegetation by setting scale_non_ntrl=0.0 in land_model_nml.
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
-      <namelist file="$(includeDir)/nml/am4p0_c384L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c384L33_2023_04.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_amip.nml"/>
       <namelist name="land_model_nml">
         layout   = $lnd_layout
@@ -2542,7 +2542,7 @@ natural vegetation by setting scale_non_ntrl=0.0 in land_model_nml.
          n_split  = 7,
          a2b_ord  = 4,
          adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
+         adj_mass_vmr    = 1,
          print_freq = 0,
          grid_type = 0,
          tau = 0.
@@ -3077,795 +3077,6 @@ set nyblocks = $dummy
 
 
 
-<experiment name="SPEAR_c384_o1_Hist_test1928" inherit="SPEAR_c384_o1_Hist_AllForc_IC1851_Q66_ens_01">
-  <description>
-Trial of which executable can get past 1928 1 1 and finish a job.
-  </description>
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q_20200814/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
-  <input>
-      <namelist name="coupler_nml">
-        months = $months,
-        days   = $days,
-        current_date = 1921,1,1,0,0,0
-        calendar = 'julian',
-        dt_atmos = 600,
-        dt_cpld = 3600,
-        use_lag_fluxes=.true.
-        concurrent = .true.
-        do_ocean = .true.,
-        ocean_npes = $ocn_ranks,
-
-        do_atmos = .true.,
-        do_land = .true.,
-        do_ice = .true.,
-        atmos_npes = $atm_ranks
-        atmos_nthreads = $atm_threads
-        do_concurrent_radiation=.false.
-        radiation_nthreads = 1
-        check_stocks=0
-      </namelist>
-     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f2/scratch/William.Cooke/SPEAR_experiments_Q/SPEAR_c384_o1_Hist_AllForc_IC1851_Q66_ens_01/ncrc4.intel18-repro-openmp/restart/tmp/19280101.tar</dataSource>
-     </dataFile> 
-      <diagTable>
-$name
-$baseDate
-      </diagTable>
-      <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <!--
-         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_20200318</dataSource>
-         -->
-         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_20200811</dataSource>
-      </dataFile>
-      <csh type="always"><![CDATA[
-######BEGIN MOM6 and SIS2 layout setup################
-##THIS HAS TO BE PART OF csh type=always###
-
-touch $work/INPUT/MOM_override
-
-cat > $work/INPUT/MOM_override << EOF
-#override KV_ML_INVZ2 = 1.0E-4
-#override DEFAULT_ANSWER_DATE=20181231
-#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
-#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
-NUM_DIAG_COORDS = 3             ! default = 1
-                                ! The number of diagnostic vertical coordinates to use.
-                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
-DIAG_COORDS = "z Z ZSTAR, rho2 RHO2 RHO, ztop ZTOP300 ZSTAR"
-
-DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
-                                ! Determines how to specify the coordinate
-                                ! resolution. Valid options are:
-                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
-                                !  UNIFORM[:N] - uniformly distributed
-                                !  FILE:string - read from a file. The string specifies
-                                !                the filename and variable name, separated
-                                !                by a comma or space, e.g. FILE:lev.nc,dz
-                                !                or FILE:lev.nc,interfaces=zw
-                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
-                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
-                                !  HYBRID:string - read from a file. The string specifies
-                                !                the filename and two variable names, separated
-                                !                by a comma or space, for sigma-2 and dz. e.g.
-                                !                HYBRID:vgrid.nc,sigma2,dz
-
-DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
-EOF
-
-touch $work/INPUT/SIS_override
-
-cat > $work/INPUT/SIS_override << EOF
-#override CP_SEAWATER = 3992.
-#override CP_BRINE = 3992.
-#override ICE_BULK_SALINITY = 0.0
-#override ICE_RELATIVE_SALINITY = 0.17
-#override SIS2_FILLING_FRAZIL = T
-#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
-#override SIS_CONTINUITY_SCHEME = "PCM"
-#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
-EOF
-
-#scan auxiliary_nml
-#set OCN_MASK_TABLE = 
-#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
-#override IO_LAYOUT = $ocn_io_layout
-#override LAYOUT    = $ocn_layout
-#override MASKTABLE = $ocn_mask_table
-MOM_LAYOUT_EOF
-
-#scan auxiliary_nml
-#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
-#override IO_LAYOUT = $ice_io_layout
-#override LAYOUT    = $ice_layout
-#override MASKTABLE = $ocn_mask_table
-SIS_LAYOUT_EOF
-
-######END MOM6 and SIS2 layout setup################
-
-cd $work/INPUT
-
-#if ( $currentSeg == 1 ) then
-#     rm -f coupler.res
-#endif
-cd $work
-
-#------------------------------------------
-## Find out whether to restart.
-# MOM6 restart switch
-   set restart_flag = 'r'
-   set sis_restart_flag = 'r'
-cd $work
-
-## Run the model
-#------------------------------------------
-###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
-set OCN_MASK_TABLE  =  $ocn_mask_table
-set OCN_LAYOUT    = $ocn_layout
-set OCN_IO_LAYOUT = $ocn_io_layout
-set ICE_LAYOUT    = $ice_layout
-set ICE_IO_LAYOUT = $ice_io_layout
-set atmos_npes = $atm_ranks
-set ocean_npes = $ocn_ranks
-set fv_layout = $atm_layout
-set fv_io_layout  = $atm_io_layout
-set land_layout   = $lnd_layout
-set land_io_layout = $lnd_io_layout
-set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nxblocks = $dummy
-set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nyblocks = $dummy
-]]>
-    </csh>
-</input>
-  <runtime>
-    <production simTime="160" units="years" >
-      <segment simTime="1" units="years"/>
-      <!--
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x4_O72_production_c384']/node())"/>
-      -->
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1728x4_O108_production_c384']/node())"/>
-      <!--<xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A2304x4_O108_production_c384']/node())"/>
-      -->
-    </production> 
-    <regression name="basic_prodsettings">
-      
-      <run days="10" >
-        <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x2_O72']/node())"/>
-      </run>
-      
-      <run days="10" >
-        <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A576x4_O180']/node())"/>
-      </run>
-      <run days="10" >
-        <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A432x4_O72']/node())"/>
-      </run>
-      <run days="10" >
-        <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x2_O72_c384']/node())"/>
-      </run>
-      <run days="10" >
-        <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A2304x4_O108_c384']/node())"/>
-      </run>
-      <run days="10" >
-        <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A2304x2_O108_c384']/node())"/>
-      </run>
-      <run days="10" >
-        <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A2304x1_O108_c384']/node())"/>
-      </run>
-      <run days="10" >
-        <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x4_O72_c384']/node())"/>
-      </run>
-      
-      <run days="10" >
-        <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1728x4_O108_c384']/node())"/>
-      </run>
-    </regression>
-    <regression name="spinup_prodsettings">
-      <run months="3" >
-        <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
-      </run>
-    </regression>
-    <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='regression_OMP_c384']/runtime/node())"/>
-  </runtime>
-</experiment>
-
-<experiment name="SPEAR_c384_o1_Hist_AllForc_IC1851_Q66_ens_01a" inherit="SPEAR_c384_o1_Hist_AllForc_IC1851_Q66_ens_01">
-  <description>
-  </description>
-<executable file="$(WFC_ARCHIVE_ROOT)/SPEAR_experiments_K_20200819/SPEAR_K_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_K_nonsymMOM6_exec.x"/>
-  <input>
-      <namelist name="xgrid_nml">
-        make_exchange_reproduce = .true.
-        interp_method = 'second_order'
-      </namelist> 
-      <csh type="always"><![CDATA[
-######BEGIN MOM6 and SIS2 layout setup################
-##THIS HAS TO BE PART OF csh type=always###
-
-touch $work/INPUT/MOM_override
-
-cat > $work/INPUT/MOM_override << EOF
-#override KV_ML_INVZ2 = 1.0E-4
-#override DEFAULT_ANSWER_DATE=20181231
-#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
-#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
-NUM_DIAG_COORDS = 3             ! default = 1
-                                ! The number of diagnostic vertical coordinates to use.
-                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
-DIAG_COORDS = "z Z ZSTAR, rho2 RHO2 RHO, ztop ZTOP300 ZSTAR"
-
-DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
-                                ! Determines how to specify the coordinate
-                                ! resolution. Valid options are:
-                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
-                                !  UNIFORM[:N] - uniformly distributed
-                                !  FILE:string - read from a file. The string specifies
-                                !                the filename and variable name, separated
-                                !                by a comma or space, e.g. FILE:lev.nc,dz
-                                !                or FILE:lev.nc,interfaces=zw
-                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
-                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
-                                !  HYBRID:string - read from a file. The string specifies
-                                !                the filename and two variable names, separated
-                                !                by a comma or space, for sigma-2 and dz. e.g.
-                                !                HYBRID:vgrid.nc,sigma2,dz
-
-DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
-EOF
-
-touch $work/INPUT/SIS_override
-
-cat > $work/INPUT/SIS_override << EOF
-#override CP_SEAWATER = 3992.
-#override CP_BRINE = 3992.
-#override ICE_BULK_SALINITY = 0.0
-#override ICE_RELATIVE_SALINITY = 0.17
-#override SIS2_FILLING_FRAZIL = T
-#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
-#override SIS_CONTINUITY_SCHEME = "PCM"
-#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
-EOF
-
-#scan auxiliary_nml
-#set OCN_MASK_TABLE = 
-#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
-#override IO_LAYOUT = $ocn_io_layout
-#override LAYOUT    = $ocn_layout
-#override MASKTABLE = $ocn_mask_table
-MOM_LAYOUT_EOF
-
-#scan auxiliary_nml
-#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
-#override IO_LAYOUT = $ice_io_layout
-#override LAYOUT    = $ice_layout
-#override MASKTABLE = $ocn_mask_table
-SIS_LAYOUT_EOF
-
-######END MOM6 and SIS2 layout setup################
-
-cd $work/INPUT
-
-if ( $currentSeg == 1 ) then
-     rm -f coupler.res
-     rm -f landuse.res
-endif
-cd $work
-
-#------------------------------------------
-## Find out whether to restart.
-# MOM6 restart switch
-   set restart_flag = 'r'
-   set sis_restart_flag = 'r'
-cd $work
-
-## Run the model
-#------------------------------------------
-###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
-set OCN_MASK_TABLE  =  $ocn_mask_table
-set OCN_LAYOUT    = $ocn_layout
-set OCN_IO_LAYOUT = $ocn_io_layout
-set ICE_LAYOUT    = $ice_layout
-set ICE_IO_LAYOUT = $ice_io_layout
-set atmos_npes = $atm_ranks
-set ocean_npes = $ocn_ranks
-set fv_layout = $atm_layout
-set fv_io_layout  = $atm_io_layout
-set land_layout   = $lnd_layout
-set land_io_layout = $lnd_io_layout
-set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nxblocks = $dummy
-set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nyblocks = $dummy
-]]>
-    </csh>
-  </input>
-  <runtime>
-    <production simTime="70" units="years" >
-      <segment simTime="1" units="years"/>
-      <!--
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x4_O72_production_c384']/node())"/>
-      
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1728x4_O108_production_c384']/node())"/>
-      
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A2304x4_O108_production_c384']/node())"/>
-
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A2304x2_O108_production_c384']/node())"/>
---> 
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O72_production_c384']/node())"/>
-    </production> 
-    <regression name="debug_3hours">
-      <run hours="3" >
-        <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A2304x1_O108_c384']/node())"/>
-      </run>
-    </regression>
-    <regression name="debug_12hours">
-      <run hours="12">
-        <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A2304x1_O108_c384']/node())"/>
-      </run>
-    </regression>
-    <regression name="debug">
-      <run days="1" >
-        <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A2304x1_O108_c384']/node())"/>
-      </run>
-    </regression>
-      <regression name="oneyear">
-        <run months="12" >
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180_long']/node())"/>
-        </run>
-      </regression>
-      <regression name="oneday_coldstart">
-        <run days="1" >
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
-        </run>
-      </regression>
-      <regression name="basic_prodsettings">
-      
-        <run days="8" >
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x2_O72']/node())"/>
-        </run>
-        <run days="8" >
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A576x4_O180']/node())"/>
-        </run>
-        <run days="8" >
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A432x4_O72']/node())"/>
-        </run>
-      
-        <run days="8" >
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x2_O72_c384']/node())"/>
-        </run>
-        
-        <run days="8" >
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A1152x6_O72_c384']/node())"/>
-        </run>
-      </regression>
-      <regression name="spinup_prodsettings">
-        <run months="3" >
-      <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
-        </run>
-      </regression>
-      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='regression_OMP_c384']/runtime/node())"/>
-      <reference restart="/lustre/f2/dev/William.Cooke/reference/SPEAR_c384_o1_Control_1850_Q66/ncrc4.intel16-repro-openmp/1x0m8d_432x4a_72x1o/restart/00010109.tar"/>
-  </runtime>
-  <postProcess>
-      <xi:include xpointer="xpointer(//freInclude[@name='SPEAR_c384_PostP_Control_withdaily']/postProcess/node())"/>
-  </postProcess>
-</experiment>
-
-<experiment name="SPEAR_c384_o1_Hist_AllForc_IC1851_K66_ens_01" inherit="SPEAR_c384_o1_Hist_AllForc_IC1851_Q66_ens_01">
-  <description>
-  SPEAR_c384_o1_Hist_AllForc_IC1851_Q66_ens_01 with K executable.
-</description>
-<executable file="$(WFC_ARCHIVE_ROOT)/SPEAR_experiments_K/SPEAR_K_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_K_nonsymMOM6_exec.x"/>
-<input>
-      <csh type="always"><![CDATA[
-######BEGIN MOM6 and SIS2 layout setup################
-##THIS HAS TO BE PART OF csh type=always###
-
-touch $work/INPUT/MOM_override
-
-cat > $work/INPUT/MOM_override << EOF
-#override KV_ML_INVZ2 = 1.0E-4
-#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
-#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
-NUM_DIAG_COORDS = 3             ! default = 1
-                                ! The number of diagnostic vertical coordinates to use.
-                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
-DIAG_COORDS = "z Z ZSTAR, rho2 RHO2 RHO, ztop ZTOP300 ZSTAR"
-
-DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
-                                ! Determines how to specify the coordinate
-                                ! resolution. Valid options are:
-                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
-                                !  UNIFORM[:N] - uniformly distributed
-                                !  FILE:string - read from a file. The string specifies
-                                !                the filename and variable name, separated
-                                !                by a comma or space, e.g. FILE:lev.nc,dz
-                                !                or FILE:lev.nc,interfaces=zw
-                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
-                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
-                                !  HYBRID:string - read from a file. The string specifies
-                                !                the filename and two variable names, separated
-                                !                by a comma or space, for sigma-2 and dz. e.g.
-                                !                HYBRID:vgrid.nc,sigma2,dz
-
-DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
-EOF
-
-touch $work/INPUT/SIS_override
-
-cat > $work/INPUT/SIS_override << EOF
-#override CP_SEAWATER = 3992.
-#override CP_BRINE = 3992.
-#override ICE_BULK_SALINITY = 0.0
-#override ICE_RELATIVE_SALINITY = 0.17
-#override SIS2_FILLING_FRAZIL = T
-#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
-#override SIS_CONTINUITY_SCHEME = "PCM"
-#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
-
-EOF
-
-#scan auxiliary_nml
-#set OCN_MASK_TABLE = 
-#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
-#override IO_LAYOUT = $ocn_io_layout
-#override LAYOUT    = $ocn_layout
-#override MASKTABLE = $ocn_mask_table
-MOM_LAYOUT_EOF
-
-#scan auxiliary_nml
-#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
-#override IO_LAYOUT = $ice_io_layout
-#override LAYOUT    = $ice_layout
-#override MASKTABLE = $ocn_mask_table
-SIS_LAYOUT_EOF
-
-######END MOM6 and SIS2 layout setup################
-
-cd $work/INPUT
-
-if ( $currentSeg == 1 ) then
-     rm -f coupler.res
-     rm -f landuse.res
-endif
-cd $work
-
-#------------------------------------------
-## Find out whether to restart.
-# MOM6 restart switch
-   set restart_flag = 'r'
-   set sis_restart_flag = 'r'
-cd $work
-
-## Run the model
-#------------------------------------------
-###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
-set OCN_MASK_TABLE  =  $ocn_mask_table
-set OCN_LAYOUT    = $ocn_layout
-set OCN_IO_LAYOUT = $ocn_io_layout
-set ICE_LAYOUT    = $ice_layout
-set ICE_IO_LAYOUT = $ice_io_layout
-set atmos_npes = $atm_ranks
-set ocean_npes = $ocn_ranks
-set fv_layout = $atm_layout
-set fv_io_layout  = $atm_io_layout
-set land_layout   = $lnd_layout
-set land_io_layout = $lnd_io_layout
-set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nxblocks = $dummy
-set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nyblocks = $dummy
-]]>
-    </csh>
-</input>
-</experiment>
-
-<experiment name="SPEAR_c384_o1_Hist_AllForc_IC1851_R20210427_ens_01" inherit="SPEAR_c384_o1_Hist_AllForc_IC1851_Q66_ens_01">
-  <description>
-  SPEAR_c384_o1_Hist_AllForc_IC1851_Q66_ens_01 with SPEAR 20210427 executable.
-</description>
-<executable file="/lustre/f2/dev//William.Cooke/SPEAR_experiments_R_20210427/SPEAR_R2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.03_nonsymMOM6_exec.x"/>
-<input>
-      <csh type="always"><![CDATA[
-######BEGIN MOM6 and SIS2 layout setup################
-##THIS HAS TO BE PART OF csh type=always###
-
-touch $work/INPUT/MOM_override
-
-cat > $work/INPUT/MOM_override << EOF
-#override KV_ML_INVZ2 = 1.0E-4
-#override REMAP_UV_USING_OLD_ALG = True
-#override Z_INIT_REMAP_OLD_ALG = True
-#override FIX_USTAR_GUSTLESS_BUG =False
-#override GRID_ROTATION_ANGLE_BUGS = True
-#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
-#override KAPPA_SHEAR_ITER_BUG = True
-#override USE_GM_WORK_BUG = True
-#override USE_MLD_ITERATION = False
-#override USE_TRIPOLAR_GEOLONB_BUG =True 
-#override GUST_CONST = 0.02
-#override MEKE_ALPHA_EADY = 0.05
-#override MEKE_ALPHA_RHINES = 0.05
-#override MIN_SALINITY = 0.01
-
-#override KH_BG_2D_BUG=True
-#override USE_DIABATIC_TIME_BUG=True
-#override USE_INACCURATE_PGF_RHO_ANOM=True
-#override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
-
-#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
-#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
-NUM_DIAG_COORDS = 3             ! default = 1
-                                ! The number of diagnostic vertical coordinates to use.
-                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
-DIAG_COORDS = "z Z ZSTAR, rho2 RHO2 RHO, ztop ZTOP300 ZSTAR"
-
-DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
-                                ! Determines how to specify the coordinate
-                                ! resolution. Valid options are:
-                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
-                                !  UNIFORM[:N] - uniformly distributed
-                                !  FILE:string - read from a file. The string specifies
-                                !                the filename and variable name, separated
-                                !                by a comma or space, e.g. FILE:lev.nc,dz
-                                !                or FILE:lev.nc,interfaces=zw
-                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
-                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
-                                !  HYBRID:string - read from a file. The string specifies
-                                !                the filename and two variable names, separated
-                                !                by a comma or space, for sigma-2 and dz. e.g.
-                                !                HYBRID:vgrid.nc,sigma2,dz
-
-DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
-EOF
-
-touch $work/INPUT/SIS_override
-
-cat > $work/INPUT/SIS_override << EOF
-#override CP_SEAWATER = 3992.
-#override CP_BRINE = 3992.
-#override ICE_BULK_SALINITY = 0.0
-#override ICE_RELATIVE_SALINITY = 0.17
-#override SIS2_FILLING_FRAZIL = T
-#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
-#override SIS_CONTINUITY_SCHEME = "PCM"
-#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
-
-#override GRID_ROTATION_ANGLE_BUGS =True
-#override USE_TRIPOLAR_GEOLONB_BUG = True
-#override RESTART_CHECKSUMS_REQUIRED =False
-
-#override INCONSISTENT_COVER_BUG = True
-#override CFL_MASS_NEGLECT_BUG=True
-EOF
-
-#scan auxiliary_nml
-#set OCN_MASK_TABLE = 
-#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
-#override IO_LAYOUT = $ocn_io_layout
-#override LAYOUT    = $ocn_layout
-#override MASKTABLE = $ocn_mask_table
-MOM_LAYOUT_EOF
-
-#scan auxiliary_nml
-#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
-#override IO_LAYOUT = $ice_io_layout
-#override LAYOUT    = $ice_layout
-#override MASKTABLE = $ocn_mask_table
-SIS_LAYOUT_EOF
-
-######END MOM6 and SIS2 layout setup################
-
-cd $work/INPUT
-
-if ( $currentSeg == 1 ) then
-     rm -f coupler.res
-     rm -f landuse.res
-endif
-cd $work
-
-#------------------------------------------
-## Find out whether to restart.
-# MOM6 restart switch
-   set restart_flag = 'r'
-   set sis_restart_flag = 'r'
-cd $work
-
-## Run the model
-#------------------------------------------
-###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
-set OCN_MASK_TABLE  =  $ocn_mask_table
-set OCN_LAYOUT    = $ocn_layout
-set OCN_IO_LAYOUT = $ocn_io_layout
-set ICE_LAYOUT    = $ice_layout
-set ICE_IO_LAYOUT = $ice_io_layout
-set atmos_npes = $atm_ranks
-set ocean_npes = $ocn_ranks
-set fv_layout = $atm_layout
-set fv_io_layout  = $atm_io_layout
-set land_layout   = $lnd_layout
-set land_io_layout = $lnd_io_layout
-set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nxblocks = $dummy
-set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nyblocks = $dummy
-]]>
-    </csh>
-</input>
-</experiment>
-
-<experiment name="SPEAR_c384_o1_Hist_AllForc_IC1851_R20220309_ens_01" inherit="SPEAR_c384_o1_Hist_AllForc_IC1851_Q66_ens_01">
-  <description>
-  SPEAR_c384_o1_Hist_AllForc_IC1851_Q66_ens_01 with SPEAR 20220309 executable.
-</description>
-<executable file="/lustre/f2/dev//William.Cooke/SPEAR_experiments_R_20220309/SPEAR_R2021.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2021.03_nonsymMOM6_exec.x"/>
-<input>
-      <csh type="always"><![CDATA[
-######BEGIN MOM6 and SIS2 layout setup################
-##THIS HAS TO BE PART OF csh type=always###
-
-touch $work/INPUT/MOM_override
-
-cat > $work/INPUT/MOM_override << EOF
-#override KV_ML_INVZ2 = 1.0E-4
-#override REMAP_UV_USING_OLD_ALG = True
-#override Z_INIT_REMAP_OLD_ALG = True
-#override FIX_USTAR_GUSTLESS_BUG =False
-#override GRID_ROTATION_ANGLE_BUGS = True
-#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
-#override KAPPA_SHEAR_ITER_BUG = True
-#override USE_GM_WORK_BUG = True
-#override USE_MLD_ITERATION = False
-#override USE_TRIPOLAR_GEOLONB_BUG =True 
-#override GUST_CONST = 0.02
-#override MEKE_ALPHA_EADY = 0.05
-#override MEKE_ALPHA_RHINES = 0.05
-#override MIN_SALINITY = 0.01
-
-#override KH_BG_2D_BUG=True
-#override USE_DIABATIC_TIME_BUG=True
-#override USE_INACCURATE_PGF_RHO_ANOM=True
-#override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
-
-#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
-#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
-NUM_DIAG_COORDS = 3             ! default = 1
-                                ! The number of diagnostic vertical coordinates to use.
-                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
-DIAG_COORDS = "z Z ZSTAR, rho2 RHO2 RHO, ztop ZTOP300 ZSTAR"
-
-DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
-                                ! Determines how to specify the coordinate
-                                ! resolution. Valid options are:
-                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
-                                !  UNIFORM[:N] - uniformly distributed
-                                !  FILE:string - read from a file. The string specifies
-                                !                the filename and variable name, separated
-                                !                by a comma or space, e.g. FILE:lev.nc,dz
-                                !                or FILE:lev.nc,interfaces=zw
-                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
-                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
-                                !  HYBRID:string - read from a file. The string specifies
-                                !                the filename and two variable names, separated
-                                !                by a comma or space, for sigma-2 and dz. e.g.
-                                !                HYBRID:vgrid.nc,sigma2,dz
-
-DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
-EOF
-
-touch $work/INPUT/SIS_override
-
-cat > $work/INPUT/SIS_override << EOF
-#override CP_SEAWATER = 3992.
-#override CP_BRINE = 3992.
-#override ICE_BULK_SALINITY = 0.0
-#override ICE_RELATIVE_SALINITY = 0.17
-#override SIS2_FILLING_FRAZIL = T
-#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
-#override SIS_CONTINUITY_SCHEME = "PCM"
-#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
-
-#override GRID_ROTATION_ANGLE_BUGS =True
-#override USE_TRIPOLAR_GEOLONB_BUG = True
-#override RESTART_CHECKSUMS_REQUIRED =False
-
-#override INCONSISTENT_COVER_BUG = True
-#override CFL_MASS_NEGLECT_BUG=True
-EOF
-
-#scan auxiliary_nml
-#set OCN_MASK_TABLE = 
-#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
-#override IO_LAYOUT = $ocn_io_layout
-#override LAYOUT    = $ocn_layout
-#override MASKTABLE = $ocn_mask_table
-MOM_LAYOUT_EOF
-
-#scan auxiliary_nml
-#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
-#override IO_LAYOUT = $ice_io_layout
-#override LAYOUT    = $ice_layout
-#override MASKTABLE = $ocn_mask_table
-SIS_LAYOUT_EOF
-
-######END MOM6 and SIS2 layout setup################
-
-cd $work/INPUT
-
-if ( $currentSeg == 1 ) then
-     rm -f coupler.res
-     rm -f landuse.res
-endif
-cd $work
-
-#------------------------------------------
-## Find out whether to restart.
-# MOM6 restart switch
-   set restart_flag = 'r'
-   set sis_restart_flag = 'r'
-cd $work
-
-## Run the model
-#------------------------------------------
-###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
-set OCN_MASK_TABLE  =  $ocn_mask_table
-set OCN_LAYOUT    = $ocn_layout
-set OCN_IO_LAYOUT = $ocn_io_layout
-set ICE_LAYOUT    = $ice_layout
-set ICE_IO_LAYOUT = $ice_io_layout
-set atmos_npes = $atm_ranks
-set ocean_npes = $ocn_ranks
-set fv_layout = $atm_layout
-set fv_io_layout  = $atm_io_layout
-set land_layout   = $lnd_layout
-set land_io_layout = $lnd_io_layout
-set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nxblocks = $dummy
-set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nyblocks = $dummy
-]]>
-    </csh>
-</input>
-</experiment>
 
 <experiment name="SPEAR_c384_o1_Hist_AllForc_IC1851_Q66_ens_01" inherit="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec">
   <description>
@@ -3892,7 +3103,7 @@ and resubmit
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
-      <namelist file="$(includeDir)/nml/am4p0_c384L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c384L33_2023_04.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_amip.nml"/>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .false.
@@ -3921,7 +3132,7 @@ and resubmit
          n_split  = 7,
          a2b_ord  = 4,
          adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
+         adj_mass_vmr    = 1,
          print_freq = 0,
          grid_type = 0,
          tau = 0.
@@ -4756,7 +3967,7 @@ set nyblocks = $dummy
          n_split  = 7,
          a2b_ord  = 4,
          adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
+         adj_mass_vmr    = 1,
          print_freq = 0,
          grid_type = 0,
          tau = 0.
@@ -5347,7 +4558,7 @@ set nyblocks = $dummy
          n_split  = 7,
          a2b_ord  = 4,
          adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
+         adj_mass_vmr    = 1,
          print_freq = 0,
          grid_type = 0,
          tau = 0.
@@ -5922,7 +5133,7 @@ This experiment is a rerun of the final 2 decades of the Historical run to compa
          n_split  = 7,
          a2b_ord  = 4,
          adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
+         adj_mass_vmr    = 1,
          print_freq = 0,
          grid_type = 0,
          tau = 0.
@@ -6340,7 +5551,7 @@ set nyblocks = $dummy
          n_split  = 7,
          a2b_ord  = 4,
          adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
+         adj_mass_vmr    = 1,
          print_freq = 0,
          grid_type = 0,
          tau = 0.
@@ -7644,7 +6855,7 @@ Update to newer executable
          n_split  = 7,
          a2b_ord  = 4,
          adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
+         adj_mass_vmr    = 1,
          print_freq = 0,
          grid_type = 0,
          tau = 0.

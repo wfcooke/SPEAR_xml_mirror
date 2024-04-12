@@ -53,15 +53,15 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
-  <property name="AWG_GIT_TAG"            value="2022.03"/>               <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2023.01"/>
-  <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>    <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"      value="2022.02"/>         <!-- git tag for atmos_drivers -->
-  <property name="ATMOS_CUBED_SPHERE_TAG" value="2022.03"/>    <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="AWG_GIT_TAG"            value="2023.04"/>               <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"            value="2023.04"/>
+  <property name="LAND_GIT_TAG"           value="2023.03"/>    <!-- git tag for Land source code -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2023.04"/>         <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG" value="origin/dev/gfdl"/>    <!-- git tag for atmos_cubed_sphere source code -->
   <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>         <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20231005"/><!--31005" /> -->  <!-- Stem use in FRE directories -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20240410"/><!--31005" /> -->  <!-- Stem use in FRE directories -->
   <property name="FRE_VERSION" value="bronx-21" />              <!-- FRE version for use in this XML -->
 
   <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
@@ -949,241 +949,6 @@ cd ..
 
 
 
-<experiment name="SPEAR_c96_o1_Hist_AllForc_IC1851_Q50_ens_01_debug"  inherit="SPEAR_c96_o1_Hist_AllForc_IC1851_Q50_ens_01_05">
-  <description>
-  Ensemble member 1 to 5 of historical run with F50 model settings.
-  Model to start in 1851 and run to 2010 with the intention of eventually extending to 2100.
-  Ensemble initial conditions taken from years 101, 121, 141, 161 and 181 of SPEAR_c96_o1_Control_1850_E50
-  Get the land restart files from the initial condition of SPEAR_c96_o1_1701_1850_K45_spinup_nobridge.
-  </description>
-
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20210210/SPEAR_R2020.04_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.04_nonsymMOM6_exec.x"/>
-  <input>
-      <namelist name="ensemble_nml">
-        ensemble_size=1
-      </namelist>
-     <dataFile label="dataTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(includeDir)/data_table/data_table_co2</dataSource>
-     </dataFile>
-     <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
-     </dataFile>
-     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource site="ncrc">/lustre/f2/scratch/William.Cooke/ensemble_test-v5lMPKOjRr/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_IC101_ens01.tar</dataSource>
-     </dataFile>
-     <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-       <dataSource platform="$(platform)">$(WFC_ARCHIVE_ROOT)/initCond_LOAR/LOAR4/TOPODRAG_SETUP/c96/topoC96_rough_land.tar</dataSource>
-     </dataFile>
-     <diagTable>
-$name
-$baseDate
-      </diagTable>
-      <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_20180719</dataSource>
-      </dataFile>
-      <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C96.OM360x320.20171213/mosaic.tar</dataSource>
-        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C96.OM360x320.20171213/mosaic.tar</dataSource> 
-      </dataFile>
-      <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='c96_LM4_SPEAR']/input/node())"/>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/landuse/LUH2/v2.0h/transitions.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/landuse/LUH2/v2.0h/states.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/landuse/LUH2/v2.0h/landfrac.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C96.OM360x320.20171213/SPEAR_c96_hydrography.tar</dataSource>
-        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/LOAR4/C96.OM360x320.112816/SPEAR_c96_hydrography.tar</dataSource> 
-      </dataFile>
-      <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='Volcano_Solar_TimeSeries_cmip6_V2']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_v20170518']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='L32_gas_conc']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='c96_stack_size']/input/node())"/>
-      <xi:include xpointer="xpointer(//freInclude[@name='csh_adjust_dry_mass']/input/node())"/>
-      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='SPEAR_domain_decomp']/input/node())"/>
-      <!--MOM6 Input datasets-->
-      <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
-      <!-- overwrite  Channels file -->
-      <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
-        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
-      </dataFile>
-      <!--MOM6 Input datasets-->
-      <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
-      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource site="ncrc">$(includeDir)/ice_ocean_SIS2/OM4_025/INPUT/hycom1_75_800m.nc</dataSource>
-      </dataFile>
-      <!-- Override the MOM_input in the MOM6_data xi include above --> 
-      <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/SPEAR/MOM_input_P39_init</dataSource>
-         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_P39_init</dataSource>
-      </dataFile>
-      <!--SIS Input datasets-->
-      <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
-      <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
-         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
-         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/KH_background_2d.nc">
-         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
-         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
-      </dataFile>
-      <dataFile label="input" target="INPUT/">
-         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
-         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
-      </dataFile>
-      <csh type="always"><![CDATA[
-######BEGIN MOM6 and SIS2 layout setup################
-##THIS HAS TO BE PART OF csh type=always###
-
-touch $work/INPUT/MOM_override
-
-cat > $work/INPUT/MOM_override << EOF
-#override KV_ML_INVZ2 = 1.0E-4
-
-#override DEFAULT_ANSWER_DATE=20181231
-
-
-
-#override REMAP_UV_USING_OLD_ALG = True
-#override Z_INIT_REMAP_OLD_ALG = True
-#override FIX_USTAR_GUSTLESS_BUG =False
-#override GRID_ROTATION_ANGLE_BUGS = True
-#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
-#override KAPPA_SHEAR_ITER_BUG = True
-#override USE_GM_WORK_BUG = True
-#override USE_MLD_ITERATION = False
-#override USE_TRIPOLAR_GEOLONB_BUG =True 
-#override GUST_CONST = 0.02
-#override MEKE_ALPHA_EADY = 0.05
-#override MEKE_ALPHA_RHINES = 0.05
-#override MIN_SALINITY = 0.01
-
-
-#override USE_INACCURATE_PGF_RHO_ANOM=True
-#override USE_DIABATIC_TIME_BUG=True
-#override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
-#override KH_BG_2D_BUG=True
-
-#override ENERGYSAVEDAYS=30
-#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
-#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
-NUM_DIAG_COORDS = 3             ! default = 1
-                                ! The number of diagnostic vertical coordinates to use.
-                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
-DIAG_COORDS = "z Z ZSTAR, rho2 RHO2 RHO, ztop ZTOP300 ZSTAR"
-
-DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
-                                ! Determines how to specify the coordinate
-                                ! resolution. Valid options are:
-                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
-                                !  UNIFORM[:N] - uniformly distributed
-                                !  FILE:string - read from a file. The string specifies
-                                !                the filename and variable name, separated
-                                !                by a comma or space, e.g. FILE:lev.nc,dz
-                                !                or FILE:lev.nc,interfaces=zw
-                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
-                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
-                                !  HYBRID:string - read from a file. The string specifies
-                                !                the filename and two variable names, separated
-                                !                by a comma or space, for sigma-2 and dz. e.g.
-                                !                HYBRID:vgrid.nc,sigma2,dz
-
-DIAG_COORD_DEF_ZTOP300 =  "UNIFORM:2,600." 
-EOF
-
-touch $work/INPUT/SIS_override
-
-cat > $work/INPUT/SIS_override << EOF
-#override CP_SEAWATER = 3992.
-#override CP_BRINE = 3992.
-#override ICE_BULK_SALINITY = 0.0
-#override ICE_RELATIVE_SALINITY = 0.17
-#override SIS2_FILLING_FRAZIL = T
-#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
-#override SIS_CONTINUITY_SCHEME = "PCM"
-#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
-EOF
-#override GRID_ROTATION_ANGLE_BUGS =True
-#override USE_TRIPOLAR_GEOLONB_BUG = True
-
-#override INCONSISTENT_COVER_BUG = True
-#override CFL_MASS_NEGLECT_BUG=True
-#override RESTART_CHECKSUMS_REQUIRED =False
-#EOF
-
-#scan auxiliary_nml
-#set OCN_MASK_TABLE = 
-#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
-#override IO_LAYOUT = $ocn_io_layout
-#override LAYOUT    = $ocn_layout
-#override MASKTABLE = $ocn_mask_table
-MOM_LAYOUT_EOF
-
-#scan auxiliary_nml
-#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
-#override IO_LAYOUT = $ice_io_layout
-#override LAYOUT    = $ice_layout
-#override MASKTABLE = $ocn_mask_table
-SIS_LAYOUT_EOF
-
-######END MOM6 and SIS2 layout setup################
-
-cd $work/INPUT
-
-if ( $currentSeg == 1 ) then
-     rm -f coupler.res
-     foreach i ( MOM.res*nc)
-       chmod u+w $i
-       #ncrename -v Kv_turb,Kv_shear -v Kd_turb,Kd_shear $i
-     end
-endif
-cd $work
-
-#------------------------------------------
-## Find out whether to restart.
-# MOM6 restart switch
-   set restart_flag = 'r'
-   set sis_restart_flag = 'r'
-cd $work
-
-## Run the model
-#------------------------------------------
-###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
-set OCN_MASK_TABLE  =  $ocn_mask_table
-set OCN_LAYOUT    = $ocn_layout
-set OCN_IO_LAYOUT = $ocn_io_layout
-set ICE_LAYOUT    = $ice_layout
-set ICE_IO_LAYOUT = $ice_io_layout
-set atmos_npes = $atm_ranks
-set ocean_npes = $ocn_ranks
-set fv_layout = $atm_layout
-set fv_io_layout  = $atm_io_layout
-set land_layout   = $lnd_layout
-set land_io_layout = $lnd_io_layout
-set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nxblocks = $dummy
-set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nyblocks = $dummy
-]]>
-    </csh>
-  </input>
-</experiment>
 
 <experiment name="SPEAR_c96_o1_Hist_AllForc_IC1851_Q50_ens_01_05_c5"  inherit="SPEAR_c96_o1_Hist_AllForc_IC1851_Q50_ens_01_05">
   <description>
@@ -1211,7 +976,7 @@ set nyblocks = $dummy
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
-      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33_2023_04.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_amip.nml"/>
       <namelist name="ensemble_nml">
         ensemble_size=5
@@ -1878,7 +1643,7 @@ set nyblocks = $dummy
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
-      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33_2023_04.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_amip.nml"/>
       <namelist name="ensemble_nml">
         ensemble_size=5
@@ -2527,7 +2292,7 @@ set nyblocks = $dummy
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
-      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33_2023_04.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_amip.nml"/>
       <namelist name="ensemble_nml">
         ensemble_size=5
@@ -3176,7 +2941,7 @@ set nyblocks = $dummy
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
-      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33_2023_04.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_amip.nml"/>
       <namelist name="ensemble_nml">
         ensemble_size=5
@@ -3825,7 +3590,7 @@ set nyblocks = $dummy
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
-      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33_2023_04.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_amip.nml"/>
       <namelist name="ensemble_nml">
         ensemble_size=5
@@ -4474,7 +4239,7 @@ set nyblocks = $dummy
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
-      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33_2023_04.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_amip.nml"/>
       <namelist name="ensemble_nml">
         ensemble_size=5

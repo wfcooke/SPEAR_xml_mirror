@@ -53,14 +53,6 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                 <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/>            <!-- git tag for MOM6 source code -->
-<!-- SPEAR_experiments_R_20220817 code -->
-<!--  <property name="AWG_GIT_TAG"            value="2022.03"/>                --> <!-- git tag for AWG source code -->
-<!--  <property name="FMS_GIT_TAG"            value="2022.03"/>                --> <!-- git tag for FMS source code -->
-<!--  <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>  --> <!-- git tag for Land source code -->
-<!--  <property name="ATMOS_DRIVERS_TAG"      value="2022.02"/>                --> <!-- git tag for atmos_drivers -->
-<!--  <property name="ATMOS_CUBED_SPHERE_TAG" value="2022.03"/>                --> <!-- git tag for atmos_cubed_sphere source code -->
-<!--  <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>                --> <!-- git tag for ice_param source code -->
-
 
 <!-- SPEAR_experiments_R_20240321 code -->
   <property name="AWG_GIT_TAG"            value="2023.04"/>                 <!-- git tag for AWG source code -->
@@ -73,9 +65,7 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
 
   <!-- FRE specific properties -->
-<!--  <property name="FRE_STEM" value="SPEAR_experiments_R_20220817"/>  -->   <!-- Stem use in FRE directories -->
-<!--  <property name="FRE_STEM" value="SPEAR_experiments_R_20231005"/>  -->   <!-- Stem use in FRE directories -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20240321"/>     <!-- Stem use in FRE directories -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20240410"/>     <!-- Stem use in FRE directories -->
   <property name="FRE_VERSION" value="bronx-21" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
@@ -287,6 +277,13 @@ configuration.
         <codeBase version="$(FMS_GIT_TAG)">
           FMS.git
         </codeBase>
+        <!--
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd FMS && git checkout 7f585284f1487c0629f8075be350385e6e75dd2f )
+          ]]>
+        </csh>
+        -->
       </source>
       <compile>
         <cppDefs>
@@ -315,6 +312,13 @@ configuration.
         <codeBase version="$(AWG_GIT_TAG)">
           atmos_phys.git
         </codeBase>
+        <!--
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd atmos_phys && git checkout 86f46861f31331b7f6e4fdfabca58c78958ed47b )
+          ]]>
+        </csh>
+        -->
       </source>
       <compile>
         <cppDefs>
@@ -341,6 +345,8 @@ configuration.
         </codeBase>
         <csh><![CDATA[
           ( cd atmos_drivers && git checkout $(ATMOS_DRIVERS_TAG) )
+          # Equivalent to the following checkout hash
+          ( cd  atmos_drivers && git checkout 62279bb627cffcb0e86d28b605048a706872568f )
           ]]>
         </csh>
       </source>
@@ -369,7 +375,9 @@ configuration.
           GFDL_atmos_cubed_sphere.git
         </codeBase>
         <csh><![CDATA[
-          ( cd GFDL_atmos_cubed_sphere && git checkout $(ATMOS_CUBED_SPHERE_TAG) )
+          #( cd GFDL_atmos_cubed_sphere && git checkout $(ATMOS_CUBED_SPHERE_TAG) )
+          # Equivalent to the following checkout hash
+          ( cd GFDL_atmos_cubed_sphere && git checkout  577abc706e5caaff52b597e7bfaf4e0043ee9960 )
           ]]>
         </csh>
       </source>
@@ -393,6 +401,13 @@ configuration.
         <codeBase version="$(LAND_GIT_TAG)">
           land_lad2.git
         </codeBase>
+        <!--
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd land_lad2 && git checkout 9c978eadc7a9fef0e92c1c7c03cf568be82e8ea2 )
+          ]]>
+        </csh>
+        -->
       </source>
       <compile doF90Cpp="yes">
         <cppDefs>
@@ -425,13 +440,13 @@ configuration.
         <codeBase version="$(MOM6_GIT_TAG)">
           MOM6.git
         </codeBase>
-<!--
+
         <csh><![CDATA[
           # Specify hash commit 
-            ( cd MOM6  && git checkout d7d126a7fc9111c4035441f6402553efc0c64596 )
+            ( cd MOM6  && git checkout 2d121dcc4275bb579ea275815fa79f92cbc6141e )
           ]]>
         </csh>
--->
+
       </source>
       <compile>
         <cppDefs><![CDATA[
@@ -454,7 +469,8 @@ configuration.
         </codeBase>
         <csh><![CDATA[
           # Equivalent to checking out the following
-          ( cd ice_param && git checkout  $(ICE_PARAM_GIT_TAG) )
+          #( cd ice_param && git checkout  $(ICE_PARAM_GIT_TAG) )
+          ( cd ice_param && git checkout  ddedca7d724fad9ad4fc6ec68bd4b22733551ed7 )
           ]]>
         </csh>
       </source>
@@ -480,12 +496,12 @@ configuration.
         <codeBase version="dev/gfdl">
           SIS2.git
         </codeBase>
-<!--
+
           <csh><![CDATA[
             ( cd SIS2  && git checkout 022bd89d1bfe03dc259afc24a6e19c334e47eb4b )
                        ]]>
           </csh>
--->
+
       </source>
       <compile>
         <cppDefs><![CDATA[
@@ -508,12 +524,12 @@ configuration.
         <codeBase version="dev/gfdl">
           icebergs.git
         </codeBase>
-<!--
+
           <csh><![CDATA[
-            ( cd icebergs  && git checkout fd6478fecd8891aebcba904fe4b34a415fe30e73 )
+            ( cd icebergs  && git checkout e8f794b04a962065ff21a8dfd37de9677c0d4533 )
                        ]]>
           </csh>        
--->
+
       </source>
       <compile>
         <cppDefs><![CDATA[
@@ -547,6 +563,13 @@ configuration.
           $(F2003_FLAGS)
           ]]>
         </cppDefs>
+        <!--
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd FMScoupler && git checkout 6442d387153064644325c96a5e9e2935139d5e3c )
+          ]]>
+        </csh>
+        -->
       </compile>
     </component>
   </experiment>
@@ -1326,6 +1349,13 @@ configuration.
         <codeBase version="$(FMS_GIT_TAG)">
           FMS.git
         </codeBase>
+        <!--
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd FMS && git checkout 7f585284f1487c0629f8075be350385e6e75dd2f )
+          ]]>
+        </csh>
+        -->
       </source>
       <compile>
         <cppDefs>
@@ -1354,6 +1384,13 @@ configuration.
         <codeBase version="$(AWG_GIT_TAG)">
           atmos_phys.git
         </codeBase>
+        <!--
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd atmos_phys && git checkout 86f46861f31331b7f6e4fdfabca58c78958ed47b )
+          ]]>
+        </csh>
+        -->
       </source>
       <compile>
         <cppDefs>
@@ -1382,6 +1419,13 @@ configuration.
           ( cd atmos_drivers && git checkout $(ATMOS_DRIVERS_TAG) )
           ]]>
         </csh>
+        <!--
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd atmos_drivers && git checkout 62279bb627cffcb0e86d28b605048a706872568f )
+          ]]>
+        </csh>
+        -->
       </source>
       <compile>
         <cppDefs>
@@ -1407,6 +1451,8 @@ configuration.
         </codeBase>
         <csh><![CDATA[
           ( cd GFDL_atmos_cubed_sphere && git checkout $(ATMOS_CUBED_SPHERE_TAG) )
+          # Equivalent to the following checkout hash
+          ( cd GFDL_atmos_cubed_sphere && git checkout 577abc706e5caaff52b597e7bfaf4e0043ee9960 )
           ]]>
         </csh>
       </source>
@@ -1431,6 +1477,13 @@ configuration.
         <codeBase version="$(LAND_GIT_TAG)">
           land_lad2.git
         </codeBase>
+        <!--
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd land_lad2 && git checkout 9c978eadc7a9fef0e92c1c7c03cf568be82e8ea2 )
+          ]]>
+        </csh>
+        -->
       </source>
       <compile doF90Cpp="yes">
         <cppDefs>
@@ -1463,7 +1516,8 @@ configuration.
           MOM6.git
         </codeBase>
         <csh><![CDATA[
-          # Commit
+          # Equivalent to the following checkout hash
+          ( cd MOM6 && git checkout 2d121dcc4275bb579ea275815fa79f92cbc6141e )
           ]]>
         </csh>
       </source>
@@ -1488,6 +1542,8 @@ configuration.
         </codeBase>
         <csh><![CDATA[
           ( cd ice_param && git checkout $(ICE_PARAM_GIT_TAG))
+          # Equivalent to the following checkout hash
+          ( cd ice_param && git checkout ddedca7d724fad9ad4fc6ec68bd4b22733551ed7 )
           ]]>
         </csh>
       </source>
@@ -1509,6 +1565,8 @@ configuration.
         
         <csh><![CDATA[
           ( cd ice_sis    && git checkout 2023.02 )
+          # Equivalent to the following checkout hash
+          ( cd ice_sis && git checkout bd14ed5ed6b8f99e35ca44a219e524ba5d0612d4 )
          ]]>
         </csh>
         
@@ -1531,6 +1589,11 @@ configuration.
         <codeBase version="dev/gfdl">
           icebergs.git
         </codeBase>
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd icebergs && git checkout e8f794b04a962065ff21a8dfd37de9677c0d4533 )
+          ]]>
+        </csh>
       </source>
       <compile>
         <cppDefs><![CDATA[
@@ -1558,6 +1621,11 @@ configuration.
       <source versionControl="git"
               root="http://github.com/NOAA-GFDL">
         <codeBase version="$(FMS_GIT_TAG)"> FMScoupler.git </codeBase>
+        <csh><![CDATA[
+          # Equivalent to the following checkout hash
+          ( cd FMScoupler && git checkout 6442d387153064644325c96a5e9e2935139d5e3c )
+          ]]>
+        </csh>
       </source>
       <compile>
         <cppDefs><![CDATA[

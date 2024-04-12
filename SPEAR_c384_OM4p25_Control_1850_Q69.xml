@@ -53,15 +53,15 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG"            value="dev/gfdl"/>              <!-- git tag for MOM6 source code -->
-  <property name="AWG_GIT_TAG"            value="2022.03"/>                   <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2023.01"/>                    
-  <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>    <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"      value="2022.02"/>             <!-- git tag for atmos_drivers -->
-  <property name="ATMOS_CUBED_SPHERE_TAG" value="2022.03"/>        <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="AWG_GIT_TAG"            value="2023.04"/>                   <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"            value="2023.04"/>                    
+  <property name="LAND_GIT_TAG"           value="2023.03"/>    <!-- git tag for Land source code -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2023.04"/>             <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG" value="origin/dev/gfdl"/>        <!-- git tag for atmos_cubed_sphere source code -->
   <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>             <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20231005" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20240410" />   <!-- Stem use in FRE directories -->
   <property name="FRE_VERSION" value="bronx-21" />              <!-- FRE version for use in this XML -->
 
   <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
@@ -1443,116 +1443,6 @@ cd ..
   </freInclude>
 
 
-<experiment name="SPEAR_c384_OM4p25_Control_1850_Q69_check_fv_core_nml" inherit="SPEAR_c384_OM4p25_Control_1850_Q69">
-  <description>
-  Check the fv_core settings that change answers.
-  Use SPEAR_HI settings.
-  </description>
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20210427/SPEAR_R2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.03_nonsymMOM6_exec.x"/>
-
-
-  <input>
-<!--
-<namelist name="fv_core_nml">
- layout   = $atm_layout
-        io_layout = $atm_io_layout
-         npx      = 385,
-         npy      = 385,
-         ntiles   = 6,
-         npz      = 33,
-         k_split  = 3,
-         n_split  = 7,
-         a2b_ord  = 4,
-         adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
-         print_freq = 0,
-         grid_type = 0,
-         tau = 0.
-         do_uni_zfull = .true.
-        n_sponge = 0
-        d2_bg_k1 = 0.16
-        d2_bg_k2 = 0.02
-        kord_tm = -10
-        kord_mt =  10
-        kord_tr =  10
-        hydrostatic = .T.
-        d_ext = 0.
-        d2_bg = 0.
-        nord =  1
-        dddmp = 0.
-        d4_bg = 0.15
-        vtdm4 = 0.0
-        do_vort_damp = .F.
-        d_con = 0.
-        hord_mt = 10
-        hord_vt = 10
-        hord_tm = 10
-        hord_dp = 10
-        hord_tr = 8
-        consv_te = 0.7
-        consv_am = .T.
-        fill = .T.
-        z_tracer = .T.
-</namelist>
-
-    "FV_CORE_NML%hord_dp": "-5",     "fv_core_nml%hord_dp": "10", 
-    "FV_CORE_NML%hord_mt": "5",      "fv_core_nml%hord_mt": "10", 
-    "FV_CORE_NML%hord_tm": "5",      "fv_core_nml%hord_tm": "10", 
-    "FV_CORE_NML%hord_tr": "-5",     "fv_core_nml%hord_tr": "8", 
-    "FV_CORE_NML%hord_vt": "5",      "fv_core_nml%hord_vt": "10"
-
-    "FV_CORE_NML%kord_mt": "9", 
-    "FV_CORE_NML%kord_tm": "-9", 
-    "FV_CORE_NML%kord_tr": "9", 
-    "FV_CORE_NML%kord_wz": "9", 
--->
-<namelist name="fv_core_nml">
-        d4_bg = 0.16
-        d_con = 1.
-        dddmp = 0.2
-        vtdm4 = 0.02
-        do_vort_damp = .T.
-        hord_dp =  6
-        hord_mt = 5
-        hord_tm = 5
-        hord_tr = 6
-        hord_vt = 5
-        kord_mt =  9
-        kord_tm = -9
-        kord_tr =  9
-        kord_wz =  9
-        nord =  2
-
-        layout   = $atm_layout
-        io_layout = $atm_io_layout
-         npx      = 385,
-         npy      = 385,
-         ntiles   = 6,
-         npz      = 33,
-         k_split  = 3,
-         n_split  = 7,
-         a2b_ord  = 4,
-         adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
-         print_freq = 0,
-         grid_type = 0,
-         tau = 0.
-         do_uni_zfull = .true.
-        n_sponge = 0
-        d2_bg_k1 = 0.16
-        d2_bg_k2 = 0.02
-        hydrostatic = .T.
-        d_ext = 0.
-        d2_bg = 0.
-        consv_te = 0.7
-        consv_am = .T.
-        fill = .T.
-        z_tracer = .T.
-</namelist>
-
-  </input>
-</experiment>  
-
 
 
 <experiment name="SPEAR_c384_OM4p25_Control_1850_Q69_snow" inherit="SPEAR_c384_OM4p25_Control_1850_Q69">
@@ -1812,19 +1702,11 @@ Older code (2020.03 FMS) did not support negative parameters for hord* and there
   </description>
 
 
-<!--
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20210427/SPEAR_R2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.03_nonsymMOM6_exec.x"/>
-
-<executable file="$(WFC_ARCHIVE_ROOT)/SPEAR_experiments_R_20211022/SPEAR_R2021.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2021.03_nonsymMOM6_exec.x"/>
-<executable file="$(WFC_ARCHIVE_ROOT)/SPEAR_experiments_R_check_20210427MOM6/SPEAR_R2020.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.03_nonsymMOM6_exec.x"/>
-
-<executable file="$(WFC_ARCHIVE_ROOT)/SPEAR_experiments_R_check_urielfv3/SPEAR_R2021.03_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2021.03_nonsymMOM6_exec.x"/>
--->
   <input>
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
-      <namelist file="$(includeDir)/nml/am4p0_c384L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c384L33_2023_04.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_1850climo_v20170518.nml"/>
       <namelist name="xgrid_nml">
         make_exchange_reproduce = .true.
@@ -1870,7 +1752,7 @@ Older code (2020.03 FMS) did not support negative parameters for hord* and there
          n_split  = 7,
          a2b_ord  = 4,
          adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
+         adj_mass_vmr    = 1,
          print_freq = 0,
          grid_type = 0,
          tau = 0.
@@ -1913,7 +1795,7 @@ Older code (2020.03 FMS) did not support negative parameters for hord* and there
          n_split  = 7,
          a2b_ord  = 4,
          adjust_dry_mass = $adjust_dry_mass,
-         adj_mass_vmr    = .true.,
+         adj_mass_vmr    = 1,
          print_freq = 0,
          grid_type = 0,
          tau = 0.

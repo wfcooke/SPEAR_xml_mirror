@@ -53,15 +53,15 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
-  <property name="AWG_GIT_TAG"            value="2022.03"/>               <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2023.01"/>
-  <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>    <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"      value="2022.02"/>         <!-- git tag for atmos_drivers -->
-  <property name="ATMOS_CUBED_SPHERE_TAG" value="2022.03"/>    <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="AWG_GIT_TAG"            value="2023.04"/>               <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"            value="2023.04"/>
+  <property name="LAND_GIT_TAG"           value="2023.03"/>    <!-- git tag for Land source code -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2023.04"/>         <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG" value="origin/dev/gfdl"/>    <!-- git tag for atmos_cubed_sphere source code -->
   <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>         <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20231005" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20240410" />   <!-- Stem use in FRE directories -->
   <property name="FRE_VERSION" value="bronx-21" />              <!-- FRE version for use in this XML -->
 
   <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
@@ -929,7 +929,7 @@ Updated the executable to allow for the pv_entropy OMP fix.
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
-      <namelist file="$(includeDir)/nml/am4p0_c96L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c96L33_2023_04.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_amip.nml"/>
       <namelist name="ensemble_nml">
         ensemble_size=5
@@ -1646,10 +1646,6 @@ set nyblocks = $dummy
 Updated the executable to allow for the pv_entropy OMP fix.
 
   </description>
-<!--
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
--->
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
   <input>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_ens_06_10/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_IC201_ens01_05.tar</dataSource>
@@ -1670,10 +1666,6 @@ Updated the executable to allow for the pv_entropy OMP fix.
 Updated the executable to allow for the pv_entropy OMP fix.
 
   </description>
-<!--
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
--->
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
   <input>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_ens_11_15/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_IC301_ens01_05.tar</dataSource>
@@ -1693,10 +1685,6 @@ Updated the executable to allow for the pv_entropy OMP fix.
 Updated the executable to allow for the pv_entropy OMP fix.
 
   </description>
-<!--
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
--->
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
   <input>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_ens_16_20/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_IC401_ens01_05.tar</dataSource>
@@ -1716,10 +1704,6 @@ Updated the executable to allow for the pv_entropy OMP fix.
 Updated the executable to allow for the pv_entropy OMP fix.
 
   </description>
-<!--
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
--->
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
   <input>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_ens_21_25/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_IC501_ens01_05.tar</dataSource>
@@ -1739,10 +1723,6 @@ Updated the executable to allow for the pv_entropy OMP fix.
 Updated the executable to allow for the pv_entropy OMP fix.
 
   </description>
-<!--
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel16-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
--->
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_Q/SPEAR_Q2020.02_nonsymMOM6_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_Q2020.02_nonsymMOM6_exec.x"/>
   <input>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_ens_26_30/SPEAR_c96_o1_Hist_AllForc_IC1851_K50_IC601_ens01_05.tar</dataSource>

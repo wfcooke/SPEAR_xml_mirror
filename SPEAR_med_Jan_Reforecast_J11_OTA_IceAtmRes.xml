@@ -48,15 +48,15 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
-  <property name="AWG_GIT_TAG"            value="2022.03"/>               <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2023.01"/>
-  <property name="LAND_GIT_TAG"           value="snowdiag_20211014_slm"/>    <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"      value="2022.02"/>         <!-- git tag for atmos_drivers -->
-  <property name="ATMOS_CUBED_SPHERE_TAG" value="2022.03"/>    <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="AWG_GIT_TAG"            value="2023.04"/>               <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"            value="2023.04"/>
+  <property name="LAND_GIT_TAG"           value="2023.03"/>    <!-- git tag for Land source code -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2023.04"/>         <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG" value="origin/dev/gfdl"/>    <!-- git tag for atmos_cubed_sphere source code -->
   <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>         <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20231005" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20240410" />   <!-- Stem use in FRE directories -->
   <property name="FRE_VERSION" value="bronx-21" />
 
   <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
@@ -801,217 +801,6 @@ cd ..
 
 </freInclude>
 
-<experiment name="i19950101_OTA_IceAtmRes_L33_new" inherit="i19950101_OTA_IceAtmRes_L33">
-
-<executable file="/lustre/f2/dev/William.Cooke/SPEAR_experiments_R_20210415/SPEAR_R2020.03_nonsymMOM6_20210416_exec/ncrc4.intel18-repro-openmp/exec/fms_SPEAR_R2020.03_nonsymMOM6_20210416_exec.x"/>
-<input>
-       <xi:include xpointer="xpointer(//freInclude[@name='csh_adjust_dry_mass']/input/node())"/>
-        <csh type="always"><![CDATA[
-
-cat > ocean_obs_table <<EOF
-EOF
-
-######BEGIN MOM6 and SIS2 layout setup################
-##THIS HAS TO BE PART OF csh type=always###
-
-cat > $work/INPUT/MOM_override_00 << EOF
-#override KV_ML_INVZ2 = 1.0E-4
-#override DEFAULT_ANSWER_DATE=20181231
-#override COORD_DEF = "FILE:vgrid_oda.nc,dz"
-#override COORD_FILE = "coord_oda.nc"
-#override REGRIDDING_COORDINATE_MODE = "ZSTAR"
-#override ALE_COORDINATE_CONFIG = "FILE:vgrid_oda.nc,dz"
-#override NK = 75
-#override MAXIMUM_INT_DEPTH_CONFIG = "NONE"
-#override MAX_LAYER_THICKNESS_CONFIG = "NONE"
-NJHALO_ODA = 12
-NIHALO_ODA = 8
-#override ODA_REMAPPING_SCHEME = "PPM_H4"
-#override USE_BASIN_MASK = False
-
-! === module ODA ===
-ASSIM_METHOD = "NO_ASSIM"
-ASSIM_FREQUENCY = 24
-BASIN_FILE = "basin.nc"         ! default = "basin.nc"
-TEMP_SALT_ADJUSTMENT_FILE ="inc.nc"
-
-#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
-#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
-#override MIXEDLAYER_RESTRAT = False
-RESTART_CONTROL = 2
-
-
-#override INTERNAL_WAVE_SPEED_BETTER_EST =False
-
-#override REMAP_UV_USING_OLD_ALG = True
-#override Z_INIT_REMAP_OLD_ALG = True
-#override FIX_USTAR_GUSTLESS_BUG =False
-#override GRID_ROTATION_ANGLE_BUGS = True
-#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
-#override KAPPA_SHEAR_ITER_BUG = True
-#override USE_GM_WORK_BUG = True
-#override USE_MLD_ITERATION = False
-#override USE_TRIPOLAR_GEOLONB_BUG =True 
-#override GUST_CONST = 0.02
-#override MEKE_ALPHA_EADY = 0.05
-#override MEKE_ALPHA_RHINES = 0.05
-#override MIN_SALINITY = 0.01
-
-
-#override USE_INACCURATE_PGF_RHO_ANOM=True
-#override USE_DIABATIC_TIME_BUG=True
-#override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
-#override KH_BG_2D_BUG=True
-
-#override RESTART_CHECKSUMS_REQUIRED=False
-#override APPLY_TRACER_TENDENCY_ADJUSTMENT =True
-EOF
-
-
-
-cat > $work/INPUT/MOM_override_01 << EOF
-#override KV_ML_INVZ2 = 1.0E-4
-#override DEFAULT_ANSWER_DATE=20181231
-
-#override INTERNAL_WAVE_SPEED_BETTER_EST =False
-
-#override REMAP_UV_USING_OLD_ALG = True
-#override Z_INIT_REMAP_OLD_ALG = True
-#override FIX_USTAR_GUSTLESS_BUG =False
-#override GRID_ROTATION_ANGLE_BUGS = True
-#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
-#override KAPPA_SHEAR_ITER_BUG = True
-#override USE_GM_WORK_BUG = True
-#override USE_MLD_ITERATION = False
-#override USE_TRIPOLAR_GEOLONB_BUG =True 
-#override GUST_CONST = 0.02
-#override MEKE_ALPHA_EADY = 0.05
-#override MEKE_ALPHA_RHINES = 0.05
-#override MIN_SALINITY = 0.01
-
-
-#override USE_INACCURATE_PGF_RHO_ANOM=True
-#override USE_DIABATIC_TIME_BUG=True
-#override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
-#override KH_BG_2D_BUG=True
-
-#override RESTART_CHECKSUMS_REQUIRED=False
-#override USE_BASIN_MASK = True
-
-#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
-#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
-#override MIXEDLAYER_RESTRAT = False
-ENSEMBLE_OCEAN = True
-RESTART_CONTROL = 2
-EOF
-
-
-set ENS_I = 2
-while ( $ENS_I <= 9 )
-	cp $work/INPUT/MOM_override_01 $work/INPUT/MOM_override_0$ENS_I
-	@ ENS_I++
-end
-set ENS_I = 10
-while ( $ENS_I <= 30 )
-	cp $work/INPUT/MOM_override_01 $work/INPUT/MOM_override_$ENS_I
-	@ ENS_I++
-end
-
-touch $work/INPUT/SIS_override
-
-
-cat > $work/INPUT/SIS_override << EOF
-#override CP_SEAWATER = 3992.
-#override CP_BRINE = 3992.
-#override ICE_BULK_SALINITY = 0.0
-#override ICE_RELATIVE_SALINITY = 0.17
-#override SIS2_FILLING_FRAZIL = T
-#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
-#override SIS_CONTINUITY_SCHEME = "PCM"
-#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
-#override GRID_ROTATION_ANGLE_BUGS =True
-#override USE_TRIPOLAR_GEOLONB_BUG = True
-
-#override INCONSISTENT_COVER_BUG = True
-#override CFL_MASS_NEGLECT_BUG=True
-EOF
-
-#scan auxiliary_nml
-#set OCN_MASK_TABLE =
-#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
-#override IO_LAYOUT = $ocn_io_layout
-#override LAYOUT    = $ocn_layout
-#override MASKTABLE = $ocn_mask_table
-MOM_LAYOUT_EOF
-
-#scan auxiliary_nml
-#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
-
-cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
-#override IO_LAYOUT = $ice_io_layout
-#override LAYOUT    = $ice_layout
-#override MASKTABLE = $ocn_mask_table
-SIS_LAYOUT_EOF
-
-######END MOM6 and SIS2 layout setup################
-
-cd $work/INPUT
-
-if ( $currentSeg == 1 ) then
-     rm -f coupler.res
-endif
-cd $work
-
-#if ( $currentSeg == 1 ) then
- #  #  rm -f coupler.res
-  #   foreach i ( MOM.res*nc)
-   #    chmod u+w $i
-    #   ncrename -v Kv_shear,Kv_turb -v Kd_shear,Kd_turb $i
-    # end
-#endif
-#cd $work
-
-#------------------------------------------
-## Find out whether to restart.
-# MOM6 restart switch
-if ( $currentSeg == 1 ) then
-   set restart_flag = 'n'
-else
-   set restart_flag = 'r'
-endif
-   set sis_restart_flag = 'r'
-
-cd $work
-
-## Run the model
-#------------------------------------------
-###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
-set OCN_MASK_TABLE  =  $ocn_mask_table
-set OCN_LAYOUT    = $ocn_layout
-set OCN_IO_LAYOUT = $ocn_io_layout
-set ICE_LAYOUT    = $ice_layout
-set ICE_IO_LAYOUT = $ice_io_layout
-set atmos_npes = $atm_ranks
-set ocean_npes = $ocn_ranks
-set fv_layout = $atm_layout
-set fv_io_layout  = $atm_io_layout
-set land_layout   = $lnd_layout
-set land_io_layout = $lnd_io_layout
-set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nxblocks = $dummy
-set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
-set nyblocks = $dummy
-
-    ]]></csh>
-
-</input>
-</experiment>
 
 <experiment name="i19950101_OTA_IceAtmRes_L33" inherit="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec" >
   <description>
@@ -1021,7 +810,7 @@ set nyblocks = $dummy
       <namelist file="$(includeDir)/nml/MOM6_g12.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_common.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_physics.nml"/>
-      <namelist file="$(includeDir)/nml/am4p0_c192L33.nml"/>
+      <namelist file="$(includeDir)/nml/am4p0_c192L33_2023_04.nml"/>
       <namelist file="$(includeDir)/nml/am4p0_amip_ecda.nml"/>
       <namelist name="ensemble_nml">
         ensemble_size=3

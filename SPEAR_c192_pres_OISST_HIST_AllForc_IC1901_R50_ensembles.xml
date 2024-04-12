@@ -46,7 +46,7 @@ SPEAR_c192_omlp25_Control_2010_A01
   * c192 atmosphere coupled to ocean mixed layer model, 0.25 degree resolution, with constant 2010 radiative forcing
 -->
 
-<experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2001/XInclude">
+<experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2003/XInclude">
 
   <!--User should set the following properties according to the plan for the production run-->	
 
@@ -321,11 +321,11 @@ configuration.
     <platform name="gfdl.ncrc4-intel-oneapi-21_3">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
-
+<!--
     <platform name="gfdl.ncrc4-gnu">
       <xi:include xpointer="xpointer(//setup/platform[@name='gfdl.postprocess']/node())" />
     </platform>
-
+-->
     <!-- NCRC Platforms -->
 
     <platform name="ncrc3.intel">
@@ -400,6 +400,7 @@ configuration.
 
     </platform>
 
+<!--
     <platform name="ncrc4.gnu">
       <freVersion>$(FRE_VERSION)</freVersion>
       <compiler type="gnu" version="8.3.0" />
@@ -408,7 +409,6 @@ configuration.
       <property name="WFC_ARCHIVE_ROOT"  value="/lustre/f2/dev/gfdl/William.Cooke"/>
       <property name="DJP_ARCHIVE_ROOT"  value="/lustre/f2/pdata/gfdl/gfdl_M/David.Paynter"/>
       <property name="CMIP6_ARCHIVE_ROOT"   value="$PDATA/gfdl/cmip6/datasets"/>
-      <!-- Change the following to lustre/f2/pdata/gfdl_SD when it becomes available. -->
       <property name="SD_ARCHIVE_ROOT"   value="/lustre/f2/dev/gfdl/William.Cooke/pdata/gfdl_SD"/>
       <property name="NB_ROOT"          value="/nbhome/$USER/$(FRE_STEM)$(DEBUGLEVEL)/$(name)"/>
  
@@ -417,12 +417,13 @@ configuration.
       <directory stem="$(FRE_STEM)">
         <scripts>/lustre/f2/dev/gfdl/$USER/SPEAR/$(name)/$(platform)-$(target)/scripts</scripts>
         <include>$(xmlDir)/SPEAR_include</include>
+-->
         <!--
         <include>$HOME/SPEAR/SPEAR_include</include>
         -->
-      </directory>
+<!--      </directory>
     </platform>
-
+-->
   </setup>
 
 <!--===========-->
