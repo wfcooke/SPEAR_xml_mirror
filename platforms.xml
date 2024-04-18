@@ -169,8 +169,8 @@
 
       <directory stem="$(FRE_STEM)">
         <include>$(xmlDir)/SPEAR_include</include>
-        <src>/gpfs/f5/gfdl_sd/proj-shared/William.Cooke/$(FRE_STEM)/$(name)/src/</src>
-        <exec>/gpfs/f5/gfdl_sd/proj-shared/William.Cooke/$(FRE_STEM)/$(name)/$(platform)-$(target)/exec/</exec>
+        <src>/gpfs/f5/gfdl_sd/proj-shared/$USER/$(FRE_STEM)/$(name)/src/</src>
+        <exec>/gpfs/f5/gfdl_sd/proj-shared/$USER/$(FRE_STEM)/$(name)/$(platform)-$(target)/exec/</exec>
 
         <!--
         <include>$HOME/SPEAR/SPEAR_include</include>
