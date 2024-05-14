@@ -145,7 +145,7 @@ from integrations with these models.
                    communityGrid=""/>
       <source versionControl="git"
               root="http://gitlab.gfdl.noaa.gov/fms">
-        <codeBase version="2023.02">
+        <codeBase version="2024.01">
           land_lad2.git
         </codeBase>
       </source>
@@ -180,7 +180,7 @@ from integrations with these models.
           MOM6.git
         </codeBase>
           <csh><![CDATA[
-            ( cd MOM6  && git checkout 8395404dd48213d8f60c42a6701113d742a6556e)
+            ( cd MOM6  && git checkout e25388369e0ce0254658a0513e009f39cf98c340)
                        ]]>
           </csh>
       </source>
@@ -200,7 +200,7 @@ from integrations with these models.
                includeDir="$(srcDir)/FMS/include">
       <source versionControl="git"
               root="https://github.com/NOAA-GFDL">
-        <codeBase version="2021.03">
+        <codeBase version="2024.01">
           ice_param.git
         </codeBase>
       </source>
@@ -227,7 +227,7 @@ from integrations with these models.
           SIS2.git
         </codeBase>
          <csh><![CDATA[
-            ( cd SIS2  && git checkout 022bd89d1bfe03dc259afc24a6e19c334e47eb4b)
+            ( cd SIS2  && git checkout 00c3b5be13721a7af99f62f2163969e8dd303df7)
                        ]]>
           </csh>
       </source>
