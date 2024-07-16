@@ -57,14 +57,14 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="MOM6_DATE"    value="2017.10.05"/>              <!-- git tag date for MOM6 source code -->
   <property name="MOM6_GIT_TAG" value="dev/SPEAR"/> <!-- git tag for MOM6 source code -->
   <property name="AWG_GIT_TAG"  value="xanadu"/>           <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"  value="2024.01"/>           <!-- git tag for FMS source code -->
+  <property name="FMS_GIT_TAG"  value="2024.02"/>           <!-- git tag for FMS source code -->
   <property name="LAND_GIT_TAG"  value="testing_20170929"/>    <!-- git tag for Land source code -->
 
 <!-- Fill in your GFDL group -->
   <property name="GFDL_YGL"  value="gfdl_f"/>
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_Q_2024.01" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_STEM" value="SPEAR_experiments_Q_2024.02" />   <!-- Stem use in FRE directories -->
   <property name="FRE_VERSION" value="bronx-21" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
@@ -4026,7 +4026,7 @@ set nyblocks = $dummy
           <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O216_rts_1x2day']/node())"/>
           <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O216_rts_2x1day']/node())"/>
       </regression>
-      <reference restart="/gpfs/f5/gfdl_f/scratch/Uriel.Ramirez/SPEAR_ANSWERS_121923/SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03/ncrc5.intel23-classic-$(target)/1x0m8d_864x2a_540x1o/restart/19210109.tar" />
+      <reference restart="/gpfs/f5/gfdl_f/scratch/Uriel.Ramirez/SPEAR_ANSWERS_071524/SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03/ncrc5.intel23-classic-$(target)/1x0m8d_864x2a_540x1o/restart/19210109.tar" />
   </runtime>
   <postProcess>
       <xi:include xpointer="xpointer(//freInclude[@name='SPEAR_c192_PostP_Historical_ensemble']/postProcess/node())"/>

@@ -57,13 +57,13 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="MOM6_GIT_TAG" value="dev/SPEAR"/> <!-- git tag for MOM6 source code -->
   <property name="AWG_GIT_TAG"  value="xanadu"/>           <!-- git tag for AWG source code -->
   <property name="LAND_GIT_TAG"  value="testing_20170929"/>    <!-- git tag for Land source code -->
-  <property name="FMS_GIT_TAG"  value="2024.01"/>           <!-- git tag for FMS source code -->
+  <property name="FMS_GIT_TAG"  value="2024.02"/>           <!-- git tag for FMS source code -->
 
 <!-- Fill in your GFDL group -->
   <property name="GFDL_YGL"  value="gfdl_f"/>
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_Q_2024.01" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_STEM" value="SPEAR_experiments_Q_2024.02" />   <!-- Stem use in FRE directories -->
   <property name="FRE_VERSION" value="bronx-21" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
@@ -3729,9 +3729,9 @@ set nyblocks = $dummy
       <segment simTime="1" units="years"/>
       <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A864x4_O252_production_c192']/node())"/>
     </production> 
-      <regression name="debug_216">
-        <run days="1" >
-          <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A144x1_O72_debug']/node())"/>
+      <regression name="debug">
+        <run days="1" overrideParams="coupler_nml:do_chksum=.True.">
+          <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
           </run>
       </regression>
       <regression name="year">
@@ -3780,7 +3780,7 @@ set nyblocks = $dummy
           <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O216_rts_1x2day']/node())"/>
           <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O216_rts_2x1day']/node())"/>
       </regression>
-      <reference restart="/gpfs/f5/gfdl_f/scratch/Uriel.Ramirez/SPEAR_ANSWERS_121923/SPEAR_c192_o1_Control_1850_Q50/ncrc5.intel23-classic-$(target)/1x0m8d_288x2a_180x1o/restart/00010109.tar"/>
+      <reference restart="/gpfs/f5/gfdl_f/scratch/Uriel.Ramirez/SPEAR_ANSWERS_071524/SPEAR_c192_o1_Control_1850_Q50/ncrc5.intel23-classic-$(target)/1x0m8d_288x2a_180x1o/restart/00010109.tar"/>
   </runtime>
   <postProcess>
       <!--
