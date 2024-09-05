@@ -1,0 +1,8 @@
+data_table:
+- grid_name: LND
+  fieldname_in_model: phot_co2
+  factor: 1.0e-06
+  override_file:
+  - file_name: INPUT/co2_data.nc
+    fieldname_in_file: co2
+    interp_method: bilinear

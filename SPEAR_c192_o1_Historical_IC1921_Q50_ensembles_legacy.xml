@@ -9,7 +9,7 @@ Quick start guide
 module load fre/bronx-18
 # Define FMS_GIT_TAG and YOURGROUPLETTER bellow
 fremake -x SPEAR_c192_o1_Historical_IC1921_Q50_ensembles.xml -p ncrc4.intel18 -t repro,openmp SPEAR_Q$(FMS_GIT_TAG)_nonsymMOM6_exec
-frerun -x SPEAR_c192_o1_Historical_IC1921_Q50_ensembles.xml -p ncrc4.intel18 -t repro,openmp -r basic_prodsettings SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03
+frerun -x SPEAR_c192_o1_Historical_IC1921_Q50_ensembles.xml -p ncrc4.intel18 -t repro,openmp -r basic_prodsettings SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_01_03
 
 ```
 The Q-series takes Xanadu code for atmos/land/coupler and dev/gfdl (as of 5/21/2019) for MOM6/SIS2 (with revertions for answer 
@@ -3303,7 +3303,7 @@ cd ..
   <xi:include href="SPEAR_experiments_compile.xml" xpointer="xpointer(//experiment[@name='SPEAR_Q$(FMS_GIT_TAG)_nonsymMOM6_exec'])"/>
 
 
-<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_04_06" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03">
+<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_04_06" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_01_03">
   <input>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_Hist_AllForc_IC1921_K50_ens_04_06/SPEAR_c192_o1_Control_1850_K50_IC161_ens01_03.tar</dataSource>
@@ -3312,7 +3312,7 @@ cd ..
   </input>
 </experiment>
 
-<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_07_09" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03">
+<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_07_09" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_01_03">
   <input>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_Hist_AllForc_IC1921_K50_ens_07_09/SPEAR_c192_o1_Control_1850_K50_IC221_ens01_03.tar</dataSource>
@@ -3321,7 +3321,7 @@ cd ..
   </input>
 </experiment>
 
-<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_10_12" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03">
+<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_10_12" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_01_03">
   <input>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_Hist_AllForc_IC1921_K50_ens_10_12/SPEAR_c192_o1_Control_1850_K50_IC281_ens01_03.tar</dataSource>
@@ -3330,7 +3330,7 @@ cd ..
   </input>
 </experiment>
 
-<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_13_15" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03">
+<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_13_15" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_01_03">
   <input>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_Hist_AllForc_IC1921_K50_ens_13_15/SPEAR_c192_o1_Control_1850_K50_IC341_ens01_03.tar</dataSource>
@@ -3339,7 +3339,7 @@ cd ..
   </input>
 </experiment>
 
-<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_16_18" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03">
+<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_16_18" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_01_03">
   <input>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_Hist_AllForc_IC1921_K50_ens_16_18/SPEAR_c192_o1_Control_1850_K50_IC401_ens01_03.tar</dataSource>
@@ -3348,7 +3348,7 @@ cd ..
   </input>
 </experiment>
 
-<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_19_21" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03">
+<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_19_21" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_01_03">
 <description>
 </description>
   <input>
@@ -3359,7 +3359,7 @@ cd ..
   </input>
 </experiment>
 
-<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_22_24" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03">
+<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_22_24" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_01_03">
   <input>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_Hist_AllForc_IC1921_K50_ens_22_24/SPEAR_c192_o1_Control_1850_K50_IC521_ens01_03.tar</dataSource>
@@ -3368,7 +3368,7 @@ cd ..
   </input>
 </experiment>
 
-<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_25_27" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03">
+<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_25_27" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_01_03">
   <input>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_Hist_AllForc_IC1921_K50_ens_25_27/SPEAR_c192_o1_Control_1850_K50_IC581_ens01_03.tar</dataSource>
@@ -3377,7 +3377,7 @@ cd ..
   </input>
 </experiment>
 
-<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_28_30" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03">
+<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_28_30" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_01_03">
 <description>
 </description>
   <input>
@@ -3388,7 +3388,7 @@ cd ..
   </input>
 </experiment>
 
-<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03" inherit="SPEAR_Q$(FMS_GIT_TAG)_nonsymMOM6_exec">
+<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_legacy_ens_01_03" inherit="SPEAR_Q$(FMS_GIT_TAG)_nonsymMOM6_exec">
   <description>
 9/4/2018
 Ensemble member 1 to 3 for c192
@@ -3764,51 +3764,24 @@ Ensemble member 1 to 3 for c192
        f_vol_warm_on_glacier = 0.06, 0.08
        f_geo_warm_on_glacier = 0.00, 0.00
      </namelist>
-     <namelist name="data_override_nml">
-       use_data_table_yaml = .true.
-       use_center_grid_points = .true.
-     </namelist>
-     <namelist name="field_manager_nml">
-       use_field_table_yaml = .true.
-     </namelist>
-     <namelist name="diag_manager_nml">
-       mix_snapshot_average_fields = .false.,
-       max_input_fields = 800,
-       max_output_fields = 1500
-       max_axes = 100
-       max_num_axis_sets = 50
-       max_files = 40
-       issue_oor_warnings = .false.
-       max_axis_attributes=4
-       use_modern_diag = .true.
-     </namelist>
-     <dataFile label="dataYaml" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(includeDir)/data_table/data_table_co2.yaml</dataSource>
+     <dataFile label="dataTable" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(includeDir)/data_table/data_table_co2</dataSource>
      </dataFile>
-     <dataFile label="fieldYaml" target="INPUT/" chksum="" size="" timestamp="">
-        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11.yaml</dataSource>
+     <dataFile label="fieldTable" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(includeDir)/field_table/field_table_am4p11</dataSource>
      </dataFile>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/initCond_SPEAR/SPEAR_c192_o1_Hist_AllForc_IC1851_K50_ens_01_03/SPEAR_c192_o1_Control_1850_K50_IC101_ens01_03.tar</dataSource>
        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_o1_Hist_AllForc_IC1921_K50_ens_01_03/SPEAR_c192_o1_Control_1850_K50_IC101_ens01_03.tar</dataSource>
      </dataFile> 
-     <diagYaml>
-title: $name
-base_date: $baseDate
-diag_files:
-- file_name: ocean_z_top300
-  time_units: days
-  unlimdim: time
-  is_ocean: true
-  freq: 1 months
-  varlist:
-  - module: ocean_model_ztop
-    var_name: thetao
-    reduction: average
-    kind: r4
-      </diagYaml>
-      <dataFile label="diagYaml" target="INPUT/" chksum="" size="" timestamp="">
-         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_20180904.yaml</dataSource>
+     <diagTable>
+$name
+$baseDate
+"ocean_z_top300",       1,  "months",   1, "days", "time"
+"ocean_model_ztop", "thetao", "thetao", "ocean_z_top300", "all", "mean", "none", 2
+      </diagTable>
+      <dataFile label="diagTable" target="INPUT/" chksum="" size="" timestamp="">
+         <dataSource platform="$(platform)">$(includeDir)/diag_table/diag_table_SPEAR_Control_20180904</dataSource>
       </dataFile>
       <dataFile label="gridSpec" target="INPUT/" chksum="" size="" timestamp="">
         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C192_OM360x320.20171213/mosaic.tar</dataSource>

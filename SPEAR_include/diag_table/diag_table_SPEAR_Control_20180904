@@ -581,7 +581,7 @@
 "vegn",    "bwood_crop", "crop_bwood", "land_month",  "all", .true., "none", 2
 "vegn",    "bwood_past", "past_bwood", "land_month",  "all", .true., "none", 2
 "vegn",    "bwood_scnd", "scnd_bwood", "land_month",  "all", .true., "none", 2
-"vegn",    "height"      "height",     "land_month",  "all", .true., "none", 2
+"vegn",    "height",     "height",     "land_month",  "all", .true., "none", 2
 "land",    "meltg_glac", "meltg_glac", "land_month",  "all", .true.,  "none", 2
 "soil",    "soil_T",     "soil_T",     "land_month",  "all", .true., "none", 2
 #"lake",    "lake_T",     "lake_T",     "land_month",  "all", .true., "none", 2

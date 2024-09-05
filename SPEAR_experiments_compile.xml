@@ -71,6 +71,7 @@ from integrations with these models.
           -Duse_libMPI
           -Duse_netCDF
           -DMAXFIELDMETHODS_=500
+          -Duse_yaml
         </cppDefs>
       </compile>
     </component>
@@ -180,7 +181,7 @@ from integrations with these models.
           MOM6.git
         </codeBase>
           <csh><![CDATA[
-            ( cd MOM6  && git checkout 2f2b7905c08e95a729d3dd3f8b02e0a0bed10602)
+            ( cd MOM6  && git checkout 1eccd281c23b8820f4719feed0a3740be4ab9282)
                        ]]>
           </csh>
       </source>
@@ -253,7 +254,7 @@ from integrations with these models.
           icebergs.git
         </codeBase>
           <csh><![CDATA[
-            ( cd icebergs  && git checkout 6a8944fc7544608942de9a42bd3b96f6e56684e0)
+            ( cd icebergs  && git checkout ce76de33ced61f747e16b125e1e78220a12218bd)
                        ]]>
           </csh>
       </source>

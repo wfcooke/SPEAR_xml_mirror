@@ -1,0 +1,1297 @@
+diag_files:
+- file_name: grid_spec
+  time_units: days
+  unlimdim: time
+  freq: -1 months
+  varlist:
+  - module: dynamics
+    var_name: grid_lon
+  - module: dynamics
+    var_name: grid_lat
+  - module: dynamics
+    var_name: grid_lont
+  - module: dynamics
+    var_name: grid_latt
+  - module: dynamics
+    var_name: area
+  - module: dynamics
+    var_name: bk
+  - module: dynamics
+    var_name: pk
+  - module: flux
+    var_name: land_mask
+  - module: dynamics
+    var_name: zsurf
+  reduction: none
+  kind: r4
+- file_name: atmos_4xdaily
+  time_units: days
+  unlimdim: time
+  freq: 6 hours
+  varlist:
+  - module: dynamics
+    var_name: ps
+  - module: dynamics
+    var_name: pv350
+  - module: dynamics
+    var_name: slp
+    output_name: slp_dyn
+  - module: dynamics
+    var_name: tm
+  - module: dynamics
+    var_name: u200
+  - module: dynamics
+    var_name: u850
+  - module: dynamics
+    var_name: v200
+  - module: dynamics
+    var_name: v300
+  - module: dynamics
+    var_name: v850
+  - module: dynamics
+    var_name: vort850
+  - module: dynamics
+    var_name: z300
+  - module: dynamics
+    var_name: z500
+  - module: dynamics
+    var_name: z850
+  - module: flux
+    var_name: q_ref
+  - module: flux
+    var_name: slp
+  - module: flux
+    var_name: t_ref
+  - module: flux
+    var_name: u_ref
+  - module: flux
+    var_name: v_ref
+  - module: moist
+    var_name: cape
+  - module: moist
+    var_name: cin
+  reduction: none
+  kind: r4
+- file_name: atmos_4xdaily_avg
+  time_units: days
+  unlimdim: time
+  freq: 6 hours
+  varlist:
+  - module: dynamics
+    var_name: ps
+  - module: dynamics
+    var_name: vort200
+  - module: flux
+    var_name: evap
+  - module: flux
+    var_name: wind_ref
+  - module: moist
+    var_name: precip
+  - module: moist
+    var_name: snow_tot
+  - module: moist
+    var_name: WVP
+  reduction: average
+  kind: r4
+- file_name: atmos_daily
+  time_units: days
+  unlimdim: time
+  freq: 24 hours
+  varlist:
+  - module: dynamics
+    var_name: pv350
+  - module: dynamics
+    var_name: z200
+  - module: dynamics
+    var_name: z250
+  - module: dynamics
+    var_name: z500
+  - module: dynamics
+    var_name: z700
+  - module: dynamics
+    var_name: z850
+  - module: dynamics
+    var_name: z925
+    write_var: False
+  - module: dynamics
+    var_name: ps
+  - module: dynamics
+    var_name: q200
+  - module: dynamics
+    var_name: q250
+  - module: dynamics
+    var_name: q500
+  - module: dynamics
+    var_name: q700
+  - module: dynamics
+    var_name: q850
+  - module: dynamics
+    var_name: q925
+  - module: dynamics
+    var_name: slp
+    output_name: slp_dyn
+  - module: dynamics
+    var_name: t200
+  - module: dynamics
+    var_name: t250
+  - module: dynamics
+    var_name: t500
+  - module: dynamics
+    var_name: t700
+  - module: dynamics
+    var_name: t850
+  - module: dynamics
+    var_name: t925
+  - module: dynamics
+    var_name: u200
+  - module: dynamics
+    var_name: u250
+  - module: dynamics
+    var_name: u50
+  - module: dynamics
+    var_name: u500
+  - module: dynamics
+    var_name: u700
+  - module: dynamics
+    var_name: u850
+  - module: dynamics
+    var_name: u925
+  - module: dynamics
+    var_name: v200
+  - module: dynamics
+    var_name: v250
+  - module: dynamics
+    var_name: v500
+  - module: dynamics
+    var_name: v700
+  - module: dynamics
+    var_name: v850
+  - module: dynamics
+    var_name: v925
+  - module: dynamics
+    var_name: vort200
+  - module: dynamics
+    var_name: vort500
+  - module: flux
+    var_name: evap
+  - module: flux
+    var_name: q_ref
+  - module: flux
+    var_name: slp
+  - module: flux
+    var_name: rh_ref
+  - module: flux
+    var_name: t_ref
+  - module: flux
+    var_name: t_ref
+    output_name: t_ref_max
+    reduction: max
+  - module: flux
+    var_name: t_ref
+    output_name: t_ref_min
+    reduction: min
+  - module: flux
+    var_name: t_surf
+  - module: flux
+    var_name: tau_x
+  - module: flux
+    var_name: tau_y
+  - module: flux
+    var_name: u_ref
+  - module: flux
+    var_name: v_ref
+  - module: moist
+    var_name: WVP
+  - module: moist
+    var_name: prec_ls
+  - module: moist
+    var_name: precip
+  - module: moist
+    var_name: snow_ls
+  - module: moist
+    var_name: snow_tot
+  - module: radiation
+    var_name: lwdn_sfc
+  - module: radiation
+    var_name: lwup_sfc
+  - module: radiation
+    var_name: olr
+  - module: radiation
+    var_name: swdn_sfc
+  - module: flux
+    var_name: wind_ref
+  reduction: average
+  kind: r4
+- file_name: atmos_month
+  time_units: days
+  unlimdim: time
+  freq: 1 months
+  varlist:
+  - module: cloudrad
+    var_name: high_cld_amt
+  - module: cloudrad
+    var_name: low_cld_amt
+  - module: cloudrad
+    var_name: mid_cld_amt
+  - module: cloudrad
+    var_name: tot_cld_amt
+  - module: dynamics
+    var_name: bk
+    reduction: none
+  - module: dynamics
+    var_name: omega
+  - module: dynamics
+    var_name: pk
+    reduction: none
+  - module: dynamics
+    var_name: ps
+  - module: dynamics
+    var_name: slp
+    output_name: slp_dyn
+  - module: dynamics
+    var_name: sphum
+  - module: dynamics
+    var_name: temp
+  - module: dynamics
+    var_name: ucomp
+  - module: dynamics
+    var_name: uq
+  - module: dynamics
+    var_name: uq_vi
+  - module: dynamics
+    var_name: ut
+  - module: dynamics
+    var_name: ut_vi
+  - module: dynamics
+    var_name: uu
+  - module: dynamics
+    var_name: uu_vi
+  - module: dynamics
+    var_name: uv
+  - module: dynamics
+    var_name: uv_vi
+  - module: dynamics
+    var_name: vcomp
+  - module: dynamics
+    var_name: vort850
+  - module: dynamics
+    var_name: vq
+  - module: dynamics
+    var_name: vq_vi
+  - module: dynamics
+    var_name: vt
+  - module: dynamics
+    var_name: vt_vi
+  - module: dynamics
+    var_name: vv
+  - module: dynamics
+    var_name: vv_vi
+  - module: dynamics
+    var_name: z200
+  - module: dynamics
+    var_name: zsurf
+    reduction: none
+  - module: flux
+    var_name: evap
+  - module: flux
+    var_name: ice_mask
+  - module: flux
+    var_name: land_mask
+    reduction: none
+  - module: flux
+    var_name: lwflx
+  - module: flux
+    var_name: rh_ref
+  - module: flux
+    var_name: shflx
+  - module: flux
+    var_name: t_ref
+  - module: flux
+    var_name: t_ref
+    output_name: t_ref_max
+    reduction: max
+  - module: flux
+    var_name: t_ref
+    output_name: t_ref_min
+    reduction: min
+  - module: flux
+    var_name: t_surf
+  - module: flux
+    var_name: tau_x
+  - module: flux
+    var_name: tau_y
+  - module: flux
+    var_name: u_ref
+  - module: flux
+    var_name: v_ref
+  - module: moist
+    var_name: IWP
+  - module: moist
+    var_name: LWP
+  - module: moist
+    var_name: WVP
+  - module: moist
+    var_name: prec_conv
+  - module: moist
+    var_name: prec_ls
+  - module: moist
+    var_name: precip
+  - module: moist
+    var_name: rh
+  - module: moist
+    var_name: snow_conv
+  - module: moist
+    var_name: snow_ls
+  - module: moist
+    var_name: snow_tot
+  - module: radiation
+    var_name: alb_sfc
+  - module: radiation
+    var_name: lwdn_sfc
+  - module: radiation
+    var_name: lwdn_sfc_clr
+  - module: radiation
+    var_name: lwup_sfc
+  - module: radiation
+    var_name: lwup_sfc_clr
+  - module: radiation
+    var_name: netrad_toa
+  - module: radiation
+    var_name: olr
+  - module: radiation
+    var_name: olr_clr
+  - module: radiation
+    var_name: qo3_col
+  - module: radiation
+    var_name: swdn_sfc
+  - module: radiation
+    var_name: swdn_sfc_clr
+  - module: radiation
+    var_name: swdn_toa
+  - module: radiation
+    var_name: swdn_toa_clr
+  - module: radiation
+    var_name: swup_sfc
+  - module: radiation
+    var_name: swup_sfc_clr
+  - module: radiation
+    var_name: swup_toa
+  - module: radiation
+    var_name: swup_toa_clr
+  - module: flux
+    var_name: wind_ref
+  reduction: average
+  kind: r4
+- file_name: atmos_month_aer
+  time_units: days
+  unlimdim: time
+  freq: 1 months
+  varlist:
+  - module: dynamics
+    var_name: area
+    reduction: none
+  - module: dynamics
+    var_name: bk
+    reduction: none
+  - module: dynamics
+    var_name: pk
+    reduction: none
+  - module: dynamics
+    var_name: zsurf
+    reduction: none
+  - module: flux
+    var_name: land_mask
+    reduction: none
+  - module: dynamics
+    var_name: ps
+  - module: dynamics
+    var_name: temp
+  - module: moist
+    var_name: rh
+  - module: radiation
+    var_name: so4
+    output_name: sulfate
+  - module: radiation
+    var_name: so4_col
+    output_name: sulfate_col
+  - module: radiation
+    var_name: small_dust
+    output_name: sm_dust
+  - module: radiation
+    var_name: small_dust_col
+    output_name: sm_dust_col
+  - module: radiation
+    var_name: large_dust
+    output_name: lg_dust
+  - module: radiation
+    var_name: large_dust_col
+    output_name: lg_dust_col
+  - module: radiation
+    var_name: sea_salt
+    output_name: salt
+  - module: radiation
+    var_name: sea_salt_col
+    output_name: salt_col
+  - module: radiation
+    var_name: black_carbon
+    output_name: blk_crb
+  - module: radiation
+    var_name: black_carbon_col
+    output_name: blk_crb_col
+  - module: radiation
+    var_name: organic_carbon
+    output_name: org_crb
+  - module: radiation
+    var_name: organic_carbon_col
+    output_name: org_crb_col
+  - module: radiation
+    var_name: aerosol_col
+    output_name: aer_c
+  - module: radiation
+    var_name: pm2.5
+  - module: radiation
+    var_name: so4_exopdep_col_vis
+    output_name: sulfate_ex_c_vs
+  - module: radiation
+    var_name: so4_abopdep_col_vis
+    output_name: sulfate_ab_c_vs
+  - module: radiation
+    var_name: so4_abopdep_vis
+    output_name: sulfate_ab_vs
+  - module: radiation
+    var_name: small_dust_exopdep_col_vis
+    output_name: sm_dst_ex_c_vs
+  - module: radiation
+    var_name: large_dust_exopdep_col_vis
+    output_name: lg_dst_ex_c_vs
+  - module: radiation
+    var_name: dust_exopdep_col_vis
+    output_name: dust_ex_c_vs
+  - module: radiation
+    var_name: black_carbon_exopdep_col_vis
+    output_name: blk_crb_ex_c_vs
+  - module: radiation
+    var_name: organic_carbon_exopdep_col_vis
+    output_name: org_crb_ex_c_vs
+  - module: radiation
+    var_name: sea_salt_exopdep_col_vis
+    output_name: salt_ex_c_vs
+  - module: radiation
+    var_name: aerosol_exopdep_col_vis
+    output_name: aer_ex_c_vs
+  - module: radiation
+    var_name: aerosol_exopdep_vis
+    output_name: aer_ex_vs
+  - module: radiation
+    var_name: dust_abopdep_col_vis
+    output_name: dust_ab_c_vs
+  - module: radiation
+    var_name: dust_abopdep_vis
+    output_name: dust_ab_vs
+  - module: radiation
+    var_name: small_dust_abopdep_col_vis
+    output_name: sm_dst_ab_c_vs
+  - module: radiation
+    var_name: large_dust_abopdep_col_vis
+    output_name: lg_dst_ab_c_vs
+  - module: radiation
+    var_name: black_carbon_abopdep_col_vis
+    output_name: blk_crb_ab_c_vs
+  - module: radiation
+    var_name: organic_carbon_abopdep_col_vis
+    output_name: org_crb_ab_c_vs
+  - module: radiation
+    var_name: aerosol_abopdep_col_vis
+    output_name: aer_ab_c_vs
+  - module: radiation
+    var_name: aerosol_abopdep_vis
+    output_name: aer_ab_vs
+  reduction: average
+  kind: r4
+- file_name: atmos_scalar
+  time_units: days
+  unlimdim: time
+  freq: 1 months
+  varlist:
+  - module: radiation
+    var_name: rrvch4
+  - module: radiation
+    var_name: rrvco2
+  - module: radiation
+    var_name: rrvf11
+  - module: radiation
+    var_name: rrvf113
+  - module: radiation
+    var_name: rrvf12
+  - module: radiation
+    var_name: rrvf22
+  - module: radiation
+    var_name: rrvn2o
+  - module: radiation
+    var_name: solar_constant
+  reduction: average
+  kind: r4
+- file_name: ice_daily
+  time_units: days
+  unlimdim: time
+  freq: 24 hours
+  varlist:
+  - module: ice_model
+    var_name: CN
+  - module: ice_model
+    var_name: HI
+  - module: ice_model
+    var_name: SST
+  reduction: average
+  kind: r4
+- file_name: ice_month
+  time_units: days
+  unlimdim: time
+  freq: 1 months
+  varlist:
+  - module: ice_model
+    var_name: ALB
+  - module: ice_model
+    var_name: BHEAT
+  - module: ice_model
+    var_name: BMELT
+  - module: ice_model
+    var_name: BSNK
+  - module: ice_model
+    var_name: CALVING
+  - module: ice_model
+    var_name: CELL_AREA
+    reduction: none
+  - module: ice_model
+    var_name: CN
+  - module: ice_model
+    var_name: COSROT
+    reduction: none
+  - module: ice_model
+    var_name: EXT
+  - module: ice_model
+    var_name: EXT
+    output_name: EXT_max
+    reduction: max
+  - module: ice_model
+    var_name: EXT
+    output_name: EXT_min
+    reduction: min
+  - module: ice_model
+    var_name: FA_X
+  - module: ice_model
+    var_name: FA_Y
+  - module: ice_model
+    var_name: FI_X
+  - module: ice_model
+    var_name: FI_Y
+  - module: ice_model
+    var_name: FRAZIL
+  - module: ice_model
+    var_name: GEOLAT
+    reduction: none
+  - module: ice_model
+    var_name: GEOLON
+    reduction: none
+  - module: ice_model
+    var_name: HI
+  - module: ice_model
+    var_name: HS
+  - module: ice_model
+    var_name: IX_TRANS
+  - module: ice_model
+    var_name: IY_TRANS
+  - module: ice_model
+    var_name: LH
+  - module: ice_model
+    var_name: LSNK
+  - module: ice_model
+    var_name: LSRC
+  - module: ice_model
+    var_name: LW
+  - module: ice_model
+    var_name: MI
+  - module: ice_model
+    var_name: RAIN
+  - module: ice_model
+    var_name: RUNOFF
+  - module: ice_model
+    var_name: SALTF
+  - module: ice_model
+    var_name: SH
+  - module: ice_model
+    var_name: SINROT
+    reduction: none
+  - module: ice_model
+    var_name: SN2IC
+  - module: ice_model
+    var_name: SNOWFL
+  - module: ice_model
+    var_name: SSH
+  - module: ice_model
+    var_name: SSS
+  - module: ice_model
+    var_name: SST
+  - module: ice_model
+    var_name: SW
+  - module: ice_model
+    var_name: T1
+  - module: ice_model
+    var_name: T2
+  - module: ice_model
+    var_name: TMELT
+  - module: ice_model
+    var_name: TS
+  - module: ice_model
+    var_name: UI
+  - module: ice_model
+    var_name: UO
+  - module: ice_model
+    var_name: VI
+  - module: ice_model
+    var_name: VO
+  - module: ice_model
+    var_name: XPRT
+  reduction: average
+  kind: r4
+- file_name: iceberg_month
+  time_units: days
+  unlimdim: time
+  freq: 1 months
+  varlist:
+  - module: icebergs
+    var_name: BERG_MELT
+  - module: icebergs
+    var_name: MASS
+  - module: icebergs
+    var_name: MELT
+  reduction: average
+  kind: r4
+- file_name: land_static
+  time_units: days
+  unlimdim: time
+  freq: -1 months
+  varlist:
+  - module: land
+    var_name: area_lake
+    output_name: lake_area
+  - module: land
+    var_name: area_land
+    output_name: land_area
+  - module: land
+    var_name: area_soil
+    output_name: soil_area
+  - module: land
+    var_name: cell_area
+  - module: land
+    var_name: frac_soil
+  - module: land
+    var_name: geolat_t
+    kind: r8
+  - module: land
+    var_name: geolon_t
+    kind: r8
+  - module: land
+    var_name: land_frac
+  reduction: none
+  kind: r4
+- file_name: land_daily
+  time_units: days
+  unlimdim: time
+  freq: 24 hours
+  varlist:
+  - module: land
+    var_name: precip
+  - module: land
+    var_name: snow
+  - module: land
+    var_name: runf
+  reduction: average
+  kind: r4
+- file_name: land_month
+  time_units: days
+  unlimdim: time
+  freq: 1 months
+  varlist:
+  - module: land
+    var_name: swdn_dif
+  - module: land
+    var_name: swdn_dir
+  - module: land
+    var_name: swup_dif
+  - module: land
+    var_name: swup_dir
+  - module: flux_land
+    var_name: t_ref
+  - module: land
+    var_name: FWS
+  - module: land
+    var_name: LWS
+  - module: land
+    var_name: water_lake
+  - module: land
+    var_name: water_soil
+  - module: cmor_land
+    var_name: cSoil
+  - module: cmor_land
+    var_name: cSoil_crop
+  - module: cmor_land
+    var_name: cSoil_ntrl
+  - module: cmor_land
+    var_name: cSoil_past
+  - module: cmor_land
+    var_name: cSoil_scnd
+  - module: vegn
+    var_name: btot
+  - module: vegn
+    var_name: btot_crop
+  - module: vegn
+    var_name: btot_ntrl
+  - module: vegn
+    var_name: btot_past
+  - module: vegn
+    var_name: btot_scnd
+  - module: vegn
+    var_name: harv_pool
+  - module: vegn
+    var_name: harv_pool_crop
+  - module: vegn
+    var_name: harv_pool_past
+  - module: vegn
+    var_name: harv_pool_scnd
+  - module: vegn
+    var_name: harv_rate
+  - module: vegn
+    var_name: harv_rate_crop
+  - module: vegn
+    var_name: harv_rate_past
+  - module: vegn
+    var_name: harv_rate_scnd
+  - module: cmor_land
+    var_name: tws
+  - module: land
+    var_name: area
+  - module: land
+    var_name: area_glac
+    output_name: glac_area
+  - module: land
+    var_name: evap
+    output_name: evap_land
+  - module: land
+    var_name: flw
+  - module: land
+    var_name: frac_glac
+  - module: land
+    var_name: frac_lake
+  - module: land
+    var_name: frunf
+  - module: land
+    var_name: fsw
+  - module: land
+    var_name: hevap
+  - module: land
+    var_name: hprec
+  - module: land
+    var_name: levapg
+  - module: land
+    var_name: levapv
+  - module: land
+    var_name: lwdn
+  - module: land
+    var_name: melt
+  - module: land
+    var_name: precip
+  - module: land
+    var_name: runf
+  - module: land
+    var_name: sens
+  - module: land
+    var_name: snow
+  - module: land
+    var_name: transp
+  - module: soil
+    var_name: soil_ice
+  - module: soil
+    var_name: soil_liq
+  - module: vegn
+    var_name: LAI
+  - module: vegn
+    var_name: npp
+  - module: land
+    var_name: area_ntrl
+    output_name: ntrl_area
+  - module: land
+    var_name: area_crop
+    output_name: crop_area
+  - module: land
+    var_name: area_past
+    output_name: past_area
+  - module: land
+    var_name: area_scnd
+    output_name: scnd_area
+  - module: land
+    var_name: frac_ntrl
+  - module: land
+    var_name: frac_crop
+  - module: land
+    var_name: frac_past
+  - module: land
+    var_name: frac_scnd
+  - module: vegn
+    var_name: bwood_ntrl
+    output_name: ntrl_bwood
+  - module: vegn
+    var_name: bwood_crop
+    output_name: crop_bwood
+  - module: vegn
+    var_name: bwood_past
+    output_name: past_bwood
+  - module: vegn
+    var_name: bwood_scnd
+    output_name: scnd_bwood
+  - module: vegn
+    var_name: height
+  - module: land
+    var_name: meltg_glac
+  - module: soil
+    var_name: soil_T
+  - module: lake
+    var_name: lake_T
+    zbounds: 0 0.1
+  - module: land
+    var_name: LWSg_lake
+  - module: land
+    var_name: FWSg_lake
+  - module: land
+    var_name: LWSs_lake
+  - module: land
+    var_name: T_snow_subs
+  reduction: average
+  kind: r4
+- file_name: land_static_sg
+  time_units: days
+  unlimdim: time
+  freq: -1 months
+  varlist:
+  - module: land_sg
+    var_name: cell_area
+  reduction: none
+  kind: r4
+- file_name: land_month_inst
+  time_units: days
+  unlimdim: time
+  freq: 1 months
+  varlist:
+  - module: land
+    var_name: LWS
+  - module: land
+    var_name: FWS
+  - module: land
+    var_name: HS
+  reduction: none
+  kind: r4
+- file_name: river_static
+  time_units: days
+  unlimdim: time
+  freq: -1 months
+  varlist:
+  - module: river
+    var_name: rv_basin
+  - module: river
+    var_name: area_land
+    output_name: land_area
+  - module: river
+    var_name: cell_area
+  reduction: none
+  kind: r4
+- file_name: river_daily
+  time_units: days
+  unlimdim: time
+  freq: 24 hours
+  varlist:
+  - module: river
+    var_name: rv_o_h2o
+  reduction: average
+  kind: r4
+- file_name: river_month
+  time_units: days
+  unlimdim: time
+  freq: 1 months
+  varlist:
+  - module: river
+    var_name: FWSr
+  - module: river
+    var_name: LWSr
+  - module: river
+    var_name: dis_heat
+  - module: river
+    var_name: dis_ice
+  - module: river
+    var_name: dis_liq
+  - module: river
+    var_name: rv_i_h2o
+  - module: river
+    var_name: rv_i_ice
+  - module: river
+    var_name: rv_i_het
+  - module: river
+    var_name: rv_o_h2o
+  - module: river
+    var_name: rv_o_ice
+  - module: river
+    var_name: rv_o_het
+  reduction: average
+  kind: r4
+- file_name: river_month_inst
+  time_units: days
+  unlimdim: time
+  freq: 1 months
+  varlist:
+  - module: river
+    var_name: LWSr
+  - module: river
+    var_name: FWSr
+  - module: river
+    var_name: HSr
+  reduction: none
+  kind: r4
+- file_name: ocean_scalar_month
+  time_units: days
+  unlimdim: time
+  is_ocean: true
+  freq: 1 months
+  varlist:
+  - module: ocean_model
+    var_name: SSS_global
+  - module: ocean_model
+    var_name: SST_global
+  - module: ocean_model
+    var_name: soga
+  - module: ocean_model
+    var_name: thetaoga
+  - module: ocean_model
+    var_name: tosga
+  - module: ocean_model
+    var_name: ave_wfo
+  - module: ocean_model
+    var_name: ave_hfds
+  - module: ocean_model
+    var_name: ave_rsntds
+  - module: ocean_model
+    var_name: LwLatSens_ga
+  - module: ocean_model
+    var_name: masso
+  reduction: average
+  kind: r4
+- file_name: ocean_static
+  time_units: days
+  unlimdim: time
+  is_ocean: true
+  freq: -1 months
+  varlist:
+  - module: ocean_model
+    var_name: Coriolis
+  - module: ocean_model
+    var_name: area_t
+  - module: ocean_model
+    var_name: areacello
+  - module: ocean_model
+    var_name: areacello_bu
+  - module: ocean_model
+    var_name: areacello_cu
+  - module: ocean_model
+    var_name: areacello_cv
+  - module: ocean_model
+    var_name: depth_ocean
+  - module: ocean_model
+    var_name: deptho
+  - module: ocean_model
+    var_name: dxCu
+  - module: ocean_model
+    var_name: dxCv
+  - module: ocean_model
+    var_name: dxt
+  - module: ocean_model
+    var_name: dyCu
+  - module: ocean_model
+    var_name: dyCv
+  - module: ocean_model
+    var_name: dyt
+  - module: ocean_model
+    var_name: geolat
+  - module: ocean_model
+    var_name: geolat_c
+  - module: ocean_model
+    var_name: geolat_u
+  - module: ocean_model
+    var_name: geolat_v
+  - module: ocean_model
+    var_name: geolon
+  - module: ocean_model
+    var_name: geolon_c
+  - module: ocean_model
+    var_name: geolon_u
+  - module: ocean_model
+    var_name: geolon_v
+  - module: ocean_model
+    var_name: sftof
+  - module: ocean_model
+    var_name: wet
+  - module: ocean_model
+    var_name: wet_c
+  - module: ocean_model
+    var_name: wet_u
+  - module: ocean_model
+    var_name: wet_v
+  reduction: none
+  kind: r4
+- file_name: ocean_month
+  time_units: days
+  unlimdim: time
+  is_ocean: true
+  freq: 1 months
+  varlist:
+  - module: ocean_model
+    var_name: Heat_PmE
+  - module: ocean_model
+    var_name: LW
+  - module: ocean_model
+    var_name: LwLatSens
+  - module: ocean_model
+    var_name: MLD_003
+  - module: ocean_model
+    var_name: MLD_003
+    output_name: MLD_003_max
+    reduction: max
+  - module: ocean_model
+    var_name: MLD_003
+    output_name: MLD_003_min
+    reduction: min
+  - module: ocean_model
+    var_name: ML_buoy_restrat
+  - module: ocean_model
+    var_name: PRCmE
+  - module: ocean_model
+    var_name: SSH
+    output_name: ssh
+  - module: ocean_model
+    var_name: SSS
+    output_name: sss
+  - module: ocean_model
+    var_name: SST
+  - module: ocean_model
+    var_name: SST
+    output_name: sst_max
+    reduction: max
+  - module: ocean_model
+    var_name: SST
+    output_name: sst_min
+    reduction: min
+  - module: ocean_model
+    var_name: SW
+  - module: ocean_model
+    var_name: S_adx_2d
+  - module: ocean_model
+    var_name: S_ady_2d
+  - module: ocean_model
+    var_name: TKE_tidal
+  - module: ocean_model
+    var_name: T_adx_2d
+  - module: ocean_model
+    var_name: T_ady_2d
+  - module: ocean_model
+    var_name: evap
+  - module: ocean_model
+    var_name: evs
+  - module: ocean_model
+    var_name: ficeberg
+  - module: ocean_model
+    var_name: fprec
+  - module: ocean_model
+    var_name: friver
+  - module: ocean_model
+    var_name: frunoff
+  - module: ocean_model
+    var_name: heat_content_cond
+  - module: ocean_model
+    var_name: heat_content_fprec
+  - module: ocean_model
+    var_name: heat_content_frunoff
+  - module: ocean_model
+    var_name: heat_content_lprec
+  - module: ocean_model
+    var_name: heat_content_lrunoff
+  - module: ocean_model
+    var_name: heat_content_massin
+  - module: ocean_model
+    var_name: heat_content_massout
+  - module: ocean_model
+    var_name: heat_content_surfwater
+  - module: ocean_model
+    var_name: hfds
+  - module: ocean_model
+    var_name: hfevapds
+  - module: ocean_model
+    var_name: hfibthermds
+  - module: ocean_model
+    var_name: hflso
+  - module: ocean_model
+    var_name: hfrainds
+  - module: ocean_model
+    var_name: hfrunoffds
+  - module: ocean_model
+    var_name: hfsifrazil
+  - module: ocean_model
+    var_name: hfsnthermds
+  - module: ocean_model
+    var_name: hfsso
+  - module: ocean_model
+    var_name: latent
+  - module: ocean_model
+    var_name: lprec
+  - module: ocean_model
+    var_name: lrunoff
+  - module: ocean_model
+    var_name: net_heat_coupler
+  - module: ocean_model
+    var_name: net_heat_surface
+  - module: ocean_model
+    var_name: net_massin
+  - module: ocean_model
+    var_name: net_massout
+  - module: ocean_model
+    var_name: p_surf
+  - module: ocean_model
+    var_name: prlq
+  - module: ocean_model
+    var_name: prsn
+  - module: ocean_model
+    var_name: rlntds
+  - module: ocean_model
+    var_name: rsntds
+  - module: ocean_model
+    var_name: salt_flux
+  - module: ocean_model
+    var_name: sensible
+  - module: ocean_model
+    var_name: sfdsi
+  - module: ocean_model
+    var_name: speed
+  - module: ocean_model
+    var_name: tauuo
+  - module: ocean_model
+    var_name: tauvo
+  - module: ocean_model
+    var_name: taux
+  - module: ocean_model
+    var_name: tauy
+  - module: ocean_model
+    var_name: ustar
+  - module: ocean_model
+    var_name: wfo
+  reduction: average
+  kind: r4
+- file_name: ocean_z_month
+  time_units: days
+  unlimdim: time
+  is_ocean: true
+  freq: 1 months
+  varlist:
+  - module: ocean_model_z
+    var_name: S_advection_xy
+  - module: ocean_model_z
+    var_name: Sh_tendency_vert_remap
+  - module: ocean_model_z
+    var_name: T_advection_xy
+  - module: ocean_model_z
+    var_name: Th_tendency_vert_remap
+  - module: ocean_model_z
+    var_name: boundary_forcing_heat_tendency
+  - module: ocean_model_z
+    var_name: boundary_forcing_salt_tendency
+  - module: ocean_model_z
+    var_name: difvho
+  - module: ocean_model_z
+    var_name: frazil_heat_tendency
+  - module: ocean_model_z
+    var_name: opottempdiff
+  - module: ocean_model_z
+    var_name: opottemppmdiff
+  - module: ocean_model_z
+    var_name: opottemptend
+  - module: ocean_model_z
+    var_name: osaltdiff
+  - module: ocean_model_z
+    var_name: osaltpmdiff
+  - module: ocean_model_z
+    var_name: osalttend
+  - module: ocean_model_z
+    var_name: rhoinsitu
+  - module: ocean_model_z
+    var_name: rhopot0
+  - module: ocean_model_z
+    var_name: rhopot2
+  - module: ocean_model_z
+    var_name: rsdoabsorb
+  - module: ocean_model_z
+    var_name: so
+  - module: ocean_model_z
+    var_name: thetao
+  - module: ocean_model_z
+    var_name: uh
+  - module: ocean_model_z
+    var_name: uhGM
+  - module: ocean_model_z
+    var_name: uhml
+  - module: ocean_model_z
+    var_name: umo
+  - module: ocean_model_z
+    var_name: uo
+  - module: ocean_model_z
+    var_name: vh
+  - module: ocean_model_z
+    var_name: vhGM
+  - module: ocean_model_z
+    var_name: vhml
+  - module: ocean_model_z
+    var_name: vmo
+  - module: ocean_model_z
+    var_name: vo
+  reduction: average
+  kind: r4
+- file_name: ocean_month_rho2
+  time_units: days
+  unlimdim: time
+  is_ocean: true
+  freq: 1 months
+  varlist:
+  - module: ocean_model_rho2
+    var_name: umo
+  - module: ocean_model_rho2
+    var_name: vmo
+  reduction: average
+  kind: r4
+- file_name: ocean_annual
+  time_units: days
+  unlimdim: time
+  is_ocean: true
+  freq: 12 months
+  varlist:
+  - module: ocean_model
+    var_name: Kd_interface
+  reduction: average
+  kind: r4
+- file_name: ocean_z_annual
+  time_units: days
+  unlimdim: time
+  is_ocean: true
+  freq: 12 months
+  varlist:
+  - module: ocean_model_z
+    var_name: age
+  - module: ocean_model_z
+    var_name: thetao_xyave
+  - module: ocean_model_z
+    var_name: so_xyave
+  reduction: average
+  kind: r4
