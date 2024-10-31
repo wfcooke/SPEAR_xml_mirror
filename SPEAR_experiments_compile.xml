@@ -181,7 +181,7 @@ from integrations with these models.
           MOM6.git
         </codeBase>
           <csh><![CDATA[
-            ( cd MOM6  && git checkout 1eccd281c23b8820f4719feed0a3740be4ab9282)
+            ( cd MOM6  && git checkout 3d37f13324fae35dea438940cb2570e0e763e055)
                        ]]>
           </csh>
       </source>

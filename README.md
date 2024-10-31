@@ -6,7 +6,7 @@ The legacy xml/experiments use the ascii diag, data, and field tables
 
 ```
 module load fre/test
-git clone -b 2024.03 https://gitlab.gfdl.noaa.gov/SPEAR/xml.git
+git clone -b 2024.03_v2 https://gitlab.gfdl.noaa.gov/SPEAR/xml.git
 multi-fremake -x SPEAR_c192_o1_Historical_IC1921_Q50_ensembles.xml -p ncrc5.intel23-classic -t repro-openmp,prod-openmp -e SPEAR_Q2024.03_nonsymMOM6_exec
 ```
 Experiments:

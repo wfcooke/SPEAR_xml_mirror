@@ -30,7 +30,7 @@
 
     <platform name="ncrc5.intel23-classic">
       <freVersion>$(FRE_VERSION)</freVersion>
-      <compiler type="intel-classic" version="2023.1.0" />
+      <compiler type="intel-classic" version="2023.2.0" />
 
       <property name="F2003_FLAGS"      value="-DINTERNAL_FILE_NML"/>
       <property name="WFC_ARCHIVE_ROOT"  value="/gpfs/f5/gfdl_sd/world-shared/William.Cooke"/>

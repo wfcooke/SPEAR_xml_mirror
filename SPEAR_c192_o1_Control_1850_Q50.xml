@@ -63,7 +63,7 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="GFDL_YGL"  value="gfdl_f"/>
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_Q_2024.03" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_STEM" value="SPEAR_experiments_Q_2024.03_v2" />   <!-- Stem use in FRE directories -->
   <property name="FRE_VERSION" value="test" />              <!-- FRE version for use in this XML -->
   <property name="ANALYSIS_SWITCH" value="on"/>
   <property name="ANALYSIS_ESM_SWITCH" value="off"/>
@@ -3807,7 +3807,7 @@ set nyblocks = $dummy
           <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O216_rts_1x2day']/node())"/>
           <xi:include xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O216_rts_2x1day']/node())"/>
       </regression>
-      <reference restart="/gpfs/f5/gfdl_f/scratch/Uriel.Ramirez/SPEAR_ANSWERS_071524/SPEAR_c192_o1_Control_1850_Q50/ncrc5.intel23-classic-$(target)/1x0m8d_288x2a_180x1o/restart/00010109.tar"/>
+      <reference restart="/gpfs/f5/gfdl_f/scratch/Uriel.Ramirez/SPEAR_ANSWERS_103024/SPEAR_c192_o1_Control_1850_Q50/ncrc5.intel23-classic-$(target)/1x0m8d_288x2a_180x1o/restart/00010109.tar"/>
   </runtime>
   <postProcess>
       <!--
