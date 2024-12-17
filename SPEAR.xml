@@ -1,0 +1,32 @@
+
+<experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2003/XInclude">
+  <property name="GFDL_YGL"      value="gfdl_f"/>
+  <property name="FRE_VERSION"   value="bronx-23"/>
+  <property name="FMS_GIT_TAG"   value="2024.03"/>           <!-- git tag for FMS source code -->
+  <property name="FRE_STEM"      value="SPEAR_experiments_Q_2024.03_testing" />   <!-- Stem use in FRE directories -->
+  <property name="LIBS_ROOT"     value="libs_compile_non_symmetricMOM6"/>
+  <property name="MOM6_EXAMPLES" value="$root/$(LIBS_ROOT)/src/mom6"/>
+  <property name="DEBUGLEVEL"    value="_0"/>
+
+  <property name="PP_START_YEAR"   value="0001"/>
+  <property name="CHUNK_LENGTH_A"  value="10yr"/>
+  <property name="CHUNK_LENGTH_B"  value="100yr"/>
+  <property name="ANALYSIS_SWITCH" value="on"/>
+  <property name="CHUNK_LENGTH_C"  value="163yr"/>
+  <property name="ANA_START"       value="1"/>
+  <property name="ANA_END"         value="40"/> <!-- Same as CHUNK_LENGTH_B -->
+
+  <setup>
+    <xi:include href="xml_include/platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc5-intel23-classic'])"/>
+    <xi:include href="xml_include/platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc5.intel23-classic'])"/>
+  </setup>
+
+  <xi:include href="xml_experiments/SPEAR_experiments_compile.xml" xpointer="xpointer(//experiment[@name='SPEAR_Q$(FMS_GIT_TAG)_nonsymMOM6_exec'])"/>
+  <xi:include href="xml_experiments/SPEAR_c192_o1_Control_1850_Q50.xml" xpointer="xpointer(//experiment[@name='SPEAR_c192_o1_Control_1850_Q50'])"/>
+  <xi:include href="xml_experiments/SPEAR_c192_o1_Control_1850_Q50_legacy.xml" xpointer="xpointer(//experiment[@name='SPEAR_c192_o1_Control_1850_Q50_legacy'])"/>
+
+  <xi:include href="xml_experiments/SPEAR_c192_o1_Historical_IC1921_Q50_ensembles.xml" xpointer="xpointer(//experiment[@name='SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03'])"/>
+  <xi:include href="xml_experiments/SPEAR_c192_o1_Historical_IC1921_Q50_ensembles_legacy.xml" xpointer="xpointer(//experiment[@name='SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03_legacy'])"/>
+
+</experimentSuite>
+

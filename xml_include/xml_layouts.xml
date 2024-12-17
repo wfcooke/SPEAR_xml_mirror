@@ -1,0 +1,55 @@
+<xmlLayouts rtsVersion="4" xmlns:xi="http://www.w3.org/2003/XInclude" >
+   <freInclude name="c192_production">
+     <resources jobWallclock="16:00:00"
+                segRuntime="2:00:00" >
+       <atm ranks="864" threads="4"  layout = "12,12"  io_layout = "1,4" />
+       <lnd                          layout = "12,12"  io_layout = "1,4" />
+       <ice                          layout = "72,12"  io_layout = "1,1" />
+       <ocn ranks="252" threads="1"  layout = "18,14"  io_layout = "1,1" mask_table="MOM_mask_table" />
+     </resources>
+   </freInclude>
+
+  <freInclude name="c192_8day">
+    <run days="8">
+      <resources jobWallclock="2:00:00">
+        <atm ranks="288" threads="2"   layout = "6,8"   io_layout = "1,4" />
+        <lnd                           layout = "6,8"   io_layout = "1,4" />
+        <ice                           layout = "72,4" io_layout = "1,1" />
+        <ocn ranks="180" threads="1"   layout = "9,20"  io_layout = "1,1" mask_table="MOM_mask_table" />
+      </resources>
+    </run>
+  </freInclude>
+
+  <freInclude name="c192_4x4day">
+    <run days="4 4">
+      <resources jobWallclock="2:00:00">
+        <atm ranks="288" threads="2"   layout = "6,8"   io_layout = "1,4" />
+        <lnd                           layout = "6,8"   io_layout = "1,4" />
+        <ice                           layout = "72,4" io_layout = "1,1" />
+        <ocn ranks="180" threads="1"   layout = "9,20"  io_layout = "1,1" mask_table="MOM_mask_table" />
+      </resources>
+    </run>
+  </freInclude>
+
+  <freInclude name="c192_12months">
+    <run months="12">
+      <resources jobWallclock="6:00:00">
+        <atm ranks="288" threads="2"   layout = "6,8"   io_layout = "1,4" />
+        <lnd                           layout = "6,8"   io_layout = "1,4" />
+        <ice                           layout = "72,4" io_layout = "1,1" />
+        <ocn ranks="180" threads="1"   layout = "9,20"  io_layout = "1,1" mask_table="MOM_mask_table" />
+      </resources>
+    </run>
+  </freInclude>
+
+   <freInclude name="c192_ensemble_production">
+             <resources jobWallclock="16:00:00"
+                   segRuntime="4:20:00" >
+               <atm ranks="576" threads="2"  layout = "8,12"   io_layout = "1,4" />
+               <lnd                          layout = "8,12"   io_layout = "1,4" />
+               <ice                          layout = "72,8"   io_layout = "1,1" />
+               <ocn ranks="108" threads="1"  layout = "12,9"   io_layout = "1,1" mask_table="MOM_mask_table" />
+             </resources>
+   </freInclude>
+
+</xmlLayouts>

@@ -57,7 +57,6 @@ from integrations with these models.
                paths="FMS">
       <description domainName="infrastructure"
                    communityName="FMS"
-                   communityVersion="$(RELEASE)"
                    communityGrid=""/>
       <source versionControl="git"
               root="http://github.com/NOAA-GFDL">
@@ -81,7 +80,6 @@ from integrations with these models.
                paths="atmos_phys">
       <description domainName=""
                    communityName=""
-                   communityVersion="$(RELEASE)"
                    communityGrid=""/>
       <source versionControl="git"
               root="http://gitlab.gfdl.noaa.gov/fms">
@@ -173,7 +171,6 @@ from integrations with these models.
                       MOM6/pkg/GSW-Fortran/ ">
       <description domainName="Ocean"
                    communityName="GFDL-MOM6"
-                   communityVersion="$(MOM6_GIT_TAG)"
                    communityGrid="Tripolar"/>
       <source versionControl="git"
               root="http://github.com/NOAA-GFDL">
@@ -246,7 +243,6 @@ from integrations with these models.
                paths="icebergs/src">
       <description domainName="N/A"
                    communityName="N/A"
-                   communityVersion="$(RELEASE)"
                    communityGrid="N/A"/>
       <source versionControl="git"
               root="http://github.com/NOAA-GFDL">
@@ -280,7 +276,6 @@ from integrations with these models.
                          icebergs">
       <description domainName="FMS Coupler"
                    communityName="coupler"
-                   communityVersion="$(RELEASE)"
                    communityGrid=""/>
       <source versionControl="git"
               root="http://github.com/NOAA-GFDL">
@@ -305,7 +300,6 @@ from integrations with these models.
                paths="FMS">
       <description domainName="infrastructure"
                    communityName="FMS"
-                   communityVersion="$(RELEASE)"
                    communityGrid=""/>
       <source versionControl="git"
               root="http://github.com/NOAA-GFDL">
@@ -336,7 +330,6 @@ from integrations with these models.
                paths="atmos_phys">
       <description domainName=""
                    communityName=""
-                   communityVersion="$(RELEASE)"
                    communityGrid=""/>
       <source versionControl="git"
               root="http://gitlab.gfdl.noaa.gov/fms">
@@ -419,7 +412,6 @@ from integrations with these models.
                       MOM6/pkg/ECDA/ ">
       <description domainName="Ocean"
                    communityName="GFDL-MOM6"
-                   communityVersion="$(MOM6_GIT_TAG)"
                    communityGrid="Tripolar"/>
       <source versionControl="git"
               root="http://github.com/wfcooke">
@@ -490,7 +482,6 @@ from integrations with these models.
                paths="icebergs">
       <description domainName="N/A"
                    communityName="N/A"
-                   communityVersion="$(RELEASE)"
                    communityGrid="N/A"/>
       <source versionControl="git"
               root="http://github.com/NOAA-GFDL">
@@ -524,7 +515,6 @@ from integrations with these models.
                          icebergs">
       <description domainName="FMS Coupler"
                    communityName="coupler"
-                   communityVersion="$(RELEASE)"
                    communityGrid=""/>
       <source versionControl="git"
               root="http://github.com/NOAA-GFDL">
