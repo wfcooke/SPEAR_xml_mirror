@@ -1,10 +1,12 @@
 compile:
-    experiment: !join ["SPEAR_Q", *FMS_VERSION, "_nonsymMOM6_exec"]
+    experiment: !join ["spear_q", *FMS_VERSION, "_nonsymmom6_exec_canopy"]
+    container_addlibs:
+    baremetal_linkerflags:
     src:
         - component: "FMS"
           repo: "https://github.com/NOAA-GFDL/FMS.git"
           branch: *FMS_VERSION
-          cppdefs: "-DHAVE_GETTID -DINTERNAL_FILE_NML -Duse_libMPI -Duse_netCDF -DMAXFIELDMETHODS_=500"
+          cppdefs: "-Duse_yaml -DHAVE_GETTID -DINTERNAL_FILE_NML -Duse_libMPI -Duse_netCDF -DMAXFIELDMETHODS_=500"
           otherFlags: *FMSincludes
         - component: "atmos_phys"
           requires: ["FMS"]
@@ -50,11 +52,12 @@ compile:
                   "MOM6/config_src/external/database_comms",
                   "MOM6/src/*/",
                   "MOM6/src/*/*/",
-                  "MOM6/pkg/GSW-Fortran" ]
+                  "MOM6/pkg/GSW-Fortran/toolbox",
+                  "MOM6/pkg/GSW-Fortran/modules"]
           cppdefs: "-DINTERNAL_FILE_NML -DMAX_FIELDS_=100 -DNOT_SET_AFFINITY -D_USE_MOM6_DIAG -D_USE_GENERIC_TRACER  -DUSE_PRECISION=2"
           makeOverrides: 'OPENMP=""'
           otherFlags: !join [*FMSincludes, " ", *momIncludes]
-          additionalInstructions: !join ["cd MOM6\n", "git checkout 3d37f13324fae35dea438940cb2570e0e763e055"]
+          additionalInstructions: !join ["cd MOM6\n", "git checkout 3d37f13324fae35dea438940cb2570e0e763e055 \n", "cd .. \n"]
         - component: "ice_param"
           requires: ["FMS"]
           repo: "https://github.com/NOAA-GFDL/ice_param.git"
@@ -70,7 +73,7 @@ compile:
           paths: ["SIS2/config_src/dynamic_symmetric",
                   "SIS2/config_src/external",
                   "SIS2/src"]
-          additionalInstructions: !join ["cd SIS2\n", "git checkout 2c49005d1d7132776fff9b501cabe6ae85ef5f57"]
+          additionalInstructions: !join ["cd SIS2\n", "git checkout 2c49005d1d7132776fff9b501cabe6ae85ef5f57 \n", "cd .. \n"]
         - component: "icebergs"
           requires: ["FMS"]
           repo: "https://github.com/NOAA-GFDL/icebergs.git"
@@ -78,10 +81,10 @@ compile:
           otherFlags: !join [*FMSincludes, " ", *momIncludes]
           cppdefs: "-DINTERNAL_FILE_NML -DUSE_FMS2_IO"
           paths: ["icebergs/src"]
-          additionalInstructions: !join ["cd icebergs\n", "git checkout ce76de33ced61f747e16b125e1e78220a12218bd"]
+          additionalInstructions: !join ["cd icebergs\n", "git checkout ce76de33ced61f747e16b125e1e78220a12218bd \n", "cd .. \n"]
         - component: "FMScoupler"
           requires: ["FMS", "GFDL_atmos_cubed_sphere", "atmos_drivers", "atmos_phys", "land_lad2", "SIS2", "MOM6", "ice_param", "icebergs"]
           repo: "https://github.com/NOAA-GFDL/FMScoupler.git"
-          branch: "2024.02"
+          branch: *FMS_VERSION
           paths: ["FMScoupler/full", "FMScoupler/shared"]
           otherFlags: !join [*FMSincludes, " ", *momIncludes]

@@ -23,9 +23,11 @@
 
   <xi:include href="xml_experiments/SPEAR_experiments_compile.xml" xpointer="xpointer(//experiment[@name='SPEAR_Q$(FMS_GIT_TAG)_nonsymMOM6_exec'])"/>
   <xi:include href="xml_experiments/SPEAR_c192_o1_Control_1850_Q50.xml" xpointer="xpointer(//experiment[@name='SPEAR_c192_o1_Control_1850_Q50'])"/>
+  <xi:include href="xml_experiments/SPEAR_c192_o1_Control_1850_Q50.xml" xpointer="xpointer(//experiment[@name='SPEAR_c192_o1_Control_1850_Q50_canopy'])"/>
   <xi:include href="xml_experiments/SPEAR_c192_o1_Control_1850_Q50_legacy.xml" xpointer="xpointer(//experiment[@name='SPEAR_c192_o1_Control_1850_Q50_legacy'])"/>
 
   <xi:include href="xml_experiments/SPEAR_c192_o1_Historical_IC1921_Q50_ensembles.xml" xpointer="xpointer(//experiment[@name='SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03'])"/>
+    <xi:include href="xml_experiments/SPEAR_c192_o1_Historical_IC1921_Q50_ensembles.xml" xpointer="xpointer(//experiment[@name='SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03_canopy'])"/>
   <xi:include href="xml_experiments/SPEAR_c192_o1_Historical_IC1921_Q50_ensembles_legacy.xml" xpointer="xpointer(//experiment[@name='SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03_legacy'])"/>
 
 </experimentSuite>

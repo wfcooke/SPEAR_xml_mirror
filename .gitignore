@@ -1,0 +1,6 @@
+YAML_WORKFLOW/combined-spear.yaml
+YAML_WORKFLOW/*.sif
+YAML_WORKFLOW/*.tar
+YAML_WORKFLOW/Dockerfile
+YAML_WORKFLOW/tmp
+YAML_WORKFLOW/createContainer.sh

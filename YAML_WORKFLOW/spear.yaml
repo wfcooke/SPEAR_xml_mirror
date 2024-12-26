@@ -1,7 +1,7 @@
 # reusable variables
 fre_properties:
   - &FMS_VERSION        "2024.03"
-  - &FRE_STEM           !join ["SPEAR_experiments_Q_", *FMS_VERSION, "_canopy"]
+  - &FRE_STEM           !join ["SPEAR_experiments_Q_", *FMS_VERSION, "_testing"]
   - &YOURGROUPLETTER    "gfdl_f"
 
   # compile information

@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2003/XInclude">
 
+<experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03_canopy" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03">
+    <executable file="$(root)/spear_q$(FMS_GIT_TAG)_nonsymmom6_exec_canopy/$(platform)-$(target)/exec/spear_q$(FMS_GIT_TAG)_nonsymmom6_exec_canopy.x"/>
+    <container file="$(xmlDir)/YAML_WORKFLOW/spear_q$(FMS_GIT_TAG)_nonsymmom6_exec_canopy-$(target).sif"/>
+</experiment>
+
 <experiment name="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_04_06" inherit="SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03">
   <input>
      <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
@@ -736,7 +741,7 @@ set nyblocks = $dummy
     <regression name="year">
       <xi:include href="../xml_include/xml_layouts.xml" xpointer="xpointer(*/freInclude[@name='c192_12months']/node())"/>
     </regression>
-    <regression name="basic_prodsettings">
+    <regression name="rts">
       <xi:include href="../xml_include/xml_layouts.xml" xpointer="xpointer(*/freInclude[@name='c192_8day']/node())"/>
       <xi:include href="../xml_include/xml_layouts.xml" xpointer="xpointer(*/freInclude[@name='c192_4x4day']/node())"/>
     </regression>
