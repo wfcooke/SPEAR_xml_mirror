@@ -17,7 +17,7 @@ compile:
         - component: "GFDL_atmos_cubed_sphere"
           requires: ["FMS", "atmos_phys"]
           repo: "https://github.com/NOAA-GFDL/GFDL_atmos_cubed_sphere.git"
-          branch: "2023.03"
+          branch: "2025.01"
           paths: ["GFDL_atmos_cubed_sphere/driver/GFDL",
                   "GFDL_atmos_cubed_sphere/model",
                   "GFDL_atmos_cubed_sphere/tools",
@@ -27,7 +27,7 @@ compile:
         - component: "atmos_drivers"
           requires: ["FMS", "atmos_phys", "GFDL_atmos_cubed_sphere"]
           repo: "https://github.com/NOAA-GFDL/atmos_drivers.git"
-          branch: "2023.04"
+          branch: "2025.01"
           paths: ["atmos_drivers/coupled"]
           cppdefs: "-DINTERNAL_FILE_NML -DSPMD"
           otherFlags: *FMSincludes

@@ -9,7 +9,7 @@ The canopy experiments use the fre/2025.01 to build "bare metal" executables and
 ```
 module load fre/bronx-23
 git clone -b RTS https://gitlab.gfdl.noaa.gov/SPEAR/xml.git
-multi-fremake -x SPEAR.xml -p ncrc5.intel23-classic -t repro-openmp,prod-openmp -e SPEAR_Q2024.03_nonsymMOM6_exec
+multi-fremake -x SPEAR.xml -p ncrc5.intel23-classic -t repro-openmp,prod-openmp -e SPEAR_Q2025.01_nonsymMOM6_exec
 ```
 Experiments:
   1. SPEAR_c192_o1_Hist_AllForc_IC1921_Q50_ens_01_03 will give you a test of a 3 member ensemble.

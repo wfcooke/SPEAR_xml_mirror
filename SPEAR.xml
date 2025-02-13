@@ -2,8 +2,8 @@
 <experimentSuite rtsVersion="4" xmlns:xi="http://www.w3.org/2003/XInclude">
   <property name="GFDL_YGL"      value="gfdl_f"/>
   <property name="FRE_VERSION"   value="bronx-23"/>
-  <property name="FMS_GIT_TAG"   value="2024.03"/>           <!-- git tag for FMS source code -->
-  <property name="FRE_STEM"      value="SPEAR_experiments_Q_2024.03_testing" />   <!-- Stem use in FRE directories -->
+  <property name="FMS_GIT_TAG"   value="2025.01"/>           <!-- git tag for FMS source code -->
+  <property name="FRE_STEM"      value="SPEAR_experiments_Q_$(FMS_GIT_TAG)" />   <!-- Stem use in FRE directories -->
   <property name="LIBS_ROOT"     value="libs_compile_non_symmetricMOM6"/>
   <property name="MOM6_EXAMPLES" value="$root/$(LIBS_ROOT)/src/mom6"/>
   <property name="DEBUGLEVEL"    value="_0"/>
