@@ -1,0 +1,2539 @@
+diag_files:
+- file_name: grid_spec
+  time_units: days
+  unlimdim: time
+  freq: -1 months
+  varlist:
+  - module: dynamics
+    var_name: grid_lon
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: grid_lat
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: grid_lont
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: grid_latt
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: area
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: bk
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: pk
+    reduction: none
+    kind: r4
+  - module: flux
+    var_name: land_mask
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: zsurf
+    reduction: none
+    kind: r4
+- file_name: atmos_4xdaily
+  time_units: days
+  unlimdim: time
+  freq: 6 hours
+  varlist:
+  - module: dynamics
+    var_name: ps
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: pv350K
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: slp
+    output_name: slp_dyn
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: tm
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: u200
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: u850
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: v200
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: v300
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: v850
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: vort850
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: z300
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: z500
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: z850
+    reduction: none
+    kind: r4
+  - module: flux
+    var_name: q_ref
+    reduction: none
+    kind: r4
+  - module: flux
+    var_name: slp
+    reduction: none
+    kind: r4
+  - module: flux
+    var_name: t_ref
+    reduction: none
+    kind: r4
+  - module: flux
+    var_name: u_ref
+    reduction: none
+    kind: r4
+  - module: flux
+    var_name: v_ref
+    reduction: none
+    kind: r4
+  - module: moist
+    var_name: cape
+    reduction: none
+    kind: r4
+  - module: moist
+    var_name: cin
+    reduction: none
+    kind: r4
+- file_name: atmos_4xdaily_avg
+  time_units: days
+  unlimdim: time
+  freq: 6 hours
+  varlist:
+  - module: dynamics
+    var_name: ps
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: vort200
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: evap
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: wind_ref
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: precip
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: snow_tot
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: WVP
+    reduction: average
+    kind: r4
+- file_name: atmos_daily
+  time_units: days
+  unlimdim: time
+  freq: 24 hours
+  varlist:
+  - module: dynamics
+    var_name: pv350K
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: pv550K
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: z200
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: z250
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: z500
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: z700
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: z850
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: z925
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: ps
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: q200
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: q250
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: q500
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: q700
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: q850
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: q925
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: slp
+    output_name: slp_dyn
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: t200
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: t250
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: t500
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: t700
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: t850
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: t925
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: u10
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: u200
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: u250
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: u50
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: u500
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: u700
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: u850
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: u925
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: v200
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: v250
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: v500
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: v700
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: v850
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: v925
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: vort200
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: vort500
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: evap
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: q_ref
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: slp
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: rh_ref
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: t_ref
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: t_ref
+    output_name: t_ref_max
+    reduction: max
+    kind: r4
+  - module: flux
+    var_name: t_ref
+    output_name: t_ref_min
+    reduction: min
+    kind: r4
+  - module: flux
+    var_name: t_surf
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: tau_x
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: tau_y
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: u_ref
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: v_ref
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: WVP
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: prec_ls
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: precip
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: snow_ls
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: snow_tot
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: lwdn_sfc
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: lwup_sfc
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: olr
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: swdn_sfc
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: wind_ref
+    reduction: average
+    kind: r4
+- file_name: atmos_month
+  time_units: days
+  unlimdim: time
+  freq: 1 months
+  varlist:
+  - module: cloudrad
+    var_name: high_cld_amt
+    reduction: average
+    kind: r4
+  - module: cloudrad
+    var_name: low_cld_amt
+    reduction: average
+    kind: r4
+  - module: cloudrad
+    var_name: mid_cld_amt
+    reduction: average
+    kind: r4
+  - module: cloudrad
+    var_name: tot_cld_amt
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: bk
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: omega
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: pk
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: ps
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: slp
+    output_name: slp_dyn
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: sphum
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: temp
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: ucomp
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: uq
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: uq_vi
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: ut
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: ut_vi
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: uu
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: uu_vi
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: uv
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: uv_vi
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: vcomp
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: vort850
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: vq
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: vq_vi
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: vt
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: vt_vi
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: vv
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: vv_vi
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: z200
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: zsurf
+    reduction: none
+    kind: r4
+  - module: flux
+    var_name: evap
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: ice_mask
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: land_mask
+    reduction: none
+    kind: r4
+  - module: flux
+    var_name: lwflx
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: rh_ref
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: shflx
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: t_ref
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: t_ref
+    output_name: t_ref_max
+    reduction: max
+    kind: r4
+  - module: flux
+    var_name: t_ref
+    output_name: t_ref_min
+    reduction: min
+    kind: r4
+  - module: flux
+    var_name: t_surf
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: tau_x
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: tau_y
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: u_ref
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: v_ref
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: IWP
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: LWP
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: WVP
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: prec_conv
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: prec_ls
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: precip
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: rh
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: snow_conv
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: snow_ls
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: snow_tot
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: alb_sfc
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: lwdn_sfc
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: lwdn_sfc_clr
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: lwup_sfc
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: lwup_sfc_clr
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: netrad_toa
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: olr
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: olr_clr
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: qo3_col
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: swdn_sfc
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: swdn_sfc_clr
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: swdn_toa
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: swdn_toa_clr
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: swup_sfc
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: swup_sfc_clr
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: swup_toa
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: swup_toa_clr
+    reduction: average
+    kind: r4
+  - module: flux
+    var_name: wind_ref
+    reduction: average
+    kind: r4
+- file_name: atmos_month_aer
+  time_units: days
+  unlimdim: time
+  freq: 1 months
+  varlist:
+  - module: dynamics
+    var_name: area
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: bk
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: pk
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: zsurf
+    reduction: none
+    kind: r4
+  - module: flux
+    var_name: land_mask
+    reduction: none
+    kind: r4
+  - module: dynamics
+    var_name: ps
+    reduction: average
+    kind: r4
+  - module: dynamics
+    var_name: temp
+    reduction: average
+    kind: r4
+  - module: moist
+    var_name: rh
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: so4
+    output_name: sulfate
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: so4_col
+    output_name: sulfate_col
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: small_dust
+    output_name: sm_dust
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: small_dust_col
+    output_name: sm_dust_col
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: large_dust
+    output_name: lg_dust
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: large_dust_col
+    output_name: lg_dust_col
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: sea_salt
+    output_name: salt
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: sea_salt_col
+    output_name: salt_col
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: black_carbon
+    output_name: blk_crb
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: black_carbon_col
+    output_name: blk_crb_col
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: organic_carbon
+    output_name: org_crb
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: organic_carbon_col
+    output_name: org_crb_col
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: aerosol_col
+    output_name: aer_c
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: pm2.5
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: so4_exopdep_col_vis
+    output_name: sulfate_ex_c_vs
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: so4_abopdep_col_vis
+    output_name: sulfate_ab_c_vs
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: so4_abopdep_vis
+    output_name: sulfate_ab_vs
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: small_dust_exopdep_col_vis
+    output_name: sm_dst_ex_c_vs
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: large_dust_exopdep_col_vis
+    output_name: lg_dst_ex_c_vs
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: dust_exopdep_col_vis
+    output_name: dust_ex_c_vs
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: black_carbon_exopdep_col_vis
+    output_name: blk_crb_ex_c_vs
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: organic_carbon_exopdep_col_vis
+    output_name: org_crb_ex_c_vs
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: sea_salt_exopdep_col_vis
+    output_name: salt_ex_c_vs
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: aerosol_exopdep_col_vis
+    output_name: aer_ex_c_vs
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: aerosol_exopdep_vis
+    output_name: aer_ex_vs
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: dust_abopdep_col_vis
+    output_name: dust_ab_c_vs
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: dust_abopdep_vis
+    output_name: dust_ab_vs
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: small_dust_abopdep_col_vis
+    output_name: sm_dst_ab_c_vs
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: large_dust_abopdep_col_vis
+    output_name: lg_dst_ab_c_vs
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: black_carbon_abopdep_col_vis
+    output_name: blk_crb_ab_c_vs
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: organic_carbon_abopdep_col_vis
+    output_name: org_crb_ab_c_vs
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: aerosol_abopdep_col_vis
+    output_name: aer_ab_c_vs
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: aerosol_abopdep_vis
+    output_name: aer_ab_vs
+    reduction: average
+    kind: r4
+- file_name: atmos_scalar
+  time_units: days
+  unlimdim: time
+  freq: 1 months
+  varlist:
+  - module: radiation
+    var_name: rrvch4
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: rrvco2
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: rrvf11
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: rrvf113
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: rrvf12
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: rrvf22
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: rrvn2o
+    reduction: average
+    kind: r4
+  - module: radiation
+    var_name: solar_constant
+    reduction: average
+    kind: r4
+- file_name: ice_static
+  time_units: days
+  unlimdim: time
+  freq: -1 months
+  varlist:
+  - module: ice_model
+    var_name: CELL_AREA
+    reduction: none
+    kind: r4
+  - module: ice_model
+    var_name: COSROT
+    reduction: none
+    kind: r4
+  - module: ice_model
+    var_name: GEOLAT
+    reduction: none
+    kind: r4
+  - module: ice_model
+    var_name: GEOLON
+    reduction: none
+    kind: r4
+  - module: ice_model
+    var_name: SINROT
+    reduction: none
+    kind: r4
+- file_name: ice_daily
+  time_units: days
+  unlimdim: time
+  freq: 24 hours
+  varlist:
+  - module: ice_model
+    var_name: ALB
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: BHEAT
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: BMELT
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: BSNK
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: CALVING
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: CALVING_HFLX
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: CN
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: E2MELT
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: EVAP
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: EXT
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: EXT
+    output_name: EXT_MIN_min
+    reduction: min
+    kind: r4
+  - module: ice_model
+    var_name: EXT
+    output_name: EXT_MAX_max
+    reduction: max
+    kind: r4
+  - module: ice_model
+    var_name: FA_X
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: FA_Y
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: FI_X
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: FI_Y
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: FRAZIL
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: IX_TRANS
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: IY_TRANS
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: LH
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: LSNK
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: LSRC
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: LW
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: RAIN
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: RUNOFF
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: SALTF
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: SH
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: SNOWFL
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: SN2IC
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: SSH
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: SSS
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: SST
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: SW
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: TMELT
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: TSN
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: T1
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: T2
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: T3
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: T4
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: UO
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: VO
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: XPRT
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: siu
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: siv
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: sispeed
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: STRENGTH_hf
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: sitimefrac
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: sitemptop
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: siconc
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: sisnconc
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: simass
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: sisnmass
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: sisnthick
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: sithick
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: sivol
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: MIB
+    reduction: average
+    kind: r4
+- file_name: ice_month
+  time_units: days
+  unlimdim: time
+  freq: 1 months
+  varlist:
+  - module: ice_model
+    var_name: CELL_AREA
+    reduction: none
+    kind: r4
+  - module: ice_model
+    var_name: COSROT
+    reduction: none
+    kind: r4
+  - module: ice_model
+    var_name: GEOLAT
+    reduction: none
+    kind: r4
+  - module: ice_model
+    var_name: GEOLON
+    reduction: none
+    kind: r4
+  - module: ice_model
+    var_name: SINROT
+    reduction: none
+    kind: r4
+  - module: ice_model
+    var_name: ALB
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: BHEAT
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: BMELT
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: BSNK
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: CALVING
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: CALVING_HFLX
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: CN
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: E2MELT
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: EVAP
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: EXT
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: EXT
+    output_name: EXT_MIN_min
+    reduction: min
+    kind: r4
+  - module: ice_model
+    var_name: EXT
+    output_name: EXT_MAX_max
+    reduction: max
+    kind: r4
+  - module: ice_model
+    var_name: FA_X
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: FA_Y
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: FI_X
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: FI_Y
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: FRAZIL
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: IX_TRANS
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: IY_TRANS
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: LH
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: LSNK
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: LSRC
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: LW
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: RAIN
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: RUNOFF
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: SALTF
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: SH
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: SNOWFL
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: SN2IC
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: SSH
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: SSS
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: SST
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: SW
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: TMELT
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: TSN
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: T1
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: T2
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: T3
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: T4
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: UO
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: VO
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: XPRT
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: siu
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: siv
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: sispeed
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: STRENGTH_hf
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: sitimefrac
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: sitemptop
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: siconc
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: sisnconc
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: simass
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: sisnmass
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: sisnthick
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: sithick
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: sivol
+    reduction: average
+    kind: r4
+  - module: ice_model
+    var_name: MIB
+    reduction: average
+    kind: r4
+- file_name: iceberg_month
+  time_units: days
+  unlimdim: time
+  freq: 1 months
+  varlist:
+  - module: icebergs
+    var_name: BERG_MELT
+    reduction: average
+    kind: r4
+  - module: icebergs
+    var_name: MASS
+    reduction: average
+    kind: r4
+  - module: icebergs
+    var_name: MELT
+    reduction: average
+    kind: r4
+- file_name: land_static
+  time_units: days
+  unlimdim: time
+  freq: -1 months
+  varlist:
+  - module: land
+    var_name: area_lake
+    output_name: lake_area
+    reduction: none
+    kind: r4
+  - module: land
+    var_name: area_land
+    output_name: land_area
+    reduction: none
+    kind: r4
+  - module: land
+    var_name: area_soil
+    output_name: soil_area
+    reduction: none
+    kind: r4
+  - module: land
+    var_name: cell_area
+    reduction: none
+    kind: r4
+  - module: land
+    var_name: frac_soil
+    reduction: none
+    kind: r4
+  - module: land
+    var_name: geolat_t
+    reduction: none
+    kind: r8
+  - module: land
+    var_name: geolon_t
+    reduction: none
+    kind: r8
+  - module: land
+    var_name: land_frac
+    reduction: none
+    kind: r4
+- file_name: land_daily
+  time_units: days
+  unlimdim: time
+  freq: 24 hours
+  varlist:
+  - module: land
+    var_name: precip
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: snow
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: runf
+    reduction: average
+    kind: r4
+- file_name: land_month
+  time_units: days
+  unlimdim: time
+  freq: 1 months
+  varlist:
+  - module: land
+    var_name: swdn_dif
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: swdn_dir
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: swup_dif
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: swup_dir
+    reduction: average
+    kind: r4
+  - module: flux_land
+    var_name: t_ref
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: FWS
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: LWS
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: water_lake
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: water_soil
+    reduction: average
+    kind: r4
+  - module: cmor_land
+    var_name: cSoil
+    reduction: average
+    kind: r4
+  - module: cmor_land
+    var_name: cSoil_crop
+    reduction: average
+    kind: r4
+  - module: cmor_land
+    var_name: cSoil_ntrl
+    reduction: average
+    kind: r4
+  - module: cmor_land
+    var_name: cSoil_past
+    reduction: average
+    kind: r4
+  - module: cmor_land
+    var_name: cSoil_scnd
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: btot
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: btot_crop
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: btot_ntrl
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: btot_past
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: btot_scnd
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: harv_pool
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: harv_pool_crop
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: harv_pool_past
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: harv_pool_scnd
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: harv_rate
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: harv_rate_crop
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: harv_rate_past
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: harv_rate_scnd
+    reduction: average
+    kind: r4
+  - module: cmor_land
+    var_name: tws
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: area
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: area_glac
+    output_name: glac_area
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: evap
+    output_name: evap_land
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: flw
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: frac_glac
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: frac_lake
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: frunf
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: fsw
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: hevap
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: hprec
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: levapg
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: levapv
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: lwdn
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: melt
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: precip
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: runf
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: sens
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: snow
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: transp
+    reduction: average
+    kind: r4
+  - module: soil
+    var_name: soil_ice
+    reduction: average
+    kind: r4
+  - module: soil
+    var_name: soil_liq
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: LAI
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: npp
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: area_ntrl
+    output_name: ntrl_area
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: area_crop
+    output_name: crop_area
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: area_past
+    output_name: past_area
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: area_scnd
+    output_name: scnd_area
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: frac_ntrl
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: frac_crop
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: frac_past
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: frac_scnd
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: bwood_ntrl
+    output_name: ntrl_bwood
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: bwood_crop
+    output_name: crop_bwood
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: bwood_past
+    output_name: past_bwood
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: bwood_scnd
+    output_name: scnd_bwood
+    reduction: average
+    kind: r4
+  - module: vegn
+    var_name: height
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: meltg_glac
+    reduction: average
+    kind: r4
+  - module: soil
+    var_name: soil_T
+    reduction: average
+    kind: r4
+  - module: lake
+    var_name: lake_T
+    reduction: average
+    zbounds: 0 0.1
+    kind: r4
+  - module: land
+    var_name: LWSg_lake
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: FWSg_lake
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: LWSs_lake
+    reduction: average
+    kind: r4
+  - module: land
+    var_name: T_snow_subs
+    reduction: average
+    kind: r4
+- file_name: land_static_sg
+  time_units: days
+  unlimdim: time
+  freq: -1 months
+  varlist:
+  - module: land_sg
+    var_name: cell_area
+    reduction: none
+    kind: r4
+- file_name: land_month_inst
+  time_units: days
+  unlimdim: time
+  freq: 1 months
+  varlist:
+  - module: land
+    var_name: LWS
+    reduction: none
+    kind: r4
+  - module: land
+    var_name: FWS
+    reduction: none
+    kind: r4
+  - module: land
+    var_name: HS
+    reduction: none
+    kind: r4
+- file_name: river_static
+  time_units: days
+  unlimdim: time
+  freq: -1 months
+  varlist:
+  - module: river
+    var_name: rv_basin
+    reduction: none
+    kind: r4
+  - module: river
+    var_name: area_land
+    output_name: land_area
+    reduction: none
+    kind: r4
+  - module: river
+    var_name: cell_area
+    reduction: none
+    kind: r4
+- file_name: river_daily
+  time_units: days
+  unlimdim: time
+  freq: 24 hours
+  varlist:
+  - module: river
+    var_name: rv_o_h2o
+    reduction: average
+    kind: r4
+- file_name: river_month
+  time_units: days
+  unlimdim: time
+  freq: 1 months
+  varlist:
+  - module: river
+    var_name: FWSr
+    reduction: average
+    kind: r4
+  - module: river
+    var_name: LWSr
+    reduction: average
+    kind: r4
+  - module: river
+    var_name: dis_heat
+    reduction: average
+    kind: r4
+  - module: river
+    var_name: dis_ice
+    reduction: average
+    kind: r4
+  - module: river
+    var_name: dis_liq
+    reduction: average
+    kind: r4
+  - module: river
+    var_name: rv_i_h2o
+    reduction: average
+    kind: r4
+  - module: river
+    var_name: rv_i_ice
+    reduction: average
+    kind: r4
+  - module: river
+    var_name: rv_i_het
+    reduction: average
+    kind: r4
+  - module: river
+    var_name: rv_o_h2o
+    reduction: average
+    kind: r4
+  - module: river
+    var_name: rv_o_ice
+    reduction: average
+    kind: r4
+  - module: river
+    var_name: rv_o_het
+    reduction: average
+    kind: r4
+- file_name: river_month_inst
+  time_units: days
+  unlimdim: time
+  freq: 1 months
+  varlist:
+  - module: river
+    var_name: LWSr
+    reduction: none
+    kind: r4
+  - module: river
+    var_name: FWSr
+    reduction: none
+    kind: r4
+  - module: river
+    var_name: HSr
+    reduction: none
+    kind: r4
+- file_name: ocean_scalar_month
+  time_units: days
+  unlimdim: time
+  is_ocean: true
+  freq: 1 months
+  varlist:
+  - module: ocean_model
+    var_name: SSS_global
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: SST_global
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: soga
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: thetaoga
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: tosga
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: ave_wfo
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: ave_hfds
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: ave_rsntds
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: LwLatSens_ga
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: masso
+    reduction: average
+    kind: r4
+- file_name: ocean_static
+  time_units: days
+  unlimdim: time
+  is_ocean: true
+  freq: -1 months
+  varlist:
+  - module: ocean_model
+    var_name: Coriolis
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: area_t
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: areacello
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: areacello_bu
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: areacello_cu
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: areacello_cv
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: depth_ocean
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: deptho
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: dxCu
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: dxCv
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: dxt
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: dyCu
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: dyCv
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: dyt
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: geolat
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: geolat_c
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: geolat_u
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: geolat_v
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: geolon
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: geolon_c
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: geolon_u
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: geolon_v
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: sftof
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: wet
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: wet_c
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: wet_u
+    reduction: none
+    kind: r4
+  - module: ocean_model
+    var_name: wet_v
+    reduction: none
+    kind: r4
+- file_name: ocean_month
+  time_units: days
+  unlimdim: time
+  is_ocean: true
+  freq: 1 months
+  varlist:
+  - module: ocean_model
+    var_name: Heat_PmE
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: LW
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: LwLatSens
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: MLD_003
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: MLD_003
+    output_name: MLD_003_max
+    reduction: max
+    kind: r4
+  - module: ocean_model
+    var_name: MLD_003
+    output_name: MLD_003_min
+    reduction: min
+    kind: r4
+  - module: ocean_model
+    var_name: ML_buoy_restrat
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: PRCmE
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: SSH
+    output_name: ssh
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: SSS
+    output_name: sss
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: SST
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: SST
+    output_name: sst_max
+    reduction: max
+    kind: r4
+  - module: ocean_model
+    var_name: SST
+    output_name: sst_min
+    reduction: min
+    kind: r4
+  - module: ocean_model
+    var_name: SW
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: S_adx_2d
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: S_ady_2d
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: TKE_tidal
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: T_adx_2d
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: T_ady_2d
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: evap
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: evs
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: ficeberg
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: fprec
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: friver
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: frunoff
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: heat_content_cond
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: heat_content_fprec
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: heat_content_frunoff
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: heat_content_lprec
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: heat_content_lrunoff
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: heat_content_massin
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: heat_content_massout
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: heat_content_surfwater
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: hfds
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: hfevapds
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: hfibthermds
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: hflso
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: hfrainds
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: hfrunoffds
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: hfsifrazil
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: hfsnthermds
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: hfsso
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: latent
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: lprec
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: lrunoff
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: net_heat_coupler
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: net_heat_surface
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: net_massin
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: net_massout
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: p_surf
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: prlq
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: prsn
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: rlntds
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: rsntds
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: salt_flux
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: sensible
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: sfdsi
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: speed
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: tauuo
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: tauvo
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: taux
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: tauy
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: ustar
+    reduction: average
+    kind: r4
+  - module: ocean_model
+    var_name: wfo
+    reduction: average
+    kind: r4
+- file_name: ocean_z_month
+  time_units: days
+  unlimdim: time
+  is_ocean: true
+  freq: 1 months
+  varlist:
+  - module: ocean_model_z
+    var_name: S_advection_xy
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: Sh_tendency_vert_remap
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: T_advection_xy
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: Th_tendency_vert_remap
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: boundary_forcing_heat_tendency
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: boundary_forcing_salt_tendency
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: difvho
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: frazil_heat_tendency
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: opottempdiff
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: opottemppmdiff
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: opottemptend
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: osaltdiff
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: osaltpmdiff
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: osalttend
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: rhoinsitu
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: rhopot0
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: rhopot2
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: rsdoabsorb
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: so
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: thetao
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: uh
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: uhGM
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: uhml
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: umo
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: uo
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: vh
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: vhGM
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: vhml
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: vmo
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: vo
+    reduction: average
+    kind: r4
+- file_name: ocean_month_rho2
+  time_units: days
+  unlimdim: time
+  is_ocean: true
+  freq: 1 months
+  varlist:
+  - module: ocean_model_rho2
+    var_name: umo
+    reduction: average
+    kind: r4
+  - module: ocean_model_rho2
+    var_name: vmo
+    reduction: average
+    kind: r4
+- file_name: ocean_annual
+  time_units: days
+  unlimdim: time
+  is_ocean: true
+  freq: 12 months
+  varlist:
+  - module: ocean_model
+    var_name: Kd_interface
+    reduction: average
+    kind: r4
+- file_name: ocean_z_annual
+  time_units: days
+  unlimdim: time
+  is_ocean: true
+  freq: 12 months
+  varlist:
+  - module: ocean_model_z
+    var_name: age
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: thetao_xyave
+    reduction: average
+    kind: r4
+  - module: ocean_model_z
+    var_name: so_xyave
+    reduction: average
+    kind: r4

@@ -119,6 +119,7 @@ if (${?debug} == 1 ) set echo
 echo "Starting on `date`"
 echo $HOST
 
+module load python/3.11
 # TODO:
 # -  Check if FRE is loaded?
 #    And if all external commands needed are available.
@@ -403,7 +404,11 @@ EOF
        echo "Is this a good place to run db scripts?????"
        echo $cwd
        echo $workdir/$eee/$hsmdate
-#undefined       echo $refineDiagScriptDir
+       cd $workdir/$eee/$hsmdate
+       python /home/William.Cooke/ncrc/SPEAR_xml/xml/SPEAR_include/refineDiag/global_atmos_ave.py
+       python /home/William.Cooke/ncrc/SPEAR_xml/xml/SPEAR_include/refineDiag/global_ocean_ave.py
+       cd -
+       
     end # foreach ensNum
 
   endif #if ( $pp_ens_member

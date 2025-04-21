@@ -1,3 +1,26 @@
+#Adding 
+#"cmor_land", "mrsos",   "mrsos",   "land_daily", "all", .true., "none", 2
+#
+#Daily sea ice variables:
+#
+#Remove: CN, EXT, EXT_MIN, EXT_MAX, sivol
+#Add: siconc, siu, siv, LSRC, LSNK, BSNK, XPRT
+#This would remove 9 2-D fields and add 7 2-D fields. Plus, the new variables are all critical at the daily scale, whereas some of the removed ones typically don't get used much for daily analysis.
+#Monthly sea ice variables:
+#Remove: EXT_MIN, EXT_MAX, sivol
+#
+# Add ssh_max to ice_daily.
+#
+# Add omg500 to atmos_4xdaily
+# Add wind100m to atmos_4xdaily_avg
+#
+# Add the following to atmos_month.
+# "atmos",     "tdt_dyn", 
+# "moist",     "tdt_ls",  
+# "moist",     "tdt_conv",
+# "radiation", "tdt_lw",  
+# "radiation", "tdt_sw",  
+
 "grid_spec",            -1,  "months",  1, "days", "time"
 "atmos_4xdaily",         6,  "hours",   1, "days", "time"
 "atmos_4xdaily_avg",     6,  "hours",   1, "days", "time"
@@ -16,8 +39,6 @@
 "river_daily",           24, "hours",  1, "days", "time"
 "river_month",            1, "months",  1, "days", "time"
 "river_month_inst",       1, "months", 1, "days", "time"
-
-
 
 #
 #===============================================================================
@@ -213,6 +234,7 @@
 "radiation", "tdt_sw",             "tdt_sw",         "atmos_month", "all", .true.,  "none", 2
 "GFDL/atmosphere_mod", "tdt_dyn",  "tdt_dyn",        "atmos_month", "all", .true.,  "none", 2
 
+
 # aerosols
 "dynamics", "area",                            "area",             "atmos_month_aer", "all", .false., "none", 2
 "dynamics", "bk",                              "bk",               "atmos_month_aer", "all", .false., "none", 2
@@ -282,7 +304,7 @@
 "land",    "area_lake",  "lake_area",  "land_static", "all", .false., "none", 2
 "land",    "area_land",  "land_area",  "land_static", "all", .false., "none", 2
 "land",    "area_soil",  "soil_area",  "land_static", "all", .false., "none", 2
-"land",    "cell_area",  "cell_area",  "land_static", "all", .false., "none", 2
+#"land",    "cell_area",  "cell_area",  "land_static", "all", .false., "none", 2
 "land",    "frac_soil",  "frac_soil",  "land_static", "all", .false., "none", 2
 "land",    "geolat_t",   "geolat_t",   "land_static", "all", .false., "none", 1
 "land",    "geolon_t",   "geolon_t",   "land_static", "all", .false., "none", 1
@@ -330,10 +352,10 @@
 #"vegn",      "harv_rate_past", "harv_rate_past", "land_month", "all", .true., "none", 2
 #"vegn",      "harv_rate_scnd", "harv_rate_scnd", "land_month", "all", .true., "none", 2
 
-"land",  "swdns",  "swdns",  "land_month", "all", .true., "none", 2
-"land",  "swups",  "swups",  "land_month", "all", .true., "none", 2
-"land",  "lwdns",  "lwdns",  "land_month", "all", .true., "none", 2
-"land",  "lwups",  "lwups",  "land_month", "all", .true., "none", 2
+#"land",  "swdns",  "swdns",  "land_month", "all", .true., "none", 2
+#"land",  "swups",  "swups",  "land_month", "all", .true., "none", 2
+#"land",  "lwdns",  "lwdns",  "land_month", "all", .true., "none", 2
+#"land",  "lwups",  "lwups",  "land_month", "all", .true., "none", 2
 
 "land",      "fsws",    "fsws",    "land_month", "all", .true., "none", 2
 "land",      "flws",    "flws",    "land_month", "all", .true., "none", 2
@@ -350,7 +372,7 @@
 "flux_land", "v_ref",   "v_ref",   "land_month", "all", .true., "none", 2
 
 "cmor_land", "tws",      "tws",        "land_month",  "all", .true., "none", 2
-"land",    "area",       "area",       "land_month",  "all", .true., "none", 2
+#"land",    "area",       "area",       "land_month",  "all", .true., "none", 2
 "land",    "area_glac",  "glac_area",  "land_month",  "all", .true., "none", 2
 "land",    "evap",       "evap_land",  "land_month",  "all", .true., "none", 2
 "land",    "flw",        "flw",        "land_month",  "all", .true., "none", 2
