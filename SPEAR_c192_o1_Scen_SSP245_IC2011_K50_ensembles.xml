@@ -53,16 +53,16 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
-  <property name="AWG_GIT_TAG"            value="2023.04"/>               <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2023.04"/>
-  <property name="LAND_GIT_TAG"           value="2023.03"/>    <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"      value="2023.04"/>         <!-- git tag for atmos_drivers -->
-  <property name="ATMOS_CUBED_SPHERE_TAG" value="origin/dev/gfdl"/>    <!-- git tag for atmos_cubed_sphere source code -->
-  <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>         <!-- git tag for AWG source code -->
+  <property name="AWG_GIT_TAG"            value="2024.02"/>               <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"            value="2025.01"/>
+  <property name="LAND_GIT_TAG"           value="2024.01"/>    <!-- git tag for Land source code -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2025.01"/>         <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG" value="2024.02"/>    <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="ICE_PARAM_GIT_TAG"      value="2024.02"/>         <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20240410" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-21" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20250331" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_VERSION" value="bronx-23" />              <!-- FRE version for use in this XML -->
 
   <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
 
@@ -73,7 +73,7 @@ SPEAR_c192_omlp25_Control_2010_A01
   <property name="PROD_SIMTIME"     value="40"/>   <!--simulation length in years-->
 
   <property name="PP_START_YEAR"   value="0001"/>
-  <property name="PP_START_YEAR_HIST"   value="2011"/>
+  <property name="PP_START_YEAR_HIST"   value="2101"/>
 
   <property name="PP_AMIP_CHUNK" value="5yr"/>
   <property name="PP_AMIP_START_YEAR"  value="1981"/>
@@ -83,7 +83,7 @@ SPEAR_c192_omlp25_Control_2010_A01
 
    <property name="CHUNK_LENGTH_A" value="10yr"/>
    <property name="CHUNK_LENGTH_B" value="10yr"/>
-   <property name="CHUNK_LENGTH_C" value="90yr"/>
+   <property name="CHUNK_LENGTH_C" value="1000yr"/>
    <property name="CHUNK_LENGTH_A_c384" value="10yr"/>
    <property name="CHUNK_LENGTH_B_c384" value="100yr"/>
    <property name="CHUNK_LENGTH_C_c384" value="1000yr"/>
@@ -232,8 +232,8 @@ configuration.
     <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.postprocess'])"/>
 
     <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel'])"/>
-    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel18'])"/>
-    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel21'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc5-intel23'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc5-intel23_2_0'])"/>
     <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel-oneapi-21_3'])"/>
     <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc5-intel-classic'])"/>
 
@@ -241,9 +241,9 @@ configuration.
     <!-- ncrc4.intel18 is the platform typically used for c4 -->
 
     <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel-oneapi-21_3'])"/>
-    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel21'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc5.intel23_2_0'])"/>
     <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel'])"/>
-    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel18'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc5.intel23'])"/>
 
 
     <!-- ncrc5.intel23-classic is the recommended platform for c5, fully coupled experiment-->
@@ -345,6 +345,23 @@ configuration.
     </input>
   </freInclude>
 
+  <freInclude name="common_cmip6_ssp245_O3_2500">
+    <input>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.isoprene.1x1.2000.nc</dataSource>
+      </dataFile>
+       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/common_cmip6/emissions.terpenes.1x1.2000.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp245/cmip6_Scenario_ssp245_GHG_ODS_conc_2500.tar</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/o3.climatology.nc" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">/gpfs/f5/gfdl_sd/world-shared/SPEAR/datasets/2011-2500/emissions/SSP245/mmro3_ScenarioMIP-ssp245_200001-251012.nc </dataSource>
+      </dataFile>
+    </input>
+  </freInclude>
+
   <freInclude name="CO2_timeseries">
     <input>
       <dataFile label="input" target="INPUT/co2_data.nc" chksum="" size="" timestamp="">
@@ -382,6 +399,26 @@ configuration.
     </input>
   </freInclude>
 
+  <freInclude name="Volcano_Solar_TimeSeries_cmip6_v3_2500">
+    <input>
+      <dataFile label="input" target="INPUT/extsw_data.nc" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">/gpfs/f5/gfdl_sd/world-shared/SPEAR/datasets/CM4/forcings/Volcano_Solar_TimeSeries_cmip6_v3_2500/extsw_data184901-251012.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/omgsw_data.nc" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">/gpfs/f5/gfdl_sd/world-shared/SPEAR/datasets/CM4/forcings/Volcano_Solar_TimeSeries_cmip6_v3_2500/omgsw_data184901-251012.nc</dataSource>
+      </dataFile>
+        <dataFile label="input" target="INPUT/asmsw_data.nc" chksum="" size="" timestamp="">
+      <dataSource platform="$(platform)">/gpfs/f5/gfdl_sd/world-shared/SPEAR/datasets/CM4/forcings/Volcano_Solar_TimeSeries_cmip6_v3_2500/asmsw_data184901-251012.nc</dataSource>
+      </dataFile>
+        <dataFile label="input" target="INPUT/extlw_data.nc" chksum="" size="" timestamp="">
+      <dataSource platform="$(platform)">/gpfs/f5/gfdl_sd/world-shared/SPEAR/datasets/CM4/forcings/Volcano_Solar_TimeSeries_cmip6_v3_2500/extlw_data184901-251012.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/Volcano_Solar_TimeSeries_cmip6_v3/lean_solar_spectral_data.dat</dataSource>
+      </dataFile>
+    </input>
+  </freInclude>
+
   <freInclude name="emissions_cmip6_ssp585">
     <input>
       <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
@@ -404,6 +441,16 @@ configuration.
     </input>
   </freInclude>
 
+  <freInclude name="emissions_cmip6_ssp245_constant_past_2100">
+    <input>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">/gpfs/f5/gfdl_sd/world-shared/SPEAR/datasets/2011-2500/emissions/SSP245/emissions.fastchem.0.5x0.5.2010-2510.tar</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/anthro_so2.2010_2510.nc" chksum="" size="" timestamp="">
+        <dataSource platform="$(platform)">/gpfs/f5/gfdl_sd/world-shared/SPEAR/datasets/2011-2500/emissions/SSP245/emissions.simple.so2.0.5x0.5.2010-2510.nc</dataSource>
+      </dataFile>
+    </input>
+  </freInclude>
 
   <freInclude name="L32_gas_conc">
     <input>
@@ -678,6 +725,998 @@ FATAL from PE  1481: compute_qs: saturation vapor pressure table overflow, nbad=
      </dataFile> 
   </input>
 </experiment>
+
+<experiment name="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_01_03_extension" inherit="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_01_03">
+<description>
+See if the job will run past 2100 and try to get out to 2200.
+Test to see what breaks.
+Then update the regular job accordingly. (No, we are going to run this separately, as the original experiment was run on c4 with a different executable)
+
+Update emissions (bc,oc,aircraft, so2) files and ozone file.
+Update Volcano asm, omg, ext datasets.
+lean_solar_spectral_data.dat ends in 2300. 
+Update xincludes to point at the updated filenames.
+Update namelists to point at the updated filenames.
+</description>
+  <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
+      <namelist name="carbon_aerosol_nml">
+      bcff_source = 'gocart_2007',
+        bcff_input_name(1)='anthro',
+        bcff_filename='emissions.bc.0.5x0.5.2010-2510.nc',
+        bcff_time_dependency_type='time_varying',bcff_dataset_entry=$baseDate
+      omff_source = 'gocart_2007',
+        omff_input_name(1)='anthro',
+        omff_filename='emissions.om.0.5x0.5.2010-2510.nc',
+        omff_time_dependency_type='time_varying',omff_dataset_entry=$baseDate
+      omsh_source = 'gocart_2007',
+        omsh_input_name(1)='ship',
+        omsh_filename='emissions.om.0.5x0.5.2010-2510.nc',
+        omsh_time_dependency_type='time_varying',omsh_dataset_entry=$baseDate
+      bcsh_source = 'gocart_2007',
+        bcsh_input_name(1)='ship',
+        bcsh_filename='emissions.bc.0.5x0.5.2010-2510.nc',
+        bcsh_time_dependency_type='time_varying',bcsh_dataset_entry=$baseDate
+      bcav_source = 'do_aircraft'
+        bcav_input_name(1)='fuel',
+        bcav_filename='emissions.aircraft.aero.0.5x0.5.2010-2510.nc',
+        bcav_time_dependency_type='time_varying',bcav_dataset_entry=$baseDate
+      bcbb_source = 'AEROCOM',
+        bcbb_filename='emissions.bc.0.5x0.5.2010-2510.nc',
+        bcbb_input_name(1)='bb_l1'
+        bcbb_input_name(2)='bb_l2'
+        bcbb_input_name(3)='bb_l3'
+        bcbb_input_name(4)='bb_l4'
+        bcbb_input_name(5)='bb_l5'
+        bcbb_input_name(6)='bb_l6'
+        bcbb_time_dependency_type='time_varying',bcbb_dataset_entry=$baseDate
+      ombb_source = 'AEROCOM',
+        ombb_filename='emissions.om.0.5x0.5.2010-2510.nc',
+        ombb_input_name(1)='bb_l1'
+        ombb_input_name(2)='bb_l2'
+        ombb_input_name(3)='bb_l3'
+        ombb_input_name(4)='bb_l4'
+        ombb_input_name(5)='bb_l5'
+        ombb_input_name(6)='bb_l6'
+        ombb_time_dependency_type='time_varying',ombb_dataset_entry=$baseDate
+      omna_source = '',
+      omss_source = 'ODowd'
+        omss_coef = 0.05
+      no_biobur_if_no_pbl = .false.
+      do_biobur_pbl_bug = .false.
+      </namelist>
+      <namelist name="simple_sulfate_nml">
+        gas_conc_filename='gas_conc_3D_am3p9.nc'
+        gas_conc_time_dependency_type='constant'
+        cont_volc_source='do_cont_volc'
+        expl_volc_source='do_expl_volc'
+          aerocom_emission_filename='so2_0.25_volcanoes.nc'
+        aircraft_source='do_aircraft',
+          aircraft_filename='emissions.aircraft.aero.0.5x0.5.2010-2510.nc',
+          aircraft_emission_name(1)='fuel'
+          so2_aircraft_EI=0.001
+          aircraft_time_dependency_type='time_varying',aircraft_dataset_entry=$baseDate
+        anthro_source='do_anthro',
+          anthro_emission_name(1)='so2ff',
+          anthro_emission_name(2)='so4ff',
+          anthro_filename='anthro_so2.2010_2510.nc',
+          anthro_time_dependency_type='time_varying',anthro_dataset_entry=$baseDate
+        biobur_source='do_biobur',
+          biobur_emission_name(1)='so2bb',
+          biobur_emission_name(2)='so4bb',
+          biobur_filename='anthro_so2.2010_2510.nc',
+          biobur_time_dependency_type='time_varying',biobur_dataset_entry=$baseDate
+        cloud_chem_solver="f1p"
+        pH_cloud=4.5
+        no_biobur_if_no_pbl = .false.
+      </namelist>
+      <namelist name="coupler_nml">
+        do_chksum = .false.
+        months = $months,
+        days   = $days,
+        current_date = 2101,1,1,0,0,0,
+        calendar = 'julian',
+        dt_cpld = 3600,
+        dt_atmos = 1200,
+        do_atmos = .true.,
+        do_land = .true.,
+        do_ice = .true.,
+        do_ocean = .true.,
+        atmos_npes = $atm_ranks
+        atmos_nthreads = $atm_threads
+        do_concurrent_radiation=.false.
+        radiation_nthreads = 1
+        ocean_npes = $ocn_ranks,
+        concurrent = .true.
+        use_lag_fluxes=.true.
+        check_stocks=0
+      </namelist>
+     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR/initCond_SPEAR/SPEAR_c192_SSP_Scenario/ens_01_03/21010101.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_SSP_Scenario/ens_01_03/21010101.tar</dataSource>
+     </dataFile> 
+      <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
+      <dataFile label="input" target="INPUT/transitions.nc" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp245/RCP4.5_SSP2_2001-2100_transitions_v20180926.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/states.nc" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp245/RCP4.5_SSP2_2001-2100_states_v20180926.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/landfrac.nc" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/landuse/LUH2/v2.0h/landfrac.nc</dataSource>
+      </dataFile>
+      <xi:include xpointer="xpointer(//freInclude[@name='c192_LM4_SPEAR']/input/node())"/>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C192_OM360x320.20171213/SPEAR_c192_hydrography.v20171218.tar</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C192.OM360x320.20171213/SPEAR_c192_hydrography.v20171218.tar</dataSource> 
+      </dataFile>
+      <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
+      <!--
+      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6_ssp245']/input/node())"/>
+      -->
+      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6_ssp245_O3_2500']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='Volcano_Solar_TimeSeries_cmip6_v3_2500']/input/node())"/>
+      <!--
+      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_ssp245']/input/node())"/>
+      -->
+      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_ssp245_constant_past_2100']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='CO2_timeseries_ssp245']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='L32_gas_conc']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='c192_stack_size']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='csh_adjust_dry_mass']/input/node())"/>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='SPEAR_domain_decomp']/input/node())"/>
+      <!--MOM6 Input datasets-->
+      <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
+      <!-- overwrite  Channels file -->
+      <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
+      </dataFile>
+      <!--MOM6 Input datasets-->
+      <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(includeDir)/ice_ocean_SIS2/OM4_025/INPUT/hycom1_75_800m.nc</dataSource>
+      </dataFile>
+      <!-- Override the MOM_input in the MOM6_data xi include above --> 
+      <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
+         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/SPEAR/MOM_input_P39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_P39_init</dataSource>
+      </dataFile>
+      <!--SIS Input datasets-->
+      <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
+      <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
+         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/KH_background_2d.nc">
+         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/">
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
+      </dataFile>
+      <csh type="always"><![CDATA[
+######BEGIN MOM6 and SIS2 layout setup################
+##THIS HAS TO BE PART OF csh type=always###
+
+touch $work/INPUT/MOM_override
+
+cat > $work/INPUT/MOM_override << EOF
+#override KV_ML_INVZ2 = 1.0E-4
+
+#override DEFAULT_ANSWER_DATE=20181231
+#override INTERNAL_WAVE_SPEED_BETTER_EST =False
+
+#override REMAP_UV_USING_OLD_ALG = True
+#override Z_INIT_REMAP_OLD_ALG = True
+#override FIX_USTAR_GUSTLESS_BUG =False
+#override GRID_ROTATION_ANGLE_BUGS = True
+#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
+#override KAPPA_SHEAR_ITER_BUG = True
+#override USE_GM_WORK_BUG = True
+#override USE_MLD_ITERATION = False
+#override USE_TRIPOLAR_GEOLONB_BUG =True 
+#override GUST_CONST = 0.02
+#override MEKE_ALPHA_EADY = 0.05
+#override MEKE_ALPHA_RHINES = 0.05
+#override MIN_SALINITY = 0.01
+#override USE_INACCURATE_PGF_RHO_ANOM=True
+#override USE_DIABATIC_TIME_BUG=True
+#override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
+#override KH_BG_2D_BUG=True
+#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
+#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
+NUM_DIAG_COORDS = 2             ! default = 1
+                                ! The number of diagnostic vertical coordinates to use.
+                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
+DIAG_COORDS = "z Z ZSTAR", "rho2 RHO2 RHO" !
+
+DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
+                                ! Determines how to specify the coordinate
+                                ! resolution. Valid options are:
+                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
+                                !  UNIFORM[:N] - uniformly distributed
+                                !  FILE:string - read from a file. The string specifies
+                                !                the filename and variable name, separated
+                                !                by a comma or space, e.g. FILE:lev.nc,dz
+                                !                or FILE:lev.nc,interfaces=zw
+                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
+                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
+                                !  HYBRID:string - read from a file. The string specifies
+                                !                the filename and two variable names, separated
+                                !                by a comma or space, for sigma-2 and dz. e.g.
+                                !                HYBRID:vgrid.nc,sigma2,dz
+
+EOF
+
+touch $work/INPUT/SIS_override
+
+cat > $work/INPUT/SIS_override << EOF
+#override CP_SEAWATER = 3992.
+#override CP_BRINE = 3992.
+#override ICE_BULK_SALINITY = 0.0
+#override ICE_RELATIVE_SALINITY = 0.17
+#override SIS2_FILLING_FRAZIL = T
+#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
+#override SIS_CONTINUITY_SCHEME = "PCM"
+#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
+#override GRID_ROTATION_ANGLE_BUGS =True
+#override USE_TRIPOLAR_GEOLONB_BUG = True
+#override INCONSISTENT_COVER_BUG = True
+#override CFL_MASS_NEGLECT_BUG=True
+#override RESTART_CHECKSUMS_REQUIRED =False
+EOF
+
+#scan auxiliary_nml
+#set OCN_MASK_TABLE = 
+#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+
+cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
+#override IO_LAYOUT = $ocn_io_layout
+#override LAYOUT    = $ocn_layout
+#override MASKTABLE = $ocn_mask_table
+MOM_LAYOUT_EOF
+
+#scan auxiliary_nml
+#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+
+cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
+#override IO_LAYOUT = $ice_io_layout
+#override LAYOUT    = $ice_layout
+#override MASKTABLE = $ocn_mask_table
+SIS_LAYOUT_EOF
+
+######END MOM6 and SIS2 layout setup################
+
+cd $work/INPUT
+
+if ( $currentSeg == 1 ) then
+#     rm -f coupler.res
+     foreach i ( MOM.res*nc)
+       chmod u+w $i
+       ncrename -v Kv_turb,Kv_shear -v Kd_turb,Kd_shear $i
+     end
+endif
+cd $work
+
+#------------------------------------------
+## Find out whether to restart.
+# MOM6 restart switch
+   set restart_flag = 'r'
+   set sis_restart_flag = 'r'
+cd $work
+
+## Run the model
+#------------------------------------------
+###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
+set OCN_MASK_TABLE  =  $ocn_mask_table
+set OCN_LAYOUT    = $ocn_layout
+set OCN_IO_LAYOUT = $ocn_io_layout
+set ICE_LAYOUT    = $ice_layout
+set ICE_IO_LAYOUT = $ice_io_layout
+set atmos_npes = $atm_ranks
+set ocean_npes = $ocn_ranks
+set fv_layout = $atm_layout
+set fv_io_layout  = $atm_io_layout
+set land_layout   = $lnd_layout
+set land_io_layout = $lnd_io_layout
+set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nxblocks = $dummy
+set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nyblocks = $dummy
+]]>
+    </csh>
+  </input>
+  <runtime>
+    <production simTime="100" units="years" >
+      <segment simTime="1" units="years"/>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108_production_c192']/node())"/>
+    </production> 
+      <regression name="threemonth">
+        <run months="3" >
+          <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A384x1_O36_c192']/node())"/>
+          </run>
+      </regression>
+      <regression name="basic_prodsettings">
+        <run days="8" >
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
+        </run>
+      </regression>
+  </runtime>
+</experiment>
+
+
+<experiment name="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_04_06_extension" inherit="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_04_06">
+<description>
+See if the job will run past 2100 and try to get out to 2200.
+Test to see what breaks.
+Then update the regular job accordingly. (No, we are going to run this separately, as the original experiment was run on c4 with a different executable)
+
+Update emissions (bc,oc,aircraft, so2) files and ozone file.
+Update Volcano asm, omg, ext datasets.
+lean_solar_spectral_data.dat ends in 2300. 
+Update xincludes to point at the updated filenames.
+Update namelists to point at the updated filenames.
+</description>
+  <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .true.
+        interp_method = 'second_order'
+      </namelist> 
+      <namelist name="carbon_aerosol_nml">
+      bcff_source = 'gocart_2007',
+        bcff_input_name(1)='anthro',
+        bcff_filename='emissions.bc.0.5x0.5.2010-2510.nc',
+        bcff_time_dependency_type='time_varying',bcff_dataset_entry=$baseDate
+      omff_source = 'gocart_2007',
+        omff_input_name(1)='anthro',
+        omff_filename='emissions.om.0.5x0.5.2010-2510.nc',
+        omff_time_dependency_type='time_varying',omff_dataset_entry=$baseDate
+      omsh_source = 'gocart_2007',
+        omsh_input_name(1)='ship',
+        omsh_filename='emissions.om.0.5x0.5.2010-2510.nc',
+        omsh_time_dependency_type='time_varying',omsh_dataset_entry=$baseDate
+      bcsh_source = 'gocart_2007',
+        bcsh_input_name(1)='ship',
+        bcsh_filename='emissions.bc.0.5x0.5.2010-2510.nc',
+        bcsh_time_dependency_type='time_varying',bcsh_dataset_entry=$baseDate
+      bcav_source = 'do_aircraft'
+        bcav_input_name(1)='fuel',
+        bcav_filename='emissions.aircraft.aero.0.5x0.5.2010-2510.nc',
+        bcav_time_dependency_type='time_varying',bcav_dataset_entry=$baseDate
+      bcbb_source = 'AEROCOM',
+        bcbb_filename='emissions.bc.0.5x0.5.2010-2510.nc',
+        bcbb_input_name(1)='bb_l1'
+        bcbb_input_name(2)='bb_l2'
+        bcbb_input_name(3)='bb_l3'
+        bcbb_input_name(4)='bb_l4'
+        bcbb_input_name(5)='bb_l5'
+        bcbb_input_name(6)='bb_l6'
+        bcbb_time_dependency_type='time_varying',bcbb_dataset_entry=$baseDate
+      ombb_source = 'AEROCOM',
+        ombb_filename='emissions.om.0.5x0.5.2010-2510.nc',
+        ombb_input_name(1)='bb_l1'
+        ombb_input_name(2)='bb_l2'
+        ombb_input_name(3)='bb_l3'
+        ombb_input_name(4)='bb_l4'
+        ombb_input_name(5)='bb_l5'
+        ombb_input_name(6)='bb_l6'
+        ombb_time_dependency_type='time_varying',ombb_dataset_entry=$baseDate
+      omna_source = '',
+      omss_source = 'ODowd'
+        omss_coef = 0.05
+      no_biobur_if_no_pbl = .false.
+      do_biobur_pbl_bug = .false.
+      </namelist>
+      <namelist name="simple_sulfate_nml">
+        gas_conc_filename='gas_conc_3D_am3p9.nc'
+        gas_conc_time_dependency_type='constant'
+        cont_volc_source='do_cont_volc'
+        expl_volc_source='do_expl_volc'
+          aerocom_emission_filename='so2_0.25_volcanoes.nc'
+        aircraft_source='do_aircraft',
+          aircraft_filename='emissions.aircraft.aero.0.5x0.5.2010-2510.nc',
+          aircraft_emission_name(1)='fuel'
+          so2_aircraft_EI=0.001
+          aircraft_time_dependency_type='time_varying',aircraft_dataset_entry=$baseDate
+        anthro_source='do_anthro',
+          anthro_emission_name(1)='so2ff',
+          anthro_emission_name(2)='so4ff',
+          anthro_filename='anthro_so2.2010_2510.nc',
+          anthro_time_dependency_type='time_varying',anthro_dataset_entry=$baseDate
+        biobur_source='do_biobur',
+          biobur_emission_name(1)='so2bb',
+          biobur_emission_name(2)='so4bb',
+          biobur_filename='anthro_so2.2010_2510.nc',
+          biobur_time_dependency_type='time_varying',biobur_dataset_entry=$baseDate
+        cloud_chem_solver="f1p"
+        pH_cloud=4.5
+        no_biobur_if_no_pbl = .false.
+      </namelist>
+      <namelist name="coupler_nml">
+        do_chksum = .false.
+        months = $months,
+        days   = $days,
+        current_date = 2101,1,1,0,0,0,
+        calendar = 'julian',
+        dt_cpld = 3600,
+        dt_atmos = 1200,
+        do_atmos = .true.,
+        do_land = .true.,
+        do_ice = .true.,
+        do_ocean = .true.,
+        atmos_npes = $atm_ranks
+        atmos_nthreads = $atm_threads
+        do_concurrent_radiation=.false.
+        radiation_nthreads = 1
+        ocean_npes = $ocn_ranks,
+        concurrent = .true.
+        use_lag_fluxes=.true.
+        check_stocks=0
+      </namelist>
+     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR/initCond_SPEAR/SPEAR_c192_SSP_Scenario/ens_04_06/21010101.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_SSP_Scenario/ens_04_06/21010101.tar</dataSource>
+     </dataFile> 
+      <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
+      <dataFile label="input" target="INPUT/transitions.nc" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp245/RCP4.5_SSP2_2001-2100_transitions_v20180926.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/states.nc" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp245/RCP4.5_SSP2_2001-2100_states_v20180926.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/landfrac.nc" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/landuse/LUH2/v2.0h/landfrac.nc</dataSource>
+      </dataFile>
+      <xi:include xpointer="xpointer(//freInclude[@name='c192_LM4_SPEAR']/input/node())"/>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C192_OM360x320.20171213/SPEAR_c192_hydrography.v20171218.tar</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C192.OM360x320.20171213/SPEAR_c192_hydrography.v20171218.tar</dataSource> 
+      </dataFile>
+      <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
+      <!--
+      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6_ssp245']/input/node())"/>
+      -->
+      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6_ssp245_O3_2500']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='Volcano_Solar_TimeSeries_cmip6_v3_2500']/input/node())"/>
+      <!--
+      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_ssp245']/input/node())"/>
+      -->
+      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_ssp245_constant_past_2100']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='CO2_timeseries_ssp245']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='L32_gas_conc']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='c192_stack_size']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='csh_adjust_dry_mass']/input/node())"/>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='SPEAR_domain_decomp']/input/node())"/>
+      <!--MOM6 Input datasets-->
+      <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
+      <!-- overwrite  Channels file -->
+      <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
+      </dataFile>
+      <!--MOM6 Input datasets-->
+      <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(includeDir)/ice_ocean_SIS2/OM4_025/INPUT/hycom1_75_800m.nc</dataSource>
+      </dataFile>
+      <!-- Override the MOM_input in the MOM6_data xi include above --> 
+      <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
+         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/SPEAR/MOM_input_P39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_P39_init</dataSource>
+      </dataFile>
+      <!--SIS Input datasets-->
+      <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
+      <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
+         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/KH_background_2d.nc">
+         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/">
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
+      </dataFile>
+      <csh type="always"><![CDATA[
+######BEGIN MOM6 and SIS2 layout setup################
+##THIS HAS TO BE PART OF csh type=always###
+
+touch $work/INPUT/MOM_override
+
+cat > $work/INPUT/MOM_override << EOF
+#override KV_ML_INVZ2 = 1.0E-4
+
+#override DEFAULT_ANSWER_DATE=20181231
+#override INTERNAL_WAVE_SPEED_BETTER_EST =False
+
+#override REMAP_UV_USING_OLD_ALG = True
+#override Z_INIT_REMAP_OLD_ALG = True
+#override FIX_USTAR_GUSTLESS_BUG =False
+#override GRID_ROTATION_ANGLE_BUGS = True
+#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
+#override KAPPA_SHEAR_ITER_BUG = True
+#override USE_GM_WORK_BUG = True
+#override USE_MLD_ITERATION = False
+#override USE_TRIPOLAR_GEOLONB_BUG =True 
+#override GUST_CONST = 0.02
+#override MEKE_ALPHA_EADY = 0.05
+#override MEKE_ALPHA_RHINES = 0.05
+#override MIN_SALINITY = 0.01
+#override USE_INACCURATE_PGF_RHO_ANOM=True
+#override USE_DIABATIC_TIME_BUG=True
+#override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
+#override KH_BG_2D_BUG=True
+#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
+#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
+NUM_DIAG_COORDS = 2             ! default = 1
+                                ! The number of diagnostic vertical coordinates to use.
+                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
+DIAG_COORDS = "z Z ZSTAR", "rho2 RHO2 RHO" !
+
+DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
+                                ! Determines how to specify the coordinate
+                                ! resolution. Valid options are:
+                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
+                                !  UNIFORM[:N] - uniformly distributed
+                                !  FILE:string - read from a file. The string specifies
+                                !                the filename and variable name, separated
+                                !                by a comma or space, e.g. FILE:lev.nc,dz
+                                !                or FILE:lev.nc,interfaces=zw
+                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
+                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
+                                !  HYBRID:string - read from a file. The string specifies
+                                !                the filename and two variable names, separated
+                                !                by a comma or space, for sigma-2 and dz. e.g.
+                                !                HYBRID:vgrid.nc,sigma2,dz
+
+EOF
+
+touch $work/INPUT/SIS_override
+
+cat > $work/INPUT/SIS_override << EOF
+#override CP_SEAWATER = 3992.
+#override CP_BRINE = 3992.
+#override ICE_BULK_SALINITY = 0.0
+#override ICE_RELATIVE_SALINITY = 0.17
+#override SIS2_FILLING_FRAZIL = T
+#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
+#override SIS_CONTINUITY_SCHEME = "PCM"
+#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
+#override GRID_ROTATION_ANGLE_BUGS =True
+#override USE_TRIPOLAR_GEOLONB_BUG = True
+#override INCONSISTENT_COVER_BUG = True
+#override CFL_MASS_NEGLECT_BUG=True
+#override RESTART_CHECKSUMS_REQUIRED =False
+EOF
+
+#scan auxiliary_nml
+#set OCN_MASK_TABLE = 
+#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+
+cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
+#override IO_LAYOUT = $ocn_io_layout
+#override LAYOUT    = $ocn_layout
+#override MASKTABLE = $ocn_mask_table
+MOM_LAYOUT_EOF
+
+#scan auxiliary_nml
+#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+
+cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
+#override IO_LAYOUT = $ice_io_layout
+#override LAYOUT    = $ice_layout
+#override MASKTABLE = $ocn_mask_table
+SIS_LAYOUT_EOF
+
+######END MOM6 and SIS2 layout setup################
+
+cd $work/INPUT
+
+if ( $currentSeg == 1 ) then
+#     rm -f coupler.res
+     foreach i ( MOM.res*nc)
+       chmod u+w $i
+       ncrename -v Kv_turb,Kv_shear -v Kd_turb,Kd_shear $i
+     end
+endif
+cd $work
+
+#------------------------------------------
+## Find out whether to restart.
+# MOM6 restart switch
+   set restart_flag = 'r'
+   set sis_restart_flag = 'r'
+cd $work
+
+## Run the model
+#------------------------------------------
+###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
+set OCN_MASK_TABLE  =  $ocn_mask_table
+set OCN_LAYOUT    = $ocn_layout
+set OCN_IO_LAYOUT = $ocn_io_layout
+set ICE_LAYOUT    = $ice_layout
+set ICE_IO_LAYOUT = $ice_io_layout
+set atmos_npes = $atm_ranks
+set ocean_npes = $ocn_ranks
+set fv_layout = $atm_layout
+set fv_io_layout  = $atm_io_layout
+set land_layout   = $lnd_layout
+set land_io_layout = $lnd_io_layout
+set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nxblocks = $dummy
+set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nyblocks = $dummy
+]]>
+    </csh>
+  </input>
+  <runtime>
+    <production simTime="100" units="years" >
+      <segment simTime="1" units="years"/>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108_production_c192']/node())"/>
+    </production> 
+      <regression name="threemonth">
+        <run months="3" >
+          <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A384x1_O36_c192']/node())"/>
+          </run>
+      </regression>
+      <regression name="basic_prodsettings">
+        <run days="8" >
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
+        </run>
+      </regression>
+  </runtime>
+</experiment>
+
+
+<experiment name="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_07_09_extension" inherit="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_07_09">
+<description>
+See if the job will run past 2100 and try to get out to 2200.
+Test to see what breaks.
+Then update the regular job accordingly. (No, we are going to run this separately, as the original experiment was run on c4 with a different executable)
+
+Update emissions (bc,oc,aircraft, so2) files and ozone file.
+Update Volcano asm, omg, ext datasets.
+lean_solar_spectral_data.dat ends in 2300. 
+Update xincludes to point at the updated filenames.
+Update namelists to point at the updated filenames.
+
+7/15/2024
+Time = 2144  6 19  0  0  0    ch4 = 1506.820110ppb  n2o =  378.353320ppb
+FATAL from PE   200: compute_qs: saturation vapor pressure table overflow, nbad=     33
+
+
+Flip make_exchange_reproduce to .false. and extend
+</description>
+  <input>
+      <namelist name="xgrid_nml">
+        make_exchange_reproduce = .false.
+        interp_method = 'second_order'
+      </namelist> 
+      <namelist name="carbon_aerosol_nml">
+      bcff_source = 'gocart_2007',
+        bcff_input_name(1)='anthro',
+        bcff_filename='emissions.bc.0.5x0.5.2010-2510.nc',
+        bcff_time_dependency_type='time_varying',bcff_dataset_entry=$baseDate
+      omff_source = 'gocart_2007',
+        omff_input_name(1)='anthro',
+        omff_filename='emissions.om.0.5x0.5.2010-2510.nc',
+        omff_time_dependency_type='time_varying',omff_dataset_entry=$baseDate
+      omsh_source = 'gocart_2007',
+        omsh_input_name(1)='ship',
+        omsh_filename='emissions.om.0.5x0.5.2010-2510.nc',
+        omsh_time_dependency_type='time_varying',omsh_dataset_entry=$baseDate
+      bcsh_source = 'gocart_2007',
+        bcsh_input_name(1)='ship',
+        bcsh_filename='emissions.bc.0.5x0.5.2010-2510.nc',
+        bcsh_time_dependency_type='time_varying',bcsh_dataset_entry=$baseDate
+      bcav_source = 'do_aircraft'
+        bcav_input_name(1)='fuel',
+        bcav_filename='emissions.aircraft.aero.0.5x0.5.2010-2510.nc',
+        bcav_time_dependency_type='time_varying',bcav_dataset_entry=$baseDate
+      bcbb_source = 'AEROCOM',
+        bcbb_filename='emissions.bc.0.5x0.5.2010-2510.nc',
+        bcbb_input_name(1)='bb_l1'
+        bcbb_input_name(2)='bb_l2'
+        bcbb_input_name(3)='bb_l3'
+        bcbb_input_name(4)='bb_l4'
+        bcbb_input_name(5)='bb_l5'
+        bcbb_input_name(6)='bb_l6'
+        bcbb_time_dependency_type='time_varying',bcbb_dataset_entry=$baseDate
+      ombb_source = 'AEROCOM',
+        ombb_filename='emissions.om.0.5x0.5.2010-2510.nc',
+        ombb_input_name(1)='bb_l1'
+        ombb_input_name(2)='bb_l2'
+        ombb_input_name(3)='bb_l3'
+        ombb_input_name(4)='bb_l4'
+        ombb_input_name(5)='bb_l5'
+        ombb_input_name(6)='bb_l6'
+        ombb_time_dependency_type='time_varying',ombb_dataset_entry=$baseDate
+      omna_source = '',
+      omss_source = 'ODowd'
+        omss_coef = 0.05
+      no_biobur_if_no_pbl = .false.
+      do_biobur_pbl_bug = .false.
+      </namelist>
+      <namelist name="simple_sulfate_nml">
+        gas_conc_filename='gas_conc_3D_am3p9.nc'
+        gas_conc_time_dependency_type='constant'
+        cont_volc_source='do_cont_volc'
+        expl_volc_source='do_expl_volc'
+          aerocom_emission_filename='so2_0.25_volcanoes.nc'
+        aircraft_source='do_aircraft',
+          aircraft_filename='emissions.aircraft.aero.0.5x0.5.2010-2510.nc',
+          aircraft_emission_name(1)='fuel'
+          so2_aircraft_EI=0.001
+          aircraft_time_dependency_type='time_varying',aircraft_dataset_entry=$baseDate
+        anthro_source='do_anthro',
+          anthro_emission_name(1)='so2ff',
+          anthro_emission_name(2)='so4ff',
+          anthro_filename='anthro_so2.2010_2510.nc',
+          anthro_time_dependency_type='time_varying',anthro_dataset_entry=$baseDate
+        biobur_source='do_biobur',
+          biobur_emission_name(1)='so2bb',
+          biobur_emission_name(2)='so4bb',
+          biobur_filename='anthro_so2.2010_2510.nc',
+          biobur_time_dependency_type='time_varying',biobur_dataset_entry=$baseDate
+        cloud_chem_solver="f1p"
+        pH_cloud=4.5
+        no_biobur_if_no_pbl = .false.
+      </namelist>
+      <namelist name="coupler_nml">
+        do_chksum = .false.
+        months = $months,
+        days   = $days,
+        current_date = 2101,1,1,0,0,0,
+        calendar = 'julian',
+        dt_cpld = 3600,
+        dt_atmos = 1200,
+        do_atmos = .true.,
+        do_land = .true.,
+        do_ice = .true.,
+        do_ocean = .true.,
+        atmos_npes = $atm_ranks
+        atmos_nthreads = $atm_threads
+        do_concurrent_radiation=.false.
+        radiation_nthreads = 1
+        ocean_npes = $ocn_ranks,
+        concurrent = .true.
+        use_lag_fluxes=.true.
+        check_stocks=0
+      </namelist>
+     <dataFile label="initCond" target="INPUT/" chksum="" size="" timestamp="">
+       <dataSource site="ncrc">$(SD_ARCHIVE_ROOT)/SPEAR/initCond_SPEAR/SPEAR_c192_SSP_Scenario/ens_07_09/21010101.tar</dataSource>
+       <dataSource site="gfdl">/archive/wfc/pdata/gfdl_G/SPEAR_c192/initCond/SPEAR_c192_SSP_Scenario/ens_07_09/21010101.tar</dataSource>
+     </dataFile> 
+      <xi:include xpointer="xpointer(//freInclude[@name='common_LM4']/input/node())"/>
+      <dataFile label="input" target="INPUT/transitions.nc" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp245/RCP4.5_SSP2_2001-2100_transitions_v20180926.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/states.nc" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/ScenarioMIP/ssp245/RCP4.5_SSP2_2001-2100_states_v20180926.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/landfrac.nc" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(CMIP6_ARCHIVE_ROOT)/CM4/forcings/landuse/LUH2/v2.0h/landfrac.nc</dataSource>
+      </dataFile>
+      <xi:include xpointer="xpointer(//freInclude[@name='c192_LM4_SPEAR']/input/node())"/>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/C192_OM360x320.20171213/SPEAR_c192_hydrography.v20171218.tar</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/gold/datasets/SPEAR/C192.OM360x320.20171213/SPEAR_c192_hydrography.v20171218.tar</dataSource> 
+      </dataFile>
+      <xi:include xpointer="xpointer(//freInclude[@name='common_AM4_v20170208']/input/node())"/>
+      <!--
+      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6_ssp245']/input/node())"/>
+      -->
+      <xi:include xpointer="xpointer(//freInclude[@name='common_cmip6_ssp245_O3_2500']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='Volcano_Solar_TimeSeries_cmip6_v3_2500']/input/node())"/>
+      <!--
+      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_ssp245']/input/node())"/>
+      -->
+      <xi:include xpointer="xpointer(//freInclude[@name='emissions_cmip6_ssp245_constant_past_2100']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='CO2_timeseries_ssp245']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='L32_gas_conc']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='c192_stack_size']/input/node())"/>
+      <xi:include xpointer="xpointer(//freInclude[@name='csh_adjust_dry_mass']/input/node())"/>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='SPEAR_domain_decomp']/input/node())"/>
+      <!--MOM6 Input datasets-->
+      <xi:include xpointer="xpointer(//freInclude[@name='FLOR2_MOM6_data']/input/node())"/> 
+      <!-- overwrite  Channels file -->
+      <dataFile label="input" target="INPUT/MOM_channels_SPEAR" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">/ncrc/home2/William.Cooke/MOM_channels_SPEAR_20180119</dataSource>
+        <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_channels_SPEAR_20180119</dataSource>
+      </dataFile>
+      <!--MOM6 Input datasets-->
+      <xi:include xpointer="xpointer(//freInclude[@name='MOM6_data']/input/node())"/>
+      <dataFile label="input" target="INPUT/" chksum="" size="" timestamp="">
+        <dataSource site="ncrc">$(includeDir)/ice_ocean_SIS2/OM4_025/INPUT/hycom1_75_800m.nc</dataSource>
+      </dataFile>
+      <!-- Override the MOM_input in the MOM6_data xi include above --> 
+      <dataFile label="input" target="INPUT/MOM_input" chksum="" size="" timestamp="">
+         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/SPEAR/MOM_input_P39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/MOM_input_P39_init</dataSource>
+      </dataFile>
+      <!--SIS Input datasets-->
+      <xi:include xpointer="xpointer(//freInclude[@name='SIS2_data']/input/node())"/>
+      <dataFile label="input" target="INPUT/SIS_input" chksum="" size="" timestamp="">
+         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/LOAR4/SIS_input_C39_init</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/SIS_input_C39_init</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/KH_background_2d.nc">
+         <dataSource site="ncrc">$(WFC_ARCHIVE_ROOT)/MOM6_datasets/Kh_BG_2D/Kh_background_5e3_50to90ns.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/datasets/Kh_background_5e3_50to90ns.nc</dataSource>
+      </dataFile>
+      <dataFile label="input" target="INPUT/">
+         <dataSource site="ncrc">/ncrc/home2/William.Cooke/decadal/topo_edits_011818.nc</dataSource>
+         <dataSource site="gfdl">/archive/William.Cooke/pdata/gfdl_G/SPEAR_MOM6/topo/topo_edits_011818.nc</dataSource>
+      </dataFile>
+      <csh type="always"><![CDATA[
+######BEGIN MOM6 and SIS2 layout setup################
+##THIS HAS TO BE PART OF csh type=always###
+
+touch $work/INPUT/MOM_override
+
+cat > $work/INPUT/MOM_override << EOF
+#override KV_ML_INVZ2 = 1.0E-4
+
+#override DEFAULT_ANSWER_DATE=20181231
+#override INTERNAL_WAVE_SPEED_BETTER_EST =False
+
+#override REMAP_UV_USING_OLD_ALG = True
+#override Z_INIT_REMAP_OLD_ALG = True
+#override FIX_USTAR_GUSTLESS_BUG =False
+#override GRID_ROTATION_ANGLE_BUGS = True
+#override KAPPA_SHEAR_ALL_LAYER_TKE_BUG = True
+#override KAPPA_SHEAR_ITER_BUG = True
+#override USE_GM_WORK_BUG = True
+#override USE_MLD_ITERATION = False
+#override USE_TRIPOLAR_GEOLONB_BUG =True 
+#override GUST_CONST = 0.02
+#override MEKE_ALPHA_EADY = 0.05
+#override MEKE_ALPHA_RHINES = 0.05
+#override MIN_SALINITY = 0.01
+#override USE_INACCURATE_PGF_RHO_ANOM=True
+#override USE_DIABATIC_TIME_BUG=True
+#override NDIFF_USE_UNMASKED_TRANSPORT_BUG=True
+#override KH_BG_2D_BUG=True
+#override TOPO_EDITS_FILE = "topo_edits_011818.nc"
+#override CHANNEL_LIST_FILE = MOM_channels_SPEAR
+NUM_DIAG_COORDS = 2             ! default = 1
+                                ! The number of diagnostic vertical coordinates to use.
+                                ! For each coordinate, an entry in DIAG_COORDS must be provided.
+DIAG_COORDS = "z Z ZSTAR", "rho2 RHO2 RHO" !
+
+DIAG_COORD_DEF_RHO2 = "RFNC1:35,999.5,1028,1028.5,8.,1038.,0.0078125" ! default = "WOA09"
+                                ! Determines how to specify the coordinate
+                                ! resolution. Valid options are:
+                                !  PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
+                                !  UNIFORM[:N] - uniformly distributed
+                                !  FILE:string - read from a file. The string specifies
+                                !                the filename and variable name, separated
+                                !                by a comma or space, e.g. FILE:lev.nc,dz
+                                !                or FILE:lev.nc,interfaces=zw
+                                !  WOA09[:N]   - the WOA09 vertical grid (approximately)
+                                !  FNC1:string - FNC1:dz_min,H_total,power,precision
+                                !  HYBRID:string - read from a file. The string specifies
+                                !                the filename and two variable names, separated
+                                !                by a comma or space, for sigma-2 and dz. e.g.
+                                !                HYBRID:vgrid.nc,sigma2,dz
+
+EOF
+
+touch $work/INPUT/SIS_override
+
+cat > $work/INPUT/SIS_override << EOF
+#override CP_SEAWATER = 3992.
+#override CP_BRINE = 3992.
+#override ICE_BULK_SALINITY = 0.0
+#override ICE_RELATIVE_SALINITY = 0.17
+#override SIS2_FILLING_FRAZIL = T
+#override SIS_THICKNESS_ADVECTION_SCHEME = "PCM"
+#override SIS_CONTINUITY_SCHEME = "PCM"
+#override SIS_TRACER_ADVECTION_SCHEME = "PPM:H3"
+#override GRID_ROTATION_ANGLE_BUGS =True
+#override USE_TRIPOLAR_GEOLONB_BUG = True
+#override INCONSISTENT_COVER_BUG = True
+#override CFL_MASS_NEGLECT_BUG=True
+#override RESTART_CHECKSUMS_REQUIRED =False
+EOF
+
+#scan auxiliary_nml
+#set OCN_MASK_TABLE = 
+#set OCN_MASK_TABLE = `awk '/ocean_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+#set OCN_LAYOUT     = `awk '/ocean_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+#set OCN_IO_LAYOUT  = `awk '/ocean_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+
+cat > $work/INPUT/MOM_layout << MOM_LAYOUT_EOF
+#override IO_LAYOUT = $ocn_io_layout
+#override LAYOUT    = $ocn_layout
+#override MASKTABLE = $ocn_mask_table
+MOM_LAYOUT_EOF
+
+#scan auxiliary_nml
+#set ICE_MASK_TABLE = `awk '/ice_mask_table/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+#set ICE_LAYOUT     = `awk '/ice_layout/     {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+#set ICE_IO_LAYOUT  = `awk '/ice_io_layout/  {gsub(/=/," ");           print $2,$3}' $work/input.nml`
+
+cat > $work/INPUT/SIS_layout << SIS_LAYOUT_EOF
+#override IO_LAYOUT = $ice_io_layout
+#override LAYOUT    = $ice_layout
+#override MASKTABLE = $ocn_mask_table
+SIS_LAYOUT_EOF
+
+######END MOM6 and SIS2 layout setup################
+
+cd $work/INPUT
+
+if ( $currentSeg == 1 ) then
+#     rm -f coupler.res
+     foreach i ( MOM.res*nc)
+       chmod u+w $i
+       ncrename -v Kv_turb,Kv_shear -v Kd_turb,Kd_shear $i
+     end
+endif
+cd $work
+
+#------------------------------------------
+## Find out whether to restart.
+# MOM6 restart switch
+   set restart_flag = 'r'
+   set sis_restart_flag = 'r'
+cd $work
+
+## Run the model
+#------------------------------------------
+###The following vars are set for the timing database ingestion tool only and are not necessary for a successful run
+set OCN_MASK_TABLE  =  $ocn_mask_table
+set OCN_LAYOUT    = $ocn_layout
+set OCN_IO_LAYOUT = $ocn_io_layout
+set ICE_LAYOUT    = $ice_layout
+set ICE_IO_LAYOUT = $ice_io_layout
+set atmos_npes = $atm_ranks
+set ocean_npes = $ocn_ranks
+set fv_layout = $atm_layout
+set fv_io_layout  = $atm_io_layout
+set land_layout   = $lnd_layout
+set land_io_layout = $lnd_io_layout
+set dummy  = `awk '/nxblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nxblocks = $dummy
+set dummy  = `awk '/nyblocks/ {gsub(/=/," ");gsub(/,/," ");print $2}' $work/input.nml`
+set nyblocks = $dummy
+]]>
+    </csh>
+  </input>
+  <runtime>
+    <production simTime="100" units="years" >
+      <segment simTime="1" units="years"/>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A576x2_O108_production_c192']/node())"/>
+    </production> 
+      <regression name="threemonth">
+        <run months="3" >
+          <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A384x1_O36_c192']/node())"/>
+          </run>
+      </regression>
+      <regression name="basic_prodsettings">
+        <run days="8" >
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x2_O180']/node())"/>
+        </run>
+      </regression>
+  </runtime>
+</experiment>
+
+
 
 <experiment name="SPEAR_c192_o1_Scen_SSP245_IC2011_K50_ens_01_03" inherit="SPEAR_R$(FMS_GIT_TAG)_nonsymMOM6_exec">
   <description>

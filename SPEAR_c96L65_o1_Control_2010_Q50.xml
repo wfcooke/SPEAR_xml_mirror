@@ -50,16 +50,16 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
-  <property name="AWG_GIT_TAG"            value="2023.04"/>               <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2023.04"/>
-  <property name="LAND_GIT_TAG"           value="2023.03"/>    <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"      value="2023.04"/>         <!-- git tag for atmos_drivers -->
-  <property name="ATMOS_CUBED_SPHERE_TAG" value="origin/dev/gfdl"/>    <!-- git tag for atmos_cubed_sphere source code -->
-  <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>         <!-- git tag for AWG source code -->
+  <property name="AWG_GIT_TAG"            value="2024.02"/>               <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"            value="2025.01"/>
+  <property name="LAND_GIT_TAG"           value="2024.01"/>    <!-- git tag for Land source code -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2025.01"/>         <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG" value="2024.02"/>    <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="ICE_PARAM_GIT_TAG"      value="2024.02"/>         <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20240410" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-21" />              <!-- FRE version for use in this XML -->
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20250331" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_VERSION" value="bronx-23" />              <!-- FRE version for use in this XML -->
 
   <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
 
@@ -226,8 +226,8 @@ configuration.
     <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.postprocess'])"/>
 
     <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel'])"/>
-    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel18'])"/>
-    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel21'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc5-intel23'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc5-intel23_2_0'])"/>
     <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel-oneapi-21_3'])"/>
     <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc5-intel-classic'])"/>
 
@@ -235,9 +235,9 @@ configuration.
     <!-- ncrc4.intel18 is the platform typically used for c4 -->
 
     <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel-oneapi-21_3'])"/>
-    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel21'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc5.intel23_2_0'])"/>
     <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel'])"/>
-    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel18'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc5.intel23'])"/>
 
 
     <!-- ncrc5.intel23-classic is the recommended platform for c5, fully coupled experiment-->

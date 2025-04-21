@@ -48,16 +48,16 @@ SPEAR_c192_omlp25_Control_2010_A01
   <!-- Properties for the source code versions -->
   <property name="RELEASE" value="dev/awg" />                   <!-- Default git branch/tag for source code -->
   <property name="MOM6_GIT_TAG" value="dev/gfdl"/> <!-- git tag for MOM6 source code -->
-  <property name="AWG_GIT_TAG"            value="2023.04"/>               <!-- git tag for AWG source code -->
-  <property name="FMS_GIT_TAG"            value="2023.04"/>
-  <property name="LAND_GIT_TAG"           value="2023.03"/>    <!-- git tag for Land source code -->
-  <property name="ATMOS_DRIVERS_TAG"      value="2023.04"/>         <!-- git tag for atmos_drivers -->
-  <property name="ATMOS_CUBED_SPHERE_TAG" value="origin/dev/gfdl"/>    <!-- git tag for atmos_cubed_sphere source code -->
-  <property name="ICE_PARAM_GIT_TAG"      value="2021.03"/>         <!-- git tag for AWG source code -->
+  <property name="AWG_GIT_TAG"            value="2024.02"/>               <!-- git tag for AWG source code -->
+  <property name="FMS_GIT_TAG"            value="2025.01"/>
+  <property name="LAND_GIT_TAG"           value="2024.01"/>    <!-- git tag for Land source code -->
+  <property name="ATMOS_DRIVERS_TAG"      value="2025.01"/>         <!-- git tag for atmos_drivers -->
+  <property name="ATMOS_CUBED_SPHERE_TAG" value="2024.02"/>    <!-- git tag for atmos_cubed_sphere source code -->
+  <property name="ICE_PARAM_GIT_TAG"      value="2024.02"/>         <!-- git tag for AWG source code -->
 
   <!-- FRE specific properties -->
-  <property name="FRE_STEM" value="SPEAR_experiments_R_20240410" />   <!-- Stem use in FRE directories -->
-  <property name="FRE_VERSION" value="bronx-21" />
+  <property name="FRE_STEM" value="SPEAR_experiments_R_20250331" />   <!-- Stem use in FRE directories -->
+  <property name="FRE_VERSION" value="bronx-23" />
 
   <property name="COUPLER_GIT_TAG"  value="$(FMS_GIT_TAG)"/>           <!-- git tag for coupler source -->
 
@@ -252,8 +252,8 @@ configuration.
     <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.postprocess'])"/>
 
     <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel'])"/>
-    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel18'])"/>
-    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel21'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc5-intel23'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc5-intel23_2_0'])"/>
     <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc4-intel-oneapi-21_3'])"/>
     <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='gfdl.ncrc5-intel-classic'])"/>
 
@@ -261,9 +261,9 @@ configuration.
     <!-- ncrc4.intel18 is the platform typically used for c4 -->
 
     <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel-oneapi-21_3'])"/>
-    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel21'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc5.intel23_2_0'])"/>
     <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel'])"/>
-    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc4.intel18'])"/>
+    <xi:include href="platforms.xml" xpointer="xpointer(//freInclude/platform[@name='ncrc5.intel23'])"/>
 
 
     <!-- ncrc5.intel23-classic is the recommended platform for c5, fully coupled experiment-->
@@ -1506,7 +1506,8 @@ set nyblocks = $dummy
 
       <regression name="basic_prodsettings">
         <run days="8" >
-          <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A384x1_O36_c192']/node())"/>
+<!--          <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A384x1_O36_c192']/node())"/>-->
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A288x1_O64_c192']/node())"/>
         </run>
       </regression>
       <regression name="debug_prodsettings">
@@ -1519,6 +1520,7 @@ set nyblocks = $dummy
           <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='resourceparams_A108x2_O72_test']/node())"/>
           </run>
       </regression>
+      <xi:include href="SPEAR_resourceparams.xml" xpointer="xpointer(//freInclude[@name='regression_OMP_c192']/runtime/node())"/>
       <reference restart="/lustre/f2/dev/William.Cooke/reference/i19950101_OTA_IceAtmRes_L33/ncrc4.intel16-repro-openmp/1x0m8d_1152x1a_108x1o/restart/19950109.tar"/>
   </runtime>
   <postProcess>
